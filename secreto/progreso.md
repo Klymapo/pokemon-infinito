@@ -19,6 +19,12 @@
   - Revisar con las hojas de contactos, siluetas y grises y la métrica de IoU antes de publicar.
   - Mantener los parámetros de `look` que ya existen (compatibilidad) y añadir los nuevos.
 
+- **2026-10-05 · Arte pixelado de la mejor calidad posible, con animaciones e iconos.** Repartirlo en varias madrugadas, sin dejar de avanzar la historia, siguiendo `docs/ARTE.md` (o la skill `pixel-art`) y con revisión por imágenes en cada paso:
+  1. **Noche 1:** retratos (punto anterior), con parpadeo y boca al hablar.
+  2. **Noche 2:** icono de la app (192/512, *maskable*) y un juego de iconos pixelados propios para la interfaz (barra inferior, lugares, objetos clave). Sustituyen a los emojis.
+  3. **Noche 3:** escenas de fondo por tipo de lugar con animación ligera (nubes, agua, faroles de noche, hojas) y transiciones de entrada a combate.
+  4. **Después:** efectos de movimientos por tipo en combate (partículas pixeladas) y pantalla de título animada.
+
 ## Hecho a petición de Mario
 
 - 2026-10-05: ver los datos de un Pokémon desde el menú de cambio en combate; estilo de combate «Cambio» (preguntar si quieres cambiar cuando cae un Pokémon rival, se puede poner en «Fijo» en Ajustes); descripciones de habilidades en español; pantalla para comparar movimientos al aprender uno nuevo (tipo, categoría, potencia, precisión, PP, descripción y si es del mismo tipo).
