@@ -1,0 +1,8 @@
+// Cloudflare Workers: sirve solo la carpeta app/ como sitio estático (el resto del repo no se publica).
+{
+  "name": "pokemon-infinito",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./app"
+  }
+}

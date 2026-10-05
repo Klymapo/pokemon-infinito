@@ -1,6 +1,6 @@
 # Pokémon Infinite · instrucciones para Claude
 
-Fangame personal de Pokémon para **un solo jugador: Mario** (usuario de GitHub `Klymapo`). Es un RPG por texto con combates Pokémon reales, pensado para jugarse en su móvil Android sin conexión. Es una PWA: `app/` se publica tal cual en Cloudflare Pages desde la rama `main`, sin paso de compilación.
+Fangame personal de Pokémon para **un solo jugador: Mario** (usuario de GitHub `Klymapo`). Es un RPG por texto con combates Pokémon reales, pensado para jugarse en su móvil Android sin conexión. Es una PWA: `app/` se publica tal cual en Cloudflare Workers (recursos estáticos, ver `wrangler.jsonc`) desde la rama `main`, sin paso de compilación. **No cambies `assets.directory`**: si apunta a la raíz, se publicaría `secreto/`.
 
 La historia es **infinita**: cada madrugada (3:00, hora de Ciudad de México) una sesión programada de Claude amplía el mundo, lo audita y lo publica. Este archivo es el procedimiento de esa sesión. También sirve para cualquier sesión que toque el contenido.
 
@@ -183,7 +183,7 @@ El subagente **corrige directamente** lo que encuentre (cambios pequeños) o dev
 2. `node herramientas/build-sw.mjs`. **Siempre** como último paso antes del commit: cambia la versión de la caché y así el móvil de Mario descarga la actualización.
 3. Haz el commit en `main`, con un mensaje sin spoilers y las líneas de atribución que indique la sesión. Después, `git push origin main`.
    - Si el push falla por cambios remotos: `git pull --rebase` y vuelve a empujar.
-   - Cloudflare Pages despliega solo en un minuto o dos.
+   - Cloudflare despliega solo en un minuto o dos (Workers Builds, al detectar el push).
 4. **Mensaje final de la sesión** (Mario puede leerlo): 3 o 4 líneas, sin spoilers. Qué se publicó (p. ej., "Bloque 2, unas 12 h, con 2 eventos nuevos"), si la auditoría pasó y si hay algo que Mario deba saber (p. ej., "abre el juego con internet para que se actualice").
 
 ---
