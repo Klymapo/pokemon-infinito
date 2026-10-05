@@ -59,6 +59,18 @@ export function encounterTable(loc, terrain) {
 	});
 }
 
+/** Probabilidad de cada especie por encuentro (0–1) en una fase del día ('manana', 'dia', 'tarde', 'noche'). */
+export function encounterOdds(loc, terrain, ph = phase()) {
+	const base = loc.route?.encounters?.[terrain] || loc.encounters?.[terrain] || [];
+	let list = base.slice();
+	for (const e of activeEvents()) if (e.encounters?.[loc.id]?.[terrain]) list = list.concat(e.encounters[loc.id][terrain]);
+	list = list.filter(x => !(x.time === 'night' && ph !== 'noche') && !(x.time === 'day' && ph === 'noche') && !(x.time === 'morning' && ph !== 'manana') && (x.cond === undefined || evalCond(x.cond)));
+	const tot = list.reduce((s, e) => s + (e.w || 1), 0);
+	const out = {};
+	for (const e of list) out[e.sp] = (out[e.sp] || 0) + (e.w || 1) / (tot || 1);
+	return out;
+}
+
 export function rollWild(loc, terrain) {
 	const tbl = encounterTable(loc, terrain);
 	if (!tbl.length) return null;

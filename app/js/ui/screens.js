@@ -8,7 +8,7 @@ import {
 	createPokemon, displayName, maxHp, calcStats, healFull, expProgress, checkEvolution, addHappy, natureMod, canLearn,
 } from '../pokemon.js';
 import {
-	L, isRoute, spotsOf, descOf, tramoItems, tramoTerrain, encounterTable, rollWild, mounted, encounterRate, canMove,
+	L, isRoute, spotsOf, descOf, tramoItems, tramoTerrain, encounterTable, encounterOdds, rollWild, mounted, encounterRate, canMove,
 	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents,
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
@@ -1255,16 +1255,31 @@ export function openZoneGuide() {
 		body.push(h('div', { class: 'note' }, h('b', {}, TNAMES[t] || t), ` · Nv. ${Math.min(...lvs)}–${Math.max(...lvs)} · Tipos: ${[...types].map(typeName).join(', ')}`));
 		const list = h('div', { class: 'list' });
 		const seenSp = new Set();
-		for (const e of all) {
-			if (seenSp.has(e.sp)) continue;
-			seenSp.add(e.sp);
-			const s = D.species[e.sp];
+		const ph = phase();
+		const oNow = encounterOdds(loc, t, ph), oDay = encounterOdds(loc, t, 'dia'), oNight = encounterOdds(loc, t, 'noche');
+		const odds = p => p >= 0.5 ? '1 de cada 2' : `1 de cada ${Math.round(1 / p)}`;
+		const pct = p => p >= 0.1 ? Math.round(p * 100) + ' %' : (Math.round(p * 1000) / 10).toString().replace('.', ',') + ' %';
+		const rarity = p => p >= 0.25 ? ['Muy común', '#3f9b5a'] : p >= 0.12 ? ['Común', '#5aa36b'] : p >= 0.06 ? ['Poco común', '#c99a2e'] : p >= 0.03 ? ['Raro', '#d0743a'] : ['Muy raro', '#c4473a'];
+		const species = [...new Set(all.map(e => e.sp))].sort((a, b) => (oNow[b] || 0) - (oNow[a] || 0) || ((oDay[b] || 0) + (oNight[b] || 0)) - ((oDay[a] || 0) + (oNight[a] || 0)));
+		for (const sp of species) {
+			if (seenSp.has(sp)) continue;
+			seenSp.add(sp);
+			const entries = all.filter(e => e.sp === sp);
+			const e = entries[0];
+			const s = D.species[sp];
 			const seen = G.dex.seen[s.num];
-			const now = tbl.includes(e);
-			list.append(h('div', { class: 'mon' + (now ? '' : ' fainted') },
-				h('div', { class: 'sprite' }, seen ? monImg(e.sp, { anim: false }) : h('div', { style: { fontSize: '26px' } }, '❔')),
-				h('div', { class: 'info' }, h('div', { class: 'name' }, seen ? s.name : '???', G.dex.caught[s.num] ? '◓' : '', e.displaced ? h('span', { class: 'status', style: { background: '#7a5cd6' } }, 'DESPLAZADO') : null),
-					h('div', { class: 'hptext' }, h('span', {}, (e.time === 'night' ? '🌙 Noche · ' : e.time === 'day' ? '☀️ Día · ' : '') + (e.w >= 30 ? 'Común' : e.w >= 10 ? 'Poco común' : 'Raro')), h('span', {}, `Nv. ${Array.isArray(e.lv) ? e.lv.join('–') : e.lv}`)))));
+			const pNow = oNow[sp] || 0, pD = oDay[sp] || 0, pN = oNight[sp] || 0;
+			const lvs = entries.map(x => Array.isArray(x.lv) ? x.lv : [x.lv, x.lv]).flat();
+			const lvTxt = Math.min(...lvs) === Math.max(...lvs) ? `Nv. ${lvs[0]}` : `Nv. ${Math.min(...lvs)}–${Math.max(...lvs)}`;
+			const [rName, rCol] = rarity(pNow || Math.max(pD, pN));
+			const nowTxt = pNow ? `${odds(pNow)} (${pct(pNow)})` : (pN && !pD ? 'Ahora no: solo de noche' : pD && !pN ? 'Ahora no: solo de día' : 'Ahora no sale');
+			const split = (!pD !== !pN) || (pD && pN && Math.max(pD, pN) / Math.min(pD, pN) > 1.5) ? `☀️ ${pD ? odds(pD) : '—'} · 🌙 ${pN ? odds(pN) : '—'}` : '';
+			list.append(h('div', { class: 'mon' + (pNow ? '' : ' fainted') },
+				h('div', { class: 'sprite' }, seen ? monImg(sp, { anim: false }) : h('div', { style: { fontSize: '26px' } }, '❔')),
+				h('div', { class: 'info' },
+					h('div', { class: 'name' }, seen ? s.name : '???', G.dex.caught[s.num] ? '◓' : '', e.displaced ? h('span', { class: 'status', style: { background: '#7a5cd6' } }, 'DESPLAZADO') : null),
+					h('div', { class: 'hptext' }, h('span', {}, h('b', { style: { color: rCol } }, rName), ' · ' + nowTxt), h('span', {}, lvTxt)),
+					split ? h('div', { class: 'oddsplit' }, split) : null)));
 		}
 		body.push(list);
 	}
