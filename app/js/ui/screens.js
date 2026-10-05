@@ -174,7 +174,9 @@ export function render() {
 		h('div', { class: 'chip', title: PHASE_NAMES[ph] }, PHASE_ICON[ph]),
 		h('div', { class: 'chip money' }, fmtMoney(G.player.money)));
 	const main = h('div', { class: 'main' });
-	const scene = h('div', { class: 'scene' }, sceneCanvas({ ...(loc.bg || {}), seed: loc.bg?.seed || loc.id }));
+	const topL = topLoc(loc.id);
+	const scene = h('div', { class: 'scene' }, sceneCanvas({ ...(loc.bg || {}), seed: loc.bg?.seed || loc.id }),
+		topL && topL.id !== loc.id ? h('div', { class: 'scene-label' }, `${topL.name} › ${loc.name}`) : null);
 	main.append(scene);
 	if (isRoute(loc)) renderRoute(main, loc);
 	else renderPlace(main, loc);
@@ -207,39 +209,114 @@ function spotIcon(s) {
 	return '💬';
 }
 
+/** Qué señal lleva un sitio: «!» misión nueva, «?» misión en curso, «•» novedad sin misión. */
+function spotMarker(s) {
+	const a = s.action || {};
+	const scripts = [];
+	const talk = s.talk || a.talk;
+	if (Array.isArray(talk)) { const t = talk.find(e => { try { return e.cond === undefined || evalCond(e.cond); } catch (x) { return false; } }); if (t?.script) scripts.push(t.script); }
+	if (s.script) scripts.push(s.script);
+	if (a.script) scripts.push(a.script);
+	const touch = questTouches();
+	let active = null, touchedAny = false;
+	for (const sc of scripts) for (const q of touch[sc] || []) {
+		if (!C.quests[q]) continue;
+		touchedAny = true;
+		const st = G.quests[q];
+		if (!st) return { kind: 'new', q };
+		if (!st.done && !active) active = { kind: 'active', q };
+	}
+	if (active) return active;
+	let isNew = false;
+	try { isNew = s.new !== undefined && evalCond(s.new); } catch (x) { isNew = false; }
+	if (isNew && !touchedAny) return { kind: 'hint' };
+	return null; // solo toca misiones ya terminadas: sin señal
+}
+function markerEl(m) {
+	if (!m) return null;
+	if (m.kind === 'new') return h('span', { class: 'mk new', title: 'Misión nueva' }, '!');
+	if (m.kind === 'active') return h('span', { class: 'mk active', title: 'Misión en curso' }, '?');
+	return h('span', { class: 'mk hint', title: 'Novedad' });
+}
+function spotKind(s) {
+	const a = s.action || {};
+	if (a.center || a.shop || a.pc) return 'services';
+	if (a.go) return 'places';
+	if (a.trainer || a.training) return 'battle';
+	if (a.explore || a.gather) return 'nature';
+	return 'people';
+}
+
 function renderPlace(main, loc) {
-	main.append(h('div', { class: 'desc' }, ...descOf(loc).split('\n\n').map(p => h('p', { html: fmtText(tx(p)) }))));
-	const spots = spotsOf(loc);
-	if (spots.length) {
-		main.append(h('div', { class: 'section-title' }, 'Aquí'));
-		const list = h('div', { class: 'list' });
-		for (const s of spots) {
+	// Descripción: el primer párrafo siempre; el resto, plegable
+	const paras = descOf(loc).split('\n\n').filter(Boolean);
+	const desc = h('div', { class: 'desc' }, h('p', { html: fmtText(tx(paras[0] || '')) }));
+	if (paras.length > 1) {
+		const more = h('div', { class: 'desc-more', hidden: true }, ...paras.slice(1).map(p => h('p', { html: fmtText(tx(p)) })));
+		const btn = h('button', { class: 'linkbtn', onclick: () => { more.hidden = !more.hidden; btn.textContent = more.hidden ? 'Leer más' : 'Leer menos'; } }, 'Leer más');
+		desc.append(more, btn);
+	}
+	main.append(desc);
+	const spots = spotsOf(loc).map(s => ({ s, m: spotMarker(s), kind: spotKind(s) }));
+	// Misiones aquí: lo que tiene «!» o «?» va primero, con el nombre de la misión
+	const quests = spots.filter(x => x.m && x.m.kind !== 'hint' && x.kind === 'people');
+	const rowFor = ({ s, m }) => {
+		const done = s.doneIf !== undefined && evalCond(s.doneIf);
+		const sub = s.action?.gather ? gatherSub(s.action.gather, loc) : m?.q ? (m.kind === 'new' ? 'Misión nueva' : `En curso: ${C.quests[m.q]?.name || ''}`) : s.sub ? tx(s.sub) : '';
+		return h('button', { class: 'row' + (m?.kind === 'new' ? ' q-new' : m?.kind === 'active' ? ' q-active' : m ? ' hl' : '') + (s.event ? ' event' : '') + (done ? ' done' : ''), onclick: () => guarded(() => doSpot(s, loc)) },
+			h('div', { class: 'ico' }, spotIcon(s)),
+			h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(s.label)), sub ? h('div', { class: 's' }, sub) : null),
+			markerEl(m));
+	};
+	if (quests.length) {
+		main.append(h('div', { class: 'section-title' }, 'Misiones aquí'));
+		main.append(h('div', { class: 'list' }, ...quests.map(rowFor)));
+	}
+	// Servicios: píldoras compactas
+	const services = spots.filter(x => x.kind === 'services');
+	if (services.length) {
+		main.append(h('div', { class: 'pills' }, ...services.map(({ s }) => h('button', { class: 'pill', onclick: () => guarded(() => doSpot(s, loc)) }, h('span', { class: 'pi' }, spotIcon(s)), tx(s.label)))));
+	}
+	const people = spots.filter(x => x.kind === 'people' && !quests.includes(x));
+	if (people.length) {
+		main.append(h('div', { class: 'section-title' }, 'Gente y rincones'));
+		main.append(h('div', { class: 'list' }, ...people.map(rowFor)));
+	}
+	// Lugares, combates y naturaleza en un solo mosaico (así se llena la cuadrícula)
+	{
+		const order = { places: 0, battle: 1, nature: 2 };
+		const xs = spots.filter(x => order[x.kind] !== undefined).sort((a, b) => order[a.kind] - order[b.kind]);
+		if (xs.length) main.append(h('div', { class: 'section-title' }, 'Explorar'));
+		const grid = h('div', { class: 'tiles' });
+		for (const x of xs) {
+			const { s, m } = x;
 			const a = s.action || {};
-			const isNew = s.new !== undefined ? evalCond(s.new) : false;
-			const done = s.doneIf !== undefined && evalCond(s.doneIf);
-			const row = h('button', { class: 'row' + (isNew ? ' hl' : '') + (s.event ? ' event' : '') + (done ? ' done' : ''), onclick: () => guarded(() => doSpot(s, loc)) },
-				h('div', { class: 'ico' }, spotIcon(s)),
-				h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(s.label)), (s.action?.gather ? gatherSub(s.action.gather, loc) : s.sub) ? h('div', { class: 's' }, s.action?.gather ? gatherSub(s.action.gather, loc) : tx(s.sub)) : null),
-				isNew ? h('span', { class: 'badge-new' }, '!') : null);
-			list.append(row);
+			const done = (s.doneIf !== undefined && evalCond(s.doneIf)) || (a.trainer && G.beaten[a.trainer] && !a.repeat);
+			const sub = a.gather ? gatherSub(a.gather, loc) : a.go ? (G.visited[a.go] ? (s.sub ? tx(s.sub) : 'Visitado') : (s.sub ? tx(s.sub) : 'Sin visitar')) : done ? 'Hecho' : s.sub ? tx(s.sub) : '';
+			grid.append(h('button', { class: 'tile' + (m?.kind === 'new' ? ' q-new' : m?.kind === 'active' ? ' q-active' : m ? ' hl' : '') + (done ? ' done' : '') + (s.event ? ' event' : ''), onclick: () => guarded(() => doSpot(s, loc)) },
+				h('div', { class: 'tile-top' }, h('span', { class: 'tile-ico' }, spotIcon(s)), markerEl(m)),
+				h('div', { class: 'tile-t' }, tx(s.label)),
+				sub ? h('div', { class: 'tile-s' }, sub) : null));
 		}
-		main.append(list);
+		if (xs.length) main.append(grid);
 	}
 	// Salidas
 	const exits = [];
-	if (loc.parent) exits.push({ id: loc.parent, label: 'Salir a ' + (L(loc.parent)?.name || ''), icon: '🚪' });
+	if (loc.parent) exits.push({ id: loc.parent, label: 'Salir a ' + (L(loc.parent)?.name || ''), icon: '🚪', sub: 'Volver' });
 	for (const n of loc.links || []) {
 		const l = L(n);
 		if (!l || (l.hidden !== undefined && evalCond(l.hidden))) continue;
 		const ce = canEnter(n);
-		exits.push({ id: n, label: l.name, icon: isRoute(l) ? '🛤️' : '🏘️', sub: G.cleared[n] ? 'Despejada' : G.visited[n] ? 'Visitada' : 'Sin explorar', blocked: !ce.ok, msg: ce.msg });
+		exits.push({ id: n, label: l.name, icon: l.kind === 'cave' ? '⛰️' : l.kind === 'forest' ? '🌲' : isRoute(l) ? '🛤️' : l.kind === 'city' ? '🏙️' : '🏘️', sub: !ce.ok ? '🔒 Cerrado por ahora' : G.cleared[n] ? 'Despejada ✔' : G.visited[n] ? 'Visitada' : 'Sin explorar', blocked: !ce.ok, msg: ce.msg, fresh: !G.visited[n] && ce.ok });
 	}
 	if (exits.length) {
 		main.append(h('div', { class: 'section-title' }, 'Caminos'));
-		const list = h('div', { class: 'list' });
-		for (const e of exits) list.append(h('button', { class: 'row', onclick: () => guarded(async () => { if (e.blocked) { await say(null, tx(e.msg)); return; } await enterLocation(e.id, { from: loc.id }); }) },
-			h('div', { class: 'ico' }, e.icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, e.label), e.sub ? h('div', { class: 's' }, e.sub) : null)));
-		main.append(list);
+		const grid = h('div', { class: 'tiles' });
+		for (const e of exits) grid.append(h('button', { class: 'tile exit' + (e.blocked ? ' locked' : '') + (e.fresh ? ' fresh' : ''), onclick: () => guarded(async () => { if (e.blocked) { await say(null, tx(e.msg)); return; } await enterLocation(e.id, { from: loc.id }); }) },
+			h('div', { class: 'tile-top' }, h('span', { class: 'tile-ico' }, e.icon), e.fresh ? h('span', { class: 'mk hint' }) : null),
+			h('div', { class: 'tile-t' }, e.label),
+			h('div', { class: 'tile-s' }, e.sub)));
+		main.append(grid);
 	}
 }
 
@@ -364,7 +441,8 @@ function renderRoute(main, loc) {
 		}
 		if (it.talk || it.spot) {
 			const sp = it.spot || {};
-			extra.append(h('button', { class: 'row' + (it.new && evalCond(it.new) ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), sp.action?.gather ? h('div', { class: 's' }, gatherSub(sp.action.gather, loc, it.sub)) : it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
+			const mk = it.talk ? spotMarker(it) : null;
+			extra.append(h('button', { class: 'row' + (mk?.kind === 'new' ? ' q-new' : mk?.kind === 'active' ? ' q-active' : (mk || (it.new && !it.talk && evalCond(it.new))) ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), markerEl(mk), h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), sp.action?.gather ? h('div', { class: 's' }, gatherSub(sp.action.gather, loc, it.sub)) : it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
 		}
 	}
 	if (extra.children.length) main.append(extra);
