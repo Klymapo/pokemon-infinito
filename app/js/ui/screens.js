@@ -880,9 +880,25 @@ function openParty() {
 }
 
 function happyText(v) {
-	return v >= 255 ? 'Te adora. Está totalmente unido a ti.' : v >= 200 ? 'Te tiene muchísimo cariño.' : v >= 150 ? 'Le caes muy bien.' : v >= 100 ? 'Está a gusto contigo.' : v >= 50 ? 'Todavía no te conoce mucho.' : 'No parece muy contento.';
+	return v >= 255 ? 'Te adora. Está totalmente unido a ti.' : v >= 220 ? 'Te tiene muchísimo cariño.' : v >= 200 ? 'Te tiene mucho cariño.' : v >= 150 ? 'Le caes muy bien.' : v >= 100 ? 'Está a gusto contigo.' : v >= 50 ? 'Todavía no te conoce mucho.' : 'No parece muy contento.';
 }
-
+/** Medidor de amistad (10 corazones = 255) y aviso si evoluciona por amistad. */
+function friendshipView(p) {
+	const v = p.happy || 0;
+	const full = Math.floor(v / 25.5);
+	const hearts = h('div', { class: 'hearts', title: `${v}/255` }, ...Array.from({ length: 10 }, (_, i) => h('span', { class: i < full ? 'on' : i === full && v % 25.5 >= 12.75 ? 'half' : '' }, '♥')));
+	const out = [h('div', {}, happyText(v)), hearts];
+	const evos = (D.species[p.sp]?.evos || []).map(id => D.species[id]).filter(e => e && e.evoType === 'levelFriendship');
+	for (const e of evos) {
+		const c = (e.evoCondition || '').toLowerCase();
+		const when = c.includes('night') ? ' de noche (20:00 a 5:59)' : c.includes('day') ? ' de día (6:00 a 19:59)' : '';
+		const name = G.dex.seen[e.num] ? e.name : 'su evolución';
+		out.push(h('div', { class: 'evo-hint' + (v >= 220 ? ' ready' : '') }, v >= 220
+			? `✨ Ya tiene la amistad para evolucionar a ${name}: súbelo de nivel${when}.`
+			: `Evoluciona por amistad${when}, cuando llegue a unos 9 corazones. Le faltan ${(Math.ceil((220 - v) / 25.5 * 2) / 2).toLocaleString('es-MX')}.`));
+	}
+	return h('div', { class: 'friend' }, ...out);
+}
 export function openSummary(p, onChange, live = null) {
 	// live: datos del combate en curso ({battle, hp, maxhp, status}); oculta las acciones que cambiarían el equipo
 	const s = D.species[p.sp];
@@ -909,7 +925,7 @@ export function openSummary(p, onChange, live = null) {
 				h('dt', {}, 'Objeto'), h('dd', {}, p.item ? itemName(p.item) : 'Ninguno'),
 				h('dt', {}, 'Tera'), h('dd', {}, typeName(p.tera)),
 				h('dt', {}, 'Experiencia'), h('dd', {}, h('div', { class: 'hpbar' }, h('i', { style: { width: (expProgress(p) * 100) + '%', background: 'var(--aura)' } }))),
-				h('dt', {}, 'Amistad'), h('dd', { style: { fontWeight: 400 } }, happyText(p.happy)),
+				h('dt', {}, 'Amistad'), h('dd', { style: { fontWeight: 400 } }, friendshipView(p)),
 				h('dt', {}, 'Origen'), h('dd', { style: { fontWeight: 400 } }, `${L(p.metAt)?.name || 'Lugar desconocido'}, Nv. ${p.metLv}`),
 				h('dt', {}, 'Ball'), h('dd', {}, itemName(p.ball)),
 			);
@@ -973,6 +989,8 @@ const USE_ON_MON = {
 const CURES = { antidote: ['psn', 'tox'], paralyzeheal: ['par'], burnheal: ['brn'], iceheal: ['frz'], awakening: ['slp'], fullheal: 'all', healpowder: 'all', fullrestore: 'all', lavacookie: 'all', lumiosegalette: 'all', shalourable: 'all', pechaberry: ['psn', 'tox'], cheriberry: ['par'], rawstberry: ['brn'], aspearberry: ['frz'], chestoberry: ['slp'], lumberry: 'all' };
 const REVIVES = { revive: 0.5, maxrevive: 1, revivalherb: 1 };
 const VITAMINS = { hpup: 0, protein: 1, iron: 2, calcium: 3, zinc: 4, carbos: 5 };
+// Bayas que bajan esfuerzo y suben la amistad (canon)
+const EV_BERRIES = { pomegberry: 0, kelpsyberry: 1, qualotberry: 2, hondewberry: 3, grepaberry: 4, tamatoberry: 5 };
 const REPELS = { repel: 100, superrepel: 200, maxrepel: 250 };
 
 export function openBag(onPick) {
@@ -1007,7 +1025,7 @@ async function itemMenu(id, redraw) {
 		redraw();
 		return;
 	}
-	const usable = USE_ON_MON[id] !== undefined || CURES[id] || REVIVES[id] || VITAMINS[id] !== undefined || id === 'rarecandy' || it.cat === 'evolution' || REPELS[id] || id === 'ppup' || id === 'ppmax' || id === 'ether' || id === 'elixir' || id === 'maxether' || id === 'maxelixir' || it.use;
+	const usable = USE_ON_MON[id] !== undefined || CURES[id] || REVIVES[id] || VITAMINS[id] !== undefined || EV_BERRIES[id] !== undefined || id === 'rarecandy' || it.cat === 'evolution' || REPELS[id] || id === 'ppup' || id === 'ppmax' || id === 'ether' || id === 'elixir' || id === 'maxether' || id === 'maxelixir' || it.use;
 	const opts = [];
 	if (it.read) opts.push(['Leer', async () => { await say(null, tx(it.read)); }]);
 	if (it.art) opts.push(['Mirar', async () => { const { viewArt } = await import('./acuarela.js'); await viewArt(id); }]);
@@ -1060,6 +1078,14 @@ async function useItemOutside(id) {
 		p.evs[k] = Math.min(252, p.evs[k] + Math.min(10, 510 - total));
 		if (k === 0 && p.hp > 0) p.hp += maxHp(p) - oldMax;
 		addHappy(p, 5); did = true; msg = `¡Ha subido el ${STAT_NAMES[STATS[k]]} base de ${displayName(p)}!`;
+	} else if (EV_BERRIES[id] !== undefined) {
+		const k = EV_BERRIES[id];
+		if (p.evs[k] <= 0 && (p.happy || 0) >= 255) { await say(null, 'No tendría ningún efecto.'); return; }
+		const oldMax = mhp, before = p.happy || 0, hadEv = p.evs[k] > 0;
+		p.evs[k] = Math.max(0, p.evs[k] - 10);
+		if (k === 0 && p.hp > 0) p.hp = Math.max(1, Math.min(maxHp(p), p.hp + maxHp(p) - oldMax));
+		addHappy(p, before < 100 ? 10 : before < 200 ? 5 : 2);
+		did = true; msg = `¡${displayName(p)} te mira con más cariño!` + (hadEv ? ` (Pierde unos pocos puntos de esfuerzo de ${STAT_NAMES[STATS[k]]}.)` : '');
 	} else if (id === 'rarecandy') {
 		if (p.lv >= 100) { await say(null, 'No tendría ningún efecto.'); return; }
 		removeItem(id);

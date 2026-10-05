@@ -416,3 +416,11 @@ button.cmpmove:active { transform: scale(.98); }
 .row.need.part.half { border-color: rgba(242,179,61,.5); }
 .row.need.part b { font-size: 12px; color: var(--muted); }
 .row.need.part.half b { color: var(--gold); }
+/* Amistad */
+.friend { display: flex; flex-direction: column; gap: 4px; }
+.hearts { display: flex; gap: 2px; font-size: 15px; line-height: 1; letter-spacing: 0; }
+.hearts span { color: rgba(255,255,255,.18); }
+.hearts span.on { color: #ff6f91; }
+.hearts span.half { color: #ff6f91; opacity: .5; }
+.evo-hint { font-size: 13px; color: var(--muted); }
+.evo-hint.ready { color: var(--gold); font-weight: 700; }
