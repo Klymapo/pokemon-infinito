@@ -1176,24 +1176,108 @@ async function openShop(id) {
 // =================== PC ===================
 async function openPC() {
 	return new Promise(resolve => {
-		let box = 0;
-		const sheet = openSheet('PC de almacenamiento', null, { onClose: resolve });
-		const draw = () => {
-			const party = h('div', { class: 'list' }, ...G.party.map(p => monRow(p, async () => {
-				if (G.party.length <= 1) { toast('Necesitas al menos un Pokémon en el equipo'); return; }
-				if (await confirm(`¿Dejar a ${displayName(p)} en la Caja ${box + 1}?`, 'Depositar', 'Cancelar')) {
-					if (G.boxes[box].length >= 30) { toast('Esa caja está llena'); return; }
-					G.party.splice(G.party.indexOf(p), 1); healFull(p); G.boxes[box].push(p); draw();
+		const BOX_MAX = 30;
+		let box = G.vars.pc_box || 0;
+		let sel = null; // { where: 'party'|'box', box, idx } mientras mueves un Pokémon
+		const sheet = openSheet('PC de almacenamiento', null, { onClose: () => { G.vars.pc_box = box; resolve(); } });
+		const listOf = (where, b) => where === 'party' ? G.party : G.boxes[b];
+		const monAt = (where, b, i) => listOf(where, b)[i];
+		const rioluUid = G.vars.riolu_uid;
+		const place = (where, b) => where === 'party' ? 'tu equipo' : `la Caja ${b + 1}`;
+
+		/** Mueve el seleccionado a (where, b, i): intercambia si hay alguien, o lo pone al final si es un hueco. */
+		const drop = (where, b, i) => {
+			const src = listOf(sel.where, sel.box), A = src[sel.idx];
+			const dst = listOf(where, b), B = dst[i];
+			if (!A) { sel = null; return; }
+			if (B) {
+				src[sel.idx] = B; dst[i] = A;
+				if (sel.where === 'party' && where !== 'party') healFull(A);
+				if (where === 'party' && sel.where !== 'party') healFull(B);
+				toast(`${displayName(A)} ⇄ ${displayName(B)}`);
+			} else {
+				if (src === dst) { dst.splice(sel.idx, 1); dst.push(A); }
+				else {
+					if (where === 'party' && dst.length >= 6) { toast('Tu equipo ya tiene 6. Toca a uno para intercambiarlos.'); return; }
+					if (where === 'box' && dst.length >= BOX_MAX) { toast('Esa caja está llena'); return; }
+					if (sel.where === 'party' && G.party.length <= 1) { toast('Necesitas al menos un Pokémon en el equipo'); return; }
+					src.splice(sel.idx, 1); dst.push(A);
+					if (sel.where === 'party') healFull(A);
+					toast(`${displayName(A)} → ${place(where, b)}`);
 				}
-			})));
-			const boxTabs = h('div', { class: 'tabs' }, ...G.boxes.map((b, i) => h('button', { class: box === i ? 'on' : '', onclick: () => { box = i; draw(); } }, `Caja ${i + 1} (${b.length})`)));
-			const inBox = h('div', { class: 'list' }, ...G.boxes[box].map(p => monRow(p, async () => {
-				const i = await choose(displayName(p), ['Sacar al equipo', 'Ver datos', 'Cancelar']);
-				if (i === 0) { if (G.party.length >= 6) { toast('Tu equipo está lleno'); return; } G.boxes[box].splice(G.boxes[box].indexOf(p), 1); G.party.push(p); draw(); }
-				if (i === 1) openSummary(p, draw);
-			})));
-			if (!G.boxes[box].length) inBox.append(h('div', { class: 'empty' }, 'Caja vacía.'));
-			sheet.set([h('div', { class: 'section-title' }, 'Tu equipo'), party, h('div', { class: 'section-title' }, 'Cajas'), boxTabs, inBox]);
+			}
+			sel = null;
+		};
+
+		const tapMon = async (where, b, i) => {
+			if (sel) {
+				if (sel.where === where && sel.box === b && sel.idx === i) { sel = null; draw(); return; }
+				drop(where, b, i); draw(); return;
+			}
+			const p = monAt(where, b, i);
+			const s = D.species[p.sp];
+			const opts = [['datos', '📋 Ver datos'], ['mover', '⇄ Mover o intercambiar']];
+			if (where === 'party') opts.push(['dejar', `📦 Dejar en la Caja ${box + 1}`]);
+			else if (G.party.length < 6) opts.push(['sacar', '◓ Llevar al equipo']);
+			else opts.push(['cambiar', '◓ Cambiar por uno del equipo']);
+			if (where === 'box' && G.boxes.length > 1) opts.push(['caja', '📦 Mandar a otra caja']);
+			opts.push(['x', 'Cancelar']);
+			const k = opts[await choose((p.nick ? `${p.nick} (${s.name})` : s.name) + ` · Nv. ${p.lv}` + (p.uid === rioluUid ? ' · tu compañero' : ''), opts.map(o => o[1]))]?.[0];
+			if (k === 'datos') openSummary(p, draw);
+			else if (k === 'mover') { sel = { where, box: b, idx: i }; draw(); }
+			else if (k === 'dejar') { sel = { where, box: b, idx: i }; drop('box', box, G.boxes[box].length); draw(); }
+			else if (k === 'sacar') { sel = { where, box: b, idx: i }; drop('party', 0, G.party.length); draw(); }
+			else if (k === 'cambiar') {
+				const j = await choose(`¿Por quién cambias a ${displayName(p)}?`, G.party.map(m => `${displayName(m)} · Nv. ${m.lv}`).concat(['Cancelar']));
+				if (j < G.party.length) { sel = { where, box: b, idx: i }; drop('party', 0, j); }
+				draw();
+			} else if (k === 'caja') {
+				const others = G.boxes.map((bx, n) => n).filter(n => n !== b);
+				const j = await choose('¿A qué caja?', others.map(n => `Caja ${n + 1} (${G.boxes[n].length}/${BOX_MAX})`).concat(['Cancelar']));
+				if (j < others.length) { sel = { where, box: b, idx: i }; drop('box', others[j], G.boxes[others[j]].length); }
+				draw();
+			}
+		};
+		const tapEmpty = (where, b) => { if (!sel) return; drop(where, b, listOf(where, b).length); draw(); };
+
+		const slot = (p, where, b, i) => {
+			if (!p) return h('button', { class: 'pc-slot empty' + (sel ? ' target' : ''), onclick: () => tapEmpty(where, b), 'aria-label': 'Hueco libre' });
+			const isSel = sel && sel.where === where && sel.box === b && sel.idx === i;
+			return h('button', { class: 'pc-slot' + (isSel ? ' sel' : '') + (sel && !isSel ? ' target' : '') + (p.hp <= 0 ? ' fainted' : ''), onclick: () => tapMon(where, b, i), title: displayName(p) },
+				h('div', { class: 'pc-sp' }, monImg(p.sp, { anim: false, shiny: p.shiny })),
+				h('span', { class: 'pc-lv' }, p.lv),
+				p.item ? h('span', { class: 'pc-item' }, '✦') : null,
+				p.shiny ? h('span', { class: 'pc-shiny' }, '★') : null,
+				h('span', { class: 'pc-name' + (where === 'party' ? '' : ' small') }, displayName(p)));
+		};
+
+		const sortBox = async () => {
+			const keys = [['Nº de Pokédex', (a, c) => D.species[a.sp].num - D.species[c.sp].num || c.lv - a.lv], ['Nivel (de mayor a menor)', (a, c) => c.lv - a.lv], ['Nombre', (a, c) => displayName(a).localeCompare(displayName(c), 'es')], ['Tipo', (a, c) => D.species[a.sp].types[0].localeCompare(D.species[c.sp].types[0]) || D.species[a.sp].num - D.species[c.sp].num]];
+			const j = await choose(`Ordenar la Caja ${box + 1} por…`, keys.map(k => k[0]).concat(['Cancelar']));
+			if (j < keys.length) { G.boxes[box].sort(keys[j][1]); toast('Caja ordenada'); }
+			draw();
+		};
+
+		const draw = () => {
+			const body = [];
+			if (sel) {
+				const p = monAt(sel.where, sel.box, sel.idx);
+				body.push(h('div', { class: 'pc-moving' }, h('div', {}, h('b', {}, `Moviendo a ${p ? displayName(p) : ''}`), h('span', {}, 'Toca un hueco para dejarlo ahí, u otro Pokémon para intercambiarlos. Puedes cambiar de caja.')),
+					h('button', { class: 'btn', onclick: () => { sel = null; draw(); } }, 'Cancelar')));
+			} else body.push(h('div', { class: 'note' }, 'Toca un Pokémon para ver sus datos, moverlo o intercambiarlo. Al dejarlo en una caja se cura del todo.'));
+			body.push(h('div', { class: 'section-title' }, `Tu equipo · ${G.party.length}/6`));
+			body.push(h('div', { class: 'pc-grid party' }, ...Array.from({ length: 6 }, (_, i) => slot(G.party[i], 'party', 0, i))));
+			const nav = h('div', { class: 'pc-boxnav' },
+				h('button', { class: 'btn', 'aria-label': 'Caja anterior', onclick: () => { box = (box + G.boxes.length - 1) % G.boxes.length; draw(); } }, '‹'),
+				h('div', { class: 'pc-boxname' }, h('b', {}, `Caja ${box + 1}`), h('span', {}, `${G.boxes[box].length}/${BOX_MAX}`)),
+				h('button', { class: 'btn', 'aria-label': 'Caja siguiente', onclick: () => { box = (box + 1) % G.boxes.length; draw(); } }, '›'),
+				h('button', { class: 'btn pc-sort', onclick: sortBox, disabled: G.boxes[box].length < 2 }, 'Ordenar'));
+			body.push(h('div', { class: 'section-title' }, 'Cajas'), nav);
+			body.push(h('div', { class: 'pc-dots' }, ...G.boxes.map((bx, n) => h('button', { class: (n === box ? 'on' : '') + (bx.length ? ' has' : ''), onclick: () => { box = n; draw(); }, 'aria-label': `Caja ${n + 1}` }, String(n + 1)))));
+			body.push(h('div', { class: 'pc-grid box' }, ...Array.from({ length: BOX_MAX }, (_, i) => slot(G.boxes[box][i], 'box', box, i))));
+			const total = G.boxes.reduce((a, bx) => a + bx.length, 0);
+			body.push(h('div', { class: 'note' }, `En el PC: ${total} Pokémon.`));
+			sheet.set(body);
 		};
 		draw();
 	});
