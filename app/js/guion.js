@@ -134,7 +134,7 @@ async function runCmd(c, ctx) {
 		if (q.done) return; // una misión terminada no se reabre ni se vuelve a completar
 		const def = C.quests[c.quest];
 		const isNew = !q.stage && !q.done;
-		if (c.stage) q.stage = c.stage;
+		if (c.stage && c.stage !== q.stage) { q.stage = c.stage; (q.hist ||= []).push({ s: c.stage, t: Date.now() }); }
 		if (c.done) { q.done = true; q.stage = c.stage || q.stage || 'hecha'; q.finished = Date.now(); }
 		if (!c.silent && def) {
 			if (c.done) UI.toast?.(`✔ Misión completada: ${def.name}`, 'quest');

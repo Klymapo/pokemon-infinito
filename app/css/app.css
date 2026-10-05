@@ -352,3 +352,30 @@ button.cmpmove:active { transform: scale(.98); }
 .pills { display: grid; grid-template-columns: 1fr 1fr; }
 .pill { padding: 9px 10px; font-size: 13.5px; border-radius: 14px; min-height: 46px; text-align: left; line-height: 1.15; }
 .tiles > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 0; }
+
+/* Diario de misiones: grupos y ficha */
+.qgroup { display: flex; flex-direction: column; gap: 2px; margin: 12px 12px 2px; padding: 10px 12px; border-radius: 12px; background: rgba(242,179,61,.10); border: 1px solid rgba(242,179,61,.35); }
+.qgroup b { font-family: var(--pixel); font-weight: 400; font-size: 15px; color: var(--gold); }
+.qgroup span { font-size: 13px; color: var(--muted); }
+.qgroup.log { background: rgba(143,176,255,.07); border-color: var(--line); }
+.qgroup.log b { color: var(--aura-soft); }
+.row.quest .chev { margin-left: auto; color: var(--muted); font-size: 22px; flex: none; }
+.row.quest.logq { opacity: .82; }
+.row.quest.logq .s { font-size: 13px; }
+.qd-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 16px 4px; }
+.qd-type { font-size: 13px; color: var(--muted); font-weight: 700; }
+.qd-status { font-size: 12px; font-weight: 900; padding: 2px 9px; border-radius: 99px; background: var(--ink-3); }
+.qd-status.active { background: var(--aura); color: #fff; }
+.qd-status.new { background: var(--gold); color: var(--ink); }
+.qd-status.done { background: #3f9b5a; color: #fff; }
+.qd-est { font-size: 12.5px; color: var(--muted); margin-left: auto; }
+.qd-now { margin: 8px 12px; padding: 12px 14px; border-radius: 14px; background: var(--ink-2); border: 1px solid var(--aura); line-height: 1.45; }
+.qd-now.done { border-color: #3f9b5a; }
+.qd-label { font-family: var(--pixel); font-size: 13px; color: var(--aura-soft); margin-bottom: 4px; }
+.row.need .needbar { height: 6px; border-radius: 3px; background: var(--ink-3); margin-top: 5px; overflow: hidden; }
+.row.need .needbar i { display: block; height: 100%; background: var(--gold); }
+.row.need.ok { border-color: #3f9b5a; }
+.row.need.ok b { color: #5cc47a; }
+.qd-steps { display: flex; flex-direction: column; gap: 8px; padding: 2px 16px 8px; }
+.qd-step { display: flex; gap: 10px; align-items: flex-start; color: #cdd6ea; font-size: 14.5px; line-height: 1.4; }
+.qd-step .dot { flex: none; width: 20px; height: 20px; border-radius: 50%; background: #3f9b5a; color: #fff; font-size: 11px; display: grid; place-items: center; margin-top: 1px; }

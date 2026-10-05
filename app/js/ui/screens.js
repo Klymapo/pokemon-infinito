@@ -1189,28 +1189,128 @@ function openDiary(startTab = 'active') {
 				avail: 'No hay misiones nuevas en los lugares que conoces. Explora y vuelve a hablar con la gente después de avanzar en la historia.',
 				done: 'Aún no has completado misiones.',
 			}[tab]));
-			for (const [type, icon, title] of TYPES) {
-				const group = qs.filter(([id]) => (C.quests[id].type || 'side') === type);
-				if (!group.length) continue;
-				body.append(h('div', { class: 'section-title' }, `${icon} ${title}`));
-				const list = h('div', { class: 'list' });
-				for (const [id, q] of group) {
-					const def = C.quests[id];
-					const where = (places[id] || []).slice(0, 2);
-					const lines = [];
-					if (tab === 'active') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
-					if (tab === 'done') lines.push(h('div', { class: 's' }, '✔ Completada' + (q.finished ? ' el ' + new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '')));
-					if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
-					if (tab !== 'done') for (const w of where) lines.push(h('div', { class: 'qwhere' }, '📍 ' + w));
-					list.append(h('div', { class: 'row quest' + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : '') },
-						h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name), ...lines)));
+			const rowOf = (id, q, extraCls = '') => {
+				const def = C.quests[id];
+				const type = def.type || 'side';
+				const icon = (TYPES.find(t => t[0] === type) || TYPES[2])[1];
+				const where = (places[id] || []).slice(0, 2);
+				const lines = [];
+				if (tab === 'active') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
+				if (tab === 'done') lines.push(h('div', { class: 's' }, '✔ Completada' + (q.finished ? ' el ' + new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '')));
+				if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
+				if (tab !== 'done') for (const w of where) lines.push(h('div', { class: 'qwhere' }, '📍 ' + w));
+				return h('button', { class: 'row quest' + extraCls + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : ''), onclick: () => openQuestDetail(id, places) },
+					h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name), ...lines), h('span', { class: 'chev' }, '›'));
+			};
+			const byType = (list, intoBody) => {
+				for (const [type, icon, title] of TYPES) {
+					const group = list.filter(([id]) => (C.quests[id].type || 'side') === type);
+					if (!group.length) continue;
+					intoBody.append(h('div', { class: 'section-title' }, `${icon} ${title}`));
+					intoBody.append(h('div', { class: 'list' }, ...group.map(([id, q]) => rowOf(id, q))));
 				}
-				body.append(list);
-			}
+			};
+			if (tab === 'active') {
+				// Por hacer: tienen un sitio donde avanzarlas ahora mismo. Registro: esperan a que pase algo en la historia.
+				const todo = qs.filter(([id]) => (places[id] || []).length || C.quests[id].type === 'main');
+				const log = qs.filter(x => !todo.includes(x));
+				if (todo.length) { body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Tienen un sitio donde avanzarlas ahora'))); byType(todo, body); }
+				if (log.length) {
+					body.append(h('div', { class: 'qgroup log' }, h('b', {}, '📖 En pausa · registro'), h('span', {}, 'Historias abiertas que seguirán más adelante. No tienes que hacer nada por ahora.')));
+					body.append(h('div', { class: 'list' }, ...log.map(([id, q]) => rowOf(id, q, ' logq'))));
+				}
+			} else byType(qs, body);
 		}
 		sheet.set([tabs, body]);
 	};
 	draw();
+}
+
+// ---------- Ficha de una misión ----------
+const NEED_RX = [
+	[/(^|[^!\w.])has\("(\w+)"\)/g, (m) => ({ kind: 'item', id: m[2], n: 1 })],
+	[/(^|[^!\w.])count\("(\w+)"\)\s*>=\s*(\d+)/g, (m) => ({ kind: 'item', id: m[2], n: +m[3] })],
+	[/(^|[^!\w.])inParty\("(\w+)"\)/g, (m) => ({ kind: 'party', id: m[2] })],
+	[/(^|[^!\w.])(seen|caught|owns)\("(\w+)"\)/g, (m) => ({ kind: m[2], id: m[3] })],
+	[/(^|[^!\w.])vars\.(\w+)\s*>=\s*(\d+)/g, (m) => ({ kind: 'var', id: m[2], n: +m[3] })],
+	[/(^|[^!\w.])beat\("(\w+)"\)/g, (m) => ({ kind: 'beat', id: m[2] })],
+];
+/** Lo que piden los diálogos que avanzan la misión en su etapa actual (objetos, Pokémon, combates, contadores). */
+function questNeeds(id) {
+	const q = G.quests[id];
+	if (!q || q.done) return [];
+	const conds = [];
+	const touch = questTouches();
+	// Una condición vale si no habla de otra etapa de esta misión (si menciona una, debe ser la actual)
+	const stageOk = c => { const m = [...c.matchAll(new RegExp(`quest\\.${id}\\s*==\\s*["'](\\w+)["']`, 'g'))]; return !m.length || m.some(x => x[1] === q.stage); };
+	const scan = (sp) => { for (const t of [].concat(sp.talk || sp.spot?.talk || [])) if (t.cond && (touch[t.script] || new Set()).has(id) && stageOk(t.cond)) conds.push(t.cond); };
+	// También los «si…» dentro de los guiones cuyo «entonces» avanza la misión
+	const touchesList = (list, d = 0) => (list || []).some(c => c && typeof c === 'object' && (c.quest === id || (c.call && d < 4 && touchesList(C.scripts[c.call], d + 1)) || ['then', 'else', 'onWin', 'onCatch'].some(k => Array.isArray(c[k]) && touchesList(c[k], d)) || (Array.isArray(c.choice) && c.choice.some(o => touchesList(o.then, d)))));
+	const walkIfs = (list, d = 0) => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.if && touchesList(c.then) && stageOk(c.if)) conds.push(c.if); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) walkIfs(c[k], d); if (Array.isArray(c.choice)) for (const o of c.choice) walkIfs(o.then, d); } };
+	for (const sid in C.scripts) if ((touch[sid] || new Set()).has(id)) walkIfs(C.scripts[sid]);
+	for (const loc of Object.values(C.locations)) {
+		for (const sp of loc.spots || []) scan(sp);
+		if (loc.route) for (const n in loc.route.tramos || {}) for (const it of [].concat(loc.route.tramos[n] || [])) scan(it);
+	}
+	const out = [], keys = new Set();
+	for (const c of conds) for (const [rx, mk] of NEED_RX) for (const m of c.matchAll(rx)) { const n = mk(m); const k = n.kind + ':' + n.id; if (!keys.has(k)) { keys.add(k); out.push({ ...n, alt: /\|\|/.test(c) }); } }
+	return out;
+}
+function openQuestDetail(id, places) {
+	const def = C.quests[id], q = G.quests[id];
+	if (!def) return;
+	const TL = { main: ['⭐', 'Historia principal'], thread: ['🧵', 'Historia de personaje'], side: ['📜', 'Secundaria'], event: ['🎉', 'Evento'] }[def.type || 'side'] || ['📜', 'Secundaria'];
+	const sheet = openSheet(def.name, null);
+	const status = !q ? ['Nueva', 'new'] : q.done ? ['Completada', 'done'] : ['En curso', 'active'];
+	const body = [];
+	body.push(h('div', { class: 'qd-head' },
+		h('span', { class: 'qd-type' }, `${TL[0]} ${TL[1]}`),
+		h('span', { class: 'qd-status ' + status[1] }, status[0]),
+		def.est ? h('span', { class: 'qd-est' }, `⏱ ~${def.est >= 60 ? Math.round(def.est / 60 * 10) / 10 + ' h' : def.est + ' min'}`) : null));
+	if (q && !q.done) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Ahora'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || '')) })));
+	if (q?.done) body.push(h('div', { class: 'qd-now done' }, h('div', { class: 'qd-label' }, 'Desenlace'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || def.stages?.hecha || 'Completada.')) })));
+	if (!q) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Cómo empezarla'), h('div', {}, (places?.[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza sola cuando llegues al lugar indicado.' : 'Habla con quien la ofrece.')));
+	// Lo que necesitas
+	const needs = questNeeds(id);
+	if (needs.length) {
+		const list = h('div', { class: 'list' });
+		const party = needs.filter(n => n.kind === 'party');
+		for (const n of needs) {
+			if (n.kind === 'party') continue;
+			let label = '', ok = false, extra = '';
+			if (n.kind === 'item') { const have = count(n.id); ok = have >= n.n; label = itemName(n.id); extra = `${Math.min(have, n.n)}/${n.n}`; }
+			else if (n.kind === 'var') { const v = G.vars[n.id] || 0; ok = v >= n.n; label = n.id.charAt(0).toUpperCase() + n.id.slice(1).replace(/_/g, ' '); extra = `${Math.min(v, n.n)}/${n.n}`; }
+			else if (n.kind === 'beat') { ok = !!G.beaten[n.id]; const t = C.trainers[n.id]; label = `Vencer a ${t ? (t.cls ? t.cls + ' ' : '') + t.name : n.id}`; }
+			else { const sp = D.species[n.id]; const num = sp?.num; ok = n.kind === 'seen' ? !!G.dex.seen[num] : !!G.dex.caught[num]; label = `${n.kind === 'seen' ? 'Ver a' : 'Tener a'} ${sp?.name || n.id}`; }
+			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, n.kind === 'item' ? itemImg(n.id) : h('div', { class: 'ico' }, n.kind === 'beat' ? '⚔️' : n.kind === 'var' ? '🔢' : '◓'),
+				h('div', { class: 'lbl' }, h('div', { class: 't' }, label), extra ? h('div', { class: 'needbar' }, h('i', { style: { width: (n.kind === 'item' ? Math.min(1, count(n.id) / n.n) : Math.min(1, (G.vars[n.id] || 0) / n.n)) * 100 + '%' } })) : null),
+				h('b', {}, ok ? '✔' : extra || '✘')));
+		}
+		if (party.length) {
+			const names = party.map(n => D.species[n.id]).filter(Boolean);
+			const ok = party.some(n => G.party.some(p => p.sp === n.id));
+			let text;
+			if (names.length <= 5) text = 'Lleva en tu equipo a ' + names.map(s => s.name).join(' o ');
+			else { const types = {}; names.forEach(s => s.types.forEach(t => types[t] = (types[t] || 0) + 1)); const top = Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([t]) => typeName(t)); text = `Lleva en tu equipo un Pokémon como estos: tipo ${top.join(' o ')} (hay ${names.length} que valen)`; }
+			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, h('div', { class: 'ico' }, '◓'), h('div', { class: 'lbl' }, h('div', { class: 't' }, text)), h('b', {}, ok ? '✔' : '✘')));
+		}
+		body.push(h('div', { class: 'section-title' }, 'Lo que necesitas'), list);
+	}
+	// Dónde
+	const where = (places?.[id] || questPlaces()[id] || []);
+	if (where.length && !q?.done) body.push(h('div', { class: 'section-title' }, 'Zonas de interés'), h('div', { class: 'list' }, ...where.map(w => h('div', { class: 'row' }, h('div', { class: 'ico' }, '📍'), h('div', { class: 'lbl' }, h('div', { class: 't' }, w))))));
+	// Historial
+	if (q) {
+		const keys = Object.keys(def.stages || {});
+		const reached = q.hist?.length ? q.hist.map(x => x.s) : keys.slice(0, Math.max(0, keys.indexOf(q.stage)) + 1);
+		const past = reached.filter((k, i) => k !== q.stage || q.done).filter((k, i, a) => a.indexOf(k) === i && k !== 'hecha');
+		if (past.length) {
+			body.push(h('div', { class: 'section-title' }, 'Lo que ya pasó'));
+			body.push(h('div', { class: 'qd-steps' }, ...past.map(k => h('div', { class: 'qd-step' }, h('span', { class: 'dot' }, '✔'), h('div', { html: fmtText(tx(def.stages[k] || k)) })))));
+		}
+		body.push(h('div', { class: 'note' }, `Empezada el ${new Date(q.started || Date.now()).toLocaleDateString('es-MX', { day: 'numeric', month: 'long' })}` + (q.finished ? ` · terminada el ${new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'long' })}` : '')));
+	}
+	sheet.set(body);
 }
 
 // =================== Más ===================
