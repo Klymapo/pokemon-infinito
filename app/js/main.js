@@ -23,15 +23,40 @@ async function boot() {
 	if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 		try {
 			const reg = await navigator.serviceWorker.register('./sw.js');
+			// Solo recarga cuando el jugador pidió aplicar la actualización (no en la primera instalación)
+			let reloading = false;
+			navigator.serviceWorker.addEventListener('controllerchange', () => { if (window.__pinfUpdate && !reloading) { reloading = true; location.reload(); } });
+			const offer = w => { if (w && navigator.serviceWorker.controller) showUpdateBanner(w); };
+			if (reg.waiting) offer(reg.waiting);
 			reg.addEventListener('updatefound', () => {
 				const w = reg.installing;
-				w?.addEventListener('statechange', () => {
-					if (w.state === 'installed' && navigator.serviceWorker.controller) {
-						import('./ui/core.js').then(m => m.toast('¡Contenido nuevo descargado! Se aplicará la próxima vez que abras el juego.', 'quest'));
-					}
-				});
+				w?.addEventListener('statechange', () => { if (w.state === 'installed') offer(w); });
 			});
+			// Busca actualizaciones al volver a la app (por si se quedó abierta en segundo plano)
+			document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
 		} catch (e) { console.warn('SW', e); }
 	}
+}
+
+/** Aviso fijo: hay versión nueva. Al tocar, guarda la partida y recarga con la versión nueva. */
+function showUpdateBanner(worker) {
+	if (document.querySelector('.update-banner')) return;
+	const b = document.createElement('button');
+	b.className = 'update-banner';
+	b.innerHTML = '✨ <b>Actualización lista</b> · toca para aplicarla';
+	b.onclick = async () => {
+		// Solo con el juego en reposo (sin diálogo ni combate abierto), para no guardar a medias
+		if (document.querySelector('.overlay, .battle')) {
+			b.innerHTML = 'Termina el diálogo o combate y vuelve a tocar';
+			setTimeout(() => { b.innerHTML = '✨ <b>Actualización lista</b> · toca para aplicarla'; }, 2500);
+			return;
+		}
+		b.textContent = 'Guardando y actualizando…';
+		try { const { saveGame } = await import('./state.js'); await saveGame(); } catch (e) { /* sin partida aún */ }
+		window.__pinfUpdate = true;
+		worker.postMessage('skipWaiting');
+		setTimeout(() => location.reload(), 2500); // por si el navegador no avisa del cambio
+	};
+	document.body.append(b);
 }
 boot();

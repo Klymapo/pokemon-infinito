@@ -27,6 +27,7 @@ const FILES = ${JSON.stringify(['./', ...files], null, 0)};
 self.addEventListener('install', e => {
 	e.waitUntil(caches.open(APP_CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))));
 });
+self.addEventListener('message', e => { if (e.data === 'skipWaiting') self.skipWaiting(); });
 self.addEventListener('activate', e => {
 	e.waitUntil((async () => {
 		const keys = await caches.keys();
