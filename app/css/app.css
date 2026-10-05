@@ -258,3 +258,11 @@ button.cmpmove:active { transform: scale(.98); }
 .cmpbox .cm-cancel { text-align: center; }
 .choices button.cmpmove { border: 1px solid rgba(243,230,196,.25); border-left: 6px solid #567; font-weight: 400; padding: 9px 12px; background: var(--ink-2, #1f2a48); }
 .choices button.cmpmove .cm-top b { font-weight: 800; }
+
+/* Diario de misiones */
+.tabs .tabcount { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 5px; border-radius: 999px; background: var(--gold); color: var(--ink); font-size: 11px; font-weight: 900; line-height: 18px; text-align: center; }
+.row.quest { align-items: flex-start; }
+.row.quest .qwhere { font-size: 13px; color: var(--aura-soft); margin-top: 3px; }
+.row.quest.doneq { opacity: .72; }
+.tabs button .tabcount { margin-left: 4px; }
+@media (max-width: 420px) { .tabs button { padding: 8px 11px; font-size: 13.5px; } }

@@ -186,7 +186,7 @@ export function render() {
 
 function navBar() {
 	const nav = h('div', { class: 'nav' });
-	const items = [['🗺️', 'Mapa', openMap], ['◓', 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', openDiary], ['☰', 'Más', openMore]];
+	const items = [['🗺️', 'Mapa', openMap], ['◓', 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
 	for (const [i, t, f] of items) nav.append(h('button', { onclick: f }, h('span', { class: 'i' }, i), t));
 	return nav;
 }
@@ -911,11 +911,77 @@ async function openPC() {
 }
 
 // =================== Diario y misiones ===================
-function openDiary() {
-	let tab = 'quests';
+// ---------- Índice de misiones: qué guiones tocan cada misión y dónde están ----------
+let QTOUCH = null;
+function questTouches() {
+	if (QTOUCH) return QTOUCH;
+	QTOUCH = {};
+	const scan = (list, set, depth) => {
+		for (const c of list || []) {
+			if (!c || typeof c !== 'object') continue;
+			if (c.quest) set.add(c.quest);
+			if (c.call && depth < 4) scan(C.scripts[c.call], set, depth + 1);
+			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) scan(c[k], set, depth);
+			if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then, set, depth);
+		}
+	};
+	for (const id in C.scripts) { const set = new Set(); scan(C.scripts[id], set, 0); QTOUCH[id] = set; }
+	return QTOUCH;
+}
+/** Para cada misión, los sitios (visibles ahora mismo y en lugares ya visitados) donde se avanza o se empieza. */
+function questPlaces() {
+	const touch = questTouches();
+	const out = {};
+	const safe = c => { try { return c === undefined || evalCond(c); } catch (e) { return false; } };
+	const add = (loc, spot) => {
+		const scripts = [];
+		if (Array.isArray(spot.talk)) { const t = spot.talk.find(e => safe(e.cond)); if (t?.script) scripts.push(t.script); }
+		if (spot.script) scripts.push(spot.script);
+		if (spot.action?.script) scripts.push(spot.action.script);
+		const top = topLoc(loc.id);
+		const where = top && top.id !== loc.id ? `${top.name} · ${loc.name}` : loc.name;
+		for (const sc of scripts) for (const q of touch[sc] || []) {
+			const arr = (out[q] ||= []);
+			const txt = spot.label ? `${where} · ${spot.label}` : where;
+			if (!arr.includes(txt)) arr.push(txt);
+		}
+	};
+	for (const loc of Object.values(C.locations)) {
+		const top = topLoc(loc.id);
+		if (!G.visited[loc.id] && !G.visited[top?.id]) continue;
+		for (const sp of spotsOf(loc)) add(loc, sp);
+		if (loc.route) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) if (it.talk || it.script) add(loc, it);
+	}
+	// Lugares que conoces pero no has pisado: lo que pasa al llegar (así se ve hacia dónde sigue la historia)
+	const known = new Set();
+	for (const id in G.visited) for (const n of L(id)?.links || []) if (!G.visited[n]) known.add(n);
+	for (const id of known) {
+		const loc = L(id);
+		if (!loc) continue;
+		(loc.onEnter || []).forEach((e, i) => {
+			if (!e.script || (e.once !== false && G.flags['enter:' + id + ':' + (e.script || i)]) || !safe(e.cond)) return;
+			for (const q of touch[e.script] || []) {
+				const arr = (out[q] ||= []);
+				const txt = `Al llegar a ${loc.name}`;
+				if (!arr.includes(txt)) arr.push(txt);
+			}
+		});
+	}
+	return out;
+}
+
+function openDiary(startTab = 'active') {
+	let tab = startTab;
 	const sheet = openSheet('Diario', null);
+	const TYPES = [['main', '⭐', 'Historia principal'], ['thread', '🧵', 'Historias de personajes'], ['side', '📜', 'Secundarias'], ['event', '🎉', 'Eventos']];
 	const draw = () => {
-		const tabs = h('div', { class: 'tabs' }, ...[['quests', 'Misiones'], ['diary', 'Diario de Rotom'], ['done', 'Completadas']].map(([k, n]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n)));
+		const places = questPlaces();
+		const active = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && !q.done);
+		const done = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && q.done);
+		const avail = Object.keys(places).filter(id => C.quests[id] && !G.quests[id]).map(id => [id, null]);
+		const counts = { active: active.length, avail: avail.length, done: done.length };
+		const tabs = h('div', { class: 'tabs' }, ...[['active', 'Activas'], ['avail', 'Nuevas'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
+			h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, counts[k] ? h('span', { class: 'tabcount' }, String(counts[k])) : null)));
 		const body = h('div', {});
 		if (tab === 'diary') {
 			if (!G.diary.length) body.append(h('div', { class: 'empty' }, 'Rotom todavía no ha escrito nada.'));
@@ -924,18 +990,31 @@ function openDiary() {
 				body.append(h('div', { class: 'diary-entry' }, h('div', { class: 'when' }, d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) + ' · ' + (L(e.loc)?.name || '')), h('div', { html: fmtText(e.text) })));
 			}
 		} else {
-			const qs = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && (tab === 'done' ? q.done : !q.done));
-			const order = { main: 0, thread: 1, side: 2, event: 3 };
-			qs.sort((a, b) => (order[C.quests[a[0]].type] ?? 9) - (order[C.quests[b[0]].type] ?? 9));
-			if (!qs.length) body.append(h('div', { class: 'empty' }, tab === 'done' ? 'Aún no has completado misiones.' : 'No tienes misiones activas. Habla con la gente: siempre hay alguien que necesita ayuda.'));
-			const list = h('div', { class: 'list' });
-			for (const [id, q] of qs) {
-				const def = C.quests[id];
-				const stageText = def.stages?.[q.stage] || '';
-				const icon = { main: '⭐', thread: '🧵', side: '📜', event: '🎉' }[def.type] || '📜';
-				list.append(h('div', { class: 'row' + (def.type === 'main' ? ' hl' : '') }, h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name), h('div', { class: 's', html: fmtText(tx(stageText)) }))));
+			const qs = tab === 'active' ? active : tab === 'avail' ? avail : done;
+			if (tab === 'done') qs.sort((a, b) => (b[1].finished || 0) - (a[1].finished || 0));
+			if (!qs.length) body.append(h('div', { class: 'empty' }, {
+				active: 'No tienes misiones en curso. Mira en «Nuevas» o habla con la gente: siempre hay alguien que necesita ayuda.',
+				avail: 'No hay misiones nuevas en los lugares que conoces. Explora y vuelve a hablar con la gente después de avanzar en la historia.',
+				done: 'Aún no has completado misiones.',
+			}[tab]));
+			for (const [type, icon, title] of TYPES) {
+				const group = qs.filter(([id]) => (C.quests[id].type || 'side') === type);
+				if (!group.length) continue;
+				body.append(h('div', { class: 'section-title' }, `${icon} ${title}`));
+				const list = h('div', { class: 'list' });
+				for (const [id, q] of group) {
+					const def = C.quests[id];
+					const where = (places[id] || []).slice(0, 2);
+					const lines = [];
+					if (tab === 'active') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
+					if (tab === 'done') lines.push(h('div', { class: 's' }, '✔ Completada' + (q.finished ? ' el ' + new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '')));
+					if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
+					if (tab !== 'done') for (const w of where) lines.push(h('div', { class: 'qwhere' }, '📍 ' + w));
+					list.append(h('div', { class: 'row quest' + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : '') },
+						h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name), ...lines)));
+				}
+				body.append(list);
 			}
-			body.append(list);
 		}
 		sheet.set([tabs, body]);
 	};

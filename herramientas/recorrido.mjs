@@ -1,5 +1,6 @@
 // Bot que juega el contenido sin interfaz: explora, habla, combate, captura y entrena.
 // Sirve para auditar: detecta errores, atascos y problemas de balance.
+// DUMP=archivo.json guarda el estado final de la partida (útil para probar la interfaz con una partida avanzada).
 // Uso: node herramientas/recorrido.mjs [--semilla N] [--max 20000] [--hasta flag] [--verbose] [--elecciones primera|azar] [--fecha MM-DD] [--hora HH]
 import { loadDataNode } from './test/node-env.mjs';
 import { D, toID } from '../app/js/data.js';
@@ -388,4 +389,5 @@ console.log(`Guiones nunca ejecutados (${unusedScripts.length}): ${unusedScripts
 if (report.losses.length) console.log(`Derrotas:\n  ${report.losses.slice(0, 20).join('\n  ')}`);
 if (report.stuck.length) console.log(`ATASCOS:\n  ${[...new Set(report.stuck)].slice(0, 15).join('\n  ')}`);
 if (report.errors.length) console.log(`ERRORES (${report.errors.length}):\n  ${[...new Set(report.errors)].slice(0, 40).join('\n  ')}`);
+if (process.env.DUMP) (await import('fs')).writeFileSync(process.env.DUMP, JSON.stringify(G));
 process.exit(report.errors.length || !G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 1 : 0);
