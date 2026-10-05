@@ -58,6 +58,7 @@ const parse = out => ({
 	lost: +(out.match(/perdidos (\d+)/)?.[1] || 0),
 	errores: /^ERRORES/m.test(out),
 	atascos: /^ATASCOS/m.test(out),
+	regalos: (out.split(/^REGALOS REPETIDOS:\n/m)[1] || '').split('\n').filter(l => l.startsWith('  ')).map(l => l.trim()),
 	derrotas: [...(out.split(/^Derrotas:\n/m)[1] || '').split(/\n(?! {2})/)[0].matchAll(/^ {2}(\S+) en (\S+)/gm)].map(m => m[1]),
 	nunca: (out.match(/Guiones nunca ejecutados \(\d+\): (.*)/)?.[1] || '').split(', '),
 	out,
@@ -77,6 +78,8 @@ const perfect = runs.filter(r => r.fin && r.lost === 0).length;
 report.push('', `Recorridos sin ninguna derrota: ${perfect} de ${runs.length}.`, '');
 // criterios (ver secreto/balance.md §5)
 if (runs.some(r => r.errores)) blockers.push('El bot encontró ERRORES de ejecución');
+const regalos = [...new Set(runs.flatMap(r => r.regalos))];
+if (regalos.length) { blockers.push(`Regalos que se repiten al volver a hablar (${regalos.length})`); report.push('**Regalos repetidos** (un NPC da lo mismo cada vez que le hablas):', '', ...regalos.map(x => '- ' + x), ''); }
 if (okRuns.length < Math.ceil(runs.length * 0.75)) blockers.push(`Solo ${okRuns.length}/${runs.length} recorridos llegan al final (mínimo 75 %)`);
 for (const [k, v] of Object.entries(losses)) if (v / runs.length > 2) warns.push(`Muro de balance: \`${k}\` con ${(v / runs.length).toFixed(2)} derrotas de media`);
 if (perfect > runs.length * 2 / 3) warns.push(`Demasiado fácil: ${perfect}/${runs.length} recorridos sin perder nunca`);

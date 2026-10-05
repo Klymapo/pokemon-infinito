@@ -13,6 +13,8 @@ export const BLOCKS = [b01, b02];
 
 ---
 
+> **Misiones terminadas:** en las condiciones, `quest.x` de una misión ya terminada se lee siempre como `'hecha'`, aunque su última etapa fuera otra. Un `{ quest }` sobre una misión terminada no hace nada.
+
 ## 1. Objeto de bloque
 
 ```js

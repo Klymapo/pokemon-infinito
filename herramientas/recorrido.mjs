@@ -43,7 +43,7 @@ const mod = await import('../app/content/index.js');
 for (const b of mod.BLOCKS) registerBlock(b);
 setExtraScope(() => ({ ...timeScope(), night: false, day: true, time: 'dia' }));
 
-const report = { errors: [], stuck: [], battles: { won: 0, lost: 0, wild: 0, trainer: 0 }, losses: [], gyms: [], log: [], scripts: new Set(), texts: 0, quests: {} };
+const report = { repeatGifts: [], errors: [], stuck: [], battles: { won: 0, lost: 0, wild: 0, trainer: 0 }, losses: [], gyms: [], log: [], scripts: new Set(), texts: 0, quests: {} };
 const log = (...a) => { const s = a.join(' '); report.log.push(s); if (VERBOSE) console.log(s); };
 let step = 0;
 let curScript = '';
@@ -175,11 +175,18 @@ async function enter(id, { from } = {}) {
 	}
 }
 UI.onScript = id => report.scripts.add(id);
+const gaveBy = {}; // guion → veces que ha dado objetos o dinero
 async function run(id) {
 	const prev = curScript; curScript = typeof id === 'string' ? id : '(inline)';
 	report.scripts.add(curScript);
 	if (VERBOSE) log(`[${step}] ${G.loc} → guion ${curScript}`);
+	const bagN = Object.values(G.bag).reduce((a, b) => a + b, 0), money = G.player.money;
 	await runScript(id);
+	const gained = Object.values(G.bag).reduce((a, b) => a + b, 0) > bagN || G.player.money > money;
+	if (gained && typeof id === 'string' && !/generico|recordar|despues|tienda|shop/.test(id)) {
+		gaveBy[id] = (gaveBy[id] || 0) + 1;
+		if (gaveBy[id] === 2) report.repeatGifts.push(`${id} (en ${G.loc}) ha dado objetos o dinero más de una vez`);
+	}
 	curScript = prev;
 }
 
@@ -388,6 +395,7 @@ console.log(`Lugares sin visitar (${unvisited.length}): ${unvisited.join(', ')}`
 console.log(`Guiones nunca ejecutados (${unusedScripts.length}): ${unusedScripts.slice(0, 80).join(', ')}`);
 if (report.losses.length) console.log(`Derrotas:\n  ${report.losses.slice(0, 20).join('\n  ')}`);
 if (report.stuck.length) console.log(`ATASCOS:\n  ${[...new Set(report.stuck)].slice(0, 15).join('\n  ')}`);
+if (report.repeatGifts.length) console.log(`REGALOS REPETIDOS:\n  ${report.repeatGifts.slice(0, 20).join('\n  ')}`);
 if (report.errors.length) console.log(`ERRORES (${report.errors.length}):\n  ${[...new Set(report.errors)].slice(0, 40).join('\n  ')}`);
 if (process.env.DUMP) (await import('fs')).writeFileSync(process.env.DUMP, JSON.stringify(G));
 process.exit(report.errors.length || !G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 1 : 0);

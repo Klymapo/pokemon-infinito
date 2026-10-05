@@ -172,7 +172,8 @@ function scope() {
 	return {
 		flag: wrap(G.flags, false), flags: wrap(G.flags, false),
 		vars: wrap(G.vars, 0), rep: wrap(G.rep, 0), af: wrap(G.af, 0),
-		quest: new Proxy({}, { get: (t, k) => G.quests[k]?.stage || '' }),
+		// Una misión terminada siempre se lee como 'hecha' (así ningún diálogo de una etapa vieja se repite)
+		quest: new Proxy({}, { get: (t, k) => G.quests[k] ? (G.quests[k].done ? 'hecha' : G.quests[k].stage || '') : '' }),
 		done: new Proxy({}, { get: (t, k) => !!G.quests[k]?.done }),
 		has: id => (G.bag[toID(id)] || 0) > 0,
 		count: id => G.bag[toID(id)] || 0,

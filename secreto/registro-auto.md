@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-05T14:15:45.964Z · contenido 2026-10-05.1
+Generado: 2026-10-05T15:53:02.712Z · contenido 2026-10-05.1
 
 ## Apariciones de NPCs (escenas por bloque)
 

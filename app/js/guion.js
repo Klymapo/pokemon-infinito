@@ -131,6 +131,7 @@ async function runCmd(c, ctx) {
 	if (c.go) { await UI.goto(c.go, { silent: c.silent }); return; }
 	if (c.quest) {
 		const q = (G.quests[c.quest] ||= { stage: '', started: Date.now() });
+		if (q.done) return; // una misión terminada no se reabre ni se vuelve a completar
 		const def = C.quests[c.quest];
 		const isNew = !q.stage && !q.done;
 		if (c.stage) q.stage = c.stage;

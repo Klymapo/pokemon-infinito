@@ -56,6 +56,10 @@
 
 - **2026-10-05 · Decisión de balance: «fijo con revanchas»** (ver `balance.md` §4b). Aplicarlo en cada bloque que vuelva a zonas viejas. El B2 vuelve a Kalos: incluir allí la primera «nueva temporada» y las revanchas de Brock, Blanca y Corelia.
 
+## Bugs corregidos
+
+- 2026-10-05: Ciprés (y otros 5 NPCs) volvían a dar su regalo cada vez que les hablabas: las condiciones leían la etapa de una misión ya terminada. Arreglo de motor: una misión terminada se lee siempre como `'hecha'` y no se puede reabrir. El bot ahora detecta «REGALOS REPETIDOS» y la auditoría lo bloquea. **Al escribir condiciones de diálogo, usa `!done.x` o lee `quest.x == 'hecha'`.**
+
 ## Hecho a petición de Mario
 
 - 2026-10-05: ver los datos de un Pokémon desde el menú de cambio en combate; estilo de combate «Cambio» (preguntar si quieres cambiar cuando cae un Pokémon rival, se puede poner en «Fijo» en Ajustes); descripciones de habilidades en español; pantalla para comparar movimientos al aprender uno nuevo (tipo, categoría, potencia, precisión, PP, descripción y si es del mismo tipo); diario de misiones con pestañas Activas / Nuevas / Hechas / Rotom, agrupadas por tipo y con 📍 dónde avanzar o empezar cada una; Colección (postales de cada pueblo, registro de objetos con ??? y pistas, recuerdos con Mirar/Leer), iconos de objetos en la mochila y 25 puntos de recolección diarios en el B1 (bayas, plumas, setas, minerales, cristales, orilla, menhires y espejos). Guía de zona con probabilidades (1 de cada N, día/noche); botón de lanzamiento rápido de Ball con % real; DexNav (rastrear especies vistas, con cadenas: nivel, IVs perfectos, habilidad oculta, variocolor); marca de capturado (Poké Ball roja) en combate, guía y DexNav. Hub de lugar rehecho (Misiones aquí con «!» nueva / «?» en curso calculados solos a partir de los guiones; servicios en píldoras; mosaico «Explorar»; caminos en mosaico con estado). **En cada bloque nuevo:** añadir puntos de recolección (`gather`), objetos con `read` (cartas, notas) y `art` (recuerdos para mirar), para que la Colección siga creciendo.
