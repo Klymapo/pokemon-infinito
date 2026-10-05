@@ -71,6 +71,16 @@ El Circuito Infinito tiene medallas de todas las regiones. No hay 8 medallas por
     - Cada zona tiene 1 especie rara (≤5 %) que da ilusión.
     - Los desplazados por Fisura se marcan con `desplazado: true`.
 
+## 4b. Zonas viejas y revanchas (decisión de Mario, 2026-10-05: «fijo con revanchas»)
+
+Los niveles siguen **fijos por zona**: no hay escalado al nivel del equipo. Pero cuando la historia vuelve a una región o zona ya jugada:
+
+- **Nueva temporada:** en las rutas viejas aparecen entrenadores nuevos (o los de siempre con equipos nuevos) con niveles de la curva **actual** − 3, con su `cond` del acto/bloque. Los originales siguen derrotados.
+- **Revanchas de líderes:** en el Circuito, cada líder ya vencido ofrece una revancha opcional, una vez por bloque, con el equipo al nivel del jefe del bloque actual y uno o dos Pokémon nuevos. Recompensa: dinero y un objeto útil (nunca obligatoria).
+- **Salvajes de zonas viejas:** cuando se vuelve en un acto posterior, se añade a la tabla una variante con niveles = curva actual − 8 a − 4 (`cond` por bloque), sin quitar la original. Puede incluir una evolución de lo que ya había.
+- **Nunca** subir los niveles de los combates obligatorios ya publicados (rompería partidas en curso).
+- Todo esto se anota en el plan de cada bloque que vuelva a zonas viejas.
+
 ## 5. Criterios de la auditoría de balance (bot)
 
 `node herramientas/auditar.mjs` ejecuta 12 semillas de día (13 h) y 12 de noche (3 h) y aplica estos umbrales:
