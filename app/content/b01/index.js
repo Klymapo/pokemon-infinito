@@ -7,12 +7,14 @@ import t0 from './t0-luminalia.js';
 import t1 from './t1-novarte.js';
 import t2 from './t2-costa.js';
 import t3 from './t3-yantra.js';
+import recoleccion from './recoleccion.js';
 
 const block = {
 	id: 'b01', title: 'Acto I · Fisuras', hours: 12, start: 'b01_inicio', ends: 'b01_fin',
 	regions: { kalos: { name: 'Kalos', h: 140, land: 'M3,26 L22,12 L48,8 L70,10 L92,22 L97,52 L94,84 L84,112 L66,138 L44,139 L22,132 L8,118 L1,96 L2,60 Z' } },
 	npcs, quests: misiones,
 	locations: {}, trainers: {}, scripts: {}, challenges: {}, badges: {}, shops: {}, items: {}, events: [], milestones: [],
+	gather: recoleccion.gather, patches: recoleccion.patches,
 };
 const extraSpots = {};
 for (const part of [comun, eventos, t0, t1, t2, t3]) {

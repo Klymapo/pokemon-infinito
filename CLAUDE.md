@@ -114,6 +114,7 @@ Trabaja en este orden. Usa la lista de tareas para que Mario vea el progreso si 
    - Zona de entrenamiento con tope antes de cada jefe. Ficha de reto (`challenges`) y nota de mapa (`mapNote`) para cada zona nueva.
    - Riolu/Lucario tiene que poder lucirse: al menos un momento de historia y combates donde brille.
    - Mecánicas por región (biblia §3.3): no des Z, Dinamax ni Tera antes de su acto.
+   - **Colección:** cada bloque añade puntos de recolección (`gather`) en sus rutas y cuevas, 2 o 3 objetos para leer (`read`: cartas, notas, diarios de NPCs que cuenten algo de su historia) y al menos un recuerdo para mirar (`art`). Mario pidió poder ver y recolectar muchas cosas.
 5. **Registro:**
    - Añade el bloque a `BLOCKS` en `app/content/index.js`.
    - Sube `CONTENT_VERSION` a `AAAA-MM-DD.N`.

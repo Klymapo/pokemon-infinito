@@ -57,6 +57,24 @@ export function fallbackCard(spId) {
 	return d;
 }
 
+const IT = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/';
+const POCKET_EMOJI = { medicine: '💊', pokeballs: '◓', berries: '🍒', key: '🗝️', machines: '💿', battle: '⚔️', mail: '✉️', misc: '✦' };
+/** Icono de objeto (sprite de PokeAPI, en caché); si no hay, un emoji según el bolsillo. */
+export function itemImg(id, { found = true } = {}) {
+	const it = D.items[toID(id)] || {};
+	const box = document.createElement('span');
+	box.className = 'itemicon' + (found ? '' : ' unknown');
+	const emoji = () => { box.textContent = it.icon || POCKET_EMOJI[it.pocket] || '✦'; };
+	if (it.ic && !it.custom) {
+		const img = document.createElement('img');
+		img.alt = ''; img.decoding = 'async'; img.draggable = false;
+		img.onerror = () => { img.remove(); emoji(); };
+		img.src = IT + it.ic + '.png';
+		box.append(img);
+	} else emoji();
+	return box;
+}
+
 export function trainerImg(name, look) {
 	const img = document.createElement('img');
 	img.className = 'px';

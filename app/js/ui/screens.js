@@ -12,7 +12,7 @@ import {
 	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents,
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
-import { monImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS } from '../art.js';
+import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS } from '../art.js';
 import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
@@ -219,7 +219,7 @@ function renderPlace(main, loc) {
 			const done = s.doneIf !== undefined && evalCond(s.doneIf);
 			const row = h('button', { class: 'row' + (isNew ? ' hl' : '') + (s.event ? ' event' : '') + (done ? ' done' : ''), onclick: () => guarded(() => doSpot(s, loc)) },
 				h('div', { class: 'ico' }, spotIcon(s)),
-				h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(s.label)), s.sub ? h('div', { class: 's' }, tx(s.sub)) : null),
+				h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(s.label)), (s.action?.gather ? gatherSub(s.action.gather, loc) : s.sub) ? h('div', { class: 's' }, s.action?.gather ? gatherSub(s.action.gather, loc) : tx(s.sub)) : null),
 				isNew ? h('span', { class: 'badge-new' }, '!') : null);
 			list.append(row);
 		}
@@ -259,6 +259,41 @@ async function doSpot(s, loc) {
 	}
 	if (a.training) return training(a.training, s);
 	if (a.explore) return exploreHere(loc, a.explore === true ? 'grass' : a.explore);
+	if (a.gather) return gatherHere(a.gather, loc);
+}
+
+// =================== Recolección ===================
+function gatherLeft(gid, loc) {
+	const def = C.gather[gid];
+	if (!def) return 0;
+	const last = G.gather?.[loc.id + ':' + gid] || 0;
+	return Math.max(0, last + (def.hours || 20) * 3600e3 - Date.now());
+}
+function gatherSub(gid, loc, extra) {
+	const left = gatherLeft(gid, loc);
+	const st = left ? `Vuelve en ${left > 3600e3 ? Math.ceil(left / 3600e3) + ' h' : Math.ceil(left / 60e3) + ' min'}` : '✨ Listo para recoger';
+	return extra ? `${tx(extra)} · ${st}` : st;
+}
+async function gatherHere(gid, loc) {
+	const def = C.gather[gid];
+	if (!def) return;
+	const left = gatherLeft(gid, loc);
+	if (left) { await say(null, tx(def.wait || 'Ya recogiste lo que había.') + ` Vuelve en unas ${Math.ceil(left / 3600e3)} h.`); return; }
+	const table = def.table.filter(e => e.cond === undefined || evalCond(e.cond));
+	const tot = table.reduce((s, e) => s + (e.w || 1), 0);
+	const roll = () => { let r = rng() * tot; return table.find(e => (r -= (e.w || 1)) < 0) || table[0]; };
+	const [p0, p1] = def.picks || [1, 2];
+	const picks = p0 + Math.floor(rng() * (p1 - p0 + 1));
+	const got = {};
+	for (let i = 0; i < picks; i++) { const e = roll(); const [n0, n1] = e.n || [1, 1]; got[e.id] = (got[e.id] || 0) + n0 + Math.floor(rng() * (n1 - n0 + 1)); }
+	const fresh = Object.keys(got).filter(id => !G.found?.[id]);
+	for (const id in got) addItem(id, got[id]);
+	G.gather[loc.id + ':' + gid] = Date.now();
+	const lines = Object.entries(got).map(([id, n]) => `**${itemName(id)}**${n > 1 ? ' ×' + n : ''}${fresh.includes(id) ? ' 🆕' : ''}`);
+	await say(null, tx(def.text || 'Has recogido algunas cosas.') + '\n' + lines.join(' · '));
+	if (fresh.length) toast(`📖 ${fresh.length === 1 ? 'Nuevo objeto' : fresh.length + ' objetos nuevos'} en tu Colección`);
+	await saveGame();
+	render();
 }
 
 async function pokemonCenter(a = {}) {
@@ -329,7 +364,7 @@ function renderRoute(main, loc) {
 		}
 		if (it.talk || it.spot) {
 			const sp = it.spot || {};
-			extra.append(h('button', { class: 'row' + (it.new && evalCond(it.new) ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
+			extra.append(h('button', { class: 'row' + (it.new && evalCond(it.new) ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), sp.action?.gather ? h('div', { class: 's' }, gatherSub(sp.action.gather, loc, it.sub)) : it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
 		}
 	}
 	if (extra.children.length) main.append(extra);
@@ -446,6 +481,7 @@ export async function enterLocation(id, { from, silent } = {}) {
 	if (!loc) { toast('Lugar desconocido: ' + id); return; }
 	const firstTime = !G.visited[id];
 	G.visited[id] = true;
+	{ const top = topLoc(id); if (top && ['city', 'town'].includes(top.kind) && G.album && !G.album[top.id]) { G.album[top.id] = Date.now(); setTimeout(() => toast(`📮 Nueva postal: ${top.name}`), 600); } }
 	for (let p = loc.parent; p && !G.visited[p]; p = L(p)?.parent) G.visited[p] = true;
 	G.loc = id;
 	if (isRoute(loc)) {
@@ -723,7 +759,7 @@ export function openBag(onPick) {
 		const list = h('div', { class: 'list' });
 		for (const id of ids) {
 			const it = D.items[id] || {};
-			list.append(h('button', { class: 'row', onclick: () => itemMenu(id, draw) }, h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name || id), h('div', { class: 's' }, it.desc || '')), h('b', {}, pocket === 'key' ? '' : '×' + G.bag[id])));
+			list.append(h('button', { class: 'row', onclick: () => itemMenu(id, draw) }, itemImg(id), h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name || id), h('div', { class: 's' }, it.desc || '')), h('b', {}, pocket === 'key' ? '' : '×' + G.bag[id])));
 		}
 		if (!ids.length) list.append(h('div', { class: 'empty' }, 'No hay nada en este bolsillo.'));
 		sheet.set([tabs, list, h('div', { class: 'note' }, `Dinero: ${fmtMoney(G.player.money)}`)]);
@@ -748,6 +784,7 @@ async function itemMenu(id, redraw) {
 	}
 	const usable = USE_ON_MON[id] !== undefined || CURES[id] || REVIVES[id] || VITAMINS[id] !== undefined || id === 'rarecandy' || it.cat === 'evolution' || REPELS[id] || id === 'ppup' || id === 'ppmax' || id === 'ether' || id === 'elixir' || id === 'maxether' || id === 'maxelixir' || it.use;
 	const opts = [];
+	if (it.read) opts.push(['Leer', async () => { await say(null, tx(it.read)); }]);
 	if (it.art) opts.push(['Mirar', async () => { const { viewArt } = await import('./acuarela.js'); await viewArt(id); }]);
 	if (usable) opts.push(['Usar', () => useItemOutside(id)]);
 	if (it.pocket !== 'key') opts.push(['Dar a un Pokémon', async () => {
@@ -1029,6 +1066,7 @@ function openMore() {
 	const caught = Object.keys(G.dex.caught).length, seen = Object.keys(G.dex.seen).length;
 	sheet.set(h('div', { class: 'list' },
 		row('📕', 'Pokédex', `Vistos ${seen} · Capturados ${caught}`, openDex),
+		row('🧺', 'Colección', `Postales ${Object.keys(G.album || {}).length} · Objetos ${Object.keys(G.found || {}).length}`, () => openCollection()),
 		row('📍', 'Guía de zona', 'Qué Pokémon hay por aquí', openZoneGuide),
 		row('🏅', 'Retos', 'Líderes y combates importantes', openChallenges),
 		row('📁', 'Expediente', 'Rivales y enemigos que conoces', openIntel),
@@ -1037,6 +1075,115 @@ function openMore() {
 		row('⚙️', 'Ajustes', 'Texto, Repartir Exp., sprites y respaldos', openSettings),
 		row('📤', 'Exportar continuación', 'Resumen de tu partida para Claude', exportContinuation),
 	));
+}
+
+// =================== Colección ===================
+const COL_GROUPS = [
+	['berries', '🍒', 'Bayas', it => it.berry || it.pocket === 'berries'],
+	['treasure', '💎', 'Tesoros y minerales', it => ['loot', 'collectibles'].includes(it.cat)],
+	['stones', '🪨', 'Piedras evolutivas', it => it.cat === 'evolution'],
+	['wings', '🪶', 'Plumas', (it, id) => /wing$/.test(id) && id !== 'prettywing'],
+	['balls', '◓', 'Poké Balls', it => it.pocket === 'pokeballs'],
+	['medicine', '💊', 'Medicinas', it => it.pocket === 'medicine'],
+	['held', '✦', 'Objetos para equipar', it => it.battle && it.pocket === 'misc'],
+	['tms', '💿', 'Máquinas técnicas', it => it.pocket === 'machines' || !!it.tm],
+];
+/** Todos los objetos que existen en el mundo publicado y dónde se consiguen (sin revelar los de la historia). */
+function itemUniverse() {
+	const src = {};
+	const add = (id, where) => { id = toID(id); if (!D.items[id] || D.items[id].pocket === 'key') return; (src[id] ||= new Set()).add(where); };
+	for (const loc of Object.values(C.locations)) {
+		const top = topLoc(loc.id);
+		const name = top && top.id !== loc.id ? top.name : loc.name;
+		const spots = [...(loc.spots || [])];
+		if (loc.route) for (const n in loc.route.tramos || {}) for (const it of [].concat(loc.route.tramos[n] || [])) { spots.push(it.spot || it); if (it.item) add(it.item, `${loc.name} (${it.hidden ? 'escondido' : 'en el camino'})`); }
+		for (const sp of spots) {
+			const g = sp.action?.gather && C.gather[sp.action.gather];
+			if (g) for (const e of g.table || []) add(e.id, `${name} · ${g.name}`);
+			if (sp.action?.shop && C.shops[sp.action.shop]) for (const e of C.shops[sp.action.shop].items || []) add(typeof e === 'string' ? e : e.id, `${C.shops[sp.action.shop].name} (${name})`);
+		}
+	}
+	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give) add(c.give, 'historia'); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then); } };
+	for (const id in C.scripts) scan(C.scripts[id]);
+	for (const id in G.found || {}) if (!src[id]) add(id, 'encontrado');
+	return src;
+}
+
+function openCollection(startTab = 'postcards') {
+	let tab = startTab;
+	const sheet = openSheet('Colección', null);
+	const draw = () => {
+		const towns = Object.values(C.locations).filter(l => !l.parent && ['city', 'town'].includes(l.kind));
+		const album = G.album || {};
+		const uni = itemUniverse();
+		const keys = Object.keys(G.bag).filter(id => G.bag[id] > 0 && D.items[id]?.pocket === 'key');
+		const tabs = h('div', { class: 'tabs' }, ...[['postcards', 'Postales', `${towns.filter(t => album[t.id]).length}/${towns.length}`], ['items', 'Objetos', `${Object.keys(uni).filter(id => G.found?.[id]).length}/${Object.keys(uni).length}`], ['keep', 'Recuerdos', String(keys.length)]]
+			.map(([k, n, c]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, h('span', { class: 'tabcount' }, c))));
+		const body = h('div', {});
+		if (tab === 'postcards') {
+			body.append(h('div', { class: 'note' }, 'Cada ciudad y pueblo que visitas te deja una postal. Toca una para verla en grande.'));
+			const byRegion = {};
+			for (const t of towns) (byRegion[t.region || 'otros'] ||= []).push(t);
+			for (const [reg, list] of Object.entries(byRegion)) {
+				body.append(h('div', { class: 'section-title' }, `${C.regions[reg]?.name || reg} · ${list.filter(t => album[t.id]).length}/${list.length}`));
+				const grid = h('div', { class: 'postgrid' });
+				for (const t of list) {
+					const have = album[t.id];
+					const card = h('button', { class: 'postcard' + (have ? '' : ' locked'), onclick: () => have && viewPostcard(t) },
+						have ? sceneCanvas({ ...(t.bg || {}), seed: t.bg?.seed || t.id }, { phase: 'dia' }) : h('div', { class: 'pc-q' }, '?'),
+						h('div', { class: 'pc-name' }, have ? (t.short || t.name.replace(/^(Ciudad|Pueblo) /, '')) : '???'));
+					grid.append(card);
+				}
+				body.append(grid);
+			}
+		} else if (tab === 'items') {
+			body.append(h('div', { class: 'note' }, 'Todo lo que se puede conseguir en el mundo publicado. Los que aún no tienes salen como ???, con una pista de dónde buscarlos.'));
+			for (const [gid, icon, title, test] of COL_GROUPS) {
+				const ids = Object.keys(uni).filter(id => { const it = D.items[id]; return it && test(it, id); }).sort((a, b) => (!!G.found?.[b] - !!G.found?.[a]) || itemName(a).localeCompare(itemName(b)));
+				if (!ids.length) continue;
+				const got = ids.filter(id => G.found?.[id]).length;
+				body.append(h('div', { class: 'section-title' }, `${icon} ${title} · ${got}/${ids.length}${got === ids.length ? ' ⭐' : ''}`));
+				const list = h('div', { class: 'list' });
+				for (const id of ids) {
+					const have = !!G.found?.[id];
+					const where = [...uni[id]].filter(w => w !== 'encontrado');
+					const hint = where.includes('historia') && where.length === 1 ? 'Aparece en la historia' : where.filter(w => w !== 'historia').slice(0, 2).join(' · ');
+					list.append(h('div', { class: 'row colitem' + (have ? '' : ' unknown') }, itemImg(id, { found: have }),
+						h('div', { class: 'lbl' }, h('div', { class: 't' }, have ? itemName(id) : '???'), h('div', { class: 's' }, have ? (D.items[id].desc || '') : hint || 'Sigue explorando')),
+						have ? h('b', {}, G.bag[id] ? '×' + G.bag[id] : '') : null));
+				}
+				body.append(list);
+			}
+		} else {
+			if (!keys.length) body.append(h('div', { class: 'empty' }, 'Aún no guardas ningún recuerdo.'));
+			const list = h('div', { class: 'list' });
+			for (const id of keys) {
+				const it = D.items[id];
+				const act = it.art ? ['Mirar', async () => { const { viewArt } = await import('./acuarela.js'); await viewArt(id); }] : it.read ? ['Leer', () => say(null, tx(it.read))] : null;
+				list.append(h(act ? 'button' : 'div', { class: 'row', onclick: act ? act[1] : null }, itemImg(id),
+					h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name), h('div', { class: 's' }, it.desc || '')), act ? h('b', {}, act[0]) : null));
+			}
+			body.append(list);
+		}
+		sheet.set([tabs, body]);
+	};
+	draw();
+}
+
+function viewPostcard(t) {
+	const cv = sceneCanvas({ ...(t.bg || {}), seed: t.bg?.seed || t.id }, { phase: 'dia' });
+	const date = new Date(G.album[t.id]).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+	const first = (descOf(t) || '').replace(/\*\*/g, '').split(/(?<=\.)\s/)[0];
+	const ov = h('div', { class: 'overlay dim art-viewer', onclick: () => ov.remove() },
+		h('div', { class: 'postcard-big' },
+			cv,
+			h('div', { class: 'pcb-text' },
+				h('div', { class: 'pcb-greet' }, `Recuerdos desde ${t.name}`),
+				h('div', { class: 'pcb-desc' }, tx(first)),
+				h('div', { class: 'pcb-date' }, `${C.regions[t.region]?.name || ''} · ${date}`)),
+			h('div', { class: 'pcb-stamp' }, '♾️')),
+		h('div', { class: 'art-hint' }, 'Toca para cerrar'));
+	document.body.append(ov);
 }
 
 function openDex() {

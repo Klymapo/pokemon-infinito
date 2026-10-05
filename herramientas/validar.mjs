@@ -13,6 +13,7 @@ for (const b of mod.BLOCKS) registerBlock(b);
 
 const errors = [], warns = [];
 const E = (w, m) => errors.push(`${w}: ${m}`);
+const checkGather = () => { for (const [gid, g] of Object.entries(C.gather || {})) { if (!Array.isArray(g.table) || !g.table.length) E('recolección ' + gid, 'tabla vacía'); for (const e of g.table || []) { if (!D.items[e.id]) E('recolección ' + gid, 'objeto inexistente: ' + e.id); if (e.cond) { try { new Function('s', 'with(s){return (' + e.cond + ')}'); } catch (x) { E('recolección ' + gid, 'condición inválida: ' + e.cond); } } } } };
 const W = (w, m) => warns.push(`${w}: ${m}`);
 
 const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve']);
@@ -109,6 +110,7 @@ for (const [id, L] of Object.entries(C.locations)) {
 		const a = s.action || {};
 		if (a.script && !C.scripts[a.script]) E(sw, 'guion inexistente: ' + a.script);
 		if (a.shop && !C.shops[a.shop]) E(sw, 'tienda inexistente: ' + a.shop);
+		if (a.gather && !C.gather[a.gather]) E(sw, 'punto de recolección inexistente: ' + a.gather);
 		if (a.go && !C.locations[a.go]) E(sw, 'lugar inexistente: ' + a.go);
 		if (a.trainer && !C.trainers[a.trainer]) E(sw, 'entrenador inexistente: ' + a.trainer);
 		if (a.training) { for (const t of a.training.trainers || []) if (!C.trainers[t]) E(sw, 'entrenador de entrenamiento inexistente: ' + t); for (const x of a.training.wild || []) checkSpecies(sw, x.sp); if (!a.training.cap) W(sw, 'entrenamiento sin cap'); }
@@ -188,6 +190,7 @@ for (const id of Object.keys(C.npcs)) {
 	else if (n < 3) lowNpc.push(`${id} (${n})`);
 }
 
+checkGather();
 console.log(`Bloques: ${C.blocks.map(b => b.id).join(', ')} · Lugares: ${Object.keys(C.locations).length} · Entrenadores: ${Object.keys(C.trainers).length} · Guiones: ${Object.keys(C.scripts).length} · Misiones: ${Object.keys(C.quests).length} · NPCs: ${Object.keys(C.npcs).length}`);
 if (lowNpc.length) console.log('NPCs con menos de 3 escenas (deben reaparecer en bloques futuros): ' + lowNpc.join(', '));
 if (warns.length) { console.log(`\n${warns.length} ADVERTENCIAS:`); for (const x of warns) console.log('  ⚠ ' + x); }

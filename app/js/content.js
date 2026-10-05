@@ -3,7 +3,7 @@ import { D, toID } from './data.js';
 
 export const C = {
 	blocks: [], regions: {}, locations: {}, npcs: {}, trainers: {}, quests: {}, scripts: {}, shops: {},
-	challenges: {}, events: [], milestones: [], badges: {}, version: '',
+	challenges: {}, events: [], milestones: [], badges: {}, gather: {}, version: '',
 };
 
 function mergeLocation(base, patch) {
@@ -35,6 +35,7 @@ export function registerBlock(b) {
 	for (const id in b.quests || {}) C.quests[id] = { id, ...b.quests[id] };
 	Object.assign(C.scripts, b.scripts || {});
 	Object.assign(C.shops, b.shops || {});
+	Object.assign(C.gather, b.gather || {});
 	for (const id in b.challenges || {}) C.challenges[id] = { id, ...b.challenges[id] };
 	Object.assign(C.badges, b.badges || {});
 	C.events.push(...(b.events || []));

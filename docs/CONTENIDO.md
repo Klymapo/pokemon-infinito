@@ -34,6 +34,14 @@ export default {
   shops: { tienda_luminalia: { name: 'Tienda de Luminalia', items: ['pokeball', 'potion', { id: 'superpotion', cond: 'badges >= 1' }] } },
   items: { farollana: { name: 'Farol de Lana', pocket: 'key', desc: '...' } }, // objetos propios (los ids van sin guiones ni espacios)
   // art: 'acuarela_riolu' → el objeto clave se puede «Mirar» en la mochila (cuadros pintados por código en app/js/ui/acuarela.js)
+  // read: 'texto' → el objeto se puede «Leer» (cartas, notas, diarios). Sale en Colección → Recuerdos.
+  gather: {  // puntos de recolección, uno por id; se recogen una vez cada `hours` horas reales
+    orilla: { name: 'Orilla de la playa', icon: '🐚', hours: 18, picks: [1, 3], text: 'La marea ha dejado cosas…', wait: '…',
+      table: [ { id: 'pearl', w: 14, n: [1, 1] }, { id: 'heartscale', w: 10, n: [1, 1], cond: 'badges >= 2' } ] },
+  },
+  // Se colocan como spot en lugares ({ label, icon, action: { gather: 'orilla' } })
+  // o en tramos de ruta ({ spot: { action: { gather: 'orilla' } }, label, icon }), por ejemplo con `patches`.
+  // Las ciudades y pueblos (kind city/town) dan una postal automática al visitarlos (Colección → Postales).
   events: [ ... ],           // §10 eventos por fecha
   milestones: [ { flag: 'b01_m_relieve', hoursLeft: 3 } ],  // §11 aviso de ritmo
 };

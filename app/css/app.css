@@ -278,3 +278,28 @@ button.cmpmove:active { transform: scale(.98); }
 .art-title { font-family: var(--pixel); color: var(--cream); font-size: 18px; text-align: center; }
 .art-note { color: var(--muted); font-size: 14px; max-width: 520px; text-align: center; line-height: 1.4; }
 .art-hint { color: var(--muted); font-size: 12px; opacity: .7; }
+
+/* Iconos de objeto */
+.itemicon { width: 36px; height: 36px; flex: 0 0 36px; display: grid; place-items: center; border-radius: 10px; background: var(--ink-3, #24304f); font-size: 20px; }
+.itemicon img { width: 32px; height: 32px; image-rendering: pixelated; }
+.itemicon.unknown img { filter: brightness(0) opacity(.45); }
+.itemicon.unknown { color: transparent; text-shadow: 0 0 0 rgba(255,255,255,.25); }
+.row.colitem.unknown .t { color: var(--muted); letter-spacing: 2px; }
+
+/* Postales */
+.postgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 4px 12px 12px; }
+.postcard { background: #f3ead6; border: 0; border-radius: 6px; padding: 5px 5px 4px; box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: rotate(-1deg); }
+.postcard:nth-child(2n) { transform: rotate(1.2deg); }
+.postcard canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; border-radius: 2px; }
+.postcard .pc-name { color: #3b3326; font-size: 12px; font-weight: 800; margin-top: 4px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.postcard.locked { background: var(--ink-2); box-shadow: none; transform: none; border: 1px dashed var(--line); }
+.postcard.locked .pc-q { aspect-ratio: 16 / 9; display: grid; place-items: center; color: var(--muted); font-family: var(--pixel); font-size: 22px; }
+.postcard.locked .pc-name { color: var(--muted); }
+.postcard-big { position: relative; background: #f3ead6; padding: 10px 10px 14px; border-radius: 6px; width: min(92vw, 520px); box-shadow: 0 14px 40px rgba(0,0,0,.55); }
+.postcard-big canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; border-radius: 3px; }
+.pcb-text { color: #3b3326; padding: 8px 4px 0; }
+.pcb-greet { font-family: var(--pixel); font-size: 17px; }
+.pcb-desc { font-style: italic; font-size: 14px; margin-top: 4px; line-height: 1.35; }
+.pcb-date { font-size: 12px; opacity: .7; margin-top: 6px; }
+.pcb-stamp { position: absolute; right: 18px; bottom: 16px; width: 44px; height: 52px; border: 2px dashed #b0604c; color: #b0604c; display: grid; place-items: center; font-size: 22px; transform: rotate(6deg); background: #f7efe0; }
+.pcb-text { padding-right: 58px; }

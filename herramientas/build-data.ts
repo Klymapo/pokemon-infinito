@@ -259,6 +259,7 @@ for (const r of paItems) {
 		pocket: cat ? pockets.get(cat.pocket_id) : 'misc',
 		cost: +r.cost || 0,
 		desc: itemFlavorEs[id] || paItemDescEs.get(r.id)?.t || '',
+		ic: r.identifier, // nombre del icono en PokeAPI/sprites/items
 	};
 }
 for (const id in Items) {

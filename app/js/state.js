@@ -1,5 +1,6 @@
 // Estado del juego, guardado y evaluación de condiciones.
 import { D, toID } from './data.js';
+import { C } from './content.js';
 import { clone } from './util.js';
 
 export const SAVE_VERSION = 1;
@@ -29,6 +30,7 @@ export function newGame(player) {
 		notices: {},
 		eventsDone: {},
 		stats: { battles: 0, caught: 0, steps: 0 },
+		found: {}, gather: {}, album: {},
 	};
 	return G;
 }
@@ -94,6 +96,11 @@ export function migrate(g) {
 	g.stats ||= { battles: 0, caught: 0, steps: 0 };
 	g.vars ||= {};
 	g.vars.cap ??= 15;
+	if (!g.found) { g.found = {}; for (const k in g.bag || {}) g.found[k] = Date.now(); }
+	g.gather ||= {};
+	g.album ||= {};
+	// postales de los pueblos y ciudades que ya visitaste antes de que existiera el álbum
+	for (const id in g.visited || {}) { const l = C.locations[id]; if (l && !l.parent && ['city', 'town'].includes(l.kind) && !g.album[id]) g.album[id] = g.created || Date.now(); }
 	return g;
 }
 
@@ -129,6 +136,7 @@ export const count = id => G.bag[toID(id)] || 0;
 export function addItem(id, n = 1) {
 	id = toID(id);
 	G.bag[id] = (G.bag[id] || 0) + n;
+	if (n > 0 && G.found && !G.found[id]) G.found[id] = Date.now();
 	if (G.bag[id] <= 0) delete G.bag[id];
 }
 export function removeItem(id, n = 1) {
