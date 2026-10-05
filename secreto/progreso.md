@@ -25,6 +25,20 @@
   3. **Noche 3:** escenas de fondo por tipo de lugar con animación ligera (nubes, agua, faroles de noche, hojas) y transiciones de entrada a combate.
   4. **Después:** efectos de movimientos por tipo en combate (partículas pixeladas) y pantalla de título animada.
 
+- **2026-10-05 · Mejorar la interfaz y añadir sonido.** Repartirlo con el arte; esto puede ir en paralelo con la noche 2.
+  - **Interfaz:** auditoría de toda la UI en el móvil (412×860), guiada por la skill `frontend-design`:
+    - Jerarquía y legibilidad.
+    - Pantalla de lugar menos "lista de botones".
+    - Tarjetas de combate y menú más claros.
+    - Transiciones cortas, retroalimentación al tocar y estados vacíos.
+    - Mantener la identidad (azul marino, aura, crema, dorado; Pixelify + Nunito) y el rendimiento en móvil.
+  - **Sonido:** todo sintetizado con Web Audio, sin archivos y sin melodías existentes (nada de temas de Pokémon; composiciones originales tipo chiptune):
+    - Efectos: menú, golpe, supereficaz, debilitado, subida de nivel, captura, curación, medalla.
+    - Música en bucle por ambiente: título, ciudad, ruta, ruta de noche, combate, líder o jefe, momentos emotivos.
+    - Gritos de los Pokémon en combate: los OGG de PokeAPI (`PokeAPI/cries`), descargados en tiempo de ejecución y cacheados como los sprites; nunca en el repo.
+    - En Ajustes: volumen de música, de efectos y de gritos, por separado.
+    - El audio empieza tras el primer toque, como exige el navegador.
+
 ## Hecho a petición de Mario
 
 - 2026-10-05: ver los datos de un Pokémon desde el menú de cambio en combate; estilo de combate «Cambio» (preguntar si quieres cambiar cuando cae un Pokémon rival, se puede poner en «Fijo» en Ajustes); descripciones de habilidades en español; pantalla para comparar movimientos al aprender uno nuevo (tipo, categoría, potencia, precisión, PP, descripción y si es del mismo tipo).
