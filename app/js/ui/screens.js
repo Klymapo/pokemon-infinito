@@ -701,11 +701,26 @@ export async function receivePokemon(p, { caught = false, silent = false, nickna
 	markCaught(p.sp);
 	if (!caught && !silent) await say(null, `¡${G.player.name} ha recibido a **${D.species[p.sp].name}**!`);
 	if (nickname && !silent) await askNickname(p);
-	if (G.party.length < 6) G.party.push(p);
-	else {
+	if (G.party.length < 6) { G.party.push(p); return; }
+	const toBox = async (mon, msg = true) => {
 		const bi = G.boxes.findIndex(b => b.length < 30);
-		(G.boxes[bi >= 0 ? bi : 0]).push(p);
-		await say(null, `Tu equipo está lleno. **${displayName(p)}** se ha enviado a la Caja ${bi + 1} del PC.`);
+		(G.boxes[bi >= 0 ? bi : 0]).push(mon);
+		if (msg) await say(null, `**${displayName(mon)}** se ha enviado a la Caja ${(bi >= 0 ? bi : 0) + 1} del PC.`);
+	};
+	if (silent) { await toBox(p, false); return; }
+	// Equipo lleno: elegir si entra al equipo (y quién sale) o va al PC
+	while (true) {
+		const i = await choose(`Tu equipo está lleno. ¿Qué hacemos con ${displayName(p)} (Nv. ${p.lv})?`, ['Meterlo en el equipo (otro va al PC)', 'Enviarlo al PC', 'Ver sus datos']);
+		if (i === 2) { await new Promise(res => openSummary(p, null, { battle: true, hp: p.hp, maxhp: maxHp(p), onClose: res })); continue; }
+		if (i === 1) { await toBox(p); return; }
+		const opts = G.party.map(m => `${displayName(m)} · Nv. ${m.lv} · ${m.hp}/${maxHp(m)} PS${m.uid === G.vars.riolu_uid ? ' ⭐' : ''}`).concat(['Cancelar']);
+		const j = await choose(`¿Quién deja su sitio a ${displayName(p)}?`, opts);
+		if (j >= G.party.length) continue;
+		const out = G.party[j];
+		G.party[j] = p;
+		await toBox(out, false);
+		await say(null, `**${displayName(p)}** se une a tu equipo. **${displayName(out)}** se va al PC.`);
+		return;
 	}
 }
 
@@ -815,7 +830,7 @@ function happyText(v) {
 export function openSummary(p, onChange, live = null) {
 	// live: datos del combate en curso ({battle, hp, maxhp, status}); oculta las acciones que cambiarían el equipo
 	const s = D.species[p.sp];
-	const sheet = openSheet(displayName(p), null);
+	const sheet = openSheet(displayName(p), null, { onClose: live?.onClose });
 	let tab = 'info';
 	const draw = () => {
 		const st = calcStats(p);
