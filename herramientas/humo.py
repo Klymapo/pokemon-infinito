@@ -43,7 +43,7 @@ def paso(pg, i):
         return True
     if pg.query_selector('.battle'):
         # combate: Luchar y el primer movimiento disponible (clic directo por JS)
-        for sel in ('.battle button.movebtn:not([disabled])', '.battle button.btn.fight', '.battle .blog'):
+        for sel in ('.battle button.movebtn:not([disabled])', '.battle button.btn.fight', '.battle button.mon:not(.fainted):not(.sel)', '.battle .blog'):
             el = pg.query_selector(sel)
             if el:
                 el.evaluate('e => e.click()'); break

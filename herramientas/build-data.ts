@@ -219,13 +219,20 @@ console.log('moves', Object.keys(moves).length);
 const paAbIdent = new Map(csv('abilities').map(r => [r.id, toID(r.identifier)]));
 const paAbNameEs = new Map<string, string>();
 for (const r of csv('ability_names')) if (r.local_language_id === ES) paAbNameEs.set(paAbIdent.get(r.ability_id)!, r.name);
+// Descripción oficial en español de PokeAPI (la versión de juego más reciente)
+const paAbFlavor = new Map<string, { v: number; t: string }>();
+for (const r of csv('ability_flavor_text')) {
+	if (r.language_id !== ES) continue;
+	const id = paAbIdent.get(r.ability_id)!, v = +r.version_group_id;
+	if (!paAbFlavor.has(id) || paAbFlavor.get(id)!.v < v) paAbFlavor.set(id, { v, t: r.flavor_text.replace(/\s+/g, ' ').trim() });
+}
 const abilities: Record<string, any> = {};
 for (const id in Abilities) {
 	const a = Abilities[id];
 	if (a.isNonstandard === 'CAP') continue;
 	abilities[id] = {
 		name: esAbil[id]?.name || paAbNameEs.get(id) || a.name,
-		desc: abilFlavorEs[id] || enAbil[id]?.shortDesc || '',
+		desc: abilFlavorEs[id] || paAbFlavor.get(id)?.t || enAbil[id]?.shortDesc || '',
 	};
 }
 

@@ -40,6 +40,7 @@ La historia es **infinita**: cada madrugada (3:00, hora de Ciudad de México) un
 | `app/sw.js` | Service worker **generado**. Regenéralo siempre antes de publicar. |
 | `docs/DISENO.md` | Diseño público (sin spoilers). |
 | `docs/CONTENIDO.md` | **Formato exacto del contenido.** Léelo antes de escribir nada. |
+| `docs/ARTE.md` | **Guía de pixel art** (siluetas, caras, revisión con imágenes). Obligatoria para cualquier trabajo de arte. |
 | `secreto/` | Documentos con spoilers: biblia, personajes, candidatas, hilos, registro, balance, referencias, planes por bloque y auditorías. |
 | `herramientas/` | Validador, bot de recorrido, registro, auditoría, prueba de humo y builds. |
 

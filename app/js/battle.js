@@ -318,7 +318,7 @@ export class BattleCtl {
 	options() {
 		const side = this.battle.p1;
 		const req = side.activeRequest;
-		const out = { forceSwitch: !!req?.forceSwitch, wait: !!req?.wait, moves: [], gimmicks: {}, trapped: false, switches: [] };
+		const out = { shift: !!this.shiftOffer, forceSwitch: !!req?.forceSwitch, wait: !!req?.wait, moves: [], gimmicks: {}, trapped: false, switches: [] };
 		side.pokemon.forEach((sp, idx) => {
 			const p = this.simToParty.get(sp);
 			out.switches.push({ idx, uid: p?.uid, name: sp.name, sp: toID(sp.species.name), lv: sp.level, hp: sp.hp, maxhp: sp.maxhp, fainted: sp.fainted || sp.hp <= 0, active: sp.isActive, status: sp.status });
@@ -359,6 +359,10 @@ export class BattleCtl {
 		let p1choice = null;
 		const side = b.p1;
 		const req = side.activeRequest;
+
+		if (this.shiftOffer && action.type !== 'switch') return this.declineShift();
+		this.shiftOffer = null;
+		if (action.type === 'noshift') return this.status();
 
 		if (req?.forceSwitch) {
 			if (action.type !== 'switch') return { events: this.flushEvents(), error: 'Elige un Pokémon.' };
@@ -431,7 +435,7 @@ export class BattleCtl {
 		}
 
 		// IA del rival
-		if (b.p2.requestState === 'move' || b.p2.requestState === 'switch') this.chooseAI();
+		if ((b.p2.requestState === 'move' || b.p2.requestState === 'switch') && !b.p2.isChoiceDone()) this.chooseAI();
 
 		if (!b.choose('p1', p1choice)) {
 			b.p1.clearChoice();
@@ -449,11 +453,47 @@ export class BattleCtl {
 		// Si el rival debe sacar otro Pokémon y el jugador no tiene que elegir nada, lo hace la IA
 		let guard = 0;
 		while (!b.ended && b.p2.requestState === 'switch' && guard++ < 6) {
+			if (this.canOfferShift()) { this.offerShift(); return; }
 			this.chooseAI();
 			if (b.p1.requestState === 'switch') break; // ambos deben cambiar: espera al jugador
 			this.pump();
 		}
 		this.pump();
+	}
+
+	/** Estilo «Cambio» (como en los juegos): cuando cae un Pokémon del rival, el jugador puede cambiar gratis antes de que salga el siguiente. */
+	canOfferShift() {
+		const b = this.battle;
+		if (!this.cfg.shift || this.wild || b.p1.requestState) return false;
+		const me = b.p1.active[0];
+		if (!me || me.fainted || me.hp <= 0) return false;
+		return b.p1.pokemon.some(p => !p.isActive && !p.fainted && p.hp > 0);
+	}
+	offerShift() {
+		const b = this.battle;
+		b.p1.active[0].switchFlag = true;
+		b.makeRequest('switch');
+		this.chooseAI(); // el rival elige su relevo, pero no sale hasta que el jugador decida
+		const target = b.p2.choice.actions[0]?.target;
+		if (!target) { // por si acaso: se anula la oferta
+			b.p1.active[0].switchFlag = false;
+			b.makeRequest('switch');
+			this.chooseAI();
+			this.pump();
+			return;
+		}
+		this.shiftOffer = { foe: target.name, sp: toID(target.species.name), choice: 'switch ' + (b.p2.pokemon.indexOf(target) + 1) };
+	}
+	declineShift() {
+		const b = this.battle;
+		const offer = this.shiftOffer;
+		this.shiftOffer = null;
+		b.p1.active[0].switchFlag = false;
+		b.makeRequest('switch');
+		if (!b.choose('p2', offer.choice)) this.chooseAI();
+		this.pump();
+		this.settleForcedAI();
+		return this.status();
 	}
 
 	status() {
@@ -464,6 +504,7 @@ export class BattleCtl {
 			out.result = this.result = b.winner === G.player.name ? 'win' : 'lose';
 		} else {
 			out.needSwitch = !!b.p1.activeRequest?.forceSwitch;
+			if (this.shiftOffer) out.shiftOffer = { foe: this.shiftOffer.foe, sp: this.shiftOffer.sp };
 		}
 		return out;
 	}

@@ -45,6 +45,13 @@ const val = await run('node', ['herramientas/validar.mjs']);
 report.push('## 1. Validador', '', '```', val.out.trim().slice(-3000), '```', '');
 if (val.code !== 0) blockers.push('El validador encontró ERRORES');
 
+// 1b. Pruebas del motor
+for (const t of ['herramientas/test/shift-test.mjs']) {
+	const r = await run('node', [t]);
+	report.push(`Prueba \`${t}\`: ${r.code === 0 ? 'OK' : '**FALLA**'}`, '');
+	if (r.code !== 0) { blockers.push(`Falla la prueba ${t}`); report.push('```', r.out.slice(-2000), '```', ''); }
+}
+
 // 2. Bot de recorrido
 const parse = out => ({
 	fin: /Final alcanzado: SÍ/.test(out),

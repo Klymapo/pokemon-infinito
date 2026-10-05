@@ -39,7 +39,7 @@ export async function runBattle(cfg, hooks) {
 
 	const terrain = cfg.terrain || trainer?.terrain || here?.battleTerrain || (here?.route ? hooks.terrainHere() : (here?.kind === 'gym' ? 'gym' : 'city'));
 	const ctl = new BattleCtl({
-		kind, foes, trainer, terrain, loc: G.loc, canRun: cfg.canRun !== false,
+		kind, foes, trainer, terrain, loc: G.loc, canRun: cfg.canRun !== false, shift: (G.settings?.battleStyle ?? 'shift') === 'shift',
 		wildGimmick: cfg.wild?.gimmick, noCatch: cfg.wild?.noCatch,
 	});
 
@@ -256,8 +256,17 @@ export async function runBattle(cfg, hooks) {
 			for (const s of o.switches) {
 				const p = G.party.find(x => x.uid === s.uid);
 				const r = s.maxhp ? s.hp / s.maxhp : 0;
-				const dis = s.fainted || s.active;
-				const card = h('button', { class: 'mon' + (s.fainted ? ' fainted' : '') + (s.active ? ' sel' : ''), disabled: dis, onclick: () => resolve({ type: 'switch', idx: s.idx }) },
+				const canSwitch = !s.fainted && !s.active && !(o.trapped && !forced);
+				const onTap = async () => {
+					const opts = [canSwitch ? (forced ? 'Sacarlo' : 'Cambiar') : null, 'Ver datos', 'Cancelar'].filter(Boolean);
+					const i = await choose(`${s.name} · Nv. ${s.lv} · ${s.hp}/${s.maxhp} PS`, opts, { cancel: opts.length - 1 });
+					if (opts[i] === 'Sacarlo' || opts[i] === 'Cambiar') resolve({ type: 'switch', idx: s.idx });
+					else if (opts[i] === 'Ver datos' && p) {
+						const { openSummary } = await import('./screens.js');
+						openSummary(p, null, { battle: true, hp: s.hp, maxhp: s.maxhp, status: s.status });
+					}
+				};
+				const card = h('button', { class: 'mon' + (s.fainted ? ' fainted' : '') + (s.active ? ' sel' : ''), onclick: onTap },
 					h('div', { class: 'sprite' }, monImg(s.sp, { anim: false, shiny: p?.shiny })),
 					h('div', { class: 'info' },
 						h('div', { class: 'name' }, s.name, h('span', { class: 'lv' }, 'Nv.' + s.lv), s.status && s.status !== 'fnt' ? h('span', { class: 'status ' + s.status }, STATUS_ES[s.status]) : null),
@@ -266,9 +275,10 @@ export async function runBattle(cfg, hooks) {
 				list.append(card);
 			}
 			panel.append(list);
-			if (!forced) panel.append(h('button', { class: 'btn backrow', onclick: showMain }, 'Atrás'));
+			if (o.shift) panel.append(h('button', { class: 'btn backrow', onclick: () => resolve({ type: 'noshift' }) }, 'No cambiar'));
+			else if (!forced) panel.append(h('button', { class: 'btn backrow', onclick: showMain }, 'Atrás'));
 			if (o.trapped && !forced) log.innerHTML = fmtText('¡No puedes cambiar de Pokémon ahora!');
-			else log.innerHTML = forced ? '¿Qué Pokémon vas a sacar?' : 'Elige un Pokémon.';
+			else log.innerHTML = o.shift ? '¿A quién quieres sacar?' : forced ? '¿Qué Pokémon vas a sacar?' : 'Toca un Pokémon para cambiarlo o ver sus datos.';
 		};
 		if (o.forceSwitch) showSwitch(true); else showMain();
 	});
@@ -280,10 +290,19 @@ export async function runBattle(cfg, hooks) {
 	while (guard++ < 500) {
 		const action = await pickAction();
 		panel.innerHTML = '';
-		const r = ctl.turn(action);
+		let r = ctl.turn(action);
 		await play(r.events || []);
 		if (r.error) { log.innerHTML = fmtText(r.error); await wait(1100); }
 		if (r.ended) { res = r; break; }
+		if (r.shiftOffer) {
+			const who = trainer ? (trainer.cls ? trainer.cls + ' ' : '') + trainer.name : 'El rival';
+			const i = await choose(`${who} va a sacar a ${r.shiftOffer.foe}. ¿Quieres cambiar de Pokémon?`, ['Sí', 'No']);
+			if (i !== 0) {
+				r = ctl.turn({ type: 'noshift' });
+				await play(r.events || []);
+				if (r.ended) { res = r; break; }
+			}
+		}
 	}
 
 	// ---------- Final ----------

@@ -622,7 +622,8 @@ function happyText(v) {
 	return v >= 255 ? 'Te adora. Está totalmente unido a ti.' : v >= 200 ? 'Te tiene muchísimo cariño.' : v >= 150 ? 'Le caes muy bien.' : v >= 100 ? 'Está a gusto contigo.' : v >= 50 ? 'Todavía no te conoce mucho.' : 'No parece muy contento.';
 }
 
-export function openSummary(p, onChange) {
+export function openSummary(p, onChange, live = null) {
+	// live: datos del combate en curso ({battle, hp, maxhp, status}); oculta las acciones que cambiarían el equipo
 	const s = D.species[p.sp];
 	const sheet = openSheet(displayName(p), null);
 	let tab = 'info';
@@ -634,9 +635,9 @@ export function openSummary(p, onChange) {
 				h('div', { style: { fontWeight: 900, fontSize: '19px' } }, displayName(p), ' ', p.gender === 'M' ? '♂' : p.gender === 'F' ? '♀' : '', p.shiny ? ' ✨' : ''),
 				h('div', { style: { color: 'var(--muted)' } }, `${s.name} · Nv. ${p.lv}`),
 				h('div', { class: 'typechip-row', style: { marginTop: '6px' } }, ...s.types.map(t => h('span', { class: 'type', style: { background: TYPE_COLORS[t] } }, typeName(t)))),
-				h('div', { class: 'hpbar', style: { width: '160px' } }, h('i', { style: { width: (p.hp / st.hp * 100) + '%' } })),
-				h('div', { style: { fontSize: '13px', color: 'var(--muted)' } }, `${p.hp}/${st.hp} PS`)));
-		const tabs = h('div', { class: 'tabs' }, ...[['info', 'Datos'], ['stats', 'Stats'], ['moves', 'Movimientos'], ['actions', 'Acciones']].map(([k, n]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n)));
+				h('div', { class: 'hpbar', style: { width: '160px' } }, h('i', { style: { width: ((live ? live.hp / live.maxhp : p.hp / st.hp) * 100) + '%' } })),
+				h('div', { style: { fontSize: '13px', color: 'var(--muted)' } }, live ? `${live.hp}/${live.maxhp} PS` : `${p.hp}/${st.hp} PS`)));
+		const tabs = h('div', { class: 'tabs' }, ...[['info', 'Datos'], ['stats', 'Stats'], ['moves', 'Movimientos'], live?.battle ? null : ['actions', 'Acciones']].filter(Boolean).map(([k, n]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n)));
 		let body;
 		if (tab === 'info') {
 			body = h('dl', { class: 'kv' },
@@ -1108,6 +1109,7 @@ function openSettings() {
 			h('div', { class: 'list' },
 				h('button', { class: 'row', onclick: () => { G.settings.textSpeed = ((G.settings.textSpeed ?? 2) + 1) % 4; setTextSpeed(G.settings.textSpeed); draw(); } }, h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Velocidad del texto')), h('b', {}, speeds[G.settings.textSpeed ?? 2])),
 				toggle('Repartir Experiencia', 'Todo el equipo gana EXP (la mitad si no combate).', 'expShare'),
+				h('button', { class: 'row', onclick: () => { G.settings.battleStyle = (G.settings.battleStyle ?? 'shift') === 'shift' ? 'set' : 'shift'; draw(); } }, h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Estilo de combate'), h('div', { class: 's' }, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio: cuando cae un Pokémon rival, te pregunta si quieres cambiar el tuyo.' : 'Fijo: no te pregunta; sigues con el mismo Pokémon.')), h('b', {}, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio' : 'Fijo')),
 				G.vars.mount ? toggle('Usar montura', 'Avanzas dos tramos por paso en rutas.', 'useMount') : null,
 			),
 			h('div', { class: 'section-title' }, 'Sprites de Pokémon'),
