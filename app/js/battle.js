@@ -311,6 +311,20 @@ export class BattleCtl {
 		if (simP.isActive) this.events.push({ t: 'hp', side: 'p1', hp: simP.hp, maxhp: simP.maxhp, lv: p.lv });
 	}
 
+	/** Probabilidad de captura (0–1) con una Ball contra el salvaje actual, con la fórmula real del juego. */
+	catchOdds(ball) {
+		const b = this.battle;
+		const foe = b.p2.active[0];
+		const inst = foe && this.simToFoe.get(foe);
+		if (!inst || !this.wild || this.cfg.noCatch) return 0;
+		const lead = b.p1.active[0];
+		return catchChance({
+			sp: inst.sp, lv: foe.level, hp: foe.hp, maxhp: foe.maxhp, status: foe.status, ball,
+			turn: this.turnNo, time: isNight() ? 'night' : 'day', terrain: this.cfg.terrain, caughtBefore: !!G.dex.caught[D.species[inst.sp].num],
+			playerLv: lead?.level,
+		}) * (this.cfg.catchMod || 1);
+	}
+
 	// ---------- Información para la interfaz ----------
 	active(side = 'p1') { return this.battle[side].active[0]; }
 	partyOf(simP) { return this.simToParty.get(simP); }
@@ -399,13 +413,8 @@ export class BattleCtl {
 			if (!removeItem(action.ball)) return { events: [{ t: 'text', s: 'No te quedan de esas.' }] };
 			const foe = b.p2.active[0];
 			const inst = this.simToFoe.get(foe);
-			const lead = b.p1.active[0];
-			const chance = catchChance({
-				sp: inst.sp, lv: foe.level, hp: foe.hp, maxhp: foe.maxhp, status: foe.status, ball: action.ball,
-				turn: this.turnNo, time: isNight() ? 'night' : 'day', terrain: this.cfg.terrain, caughtBefore: !!G.dex.caught[D.species[inst.sp].num],
-				playerLv: lead?.level,
-			});
-			const r = rollCatch(chance * (this.cfg.catchMod || 1));
+			const chance = this.catchOdds(action.ball);
+			const r = rollCatch(chance);
 			ev.push({ t: 'text', s: `¡${G.player.name} lanzó una **${D.items[action.ball]?.name || 'Poké Ball'}**!` });
 			ev.push({ t: 'ball', ball: action.ball, shakes: r.shakes, caught: r.caught });
 			if (r.caught) {

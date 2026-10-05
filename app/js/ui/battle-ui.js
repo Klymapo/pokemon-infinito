@@ -198,6 +198,26 @@ export async function runBattle(cfg, hooks) {
 				h('button', { class: 'btn pkmn', onclick: () => showSwitch(false) }, 'Pokémon'),
 				h('button', { class: 'btn run', onclick: () => resolve({ type: 'run' }) }, kind === 'wild' ? 'Huir' : 'Huir'),
 			);
+			// Lanzamiento rápido: la Ball con más probabilidad (o la que elijas), con su % real
+			if (kind === 'wild' && !cfg.wild?.noCatch) {
+				const balls = Object.keys(G.bag).filter(id => G.bag[id] > 0 && isBall(id) && id !== 'masterball');
+				if (balls.length) {
+					const pref = G.settings.ballPick || 'auto';
+					const odds = Object.fromEntries(balls.map(id => [id, ctl.catchOdds(id)]));
+					const best = pref !== 'auto' && G.bag[pref] > 0 ? pref : balls.slice().sort((a, b) => (odds[b] - odds[a]) || ((D.items[a]?.cost || 0) - (D.items[b]?.cost || 0)))[0];
+					const p = odds[best];
+					const pTxt = p >= 0.995 ? '100 %' : p < 0.01 ? '<1 %' : Math.round(p * 100) + ' %';
+					panel.append(h('div', { class: 'quickball' },
+						h('button', { class: 'btn qb-throw', onclick: () => { G.settings.lastBall = best; resolve({ type: 'ball', ball: best }); } },
+							h('span', { class: 'qb-ico' }, '◓'), h('span', {}, `Lanzar ${D.items[best]?.name || best}`), h('span', { class: 'qb-n' }, `×${G.bag[best]} · ${pTxt}`)),
+						h('button', { class: 'btn qb-pick', 'aria-label': 'Elegir Ball', onclick: async () => {
+							const opts = ['auto', ...balls];
+							const i = await choose('¿Qué Ball quieres en el botón rápido?', opts.map(id => id === 'auto' ? `Automática (la de más probabilidad)${pref === 'auto' ? ' ✔' : ''}` : `${D.items[id]?.name} ×${G.bag[id]} · ${Math.round(odds[id] * 100)} %${pref === id ? ' ✔' : ''}`).concat(['Cancelar']), { cancel: opts.length });
+							if (i < opts.length) G.settings.ballPick = opts[i];
+							showMain();
+						} }, '⇄')));
+				}
+			}
 		};
 		let gimmick = null;
 		const showMoves = () => {
@@ -234,7 +254,7 @@ export async function runBattle(cfg, hooks) {
 			panel.append(list, h('button', { class: 'btn backrow', onclick: showMain }, 'Atrás'));
 		};
 		const useItem = async id => {
-			if (isBall(id)) { resolve({ type: 'ball', ball: id }); return; }
+			if (isBall(id)) { G.settings.lastBall = id; resolve({ type: 'ball', ball: id }); return; }
 			const info = healInfo(id);
 			if (info?.boost || info?.crit || info?.mist) { resolve({ type: 'item', item: id, uid: vis.p1.uid }); return; }
 			// elegir objetivo
