@@ -1,0 +1,1989 @@
+{
+ "hoenn-route-101": {
+  "gift": {
+   "treecko": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "torchic": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "mudkip": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "chikorita": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "cyndaquil": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "totodile": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "snivy": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "tepig": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "oshawott": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "turtwig": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "chimchar": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "piplup": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   }
+  },
+  "horde": {
+   "poochyena": {
+    "min": 2,
+    "max": 2,
+    "rarity": 10
+   },
+   "zigzagoon": {
+    "min": 2,
+    "max": 2,
+    "rarity": 190
+   }
+  }
+ },
+ "slateport-city/contest-hall": {
+  "gift": {
+   "pikachu": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "verdanturf-town/contest-hall": {
+  "gift": {
+   "pikachu": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "fallarbor-town/contest-hall": {
+  "gift": {
+   "pikachu": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "lilycove-city/contest-hall": {
+  "gift": {
+   "pikachu": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "southern-island": {
+  "gift": {
+   "latios": {
+    "min": 30,
+    "max": 30,
+    "rarity": 100
+   },
+   "latias": {
+    "min": 30,
+    "max": 30,
+    "rarity": 100
+   }
+  },
+  "static": {
+   "latias": {
+    "min": 30,
+    "max": 30,
+    "rarity": 200
+   },
+   "latios": {
+    "min": 30,
+    "max": 30,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-route-119/weather-institute": {
+  "gift": {
+   "castform": {
+    "min": 30,
+    "max": 30,
+    "rarity": 200
+   }
+  }
+ },
+ "mossdeep-city/stevens-house": {
+  "gift": {
+   "beldum": {
+    "min": 1,
+    "max": 1,
+    "rarity": 200
+   }
+  }
+ },
+ "battle-resort": {
+  "gift": {
+   "camerupt": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   },
+   "sharpedo": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "lavaridge-town": {
+  "gift-egg": {
+   "wynaut": {
+    "min": 1,
+    "max": 1,
+    "rarity": 200
+   },
+   "togepi": {
+    "min": 1,
+    "max": 1,
+    "rarity": 200
+   }
+  },
+  "devon-scope": {
+   "kecleon": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "new-mauville": {
+  "static": {
+   "voltorb": {
+    "min": 25,
+    "max": 25,
+    "rarity": 800
+   }
+  },
+  "horde": {
+   "magnemite": {
+    "min": 12,
+    "max": 12,
+    "rarity": 70
+   },
+   "voltorb": {
+    "min": 12,
+    "max": 12,
+    "rarity": 130
+   }
+  }
+ },
+ "team-aqua-hideout": {
+  "static": {
+   "electrode": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "team-magma-hideout": {
+  "static": {
+   "electrode": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "desert-ruins/area": {
+  "static": {
+   "regirock": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "island-cave/area": {
+  "static": {
+   "regice": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   },
+   "regigigas": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "ancient-tomb/area": {
+  "static": {
+   "registeel": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/b4f": {
+  "static": {
+   "kyogre": {
+    "min": 45,
+    "max": 45,
+    "rarity": 100
+   },
+   "groudon": {
+    "min": 45,
+    "max": 45,
+    "rarity": 100
+   }
+  }
+ },
+ "sky-pillar/apex": {
+  "static": {
+   "rayquaza": {
+    "min": 70,
+    "max": 70,
+    "rarity": 200
+   },
+   "deoxys-normal": {
+    "min": 80,
+    "max": 80,
+    "rarity": 200
+   }
+  }
+ },
+ "sea-mauville/inside": {
+  "static": {
+   "spiritomb": {
+    "min": 50,
+    "max": 50,
+    "rarity": 400
+   },
+   "lugia": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "ho-oh": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   }
+  }
+ },
+ "crescent-isle": {
+  "static": {
+   "cresselia": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-route-119": {
+  "devon-scope": {
+   "kecleon": {
+    "min": 30,
+    "max": 30,
+    "rarity": 200
+   }
+  },
+  "horde": {
+   "oddish": {
+    "min": 12,
+    "max": 12,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-route-120": {
+  "devon-scope": {
+   "kecleon": {
+    "min": 30,
+    "max": 30,
+    "rarity": 600
+   }
+  },
+  "horde": {
+   "oddish": {
+    "min": 13,
+    "max": 13,
+    "rarity": 120
+   },
+   "marill": {
+    "min": 13,
+    "max": 13,
+    "rarity": 70
+   },
+   "kecleon": {
+    "min": 13,
+    "max": 13,
+    "rarity": 10
+   }
+  }
+ },
+ "mossdeep-space-center": {
+  "devon-scope": {
+   "kecleon": {
+    "min": 45,
+    "max": 45,
+    "rarity": 200
+   }
+  }
+ },
+ "trackless-forest": {
+  "static": {
+   "raikou": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   },
+   "entei": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   },
+   "suicune": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "nameless-cavern": {
+  "static": {
+   "uxie": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   },
+   "mesprit": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   },
+   "azelf": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "soaring-in-the-sky": {
+  "static": {
+   "dialga": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "palkia": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "giratina-altered": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   },
+   "tornadus-incarnate": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "thundurus-incarnate": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "landorus-incarnate": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "scorched-slab/b3f": {
+  "static": {
+   "heatran": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  },
+  "horde": {
+   "zubat": {
+    "min": 14,
+    "max": 14,
+    "rarity": 200
+   }
+  }
+ },
+ "pathless-plain": {
+  "static": {
+   "cobalion": {
+    "min": 50,
+    "max": 50,
+    "rarity": 600
+   },
+   "terrakion": {
+    "min": 50,
+    "max": 50,
+    "rarity": 400
+   },
+   "virizion": {
+    "min": 50,
+    "max": 50,
+    "rarity": 400
+   }
+  }
+ },
+ "fabled-cave": {
+  "static": {
+   "reshiram": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   },
+   "zekrom": {
+    "min": 50,
+    "max": 50,
+    "rarity": 100
+   }
+  }
+ },
+ "gnarled-den": {
+  "static": {
+   "kyurem": {
+    "min": 50,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "petalburg-woods": {
+  "horde": {
+   "zigzagoon": {
+    "min": 3,
+    "max": 3,
+    "rarity": 70
+   },
+   "wurmple": {
+    "min": 3,
+    "max": 3,
+    "rarity": 120
+   },
+   "shroomish": {
+    "min": 3,
+    "max": 3,
+    "rarity": 10
+   }
+  }
+ },
+ "rusturf-tunnel": {
+  "horde": {
+   "whismur": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   }
+  }
+ },
+ "granite-cave/1f": {
+  "horde": {
+   "zubat": {
+    "min": 6,
+    "max": 6,
+    "rarity": 120
+   },
+   "geodude": {
+    "min": 6,
+    "max": 6,
+    "rarity": 70
+   },
+   "makuhita": {
+    "min": 6,
+    "max": 6,
+    "rarity": 80
+   }
+  }
+ },
+ "granite-cave/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 6,
+    "max": 6,
+    "rarity": 120
+   },
+   "aron": {
+    "min": 6,
+    "max": 6,
+    "rarity": 80
+   }
+  }
+ },
+ "granite-cave/b2f": {
+  "horde": {
+   "zubat": {
+    "min": 6,
+    "max": 6,
+    "rarity": 120
+   },
+   "sableye": {
+    "min": 6,
+    "max": 6,
+    "rarity": 5
+   },
+   "mawile": {
+    "min": 6,
+    "max": 6,
+    "rarity": 5
+   },
+   "aron": {
+    "min": 6,
+    "max": 6,
+    "rarity": 70
+   }
+  }
+ },
+ "fiery-path": {
+  "horde": {
+   "grimer": {
+    "min": 8,
+    "max": 8,
+    "rarity": 35
+   },
+   "koffing": {
+    "min": 8,
+    "max": 8,
+    "rarity": 35
+   },
+   "slugma": {
+    "min": 8,
+    "max": 8,
+    "rarity": 10
+   },
+   "numel": {
+    "min": 8,
+    "max": 8,
+    "rarity": 120
+   }
+  }
+ },
+ "jagged-pass": {
+  "horde": {
+   "machop": {
+    "min": 10,
+    "max": 10,
+    "rarity": 130
+   },
+   "spoink": {
+    "min": 10,
+    "max": 10,
+    "rarity": 70
+   }
+  }
+ },
+ "meteor-falls": {
+  "horde": {
+   "zubat": {
+    "min": 9,
+    "max": 9,
+    "rarity": 200
+   }
+  }
+ },
+ "meteor-falls/back": {
+  "horde": {
+   "zubat": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "meteor-falls/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 20,
+    "max": 20,
+    "rarity": 200
+   }
+  }
+ },
+ "meteor-falls/backsmall-room": {
+  "horde": {
+   "zubat": {
+    "min": 20,
+    "max": 20,
+    "rarity": 190
+   },
+   "bagon": {
+    "min": 20,
+    "max": 20,
+    "rarity": 10
+   }
+  }
+ },
+ "scorched-slab/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 14,
+    "max": 14,
+    "rarity": 200
+   }
+  }
+ },
+ "scorched-slab/b2f": {
+  "horde": {
+   "zubat": {
+    "min": 14,
+    "max": 14,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-safari-zone/nwmach-bike-area": {
+  "horde": {
+   "oddish": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "psyduck": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "doduo": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "hoenn-safari-zone/neacro-bike-area": {
+  "horde": {
+   "oddish": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "psyduck": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "doduo": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "hoenn-safari-zone/sw": {
+  "horde": {
+   "oddish": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "psyduck": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "doduo": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "hoenn-safari-zone/se": {
+  "horde": {
+   "oddish": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "psyduck": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "doduo": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "mt-pyre/1f": {
+  "horde": {
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 200
+   }
+  }
+ },
+ "mt-pyre/2f": {
+  "horde": {
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 200
+   }
+  }
+ },
+ "mt-pyre/3f": {
+  "horde": {
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 200
+   }
+  }
+ },
+ "mt-pyre/4f": {
+  "horde": {
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 200
+   }
+  }
+ },
+ "mt-pyre/outside": {
+  "horde": {
+   "vulpix": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "meditite": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "mt-pyre/summit": {
+  "horde": {
+   "vulpix": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "meditite": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "shoal-cave/high-tide": {
+  "horde": {
+   "zubat": {
+    "min": 17,
+    "max": 17,
+    "rarity": 80
+   },
+   "spheal": {
+    "min": 17,
+    "max": 17,
+    "rarity": 120
+   }
+  }
+ },
+ "shoal-cave/b3f": {
+  "horde": {
+   "zubat": {
+    "min": 17,
+    "max": 17,
+    "rarity": 120
+   },
+   "snorunt": {
+    "min": 17,
+    "max": 17,
+    "rarity": 10
+   },
+   "spheal": {
+    "min": 17,
+    "max": 17,
+    "rarity": 70
+   }
+  }
+ },
+ "seafloor-cavern": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/entrance": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/1f": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/b2f": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "cave-of-origin/b3f": {
+  "horde": {
+   "zubat": {
+    "min": 18,
+    "max": 18,
+    "rarity": 200
+   }
+  }
+ },
+ "sky-pillar/1f": {
+  "horde": {
+   "golbat": {
+    "min": 23,
+    "max": 23,
+    "rarity": 120
+   },
+   "ariados": {
+    "min": 23,
+    "max": 23,
+    "rarity": 70
+   },
+   "swablu": {
+    "min": 23,
+    "max": 23,
+    "rarity": 10
+   }
+  }
+ },
+ "sky-pillar/3f": {
+  "horde": {
+   "golbat": {
+    "min": 23,
+    "max": 23,
+    "rarity": 120
+   },
+   "ariados": {
+    "min": 23,
+    "max": 23,
+    "rarity": 70
+   },
+   "swablu": {
+    "min": 23,
+    "max": 23,
+    "rarity": 10
+   }
+  }
+ },
+ "sky-pillar/5f": {
+  "horde": {
+   "golbat": {
+    "min": 23,
+    "max": 23,
+    "rarity": 120
+   },
+   "ariados": {
+    "min": 23,
+    "max": 23,
+    "rarity": 70
+   },
+   "swablu": {
+    "min": 23,
+    "max": 23,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-victory-road/1f": {
+  "horde": {
+   "zubat": {
+    "min": 20,
+    "max": 20,
+    "rarity": 120
+   },
+   "loudred": {
+    "min": 20,
+    "max": 20,
+    "rarity": 10
+   },
+   "aron": {
+    "min": 20,
+    "max": 20,
+    "rarity": 70
+   }
+  }
+ },
+ "hoenn-victory-road/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 20,
+    "max": 20,
+    "rarity": 120
+   },
+   "loudred": {
+    "min": 20,
+    "max": 20,
+    "rarity": 10
+   },
+   "aron": {
+    "min": 20,
+    "max": 20,
+    "rarity": 70
+   }
+  }
+ },
+ "hoenn-route-102": {
+  "horde": {
+   "zigzagoon": {
+    "min": 2,
+    "max": 2,
+    "rarity": 120
+   },
+   "lotad": {
+    "min": 2,
+    "max": 2,
+    "rarity": 35
+   },
+   "seedot": {
+    "min": 2,
+    "max": 2,
+    "rarity": 35
+   },
+   "ralts": {
+    "min": 2,
+    "max": 2,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-route-103": {
+  "horde": {
+   "poochyena": {
+    "min": 2,
+    "max": 2,
+    "rarity": 70
+   },
+   "zigzagoon": {
+    "min": 2,
+    "max": 2,
+    "rarity": 120
+   },
+   "wingull": {
+    "min": 2,
+    "max": 2,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-route-104/north-oras": {
+  "horde": {
+   "zigzagoon": {
+    "min": 2,
+    "max": 2,
+    "rarity": 190
+   },
+   "taillow": {
+    "min": 3,
+    "max": 3,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-route-104/south-oras": {
+  "horde": {
+   "wingull": {
+    "min": 2,
+    "max": 2,
+    "rarity": 10
+   },
+   "zigzagoon": {
+    "min": 2,
+    "max": 2,
+    "rarity": 190
+   }
+  }
+ },
+ "hoenn-route-110": {
+  "horde": {
+   "magnemite": {
+    "min": 6,
+    "max": 6,
+    "rarity": 120
+   },
+   "plusle": {
+    "min": 6,
+    "max": 6,
+    "rarity": 45
+   },
+   "minun": {
+    "min": 6,
+    "max": 6,
+    "rarity": 45
+   }
+  }
+ },
+ "hoenn-route-111": {
+  "horde": {
+   "sandshrew": {
+    "min": 11,
+    "max": 11,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-route-112": {
+  "horde": {
+   "machop": {
+    "min": 8,
+    "max": 8,
+    "rarity": 70
+   },
+   "numel": {
+    "min": 8,
+    "max": 8,
+    "rarity": 130
+   }
+  }
+ },
+ "hoenn-route-113": {
+  "horde": {
+   "skarmory": {
+    "min": 9,
+    "max": 9,
+    "rarity": 10
+   },
+   "spinda": {
+    "min": 9,
+    "max": 9,
+    "rarity": 190
+   }
+  }
+ },
+ "hoenn-route-114": {
+  "horde": {
+   "seedot": {
+    "min": 9,
+    "max": 9,
+    "rarity": 35
+   },
+   "swablu": {
+    "min": 9,
+    "max": 9,
+    "rarity": 140
+   },
+   "lotad": {
+    "min": 9,
+    "max": 9,
+    "rarity": 35
+   }
+  }
+ },
+ "hoenn-route-115": {
+  "horde": {
+   "swablu": {
+    "min": 10,
+    "max": 10,
+    "rarity": 200
+   }
+  }
+ },
+ "hoenn-route-116": {
+  "horde": {
+   "zigzagoon": {
+    "min": 4,
+    "max": 4,
+    "rarity": 120
+   },
+   "nincada": {
+    "min": 4,
+    "max": 4,
+    "rarity": 70
+   },
+   "skitty": {
+    "min": 4,
+    "max": 4,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-route-117": {
+  "horde": {
+   "oddish": {
+    "min": 7,
+    "max": 7,
+    "rarity": 120
+   },
+   "marill": {
+    "min": 7,
+    "max": 7,
+    "rarity": 10
+   },
+   "zigzagoon": {
+    "min": 7,
+    "max": 7,
+    "rarity": 120
+   },
+   "roselia": {
+    "min": 7,
+    "max": 7,
+    "rarity": 70
+   }
+  }
+ },
+ "hoenn-route-118": {
+  "horde": {
+   "wingull": {
+    "min": 12,
+    "max": 12,
+    "rarity": 70
+   },
+   "electrike": {
+    "min": 12,
+    "max": 12,
+    "rarity": 120
+   },
+   "kecleon": {
+    "min": 12,
+    "max": 12,
+    "rarity": 10
+   }
+  }
+ },
+ "hoenn-route-121": {
+  "horde": {
+   "wingull": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "kecleon": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "hoenn-route-123": {
+  "horde": {
+   "wingull": {
+    "min": 15,
+    "max": 15,
+    "rarity": 70
+   },
+   "kecleon": {
+    "min": 15,
+    "max": 15,
+    "rarity": 10
+   },
+   "shuppet": {
+    "min": 15,
+    "max": 15,
+    "rarity": 120
+   }
+  }
+ },
+ "shoal-cave/low-tide": {
+  "horde": {
+   "zubat": {
+    "min": 17,
+    "max": 17,
+    "rarity": 120
+   },
+   "spheal": {
+    "min": 17,
+    "max": 17,
+    "rarity": 80
+   }
+  }
+ },
+ "shoal-cave/b1f": {
+  "horde": {
+   "zubat": {
+    "min": 17,
+    "max": 17,
+    "rarity": 120
+   },
+   "spheal": {
+    "min": 17,
+    "max": 17,
+    "rarity": 70
+   }
+  }
+ },
+ "shoal-cave/b2f": {
+  "horde": {
+   "zubat": {
+    "min": 17,
+    "max": 17,
+    "rarity": 120
+   },
+   "spheal": {
+    "min": 17,
+    "max": 17,
+    "rarity": 70
+   }
+  }
+ },
+ "mirage-spot-island/west-of-dewford-town": {
+  "walk": {
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "venomoth": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-island/west-of-route-104": {
+  "walk": {
+   "venomoth": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "darmanitan-standard": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-island/route-114": {
+  "walk": {
+   "darmanitan-standard": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "larvesta": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-island/route-124": {
+  "walk": {
+   "venomoth": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "persian": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-island/route-132": {
+  "walk": {
+   "munna": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "ditto": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-island/south-of-route-134": {
+  "walk": {
+   "venomoth": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "maractus": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 38,
+    "max": 38,
+    "rarity": 170
+   },
+   "binacle": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-island/south-of-pacifidlog": {
+  "walk": {
+   "audino": {
+    "min": 36,
+    "max": 38,
+    "rarity": 180
+   },
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 38,
+    "max": 38,
+    "rarity": 170
+   },
+   "binacle": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-island/east-of-shoal-cave": {
+  "walk": {
+   "purugly": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "porygon": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-forest/north-of-lilycove": {
+  "walk": {
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "purugly": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "cherrim": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/south-of-route-132": {
+  "walk": {
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "petilil": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "audino": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/east-of-mossdeep": {
+  "walk": {
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "glameow": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "minccino": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/south-of-route-109": {
+  "walk": {
+   "audino": {
+    "min": 36,
+    "max": 38,
+    "rarity": 180
+   },
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/north-of-route-124": {
+  "walk": {
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "purugly": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "vulpix": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/west-of-route-114": {
+  "walk": {
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "sunkern": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "purugly": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "petilil": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-forest/west-of-route-105": {
+  "walk": {
+   "forretress": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "happiny": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 36,
+    "max": 38,
+    "rarity": 200
+   }
+  }
+ },
+ "mirage-spot-forest/south-of-route-111": {
+  "walk": {
+   "kricketune": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "larvesta": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-cave/south-of-pacifidlog": {
+  "walk": {
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "cofagrigus": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "slowpoke": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-cave/north-of-route-132": {
+  "walk": {
+   "ditto": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   },
+   "excadrill": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   }
+  }
+ },
+ "mirage-spot-cave/north-of-fallarbor": {
+  "walk": {
+   "slowpoke": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   },
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   }
+  }
+ },
+ "mirage-spot-cave/north-of-fortree": {
+  "walk": {
+   "klink": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "excadrill": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "onix": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-cave/south-east-of-route-129": {
+  "walk": {
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "onix": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 35,
+    "max": 38,
+    "rarity": 170
+   },
+   "boldore": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-cave/south-of-route-107": {
+  "walk": {
+   "unown": {
+    "min": 36,
+    "max": 38,
+    "rarity": 200
+   }
+  }
+ },
+ "mirage-spot-cave/north-of-route-124": {
+  "walk": {
+   "klink": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "cofagrigus": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 35,
+    "max": 38,
+    "rarity": 170
+   },
+   "boldore": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-cave/west-of-rustburo": {
+  "walk": {
+   "klink": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "tynamo": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 35,
+    "max": 38,
+    "rarity": 170
+   },
+   "boldore": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-mountain/east-of-mossdeep": {
+  "walk": {
+   "audino": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "happiny": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "tangela": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-mountain/north-of-mossdeep": {
+  "walk": {
+   "darmanitan-standard": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "magby": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-mountain/south-east-of-route-129": {
+  "walk": {
+   "xatu": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "munna": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "porygon": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  },
+  "rock-smash": {
+   "graveler": {
+    "min": 35,
+    "max": 38,
+    "rarity": 170
+   },
+   "crustle": {
+    "min": 37,
+    "max": 37,
+    "rarity": 30
+   }
+  }
+ },
+ "mirage-spot-mountain/north-of-lilycove": {
+  "walk": {
+   "forretress": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "donphan": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "kricketune": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "rufflet": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-mountain/west-of-route-104": {
+  "walk": {
+   "forretress": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "donphan": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "kricketune": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "stantler": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-mountain/south-of-route-129": {
+  "walk": {
+   "zebstrika": {
+    "min": 36,
+    "max": 38,
+    "rarity": 120
+   },
+   "elekid": {
+    "min": 36,
+    "max": 38,
+    "rarity": 80
+   }
+  }
+ },
+ "mirage-spot-mountain/south-of-route-131": {
+  "walk": {
+   "forretress": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "donphan": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "kricketune": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "girafarig": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ },
+ "mirage-spot-mountain/north-east-of-route-125": {
+  "walk": {
+   "forretress": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "donphan": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "kricketune": {
+    "min": 36,
+    "max": 38,
+    "rarity": 60
+   },
+   "vullaby": {
+    "min": 36,
+    "max": 38,
+    "rarity": 20
+   }
+  }
+ }
+}

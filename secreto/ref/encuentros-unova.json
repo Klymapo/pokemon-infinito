@@ -1,0 +1,9190 @@
+{
+ "striaton-city": {
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   },
+   "corphish": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 90
+   },
+   "crawdaunt": {
+    "min": 50,
+    "max": 60,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 90
+   }
+  }
+ },
+ "castelia-city": {
+  "dark-grass": {
+   "rattata": {
+    "min": 16,
+    "max": 17,
+    "rarity": 60
+   },
+   "cottonee": {
+    "min": 16,
+    "max": 18,
+    "rarity": 35
+   },
+   "pidove": {
+    "min": 16,
+    "max": 17,
+    "rarity": 30
+   },
+   "buneary": {
+    "min": 16,
+    "max": 17,
+    "rarity": 15
+   },
+   "eevee": {
+    "min": 19,
+    "max": 19,
+    "rarity": 10
+   },
+   "petilil": {
+    "min": 16,
+    "max": 18,
+    "rarity": 35
+   },
+   "skitty": {
+    "min": 16,
+    "max": 17,
+    "rarity": 15
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 15,
+    "max": 18,
+    "rarity": 180
+   },
+   "lopunny": {
+    "min": 18,
+    "max": 18,
+    "rarity": 5
+   },
+   "whimsicott": {
+    "min": 18,
+    "max": 18,
+    "rarity": 5
+   },
+   "delcatty": {
+    "min": 18,
+    "max": 18,
+    "rarity": 5
+   },
+   "lilligant": {
+    "min": 18,
+    "max": 18,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "rattata": {
+    "min": 15,
+    "max": 16,
+    "rarity": 60
+   },
+   "cottonee": {
+    "min": 15,
+    "max": 17,
+    "rarity": 35
+   },
+   "pidove": {
+    "min": 15,
+    "max": 16,
+    "rarity": 30
+   },
+   "buneary": {
+    "min": 15,
+    "max": 16,
+    "rarity": 15
+   },
+   "eevee": {
+    "min": 18,
+    "max": 18,
+    "rarity": 10
+   },
+   "petilil": {
+    "min": 15,
+    "max": 17,
+    "rarity": 35
+   },
+   "skitty": {
+    "min": 15,
+    "max": 16,
+    "rarity": 15
+   }
+  },
+  "gift": {
+   "eevee": {
+    "min": 10,
+    "max": 10,
+    "rarity": 200
+   }
+  }
+ },
+ "icirrus-city": {
+  "super-rod": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 240
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "whiscash": {
+    "min": 50,
+    "max": 60,
+    "rarity": 160
+   }
+  },
+  "surf": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 260
+   }
+  },
+  "surf-spots": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 220
+   },
+   "seismitoad": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "palpitoad": {
+    "min": 54,
+    "max": 57,
+    "rarity": 240
+   },
+   "shelmet": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   },
+   "croagunk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 90
+   },
+   "stunfisk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 120
+   },
+   "karrablast": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   }
+  }
+ },
+ "aspertia-city": {
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   }
+  },
+  "gift": {
+   "snivy": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "tepig": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   },
+   "oshawott": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   }
+  }
+ },
+ "virbank-city": {
+  "super-rod": {
+   "finneon": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "krabby": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "qwilfish": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "super-rod-spots": {
+   "krabby": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "lumineon": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "kingler": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 5,
+    "max": 15,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 5,
+    "max": 15,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 5,
+    "max": 15,
+    "rarity": 10
+   }
+  }
+ },
+ "humilau-city": {
+  "super-rod": {
+   "luvdisc": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "shellder": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "shellder": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "luvdisc": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "cloyster": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 30,
+    "max": 45,
+    "rarity": 130
+   },
+   "staryu": {
+    "min": 30,
+    "max": 45,
+    "rarity": 60
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 45,
+    "rarity": 5
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 45,
+    "rarity": 5
+   }
+  },
+  "surf-spots": {
+   "jellicent-male": {
+    "min": 35,
+    "max": 45,
+    "rarity": 120
+   },
+   "corsola": {
+    "min": 35,
+    "max": 45,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 45,
+    "rarity": 5
+   },
+   "starmie": {
+    "min": 35,
+    "max": 45,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 45,
+    "rarity": 5
+   }
+  },
+  "npc-trade": {
+   "tangrowth": {
+    "min": 45,
+    "max": 45,
+    "rarity": 200
+   }
+  }
+ },
+ "dreamyard": {
+  "dark-grass": {
+   "watchog": {
+    "min": 64,
+    "max": 67,
+    "rarity": 50
+   },
+   "liepard": {
+    "min": 64,
+    "max": 67,
+    "rarity": 50
+   },
+   "raticate": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "jigglypuff": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "munna": {
+    "min": 65,
+    "max": 66,
+    "rarity": 40
+   },
+   "golbat": {
+    "min": 65,
+    "max": 66,
+    "rarity": 20
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 150
+   },
+   "dunsparce": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "wigglytuff": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "crobat": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "musharna": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "watchog": {
+    "min": 56,
+    "max": 59,
+    "rarity": 50
+   },
+   "liepard": {
+    "min": 56,
+    "max": 59,
+    "rarity": 50
+   },
+   "raticate": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "jigglypuff": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "munna": {
+    "min": 57,
+    "max": 58,
+    "rarity": 40
+   },
+   "golbat": {
+    "min": 57,
+    "max": 58,
+    "rarity": 20
+   }
+  },
+  "static": {
+   "latias": {
+    "min": 68,
+    "max": 68,
+    "rarity": 100
+   },
+   "latios": {
+    "min": 68,
+    "max": 68,
+    "rarity": 100
+   }
+  }
+ },
+ "dreamyard/b1f": {
+  "dark-grass": {
+   "raticate": {
+    "min": 64,
+    "max": 67,
+    "rarity": 50
+   },
+   "golbat": {
+    "min": 64,
+    "max": 67,
+    "rarity": 50
+   },
+   "watchog": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "jigglypuff": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "munna": {
+    "min": 65,
+    "max": 66,
+    "rarity": 40
+   },
+   "liepard": {
+    "min": 65,
+    "max": 66,
+    "rarity": 20
+   }
+  }
+ },
+ "pinwheel-forest/outside": {
+  "dark-grass": {
+   "palpitoad": {
+    "min": 64,
+    "max": 65,
+    "rarity": 50
+   },
+   "gurdurr": {
+    "min": 63,
+    "max": 64,
+    "rarity": 80
+   },
+   "toxicroak": {
+    "min": 63,
+    "max": 63,
+    "rarity": 20
+   },
+   "yanma": {
+    "min": 63,
+    "max": 63,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 63,
+    "max": 65,
+    "rarity": 15
+   },
+   "throh": {
+    "min": 63,
+    "max": 65,
+    "rarity": 15
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 54,
+    "max": 57,
+    "rarity": 170
+   },
+   "yanmega": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "seismitoad": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "throh": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   },
+   "sawk": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "palpitoad": {
+    "min": 54,
+    "max": 57,
+    "rarity": 50
+   },
+   "gurdurr": {
+    "min": 54,
+    "max": 56,
+    "rarity": 80
+   },
+   "toxicroak": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "yanma": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 55,
+    "max": 57,
+    "rarity": 15
+   },
+   "throh": {
+    "min": 55,
+    "max": 57,
+    "rarity": 15
+   }
+  }
+ },
+ "pinwheel-forest/inside": {
+  "dark-grass": {
+   "cottonee": {
+    "min": 62,
+    "max": 65,
+    "rarity": 45
+   },
+   "swadloon": {
+    "min": 62,
+    "max": 64,
+    "rarity": 50
+   },
+   "vigoroth": {
+    "min": 63,
+    "max": 65,
+    "rarity": 30
+   },
+   "whirlipede": {
+    "min": 63,
+    "max": 65,
+    "rarity": 30
+   },
+   "petilil": {
+    "min": 62,
+    "max": 65,
+    "rarity": 45
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 54,
+    "max": 64,
+    "rarity": 110
+   },
+   "pansage": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "pansear": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "panpour": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "scolipede": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "slaking": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "whimsicott": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   },
+   "lilligant": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 35,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 35,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 45,
+    "max": 60,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "cottonee": {
+    "min": 54,
+    "max": 57,
+    "rarity": 45
+   },
+   "swadloon": {
+    "min": 54,
+    "max": 56,
+    "rarity": 50
+   },
+   "vigoroth": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "whirlipede": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "petilil": {
+    "min": 54,
+    "max": 57,
+    "rarity": 45
+   }
+  }
+ },
+ "desert-resort/entrance": {
+  "walk": {
+   "sandile": {
+    "min": 18,
+    "max": 19,
+    "rarity": 60
+   },
+   "darumaka": {
+    "min": 18,
+    "max": 19,
+    "rarity": 60
+   },
+   "maractus": {
+    "min": 19,
+    "max": 19,
+    "rarity": 20
+   },
+   "scraggy": {
+    "min": 19,
+    "max": 19,
+    "rarity": 20
+   },
+   "sandshrew": {
+    "min": 19,
+    "max": 20,
+    "rarity": 20
+   },
+   "dwebble": {
+    "min": 19,
+    "max": 21,
+    "rarity": 20
+   }
+  }
+ },
+ "desert-resort": {
+  "walk": {
+   "sandile": {
+    "min": 18,
+    "max": 19,
+    "rarity": 60
+   },
+   "darumaka": {
+    "min": 18,
+    "max": 18,
+    "rarity": 40
+   },
+   "sandshrew": {
+    "min": 19,
+    "max": 20,
+    "rarity": 30
+   },
+   "maractus": {
+    "min": 19,
+    "max": 19,
+    "rarity": 20
+   },
+   "sigilyph": {
+    "min": 19,
+    "max": 19,
+    "rarity": 20
+   },
+   "dwebble": {
+    "min": 19,
+    "max": 21,
+    "rarity": 20
+   },
+   "trapinch": {
+    "min": 21,
+    "max": 21,
+    "rarity": 10
+   }
+  }
+ },
+ "relic-castle/a": {
+  "walk": {
+   "sandile": {
+    "min": 18,
+    "max": 21,
+    "rarity": 80
+   },
+   "yamask": {
+    "min": 18,
+    "max": 21,
+    "rarity": 80
+   },
+   "sandshrew": {
+    "min": 19,
+    "max": 20,
+    "rarity": 40
+   }
+  }
+ },
+ "relic-castle/c": {
+  "walk": {
+   "yamask": {
+    "min": 27,
+    "max": 30,
+    "rarity": 80
+   },
+   "sandile": {
+    "min": 27,
+    "max": 28,
+    "rarity": 60
+   },
+   "sandslash": {
+    "min": 28,
+    "max": 29,
+    "rarity": 40
+   },
+   "krokorok": {
+    "min": 29,
+    "max": 30,
+    "rarity": 20
+   }
+  }
+ },
+ "relic-castle/d": {
+  "walk": {
+   "baltoy": {
+    "min": 27,
+    "max": 30,
+    "rarity": 200
+   }
+  },
+  "static": {
+   "volcarona": {
+    "min": 35,
+    "max": 65,
+    "rarity": 400
+   }
+  }
+ },
+ "chargestone-cave/1f": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 25,
+    "max": 28,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "joltik": {
+    "min": 25,
+    "max": 28,
+    "rarity": 78
+   },
+   "klink": {
+    "min": 26,
+    "max": 28,
+    "rarity": 48
+   },
+   "nosepass": {
+    "min": 27,
+    "max": 27,
+    "rarity": 20
+   },
+   "ferroseed": {
+    "min": 26,
+    "max": 27,
+    "rarity": 40
+   },
+   "boldore": {
+    "min": 25,
+    "max": 25,
+    "rarity": 10
+   },
+   "tynamo": {
+    "min": 28,
+    "max": 28,
+    "rarity": 4
+   }
+  }
+ },
+ "chargestone-cave/b1f": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 28,
+    "max": 31,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "joltik": {
+    "min": 28,
+    "max": 31,
+    "rarity": 78
+   },
+   "klink": {
+    "min": 29,
+    "max": 31,
+    "rarity": 48
+   },
+   "nosepass": {
+    "min": 30,
+    "max": 30,
+    "rarity": 20
+   },
+   "ferroseed": {
+    "min": 29,
+    "max": 30,
+    "rarity": 40
+   },
+   "boldore": {
+    "min": 28,
+    "max": 28,
+    "rarity": 10
+   },
+   "tynamo": {
+    "min": 31,
+    "max": 31,
+    "rarity": 4
+   }
+  }
+ },
+ "chargestone-cave/b2f": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 28,
+    "max": 31,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "joltik": {
+    "min": 28,
+    "max": 31,
+    "rarity": 72
+   },
+   "klink": {
+    "min": 29,
+    "max": 31,
+    "rarity": 42
+   },
+   "nosepass": {
+    "min": 30,
+    "max": 30,
+    "rarity": 20
+   },
+   "ferroseed": {
+    "min": 30,
+    "max": 31,
+    "rarity": 40
+   },
+   "boldore": {
+    "min": 28,
+    "max": 28,
+    "rarity": 10
+   },
+   "tynamo": {
+    "min": 31,
+    "max": 31,
+    "rarity": 16
+   }
+  }
+ },
+ "twist-mountain/b1f-3f": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 55,
+    "rarity": 240
+   },
+   "beartic": {
+    "min": 54,
+    "max": 56,
+    "rarity": 90
+   },
+   "gurdurr": {
+    "min": 55,
+    "max": 55,
+    "rarity": 100
+   },
+   "heatmor": {
+    "min": 55,
+    "max": 56,
+    "rarity": 70
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "durant": {
+    "min": 56,
+    "max": 57,
+    "rarity": 30
+   },
+   "cryogonal": {
+    "min": 56,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  }
+ },
+ "dragonspiral-tower/entrance": {
+  "dark-grass": {
+   "vanillish": {
+    "min": 63,
+    "max": 65,
+    "rarity": 50
+   },
+   "sawsbuck": {
+    "min": 63,
+    "max": 65,
+    "rarity": 60
+   },
+   "mienshao": {
+    "min": 64,
+    "max": 66,
+    "rarity": 58
+   },
+   "beartic": {
+    "min": 65,
+    "max": 66,
+    "rarity": 30
+   },
+   "mienfoo": {
+    "min": 66,
+    "max": 66,
+    "rarity": 2
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 55,
+    "max": 58,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 56,
+    "max": 56,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 58,
+    "max": 58,
+    "rarity": 30
+   },
+   "vanilluxe": {
+    "min": 58,
+    "max": 58,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "tranquill": {
+    "min": 55,
+    "max": 58,
+    "rarity": 210
+   },
+   "vanillish": {
+    "min": 55,
+    "max": 57,
+    "rarity": 50
+   },
+   "sawsbuck": {
+    "min": 55,
+    "max": 58,
+    "rarity": 90
+   },
+   "mienshao": {
+    "min": 56,
+    "max": 58,
+    "rarity": 60
+   },
+   "beartic": {
+    "min": 57,
+    "max": 58,
+    "rarity": 30
+   },
+   "druddigon": {
+    "min": 58,
+    "max": 58,
+    "rarity": 30
+   }
+  }
+ },
+ "dragonspiral-tower/outside": {
+  "dark-grass": {
+   "tranquill": {
+    "min": 63,
+    "max": 66,
+    "rarity": 210
+   },
+   "vanillish": {
+    "min": 63,
+    "max": 65,
+    "rarity": 50
+   },
+   "sawsbuck": {
+    "min": 63,
+    "max": 66,
+    "rarity": 90
+   },
+   "mienshao": {
+    "min": 64,
+    "max": 66,
+    "rarity": 50
+   },
+   "beartic": {
+    "min": 65,
+    "max": 66,
+    "rarity": 30
+   },
+   "druddigon": {
+    "min": 66,
+    "max": 66,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 55,
+    "max": 57,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 56,
+    "max": 56,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 57,
+    "max": 57,
+    "rarity": 30
+   },
+   "vanilluxe": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "dratini": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "dratini": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "dragonair": {
+    "min": 50,
+    "max": 70,
+    "rarity": 38
+   },
+   "dragonite": {
+    "min": 50,
+    "max": 70,
+    "rarity": 2
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "walk": {
+   "tranquill": {
+    "min": 55,
+    "max": 58,
+    "rarity": 210
+   },
+   "vanillish": {
+    "min": 55,
+    "max": 57,
+    "rarity": 50
+   },
+   "sawsbuck": {
+    "min": 55,
+    "max": 58,
+    "rarity": 90
+   },
+   "mienshao": {
+    "min": 56,
+    "max": 58,
+    "rarity": 50
+   },
+   "beartic": {
+    "min": 57,
+    "max": 58,
+    "rarity": 30
+   },
+   "druddigon": {
+    "min": 58,
+    "max": 58,
+    "rarity": 10
+   }
+  }
+ },
+ "dragonspiral-tower/1f": {
+  "walk": {
+   "golurk": {
+    "min": 55,
+    "max": 58,
+    "rarity": 100
+   },
+   "mienshao": {
+    "min": 55,
+    "max": 55,
+    "rarity": 40
+   },
+   "druddigon": {
+    "min": 56,
+    "max": 58,
+    "rarity": 60
+   }
+  }
+ },
+ "dragonspiral-tower/2f": {
+  "walk": {
+   "golurk": {
+    "min": 55,
+    "max": 58,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-victory-road/7f": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 47,
+    "max": 50,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-71": {
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 55,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 60,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 35,
+    "max": 50,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 40,
+    "max": 50,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "banette": {
+    "min": 47,
+    "max": 50,
+    "rarity": 140
+   },
+   "golurk": {
+    "min": 48,
+    "max": 50,
+    "rarity": 60
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-72": {
+  "dark-grass": {
+   "cottonee": {
+    "min": 52,
+    "max": 55,
+    "rarity": 70
+   },
+   "roselia": {
+    "min": 53,
+    "max": 55,
+    "rarity": 60
+   },
+   "petilil": {
+    "min": 52,
+    "max": 55,
+    "rarity": 70
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "dunsparce": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "whimsicott": {
+    "min": 50,
+    "max": 50,
+    "rarity": 5
+   },
+   "roserade": {
+    "min": 50,
+    "max": 50,
+    "rarity": 10
+   },
+   "lilligant": {
+    "min": 50,
+    "max": 50,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "cottonee": {
+    "min": 47,
+    "max": 50,
+    "rarity": 70
+   },
+   "roselia": {
+    "min": 48,
+    "max": 50,
+    "rarity": 60
+   },
+   "petilil": {
+    "min": 47,
+    "max": 50,
+    "rarity": 70
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-73": {
+  "dark-grass": {
+   "tranquill": {
+    "min": 52,
+    "max": 55,
+    "rarity": 160
+   },
+   "altaria": {
+    "min": 54,
+    "max": 55,
+    "rarity": 40
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 47,
+    "max": 50,
+    "rarity": 170
+   },
+   "dunsparce": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 50,
+    "max": 50,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 40,
+    "max": 50,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "tranquill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "altaria": {
+    "min": 49,
+    "max": 50,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-74": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 41,
+    "max": 44,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 41,
+    "max": 41,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 41,
+    "max": 44,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 43,
+    "max": 44,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-75": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 47,
+    "max": 47,
+    "rarity": 40
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 35,
+    "max": 60,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 70,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 40,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 49,
+    "max": 50,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-76": {
+  "dark-grass": {
+   "gurdurr": {
+    "min": 52,
+    "max": 55,
+    "rarity": 140
+   },
+   "throh": {
+    "min": 53,
+    "max": 55,
+    "rarity": 60
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 47,
+    "max": 50,
+    "rarity": 190
+   },
+   "sawk": {
+    "min": 50,
+    "max": 50,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "gurdurr": {
+    "min": 47,
+    "max": 50,
+    "rarity": 140
+   },
+   "throh": {
+    "min": 48,
+    "max": 50,
+    "rarity": 60
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-77": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 47,
+    "max": 47,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "druddigon": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "zweilous": {
+    "min": 49,
+    "max": 50,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-78": {
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 35,
+    "max": 50,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 40,
+    "max": 50,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "banette": {
+    "min": 47,
+    "max": 50,
+    "rarity": 140
+   },
+   "golurk": {
+    "min": 48,
+    "max": 50,
+    "rarity": 60
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-79": {
+  "dark-grass": {
+   "tranquill": {
+    "min": 52,
+    "max": 55,
+    "rarity": 160
+   },
+   "altaria": {
+    "min": 54,
+    "max": 55,
+    "rarity": 40
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 47,
+    "max": 50,
+    "rarity": 170
+   },
+   "dunsparce": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 50,
+    "max": 50,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 40,
+    "max": 50,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "tranquill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "altaria": {
+    "min": 49,
+    "max": 50,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-victory-road-2/unknown-area-80": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 47,
+    "max": 47,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "druddigon": {
+    "min": 47,
+    "max": 50,
+    "rarity": 160
+   },
+   "zweilous": {
+    "min": 49,
+    "max": 50,
+    "rarity": 40
+   }
+  }
+ },
+ "giant-chasm/outside": {
+  "dark-grass": {
+   "tangela": {
+    "min": 49,
+    "max": 50,
+    "rarity": 60
+   },
+   "pelipper": {
+    "min": 50,
+    "max": 50,
+    "rarity": 40
+   },
+   "lunatone": {
+    "min": 50,
+    "max": 50,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 51,
+    "max": 51,
+    "rarity": 20
+   },
+   "clefairy": {
+    "min": 50,
+    "max": 52,
+    "rarity": 30
+   },
+   "vanillish": {
+    "min": 50,
+    "max": 52,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 49,
+    "max": 49,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 44,
+    "max": 47,
+    "rarity": 170
+   },
+   "clefable": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "vanilluxe": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "tangrowth": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "tangela": {
+    "min": 44,
+    "max": 45,
+    "rarity": 60
+   },
+   "pelipper": {
+    "min": 45,
+    "max": 45,
+    "rarity": 40
+   },
+   "lunatone": {
+    "min": 45,
+    "max": 45,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "clefairy": {
+    "min": 45,
+    "max": 47,
+    "rarity": 30
+   },
+   "vanillish": {
+    "min": 45,
+    "max": 47,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 44,
+    "max": 44,
+    "rarity": 10
+   }
+  }
+ },
+ "giant-chasm": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 44,
+    "max": 47,
+    "rarity": 200
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   },
+   "seel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "seel": {
+    "min": 35,
+    "max": 50,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   },
+   "dewgong": {
+    "min": 40,
+    "max": 50,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 35,
+    "max": 50,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "sneasel": {
+    "min": 44,
+    "max": 44,
+    "rarity": 40
+   },
+   "piloswine": {
+    "min": 44,
+    "max": 46,
+    "rarity": 50
+   },
+   "vanillish": {
+    "min": 45,
+    "max": 47,
+    "rarity": 30
+   },
+   "clefairy": {
+    "min": 44,
+    "max": 46,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   }
+  }
+ },
+ "giant-chasm/forest": {
+  "dark-grass": {
+   "piloswine": {
+    "min": 49,
+    "max": 51,
+    "rarity": 60
+   },
+   "clefairy": {
+    "min": 50,
+    "max": 50,
+    "rarity": 40
+   },
+   "ditto": {
+    "min": 50,
+    "max": 52,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 51,
+    "max": 51,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 51,
+    "max": 51,
+    "rarity": 20
+   },
+   "metang": {
+    "min": 50,
+    "max": 52,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 49,
+    "max": 49,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 44,
+    "max": 47,
+    "rarity": 170
+   },
+   "mamoswine": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "clefable": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "metagross": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "piloswine": {
+    "min": 44,
+    "max": 46,
+    "rarity": 60
+   },
+   "clefairy": {
+    "min": 45,
+    "max": 45,
+    "rarity": 40
+   },
+   "ditto": {
+    "min": 45,
+    "max": 47,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "metang": {
+    "min": 45,
+    "max": 47,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 44,
+    "max": 44,
+    "rarity": 10
+   }
+  }
+ },
+ "giant-chasm/forest-cave": {
+  "dark-grass": {
+   "piloswine": {
+    "min": 49,
+    "max": 51,
+    "rarity": 60
+   },
+   "clefairy": {
+    "min": 50,
+    "max": 50,
+    "rarity": 40
+   },
+   "ditto": {
+    "min": 50,
+    "max": 52,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 51,
+    "max": 51,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 51,
+    "max": 51,
+    "rarity": 20
+   },
+   "metang": {
+    "min": 50,
+    "max": 52,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 49,
+    "max": 49,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 44,
+    "max": 47,
+    "rarity": 170
+   },
+   "mamoswine": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "clefable": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   },
+   "metagross": {
+    "min": 47,
+    "max": 47,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "piloswine": {
+    "min": 44,
+    "max": 46,
+    "rarity": 60
+   },
+   "clefairy": {
+    "min": 45,
+    "max": 45,
+    "rarity": 40
+   },
+   "ditto": {
+    "min": 45,
+    "max": 47,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "metang": {
+    "min": 45,
+    "max": 47,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 44,
+    "max": 44,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "kyurem": {
+    "min": 70,
+    "max": 70,
+    "rarity": 200
+   }
+  }
+ },
+ "castelia-sewers": {
+  "super-rod": {
+   "grimer": {
+    "min": 40,
+    "max": 70,
+    "rarity": 200
+   }
+  },
+  "super-rod-spots": {
+   "grimer": {
+    "min": 40,
+    "max": 60,
+    "rarity": 160
+   },
+   "muk": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "grimer": {
+    "min": 5,
+    "max": 15,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "grimer": {
+    "min": 5,
+    "max": 20,
+    "rarity": 190
+   },
+   "muk": {
+    "min": 5,
+    "max": 20,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "rattata": {
+    "min": 14,
+    "max": 17,
+    "rarity": 90
+   },
+   "zubat": {
+    "min": 14,
+    "max": 17,
+    "rarity": 90
+   },
+   "grimer": {
+    "min": 15,
+    "max": 17,
+    "rarity": 20
+   }
+  }
+ },
+ "castelia-sewers/unknown-area-38": {
+  "super-rod": {
+   "grimer": {
+    "min": 40,
+    "max": 70,
+    "rarity": 200
+   }
+  },
+  "super-rod-spots": {
+   "grimer": {
+    "min": 60,
+    "max": 60,
+    "rarity": 160
+   },
+   "muk": {
+    "min": 70,
+    "max": 70,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "grimer": {
+    "min": 5,
+    "max": 15,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "grimer": {
+    "min": 5,
+    "max": 20,
+    "rarity": 190
+   },
+   "muk": {
+    "min": 5,
+    "max": 20,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "rattata": {
+    "min": 14,
+    "max": 17,
+    "rarity": 90
+   },
+   "zubat": {
+    "min": 14,
+    "max": 17,
+    "rarity": 90
+   },
+   "grimer": {
+    "min": 15,
+    "max": 17,
+    "rarity": 20
+   }
+  }
+ },
+ "p2-laboratory": {
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 170
+   },
+   "magnezone": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "klinklang": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "stoutland": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "finneon": {
+    "min": 35,
+    "max": 55,
+    "rarity": 90
+   },
+   "horsea": {
+    "min": 35,
+    "max": 55,
+    "rarity": 110
+   }
+  },
+  "super-rod-spots": {
+   "seadra": {
+    "min": 35,
+    "max": 60,
+    "rarity": 80
+   },
+   "qwilfish": {
+    "min": 35,
+    "max": 60,
+    "rarity": 80
+   },
+   "lumineon": {
+    "min": 35,
+    "max": 70,
+    "rarity": 30
+   },
+   "kingdra": {
+    "min": 45,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 45,
+    "max": 60,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 45,
+    "max": 60,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "watchog": {
+    "min": 56,
+    "max": 56,
+    "rarity": 40
+   },
+   "herdier": {
+    "min": 56,
+    "max": 56,
+    "rarity": 40
+   },
+   "weezing": {
+    "min": 57,
+    "max": 58,
+    "rarity": 30
+   },
+   "magneton": {
+    "min": 57,
+    "max": 59,
+    "rarity": 30
+   },
+   "klang": {
+    "min": 57,
+    "max": 59,
+    "rarity": 30
+   },
+   "scrafty": {
+    "min": 57,
+    "max": 58,
+    "rarity": 30
+   }
+  }
+ },
+ "undella-bay": {
+  "super-rod": {
+   "chinchou": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "remoraid": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "remoraid": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "chinchou": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "lanturn": {
+    "min": 50,
+    "max": 70,
+    "rarity": 30
+   },
+   "octillery": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 130
+   },
+   "mantyke": {
+    "min": 25,
+    "max": 40,
+    "rarity": 180
+   },
+   "spheal": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "remoraid": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   }
+  },
+  "surf-spots": {
+   "jellicent-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 360
+   },
+   "wailmer": {
+    "min": 25,
+    "max": 40,
+    "rarity": 300
+   },
+   "sealeo": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "mantine": {
+    "min": 30,
+    "max": 40,
+    "rarity": 30
+   },
+   "walrein": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "wailord": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "jellicent-male": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "floccesy-ranch/outer": {
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   },
+   "azurill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   },
+   "marill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "azumarill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   }
+  }
+ },
+ "floccesy-ranch/inner": {
+  "grass-spots": {
+   "audino": {
+    "min": 4,
+    "max": 7,
+    "rarity": 180
+   },
+   "dunsparce": {
+    "min": 5,
+    "max": 5,
+    "rarity": 20
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   },
+   "azurill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   },
+   "marill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "azumarill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   }
+  },
+  "walk": {
+   "lillipup": {
+    "min": 4,
+    "max": 7,
+    "rarity": 80
+   },
+   "azurill": {
+    "min": 5,
+    "max": 5,
+    "rarity": 40
+   },
+   "patrat": {
+    "min": 5,
+    "max": 5,
+    "rarity": 20
+   },
+   "mareep": {
+    "min": 5,
+    "max": 5,
+    "rarity": 20
+   },
+   "psyduck": {
+    "min": 5,
+    "max": 5,
+    "rarity": 20
+   },
+   "pidove": {
+    "min": 7,
+    "max": 7,
+    "rarity": 10
+   },
+   "riolu": {
+    "min": 5,
+    "max": 7,
+    "rarity": 10
+   }
+  }
+ },
+ "virbank-complex/outer": {
+  "grass-spots": {
+   "audino": {
+    "min": 10,
+    "max": 13,
+    "rarity": 200
+   }
+  },
+  "super-rod": {
+   "finneon": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "krabby": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "qwilfish": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "super-rod-spots": {
+   "krabby": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "lumineon": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "kingler": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 5,
+    "max": 15,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 5,
+    "max": 15,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 5,
+    "max": 15,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "patrat": {
+    "min": 10,
+    "max": 13,
+    "rarity": 70
+   },
+   "pidove": {
+    "min": 10,
+    "max": 13,
+    "rarity": 70
+   },
+   "magby": {
+    "min": 10,
+    "max": 11,
+    "rarity": 15
+   },
+   "magnemite": {
+    "min": 10,
+    "max": 11,
+    "rarity": 30
+   },
+   "elekid": {
+    "min": 10,
+    "max": 11,
+    "rarity": 15
+   }
+  }
+ },
+ "virbank-complex/inner": {
+  "dark-grass": {
+   "magby": {
+    "min": 11,
+    "max": 13,
+    "rarity": 25
+   },
+   "magnemite": {
+    "min": 11,
+    "max": 13,
+    "rarity": 50
+   },
+   "patrat": {
+    "min": 11,
+    "max": 14,
+    "rarity": 30
+   },
+   "koffing": {
+    "min": 11,
+    "max": 14,
+    "rarity": 30
+   },
+   "growlithe": {
+    "min": 12,
+    "max": 14,
+    "rarity": 40
+   },
+   "elekid": {
+    "min": 11,
+    "max": 13,
+    "rarity": 25
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 10,
+    "max": 13,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "magby": {
+    "min": 10,
+    "max": 12,
+    "rarity": 25
+   },
+   "magnemite": {
+    "min": 10,
+    "max": 12,
+    "rarity": 50
+   },
+   "patrat": {
+    "min": 10,
+    "max": 13,
+    "rarity": 30
+   },
+   "koffing": {
+    "min": 10,
+    "max": 13,
+    "rarity": 30
+   },
+   "growlithe": {
+    "min": 11,
+    "max": 13,
+    "rarity": 40
+   },
+   "elekid": {
+    "min": 10,
+    "max": 12,
+    "rarity": 25
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-48": {
+  "dark-grass": {
+   "skorupi": {
+    "min": 35,
+    "max": 37,
+    "rarity": 60
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 37,
+    "rarity": 30
+   },
+   "skarmory": {
+    "min": 36,
+    "max": 38,
+    "rarity": 30
+   },
+   "drifblim": {
+    "min": 36,
+    "max": 37,
+    "rarity": 40
+   },
+   "vibrava": {
+    "min": 38,
+    "max": 38,
+    "rarity": 10
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 37,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 31,
+    "max": 34,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "skorupi": {
+    "min": 31,
+    "max": 33,
+    "rarity": 60
+   },
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "trapinch": {
+    "min": 32,
+    "max": 34,
+    "rarity": 30
+   },
+   "drifblim": {
+    "min": 32,
+    "max": 33,
+    "rarity": 40
+   },
+   "skarmory": {
+    "min": 34,
+    "max": 34,
+    "rarity": 10
+   },
+   "grumpig": {
+    "min": 33,
+    "max": 33,
+    "rarity": 10
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 33,
+    "max": 33,
+    "rarity": 10
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-49": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-50": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 5
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-51": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-52": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-53": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-54": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-55": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-56": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 5
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-57": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-58": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-59": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "reversal-mountain/unknown-area-60": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 32,
+    "max": 35,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "spoink": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "woobat": {
+    "min": 32,
+    "max": 35,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 32,
+    "max": 35,
+    "rarity": 50
+   },
+   "skorupi": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "grumpig": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   },
+   "numel": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "camerupt": {
+    "min": 35,
+    "max": 35,
+    "rarity": 5
+   }
+  }
+ },
+ "strange-house/1f": {
+  "walk": {
+   "litwick": {
+    "min": 31,
+    "max": 33,
+    "rarity": 60
+   },
+   "gothita": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "raticate": {
+    "min": 32,
+    "max": 33,
+    "rarity": 30
+   },
+   "golbat": {
+    "min": 32,
+    "max": 33,
+    "rarity": 30
+   },
+   "banette": {
+    "min": 32,
+    "max": 34,
+    "rarity": 30
+   },
+   "gothorita": {
+    "min": 34,
+    "max": 34,
+    "rarity": 5
+   },
+   "solosis": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "duosion": {
+    "min": 34,
+    "max": 34,
+    "rarity": 5
+   }
+  }
+ },
+ "strange-house/b1f": {
+  "walk": {
+   "litwick": {
+    "min": 31,
+    "max": 31,
+    "rarity": 40
+   },
+   "gothita": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "raticate": {
+    "min": 32,
+    "max": 33,
+    "rarity": 30
+   },
+   "golbat": {
+    "min": 32,
+    "max": 33,
+    "rarity": 30
+   },
+   "gothorita": {
+    "min": 33,
+    "max": 34,
+    "rarity": 15
+   },
+   "banette": {
+    "min": 32,
+    "max": 34,
+    "rarity": 30
+   },
+   "solosis": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "duosion": {
+    "min": 33,
+    "max": 34,
+    "rarity": 15
+   }
+  }
+ },
+ "relic-passage/castelia-sewers-entrance": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 16,
+    "max": 19,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 16,
+    "max": 16,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "roggenrola": {
+    "min": 16,
+    "max": 18,
+    "rarity": 68
+   },
+   "woobat": {
+    "min": 16,
+    "max": 18,
+    "rarity": 62
+   },
+   "timburr": {
+    "min": 17,
+    "max": 18,
+    "rarity": 40
+   },
+   "rattata": {
+    "min": 17,
+    "max": 17,
+    "rarity": 20
+   },
+   "onix": {
+    "min": 18,
+    "max": 18,
+    "rarity": 10
+   }
+  }
+ },
+ "relic-passage/relic-castle-entrance": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 27,
+    "max": 30,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 27,
+    "max": 27,
+    "rarity": 40
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 10,
+    "max": 30,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 10,
+    "max": 30,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 10,
+    "max": 30,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 27,
+    "max": 30,
+    "rarity": 68
+   },
+   "woobat": {
+    "min": 27,
+    "max": 30,
+    "rarity": 62
+   },
+   "gurdurr": {
+    "min": 28,
+    "max": 30,
+    "rarity": 40
+   },
+   "raticate": {
+    "min": 29,
+    "max": 29,
+    "rarity": 20
+   },
+   "onix": {
+    "min": 30,
+    "max": 30,
+    "rarity": 10
+   }
+  }
+ },
+ "relic-passage/pwt-entrance": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 27,
+    "max": 30,
+    "rarity": 160
+   },
+   "onix": {
+    "min": 27,
+    "max": 27,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 27,
+    "max": 30,
+    "rarity": 78
+   },
+   "woobat": {
+    "min": 27,
+    "max": 30,
+    "rarity": 72
+   },
+   "gurdurr": {
+    "min": 28,
+    "max": 30,
+    "rarity": 40
+   },
+   "onix": {
+    "min": 30,
+    "max": 30,
+    "rarity": 10
+   }
+  }
+ },
+ "clay-tunnel": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 50,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 50,
+    "max": 60,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 60,
+    "max": 60,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 56,
+    "rarity": 70
+   },
+   "durant": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "lairon": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "nosepass": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  }
+ },
+ "underground-ruins": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 56,
+    "rarity": 70
+   },
+   "durant": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "lairon": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "nosepass": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "regirock": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   },
+   "regice": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   },
+   "registeel": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   }
+  }
+ },
+ "rocky-mountain-room": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 56,
+    "rarity": 70
+   },
+   "durant": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "lairon": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "nosepass": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  }
+ },
+ "glacier-room": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 56,
+    "rarity": 70
+   },
+   "durant": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "lairon": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "nosepass": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  }
+ },
+ "iron-room": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "onix": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "steelix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 54,
+    "max": 56,
+    "rarity": 70
+   },
+   "durant": {
+    "min": 54,
+    "max": 54,
+    "rarity": 40
+   },
+   "woobat": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "lairon": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "nosepass": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "onix": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   }
+  }
+ },
+ "seaside-cave/1f": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 34,
+    "max": 37,
+    "rarity": 200
+   }
+  },
+  "super-rod": {
+   "luvdisc": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "shellder": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "shellder": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "luvdisc": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "cloyster": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 140
+   },
+   "seel": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   }
+  },
+  "surf-spots": {
+   "seel": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "jellicent-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "dewgong": {
+    "min": 30,
+    "max": 40,
+    "rarity": 20
+   }
+  },
+  "walk": {
+   "woobat": {
+    "min": 34,
+    "max": 36,
+    "rarity": 70
+   },
+   "golduck": {
+    "min": 34,
+    "max": 36,
+    "rarity": 70
+   },
+   "seel": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "boldore": {
+    "min": 35,
+    "max": 37,
+    "rarity": 30
+   },
+   "tynamo": {
+    "min": 37,
+    "max": 37,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "crustle": {
+    "min": 42,
+    "max": 42,
+    "rarity": 200
+   }
+  }
+ },
+ "seaside-cave/b1f": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 39,
+    "max": 42,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "woobat": {
+    "min": 39,
+    "max": 41,
+    "rarity": 70
+   },
+   "boldore": {
+    "min": 39,
+    "max": 42,
+    "rarity": 70
+   },
+   "golduck": {
+    "min": 40,
+    "max": 40,
+    "rarity": 40
+   },
+   "eelektrik": {
+    "min": 42,
+    "max": 42,
+    "rarity": 10
+   },
+   "shuckle": {
+    "min": 41,
+    "max": 41,
+    "rarity": 10
+   }
+  }
+ },
+ "nature-sanctuary": {
+  "dark-grass": {
+   "nuzleaf": {
+    "min": 64,
+    "max": 65,
+    "rarity": 60
+   },
+   "altaria": {
+    "min": 64,
+    "max": 64,
+    "rarity": 40
+   },
+   "golduck": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "noctowl": {
+    "min": 66,
+    "max": 66,
+    "rarity": 20
+   },
+   "girafarig": {
+    "min": 66,
+    "max": 67,
+    "rarity": 30
+   },
+   "fraxure": {
+    "min": 65,
+    "max": 67,
+    "rarity": 20
+   },
+   "kecleon": {
+    "min": 65,
+    "max": 67,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 170
+   },
+   "dunsparce": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "shiftry": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "magikarp": {
+    "min": 1,
+    "max": 100,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "magikarp": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "gyarados": {
+    "min": 1,
+    "max": 100,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 45,
+    "max": 60,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 35
+   },
+   "floatzel": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "nuzleaf": {
+    "min": 56,
+    "max": 57,
+    "rarity": 60
+   },
+   "altaria": {
+    "min": 56,
+    "max": 56,
+    "rarity": 40
+   },
+   "golduck": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "noctowl": {
+    "min": 58,
+    "max": 58,
+    "rarity": 20
+   },
+   "girafarig": {
+    "min": 58,
+    "max": 59,
+    "rarity": 30
+   },
+   "fraxure": {
+    "min": 57,
+    "max": 59,
+    "rarity": 20
+   },
+   "kecleon": {
+    "min": 57,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "haxorus": {
+    "min": 60,
+    "max": 60,
+    "rarity": 200
+   }
+  }
+ },
+ "driftveil-drawbridge": {
+  "bridge-spots": {
+   "ducklett": {
+    "min": 23,
+    "max": 26,
+    "rarity": 200
+   }
+  }
+ },
+ "village-bridge": {
+  "dark-grass": {
+   "golduck": {
+    "min": 40,
+    "max": 42,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 40,
+    "max": 42,
+    "rarity": 70
+   },
+   "zangoose": {
+    "min": 41,
+    "max": 43,
+    "rarity": 30
+   },
+   "seviper": {
+    "min": 41,
+    "max": 43,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 36,
+    "max": 39,
+    "rarity": 150
+   },
+   "emolga": {
+    "min": 37,
+    "max": 37,
+    "rarity": 20
+   },
+   "dunsparce": {
+    "min": 37,
+    "max": 37,
+    "rarity": 20
+   },
+   "azumarill": {
+    "min": 39,
+    "max": 39,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "carvanha": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "carvanha": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "sharpedo": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 30
+   },
+   "azumarill": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "lapras": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "golduck": {
+    "min": 36,
+    "max": 38,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 36,
+    "max": 38,
+    "rarity": 70
+   },
+   "zangoose": {
+    "min": 37,
+    "max": 39,
+    "rarity": 30
+   },
+   "seviper": {
+    "min": 37,
+    "max": 39,
+    "rarity": 30
+   }
+  }
+ },
+ "marvelous-bridge": {
+  "bridge-spots": {
+   "swanna": {
+    "min": 54,
+    "max": 57,
+    "rarity": 200
+   }
+  },
+  "gift": {
+   "magikarp": {
+    "min": 5,
+    "max": 5,
+    "rarity": 200
+   }
+  },
+  "static": {
+   "cresselia": {
+    "min": 68,
+    "max": 68,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-route-1": {
+  "dark-grass": {
+   "watchog": {
+    "min": 64,
+    "max": 67,
+    "rarity": 80
+   },
+   "herdier": {
+    "min": 64,
+    "max": 67,
+    "rarity": 78
+   },
+   "jigglypuff": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "scrafty": {
+    "min": 66,
+    "max": 67,
+    "rarity": 22
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 160
+   },
+   "dunsparce": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "stoutland": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "wigglytuff": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 70,
+    "rarity": 95
+   },
+   "feebas": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 70,
+    "rarity": 95
+   }
+  },
+  "super-rod-spots": {
+   "feebas": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "milotic": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "walk": {
+   "watchog": {
+    "min": 56,
+    "max": 59,
+    "rarity": 80
+   },
+   "herdier": {
+    "min": 56,
+    "max": 59,
+    "rarity": 100
+   },
+   "jigglypuff": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   }
+  }
+ },
+ "unova-route-2": {
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 150
+   },
+   "dunsparce": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "lickilicky": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "stoutland": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   },
+   "wigglytuff": {
+    "min": 59,
+    "max": 59,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "watchog": {
+    "min": 56,
+    "max": 59,
+    "rarity": 60
+   },
+   "herdier": {
+    "min": 56,
+    "max": 59,
+    "rarity": 60
+   },
+   "jigglypuff": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "lickitung": {
+    "min": 58,
+    "max": 58,
+    "rarity": 20
+   },
+   "liepard": {
+    "min": 57,
+    "max": 58,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-route-3": {
+  "dark-grass": {
+   "watchog": {
+    "min": 63,
+    "max": 63,
+    "rarity": 40
+   },
+   "tranquill": {
+    "min": 63,
+    "max": 65,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 64,
+    "max": 66,
+    "rarity": 40
+   },
+   "yanma": {
+    "min": 64,
+    "max": 64,
+    "rarity": 20
+   },
+   "herdier": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   },
+   "purrloin": {
+    "min": 65,
+    "max": 65,
+    "rarity": 20
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 55,
+    "max": 58,
+    "rarity": 170
+   },
+   "yanmega": {
+    "min": 58,
+    "max": 58,
+    "rarity": 10
+   },
+   "unfezant": {
+    "min": 58,
+    "max": 58,
+    "rarity": 10
+   },
+   "stoutland": {
+    "min": 58,
+    "max": 58,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   },
+   "corphish": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "corphish": {
+    "min": 45,
+    "max": 60,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 30
+   },
+   "crawdaunt": {
+    "min": 50,
+    "max": 60,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "watchog": {
+    "min": 55,
+    "max": 55,
+    "rarity": 40
+   },
+   "tranquill": {
+    "min": 55,
+    "max": 57,
+    "rarity": 60
+   },
+   "zebstrika": {
+    "min": 56,
+    "max": 58,
+    "rarity": 40
+   },
+   "yanma": {
+    "min": 56,
+    "max": 56,
+    "rarity": 20
+   },
+   "herdier": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "purrloin": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   }
+  }
+ },
+ "wellspring-cave": {
+  "cave-spots": {
+   "excadrill": {
+    "min": 55,
+    "max": 58,
+    "rarity": 200
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 50,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 50,
+    "max": 60,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 60,
+    "max": 60,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 45,
+    "max": 60,
+    "rarity": 100
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 55,
+    "max": 58,
+    "rarity": 100
+   },
+   "woobat": {
+    "min": 55,
+    "max": 58,
+    "rarity": 100
+   }
+  }
+ },
+ "unova-route-4": {
+  "super-rod": {
+   "finneon": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "clamperl": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "qwilfish": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "super-rod-spots": {
+   "lumineon": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "qwilfish": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "relicanth": {
+    "min": 50,
+    "max": 70,
+    "rarity": 30
+   },
+   "huntail": {
+    "min": 50,
+    "max": 70,
+    "rarity": 5
+   },
+   "gorebyss": {
+    "min": 50,
+    "max": 70,
+    "rarity": 5
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 5,
+    "max": 15,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 5,
+    "max": 20,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 5,
+    "max": 20,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "sandile": {
+    "min": 14,
+    "max": 17,
+    "rarity": 70
+   },
+   "darumaka": {
+    "min": 14,
+    "max": 17,
+    "rarity": 70
+   },
+   "trubbish": {
+    "min": 14,
+    "max": 17,
+    "rarity": 25
+   },
+   "scraggy": {
+    "min": 17,
+    "max": 17,
+    "rarity": 10
+   },
+   "minccino": {
+    "min": 14,
+    "max": 17,
+    "rarity": 25
+   }
+  },
+  "static": {
+   "braviary": {
+    "min": 25,
+    "max": 25,
+    "rarity": 100
+   },
+   "mandibuzz": {
+    "min": 25,
+    "max": 25,
+    "rarity": 100
+   }
+  },
+  "npc-trade": {
+   "petilil": {
+    "min": 20,
+    "max": 20,
+    "rarity": 100
+   },
+   "cottonee": {
+    "min": 20,
+    "max": 20,
+    "rarity": 100
+   }
+  }
+ },
+ "unova-route-5": {
+  "dark-grass": {
+   "gothita": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   },
+   "minccino": {
+    "min": 23,
+    "max": 26,
+    "rarity": 60
+   },
+   "trubbish": {
+    "min": 23,
+    "max": 26,
+    "rarity": 40
+   },
+   "liepard": {
+    "min": 24,
+    "max": 26,
+    "rarity": 40
+   },
+   "solosis": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 21,
+    "max": 24,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "cinccino": {
+    "min": 24,
+    "max": 24,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "gothita": {
+    "min": 21,
+    "max": 24,
+    "rarity": 30
+   },
+   "minccino": {
+    "min": 21,
+    "max": 24,
+    "rarity": 60
+   },
+   "trubbish": {
+    "min": 21,
+    "max": 24,
+    "rarity": 40
+   },
+   "liepard": {
+    "min": 22,
+    "max": 24,
+    "rarity": 40
+   },
+   "solosis": {
+    "min": 21,
+    "max": 24,
+    "rarity": 30
+   }
+  }
+ },
+ "unova-route-6": {
+  "dark-grass": {
+   "deerling": {
+    "min": 26,
+    "max": 28,
+    "rarity": 60
+   },
+   "shelmet": {
+    "min": 26,
+    "max": 29,
+    "rarity": 30
+   },
+   "tranquill": {
+    "min": 29,
+    "max": 29,
+    "rarity": 30
+   },
+   "foongus": {
+    "min": 29,
+    "max": 29,
+    "rarity": 20
+   },
+   "swadloon": {
+    "min": 29,
+    "max": 29,
+    "rarity": 20
+   },
+   "marill": {
+    "min": 28,
+    "max": 28,
+    "rarity": 10
+   },
+   "karrablast": {
+    "min": 26,
+    "max": 29,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 23,
+    "max": 25,
+    "rarity": 100
+   },
+   "emolga": {
+    "min": 24,
+    "max": 25,
+    "rarity": 40
+   },
+   "dunsparce": {
+    "min": 25,
+    "max": 25,
+    "rarity": 20
+   },
+   "azumarill": {
+    "min": 26,
+    "max": 26,
+    "rarity": 10
+   },
+   "castform": {
+    "min": 26,
+    "max": 26,
+    "rarity": 10
+   },
+   "unfezant": {
+    "min": 26,
+    "max": 26,
+    "rarity": 10
+   },
+   "leavanny": {
+    "min": 26,
+    "max": 26,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 25,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 10,
+    "max": 30,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 10,
+    "max": 35,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 10,
+    "max": 35,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 35,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "deerling": {
+    "min": 23,
+    "max": 25,
+    "rarity": 60
+   },
+   "shelmet": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   },
+   "tranquill": {
+    "min": 26,
+    "max": 26,
+    "rarity": 30
+   },
+   "foongus": {
+    "min": 26,
+    "max": 26,
+    "rarity": 20
+   },
+   "swadloon": {
+    "min": 26,
+    "max": 26,
+    "rarity": 20
+   },
+   "marill": {
+    "min": 25,
+    "max": 25,
+    "rarity": 10
+   },
+   "karrablast": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   }
+  },
+  "static": {
+   "foongus": {
+    "min": 29,
+    "max": 29,
+    "rarity": 600
+   }
+  }
+ },
+ "mistralton-cave": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 27,
+    "max": 30,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 27,
+    "max": 28,
+    "rarity": 60
+   },
+   "woobat": {
+    "min": 27,
+    "max": 28,
+    "rarity": 60
+   },
+   "aron": {
+    "min": 29,
+    "max": 30,
+    "rarity": 40
+   },
+   "axew": {
+    "min": 29,
+    "max": 30,
+    "rarity": 40
+   }
+  }
+ },
+ "guidance-chamber": {
+  "cave-spots": {
+   "drilbur": {
+    "min": 27,
+    "max": 30,
+    "rarity": 200
+   }
+  },
+  "walk": {
+   "boldore": {
+    "min": 27,
+    "max": 28,
+    "rarity": 60
+   },
+   "woobat": {
+    "min": 27,
+    "max": 28,
+    "rarity": 60
+   },
+   "aron": {
+    "min": 29,
+    "max": 30,
+    "rarity": 40
+   },
+   "axew": {
+    "min": 29,
+    "max": 30,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-route-7": {
+  "dark-grass": {
+   "tranquill": {
+    "min": 33,
+    "max": 35,
+    "rarity": 200
+   },
+   "cubchoo": {
+    "min": 33,
+    "max": 36,
+    "rarity": 50
+   },
+   "deerling": {
+    "min": 33,
+    "max": 33,
+    "rarity": 40
+   },
+   "watchog": {
+    "min": 34,
+    "max": 36,
+    "rarity": 50
+   },
+   "zebstrika": {
+    "min": 34,
+    "max": 36,
+    "rarity": 40
+   },
+   "zangoose": {
+    "min": 35,
+    "max": 35,
+    "rarity": 10
+   },
+   "seviper": {
+    "min": 35,
+    "max": 35,
+    "rarity": 10
+   },
+   "foongus": {
+    "min": 36,
+    "max": 36,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 30,
+    "max": 33,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 31,
+    "max": 31,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 33,
+    "max": 33,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "tranquill": {
+    "min": 30,
+    "max": 32,
+    "rarity": 200
+   },
+   "cubchoo": {
+    "min": 30,
+    "max": 33,
+    "rarity": 50
+   },
+   "deerling": {
+    "min": 30,
+    "max": 30,
+    "rarity": 40
+   },
+   "watchog": {
+    "min": 31,
+    "max": 33,
+    "rarity": 50
+   },
+   "zebstrika": {
+    "min": 31,
+    "max": 33,
+    "rarity": 40
+   },
+   "zangoose": {
+    "min": 32,
+    "max": 32,
+    "rarity": 10
+   },
+   "seviper": {
+    "min": 32,
+    "max": 32,
+    "rarity": 10
+   },
+   "foongus": {
+    "min": 33,
+    "max": 33,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "foongus": {
+    "min": 36,
+    "max": 36,
+    "rarity": 400
+   }
+  },
+  "npc-trade": {
+   "gigalith": {
+    "min": 35,
+    "max": 35,
+    "rarity": 200
+   }
+  }
+ },
+ "celestial-tower/2f": {
+  "walk": {
+   "litwick": {
+    "min": 27,
+    "max": 30,
+    "rarity": 200
+   }
+  }
+ },
+ "celestial-tower/3f": {
+  "walk": {
+   "litwick": {
+    "min": 28,
+    "max": 31,
+    "rarity": 160
+   },
+   "elgyem": {
+    "min": 30,
+    "max": 31,
+    "rarity": 30
+   },
+   "golbat": {
+    "min": 31,
+    "max": 31,
+    "rarity": 10
+   }
+  }
+ },
+ "celestial-tower/4f": {
+  "walk": {
+   "litwick": {
+    "min": 29,
+    "max": 32,
+    "rarity": 130
+   },
+   "elgyem": {
+    "min": 30,
+    "max": 32,
+    "rarity": 50
+   },
+   "golbat": {
+    "min": 32,
+    "max": 32,
+    "rarity": 20
+   }
+  }
+ },
+ "celestial-tower/5f": {
+  "walk": {
+   "litwick": {
+    "min": 30,
+    "max": 33,
+    "rarity": 80
+   },
+   "elgyem": {
+    "min": 30,
+    "max": 33,
+    "rarity": 80
+   },
+   "golbat": {
+    "min": 33,
+    "max": 33,
+    "rarity": 40
+   }
+  },
+  "static": {
+   "mesprit": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-route-8": {
+  "super-rod": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 240
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "whiscash": {
+    "min": 50,
+    "max": 60,
+    "rarity": 160
+   }
+  },
+  "surf": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 200
+   },
+   "palpitoad": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   }
+  },
+  "surf-spots": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 160
+   },
+   "palpitoad": {
+    "min": 45,
+    "max": 60,
+    "rarity": 60
+   },
+   "seismitoad": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "palpitoad": {
+    "min": 54,
+    "max": 57,
+    "rarity": 240
+   },
+   "shelmet": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   },
+   "croagunk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 90
+   },
+   "stunfisk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 120
+   },
+   "karrablast": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   }
+  }
+ },
+ "moor-of-icirrus": {
+  "super-rod": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 240
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "barboach": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 80
+   },
+   "whiscash": {
+    "min": 50,
+    "max": 60,
+    "rarity": 160
+   }
+  },
+  "surf": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 260
+   }
+  },
+  "surf-spots": {
+   "stunfisk": {
+    "min": 45,
+    "max": 60,
+    "rarity": 220
+   },
+   "seismitoad": {
+    "min": 50,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "walk": {
+   "palpitoad": {
+    "min": 54,
+    "max": 57,
+    "rarity": 240
+   },
+   "shelmet": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   },
+   "croagunk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 90
+   },
+   "stunfisk": {
+    "min": 55,
+    "max": 56,
+    "rarity": 120
+   },
+   "karrablast": {
+    "min": 54,
+    "max": 57,
+    "rarity": 75
+   }
+  }
+ },
+ "unova-route-9": {
+  "dark-grass": {
+   "gothorita": {
+    "min": 41,
+    "max": 43,
+    "rarity": 25
+   },
+   "minccino": {
+    "min": 41,
+    "max": 43,
+    "rarity": 60
+   },
+   "garbodor": {
+    "min": 42,
+    "max": 44,
+    "rarity": 30
+   },
+   "pawniard": {
+    "min": 42,
+    "max": 44,
+    "rarity": 30
+   },
+   "liepard": {
+    "min": 44,
+    "max": 44,
+    "rarity": 20
+   },
+   "muk": {
+    "min": 44,
+    "max": 44,
+    "rarity": 10
+   },
+   "duosion": {
+    "min": 41,
+    "max": 43,
+    "rarity": 25
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 37,
+    "max": 40,
+    "rarity": 160
+   },
+   "emolga": {
+    "min": 38,
+    "max": 38,
+    "rarity": 20
+   },
+   "cinccino": {
+    "min": 40,
+    "max": 40,
+    "rarity": 10
+   },
+   "gothitelle": {
+    "min": 40,
+    "max": 40,
+    "rarity": 5
+   },
+   "reuniclus": {
+    "min": 40,
+    "max": 40,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "gothorita": {
+    "min": 37,
+    "max": 39,
+    "rarity": 25
+   },
+   "minccino": {
+    "min": 37,
+    "max": 39,
+    "rarity": 60
+   },
+   "garbodor": {
+    "min": 38,
+    "max": 40,
+    "rarity": 30
+   },
+   "pawniard": {
+    "min": 38,
+    "max": 40,
+    "rarity": 30
+   },
+   "liepard": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "muk": {
+    "min": 40,
+    "max": 40,
+    "rarity": 10
+   },
+   "duosion": {
+    "min": 37,
+    "max": 39,
+    "rarity": 25
+   }
+  }
+ },
+ "unova-route-11": {
+  "dark-grass": {
+   "shelmet": {
+    "min": 40,
+    "max": 43,
+    "rarity": 30
+   },
+   "golduck": {
+    "min": 40,
+    "max": 40,
+    "rarity": 40
+   },
+   "gligar": {
+    "min": 41,
+    "max": 43,
+    "rarity": 30
+   },
+   "marill": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "zangoose": {
+    "min": 42,
+    "max": 42,
+    "rarity": 20
+   },
+   "seviper": {
+    "min": 42,
+    "max": 42,
+    "rarity": 20
+   },
+   "amoonguss": {
+    "min": 41,
+    "max": 41,
+    "rarity": 10
+   },
+   "karrablast": {
+    "min": 40,
+    "max": 43,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 36,
+    "max": 39,
+    "rarity": 160
+   },
+   "emolga": {
+    "min": 37,
+    "max": 37,
+    "rarity": 20
+   },
+   "gliscor": {
+    "min": 39,
+    "max": 39,
+    "rarity": 10
+   },
+   "azumarill": {
+    "min": 39,
+    "max": 39,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 50,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 30,
+    "max": 40,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "shelmet": {
+    "min": 36,
+    "max": 39,
+    "rarity": 30
+   },
+   "golduck": {
+    "min": 36,
+    "max": 36,
+    "rarity": 40
+   },
+   "gligar": {
+    "min": 37,
+    "max": 39,
+    "rarity": 30
+   },
+   "marill": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "zangoose": {
+    "min": 38,
+    "max": 38,
+    "rarity": 20
+   },
+   "seviper": {
+    "min": 38,
+    "max": 38,
+    "rarity": 20
+   },
+   "amoonguss": {
+    "min": 37,
+    "max": 37,
+    "rarity": 10
+   },
+   "karrablast": {
+    "min": 36,
+    "max": 39,
+    "rarity": 30
+   }
+  },
+  "static": {
+   "amoonguss": {
+    "min": 47,
+    "max": 47,
+    "rarity": 400
+   },
+   "virizion": {
+    "min": 45,
+    "max": 65,
+    "rarity": 400
+   }
+  }
+ },
+ "unova-route-12": {
+  "dark-grass": {
+   "combee": {
+    "min": 39,
+    "max": 39,
+    "rarity": 40
+   },
+   "roselia": {
+    "min": 39,
+    "max": 41,
+    "rarity": 50
+   },
+   "sewaddle": {
+    "min": 40,
+    "max": 42,
+    "rarity": 30
+   },
+   "tranquill": {
+    "min": 40,
+    "max": 42,
+    "rarity": 50
+   },
+   "heracross": {
+    "min": 40,
+    "max": 42,
+    "rarity": 15
+   },
+   "pinsir": {
+    "min": 40,
+    "max": 42,
+    "rarity": 15
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 35,
+    "max": 37,
+    "rarity": 120
+   },
+   "emolga": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "dunsparce": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "unfezant": {
+    "min": 38,
+    "max": 38,
+    "rarity": 10
+   },
+   "leavanny": {
+    "min": 38,
+    "max": 38,
+    "rarity": 10
+   },
+   "vespiquen": {
+    "min": 38,
+    "max": 38,
+    "rarity": 10
+   },
+   "roserade": {
+    "min": 38,
+    "max": 38,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "combee": {
+    "min": 35,
+    "max": 35,
+    "rarity": 40
+   },
+   "roselia": {
+    "min": 35,
+    "max": 37,
+    "rarity": 50
+   },
+   "sewaddle": {
+    "min": 36,
+    "max": 38,
+    "rarity": 30
+   },
+   "tranquill": {
+    "min": 36,
+    "max": 38,
+    "rarity": 50
+   },
+   "heracross": {
+    "min": 36,
+    "max": 38,
+    "rarity": 15
+   },
+   "pinsir": {
+    "min": 36,
+    "max": 38,
+    "rarity": 15
+   }
+  }
+ },
+ "unova-route-13": {
+  "dark-grass": {
+   "tangela": {
+    "min": 38,
+    "max": 41,
+    "rarity": 50
+   },
+   "pelipper": {
+    "min": 38,
+    "max": 41,
+    "rarity": 50
+   },
+   "drifblim": {
+    "min": 38,
+    "max": 39,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "absol": {
+    "min": 39,
+    "max": 41,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 34,
+    "max": 37,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 35,
+    "max": 35,
+    "rarity": 20
+   },
+   "tangrowth": {
+    "min": 37,
+    "max": 37,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "luvdisc": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "shellder": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "shellder": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "luvdisc": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "cloyster": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 130
+   },
+   "staryu": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-red-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   },
+   "basculin-blue-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   }
+  },
+  "surf-spots": {
+   "staryu": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "jellicent-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   },
+   "starmie": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "tangela": {
+    "min": 34,
+    "max": 37,
+    "rarity": 50
+   },
+   "pelipper": {
+    "min": 34,
+    "max": 37,
+    "rarity": 50
+   },
+   "drifblim": {
+    "min": 34,
+    "max": 35,
+    "rarity": 30
+   },
+   "lunatone": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "absol": {
+    "min": 35,
+    "max": 37,
+    "rarity": 30
+   }
+  },
+  "static": {
+   "cobalion": {
+    "min": 45,
+    "max": 65,
+    "rarity": 400
+   }
+  }
+ },
+ "unova-route-14": {
+  "dark-grass": {
+   "golduck": {
+    "min": 37,
+    "max": 39,
+    "rarity": 50
+   },
+   "mienfoo": {
+    "min": 37,
+    "max": 39,
+    "rarity": 60
+   },
+   "drifblim": {
+    "min": 38,
+    "max": 39,
+    "rarity": 30
+   },
+   "altaria": {
+    "min": 37,
+    "max": 40,
+    "rarity": 30
+   },
+   "absol": {
+    "min": 38,
+    "max": 40,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 33,
+    "max": 36,
+    "rarity": 180
+   },
+   "emolga": {
+    "min": 34,
+    "max": 34,
+    "rarity": 20
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 15,
+    "max": 35,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 15,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 15,
+    "max": 40,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 15,
+    "max": 40,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 25,
+    "max": 40,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "golduck": {
+    "min": 34,
+    "max": 35,
+    "rarity": 50
+   },
+   "swablu": {
+    "min": 33,
+    "max": 33,
+    "rarity": 40
+   },
+   "drifblim": {
+    "min": 34,
+    "max": 35,
+    "rarity": 30
+   },
+   "mienfoo": {
+    "min": 33,
+    "max": 35,
+    "rarity": 40
+   },
+   "absol": {
+    "min": 34,
+    "max": 36,
+    "rarity": 30
+   },
+   "altaria": {
+    "min": 36,
+    "max": 36,
+    "rarity": 10
+   }
+  }
+ },
+ "abundant-shrine": {
+  "dark-grass": {
+   "vulpix": {
+    "min": 37,
+    "max": 37,
+    "rarity": 40
+   },
+   "cottonee": {
+    "min": 37,
+    "max": 39,
+    "rarity": 35
+   },
+   "altaria": {
+    "min": 38,
+    "max": 40,
+    "rarity": 30
+   },
+   "marill": {
+    "min": 38,
+    "max": 38,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 38,
+    "max": 38,
+    "rarity": 20
+   },
+   "bronzong": {
+    "min": 36,
+    "max": 36,
+    "rarity": 20
+   },
+   "petilil": {
+    "min": 37,
+    "max": 39,
+    "rarity": 35
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 33,
+    "max": 36,
+    "rarity": 155
+   },
+   "emolga": {
+    "min": 34,
+    "max": 34,
+    "rarity": 20
+   },
+   "whimsicott": {
+    "min": 36,
+    "max": 36,
+    "rarity": 5
+   },
+   "ninetales": {
+    "min": 36,
+    "max": 36,
+    "rarity": 10
+   },
+   "azumarill": {
+    "min": 36,
+    "max": 36,
+    "rarity": 5
+   },
+   "lilligant": {
+    "min": 36,
+    "max": 36,
+    "rarity": 5
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 25,
+    "max": 40,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "swablu": {
+    "min": 33,
+    "max": 33,
+    "rarity": 40
+   },
+   "cottonee": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   },
+   "vulpix": {
+    "min": 34,
+    "max": 34,
+    "rarity": 20
+   },
+   "bronzor": {
+    "min": 32,
+    "max": 32,
+    "rarity": 30
+   },
+   "marill": {
+    "min": 34,
+    "max": 34,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 34,
+    "max": 34,
+    "rarity": 20
+   },
+   "altaria": {
+    "min": 36,
+    "max": 36,
+    "rarity": 10
+   },
+   "petilil": {
+    "min": 33,
+    "max": 35,
+    "rarity": 30
+   }
+  }
+ },
+ "unova-route-15": {
+  "dark-grass": {
+   "sandslash": {
+    "min": 62,
+    "max": 64,
+    "rarity": 60
+   },
+   "gligar": {
+    "min": 63,
+    "max": 65,
+    "rarity": 50
+   },
+   "scrafty": {
+    "min": 63,
+    "max": 63,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 63,
+    "max": 65,
+    "rarity": 20
+   },
+   "pupitar": {
+    "min": 63,
+    "max": 65,
+    "rarity": 30
+   },
+   "throh": {
+    "min": 63,
+    "max": 65,
+    "rarity": 20
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 54,
+    "max": 57,
+    "rarity": 150
+   },
+   "emolga": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "throh": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   },
+   "gliscor": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "tyranitar": {
+    "min": 57,
+    "max": 57,
+    "rarity": 10
+   },
+   "sawk": {
+    "min": 57,
+    "max": 57,
+    "rarity": 5
+   }
+  },
+  "walk": {
+   "sandslash": {
+    "min": 54,
+    "max": 56,
+    "rarity": 60
+   },
+   "gligar": {
+    "min": 55,
+    "max": 57,
+    "rarity": 50
+   },
+   "scrafty": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 55,
+    "max": 57,
+    "rarity": 20
+   },
+   "pupitar": {
+    "min": 55,
+    "max": 57,
+    "rarity": 30
+   },
+   "throh": {
+    "min": 55,
+    "max": 57,
+    "rarity": 20
+   }
+  },
+  "npc-trade": {
+   "rotom": {
+    "min": 60,
+    "max": 60,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-route-16": {
+  "dark-grass": {
+   "gothita": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   },
+   "minccino": {
+    "min": 23,
+    "max": 26,
+    "rarity": 60
+   },
+   "trubbish": {
+    "min": 23,
+    "max": 26,
+    "rarity": 40
+   },
+   "liepard": {
+    "min": 24,
+    "max": 26,
+    "rarity": 40
+   },
+   "solosis": {
+    "min": 23,
+    "max": 26,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 21,
+    "max": 24,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "cinccino": {
+    "min": 24,
+    "max": 24,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "gothita": {
+    "min": 21,
+    "max": 24,
+    "rarity": 30
+   },
+   "minccino": {
+    "min": 21,
+    "max": 24,
+    "rarity": 60
+   },
+   "trubbish": {
+    "min": 21,
+    "max": 24,
+    "rarity": 40
+   },
+   "liepard": {
+    "min": 22,
+    "max": 24,
+    "rarity": 40
+   },
+   "solosis": {
+    "min": 21,
+    "max": 24,
+    "rarity": 30
+   }
+  }
+ },
+ "lostlorn-forest": {
+  "dark-grass": {
+   "cottonee": {
+    "min": 23,
+    "max": 26,
+    "rarity": 25
+   },
+   "swadloon": {
+    "min": 23,
+    "max": 26,
+    "rarity": 50
+   },
+   "combee": {
+    "min": 24,
+    "max": 24,
+    "rarity": 20
+   },
+   "whirlipede": {
+    "min": 23,
+    "max": 23,
+    "rarity": 40
+   },
+   "roselia": {
+    "min": 25,
+    "max": 26,
+    "rarity": 30
+   },
+   "heracross": {
+    "min": 26,
+    "max": 26,
+    "rarity": 5
+   },
+   "petilil": {
+    "min": 23,
+    "max": 26,
+    "rarity": 25
+   },
+   "pinsir": {
+    "min": 26,
+    "max": 26,
+    "rarity": 5
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 21,
+    "max": 23,
+    "rarity": 80
+   },
+   "emolga": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "pansage": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "pansear": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "panpour": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "vespiquen": {
+    "min": 24,
+    "max": 24,
+    "rarity": 10
+   },
+   "roserade": {
+    "min": 24,
+    "max": 24,
+    "rarity": 10
+   },
+   "leavanny": {
+    "min": 24,
+    "max": 24,
+    "rarity": 10
+   },
+   "whimsicott": {
+    "min": 24,
+    "max": 24,
+    "rarity": 5
+   },
+   "lilligant": {
+    "min": 24,
+    "max": 24,
+    "rarity": 5
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 25,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 10,
+    "max": 25,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 25,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 10,
+    "max": 30,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 10,
+    "max": 30,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 10,
+    "max": 30,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "cottonee": {
+    "min": 21,
+    "max": 24,
+    "rarity": 25
+   },
+   "swadloon": {
+    "min": 21,
+    "max": 24,
+    "rarity": 50
+   },
+   "combee": {
+    "min": 22,
+    "max": 22,
+    "rarity": 20
+   },
+   "venipede": {
+    "min": 21,
+    "max": 21,
+    "rarity": 40
+   },
+   "roselia": {
+    "min": 23,
+    "max": 24,
+    "rarity": 30
+   },
+   "heracross": {
+    "min": 24,
+    "max": 24,
+    "rarity": 5
+   },
+   "petilil": {
+    "min": 21,
+    "max": 24,
+    "rarity": 25
+   },
+   "pinsir": {
+    "min": 24,
+    "max": 24,
+    "rarity": 5
+   }
+  }
+ },
+ "unova-route-18": {
+  "dark-grass": {
+   "scrafty": {
+    "min": 65,
+    "max": 66,
+    "rarity": 60
+   },
+   "crustle": {
+    "min": 65,
+    "max": 65,
+    "rarity": 40
+   },
+   "watchog": {
+    "min": 64,
+    "max": 64,
+    "rarity": 20
+   },
+   "tropius": {
+    "min": 66,
+    "max": 66,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 65,
+    "max": 67,
+    "rarity": 20
+   },
+   "carnivine": {
+    "min": 66,
+    "max": 66,
+    "rarity": 20
+   },
+   "throh": {
+    "min": 65,
+    "max": 67,
+    "rarity": 20
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 56,
+    "max": 59,
+    "rarity": 170
+   },
+   "dunsparce": {
+    "min": 57,
+    "max": 57,
+    "rarity": 20
+   },
+   "throh": {
+    "min": 59,
+    "max": 59,
+    "rarity": 5
+   },
+   "sawk": {
+    "min": 59,
+    "max": 59,
+    "rarity": 5
+   }
+  },
+  "super-rod": {
+   "finneon": {
+    "min": 50,
+    "max": 70,
+    "rarity": 110
+   },
+   "horsea": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   },
+   "corsola": {
+    "min": 60,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "super-rod-spots": {
+   "horsea": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   },
+   "lumineon": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   },
+   "seadra": {
+    "min": 60,
+    "max": 70,
+    "rarity": 30
+   },
+   "kingdra": {
+    "min": 60,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 45,
+    "max": 60,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 45,
+    "max": 60,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   }
+  },
+  "walk": {
+   "scrafty": {
+    "min": 57,
+    "max": 58,
+    "rarity": 60
+   },
+   "crustle": {
+    "min": 57,
+    "max": 57,
+    "rarity": 40
+   },
+   "watchog": {
+    "min": 56,
+    "max": 56,
+    "rarity": 20
+   },
+   "tropius": {
+    "min": 58,
+    "max": 58,
+    "rarity": 20
+   },
+   "sawk": {
+    "min": 57,
+    "max": 59,
+    "rarity": 20
+   },
+   "carnivine": {
+    "min": 58,
+    "max": 58,
+    "rarity": 20
+   },
+   "throh": {
+    "min": 57,
+    "max": 59,
+    "rarity": 20
+   }
+  }
+ },
+ "unova-route-19": {
+  "grass-spots": {
+   "patrat": {
+    "min": 2,
+    "max": 4,
+    "rarity": 200
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   },
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   },
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 100
+   }
+  },
+  "walk": {
+   "patrat": {
+    "min": 2,
+    "max": 4,
+    "rarity": 100
+   },
+   "purrloin": {
+    "min": 2,
+    "max": 4,
+    "rarity": 100
+   }
+  }
+ },
+ "unova-route-20": {
+  "dark-grass": {
+   "pidove": {
+    "min": 9,
+    "max": 10,
+    "rarity": 130
+   },
+   "sunkern": {
+    "min": 9,
+    "max": 11,
+    "rarity": 76
+   },
+   "venipede": {
+    "min": 10,
+    "max": 10,
+    "rarity": 40
+   },
+   "patrat": {
+    "min": 10,
+    "max": 10,
+    "rarity": 40
+   },
+   "purrloin": {
+    "min": 10,
+    "max": 11,
+    "rarity": 34
+   },
+   "sewaddle": {
+    "min": 10,
+    "max": 11,
+    "rarity": 30
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 2,
+    "max": 4,
+    "rarity": 180
+   },
+   "dunsparce": {
+    "min": 3,
+    "max": 3,
+    "rarity": 20
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "politoed": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   },
+   "azurill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "basculin-blue-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   },
+   "marill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 60
+   },
+   "azumarill": {
+    "min": 5,
+    "max": 15,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 5,
+    "max": 15,
+    "rarity": 65
+   }
+  },
+  "walk": {
+   "pidove": {
+    "min": 2,
+    "max": 4,
+    "rarity": 130
+   },
+   "sunkern": {
+    "min": 2,
+    "max": 4,
+    "rarity": 76
+   },
+   "sewaddle": {
+    "min": 2,
+    "max": 4,
+    "rarity": 70
+   },
+   "patrat": {
+    "min": 3,
+    "max": 3,
+    "rarity": 40
+   },
+   "purrloin": {
+    "min": 3,
+    "max": 4,
+    "rarity": 34
+   }
+  }
+ },
+ "unova-route-22": {
+  "dark-grass": {
+   "amoonguss": {
+    "min": 44,
+    "max": 44,
+    "rarity": 40
+   },
+   "mienfoo": {
+    "min": 44,
+    "max": 47,
+    "rarity": 50
+   },
+   "pelipper": {
+    "min": 45,
+    "max": 45,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 45,
+    "max": 45,
+    "rarity": 20
+   },
+   "lunatone": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 46,
+    "max": 46,
+    "rarity": 20
+   },
+   "marill": {
+    "min": 45,
+    "max": 47,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 44,
+    "max": 44,
+    "rarity": 10
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 39,
+    "max": 42,
+    "rarity": 170
+   },
+   "emolga": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "azumarill": {
+    "min": 42,
+    "max": 42,
+    "rarity": 10
+   }
+  },
+  "super-rod": {
+   "goldeen": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "goldeen": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "seaking": {
+    "min": 50,
+    "max": 70,
+    "rarity": 40
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 15,
+    "max": 40,
+    "rarity": 70
+   },
+   "marill": {
+    "min": 15,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 15,
+    "max": 40,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "marill": {
+    "min": 15,
+    "max": 40,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 15,
+    "max": 45,
+    "rarity": 35
+   },
+   "azumarill": {
+    "min": 25,
+    "max": 45,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 15,
+    "max": 45,
+    "rarity": 35
+   }
+  },
+  "walk": {
+   "amoonguss": {
+    "min": 39,
+    "max": 39,
+    "rarity": 40
+   },
+   "mienfoo": {
+    "min": 39,
+    "max": 42,
+    "rarity": 50
+   },
+   "pelipper": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 40,
+    "max": 40,
+    "rarity": 20
+   },
+   "lunatone": {
+    "min": 41,
+    "max": 41,
+    "rarity": 20
+   },
+   "solrock": {
+    "min": 41,
+    "max": 41,
+    "rarity": 20
+   },
+   "marill": {
+    "min": 40,
+    "max": 42,
+    "rarity": 20
+   },
+   "delibird": {
+    "min": 39,
+    "max": 39,
+    "rarity": 10
+   }
+  },
+  "static": {
+   "amoonguss": {
+    "min": 47,
+    "max": 47,
+    "rarity": 400
+   },
+   "terrakion": {
+    "min": 45,
+    "max": 65,
+    "rarity": 400
+   }
+  }
+ },
+ "unova-route-23": {
+  "dark-grass": {
+   "bouffalant": {
+    "min": 54,
+    "max": 56,
+    "rarity": 50
+   },
+   "sawk": {
+    "min": 53,
+    "max": 54,
+    "rarity": 25
+   },
+   "gligar": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "mienshao": {
+    "min": 53,
+    "max": 53,
+    "rarity": 30
+   },
+   "amoonguss": {
+    "min": 54,
+    "max": 54,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 55,
+    "max": 55,
+    "rarity": 20
+   },
+   "vullaby": {
+    "min": 52,
+    "max": 52,
+    "rarity": 5
+   },
+   "throh": {
+    "min": 53,
+    "max": 54,
+    "rarity": 25
+   },
+   "rufflet": {
+    "min": 52,
+    "max": 52,
+    "rarity": 5
+   }
+  },
+  "grass-spots": {
+   "audino": {
+    "min": 48,
+    "max": 51,
+    "rarity": 160
+   },
+   "emolga": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "gliscor": {
+    "min": 51,
+    "max": 51,
+    "rarity": 10
+   },
+   "throh": {
+    "min": 51,
+    "max": 51,
+    "rarity": 5
+   },
+   "sawk": {
+    "min": 51,
+    "max": 51,
+    "rarity": 5
+   }
+  },
+  "super-rod": {
+   "poliwag": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "super-rod-spots": {
+   "poliwhirl": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   },
+   "poliwrath": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 60,
+    "rarity": 40
+   }
+  },
+  "surf": {
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 70
+   },
+   "buizel": {
+    "min": 40,
+    "max": 55,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 70
+   }
+  },
+  "surf-spots": {
+   "buizel": {
+    "min": 40,
+    "max": 55,
+    "rarity": 120
+   },
+   "basculin-blue-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 30
+   },
+   "floatzel": {
+    "min": 45,
+    "max": 55,
+    "rarity": 20
+   },
+   "basculin-red-striped": {
+    "min": 40,
+    "max": 55,
+    "rarity": 30
+   }
+  },
+  "walk": {
+   "bouffalant": {
+    "min": 49,
+    "max": 51,
+    "rarity": 50
+   },
+   "sawk": {
+    "min": 48,
+    "max": 49,
+    "rarity": 25
+   },
+   "gligar": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "mienfoo": {
+    "min": 48,
+    "max": 48,
+    "rarity": 30
+   },
+   "amoonguss": {
+    "min": 49,
+    "max": 49,
+    "rarity": 20
+   },
+   "golduck": {
+    "min": 50,
+    "max": 50,
+    "rarity": 20
+   },
+   "vullaby": {
+    "min": 47,
+    "max": 47,
+    "rarity": 5
+   },
+   "throh": {
+    "min": 48,
+    "max": 49,
+    "rarity": 25
+   },
+   "rufflet": {
+    "min": 47,
+    "max": 47,
+    "rarity": 5
+   }
+  },
+  "static": {
+   "azelf": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   },
+   "amoonguss": {
+    "min": 56,
+    "max": 56,
+    "rarity": 600
+   }
+  }
+ },
+ "undella-town": {
+  "super-rod": {
+   "luvdisc": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "shellder": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "shellder": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "luvdisc": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "cloyster": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 130
+   },
+   "staryu": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-red-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   },
+   "basculin-blue-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   }
+  },
+  "surf-spots": {
+   "staryu": {
+    "min": 25,
+    "max": 40,
+    "rarity": 120
+   },
+   "jellicent-male": {
+    "min": 25,
+    "max": 40,
+    "rarity": 60
+   },
+   "basculin-blue-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   },
+   "starmie": {
+    "min": 30,
+    "max": 40,
+    "rarity": 10
+   },
+   "basculin-red-striped": {
+    "min": 30,
+    "max": 40,
+    "rarity": 5
+   }
+  }
+ },
+ "unova-route-17": {
+  "super-rod": {
+   "finneon": {
+    "min": 50,
+    "max": 70,
+    "rarity": 120
+   },
+   "horsea": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "horsea": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   },
+   "lumineon": {
+    "min": 50,
+    "max": 60,
+    "rarity": 80
+   },
+   "seadra": {
+    "min": 60,
+    "max": 70,
+    "rarity": 30
+   },
+   "kingdra": {
+    "min": 60,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 45,
+    "max": 60,
+    "rarity": 200
+   }
+  },
+  "surf-spots": {
+   "alomomola": {
+    "min": 45,
+    "max": 60,
+    "rarity": 190
+   },
+   "jellicent-male": {
+    "min": 50,
+    "max": 60,
+    "rarity": 10
+   }
+  }
+ },
+ "unova-route-21": {
+  "super-rod": {
+   "luvdisc": {
+    "min": 40,
+    "max": 70,
+    "rarity": 120
+   },
+   "remoraid": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   }
+  },
+  "super-rod-spots": {
+   "remoraid": {
+    "min": 40,
+    "max": 70,
+    "rarity": 110
+   },
+   "luvdisc": {
+    "min": 40,
+    "max": 60,
+    "rarity": 80
+   },
+   "octillery": {
+    "min": 50,
+    "max": 70,
+    "rarity": 10
+   }
+  },
+  "surf": {
+   "frillish-male": {
+    "min": 30,
+    "max": 45,
+    "rarity": 130
+   },
+   "mantyke": {
+    "min": 30,
+    "max": 45,
+    "rarity": 60
+   },
+   "remoraid": {
+    "min": 35,
+    "max": 45,
+    "rarity": 10
+   }
+  },
+  "surf-spots": {
+   "jellicent-male": {
+    "min": 30,
+    "max": 45,
+    "rarity": 120
+   },
+   "alomomola": {
+    "min": 30,
+    "max": 45,
+    "rarity": 70
+   },
+   "mantine": {
+    "min": 35,
+    "max": 45,
+    "rarity": 10
+   }
+  }
+ },
+ "driftveil-city": {
+  "gift": {
+   "zorua": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   }
+  }
+ },
+ "unova-route-6/weather-institute": {
+  "gift": {
+   "deerling": {
+    "min": 30,
+    "max": 30,
+    "rarity": 200
+   }
+  }
+ },
+ "floccesy-town": {
+  "gift": {
+   "dratini": {
+    "min": 1,
+    "max": 1,
+    "rarity": 100
+   },
+   "gible": {
+    "min": 1,
+    "max": 1,
+    "rarity": 100
+   }
+  }
+ },
+ "nacrene-city/west-gate": {
+  "gift-egg": {
+   "happiny": {
+    "min": 1,
+    "max": 1,
+    "rarity": 200
+   }
+  },
+  "static": {
+   "uxie": {
+    "min": 65,
+    "max": 65,
+    "rarity": 200
+   }
+  }
+ },
+ "reversal-mountain/b1f": {
+  "static": {
+   "heatran": {
+    "min": 68,
+    "max": 68,
+    "rarity": 200
+   }
+  }
+ },
+ "twist-mountain/b4f": {
+  "static": {
+   "regigigas": {
+    "min": 68,
+    "max": 68,
+    "rarity": 200
+   }
+  }
+ },
+ "dragonspiral-tower/7f": {
+  "static": {
+   "reshiram": {
+    "min": 70,
+    "max": 70,
+    "rarity": 100
+   },
+   "zekrom": {
+    "min": 70,
+    "max": 70,
+    "rarity": 100
+   }
+  }
+ },
+ "unova-route-2/hidden-grotto": {
+  "hidden-grotto": {
+   "nidoran-f": {
+    "min": 55,
+    "max": 59,
+    "rarity": 20
+   },
+   "nidoran-m": {
+    "min": 55,
+    "max": 59,
+    "rarity": 20
+   },
+   "granbull": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   },
+   "watchog": {
+    "min": 55,
+    "max": 59,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-3/hidden-grotto-dark-grass": {
+  "hidden-grotto": {
+   "manectric": {
+    "min": 55,
+    "max": 59,
+    "rarity": 40
+   },
+   "pachirisu": {
+    "min": 55,
+    "max": 59,
+    "rarity": 150
+   },
+   "zebstrika": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   }
+  }
+ },
+ "unova-route-3/hidden-grotto-pond": {
+  "hidden-grotto": {
+   "venonat": {
+    "min": 55,
+    "max": 59,
+    "rarity": 40
+   },
+   "lombre": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   },
+   "bibarel": {
+    "min": 55,
+    "max": 59,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-5/hidden-grotto": {
+  "hidden-grotto": {
+   "liepard": {
+    "min": 20,
+    "max": 24,
+    "rarity": 40
+   },
+   "minccino": {
+    "min": 20,
+    "max": 24,
+    "rarity": 10
+   },
+   "foongus": {
+    "min": 20,
+    "max": 24,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-6/hidden-grotto-near-pokemon-breeder": {
+  "hidden-grotto": {
+   "dunsparce": {
+    "min": 25,
+    "max": 29,
+    "rarity": 10
+   },
+   "woobat": {
+    "min": 25,
+    "max": 29,
+    "rarity": 40
+   },
+   "foongus": {
+    "min": 25,
+    "max": 29,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-6/hidden-grotto-mistralton-cave": {
+  "hidden-grotto": {
+   "nosepass": {
+    "min": 25,
+    "max": 29,
+    "rarity": 10
+   },
+   "woobat": {
+    "min": 25,
+    "max": 29,
+    "rarity": 40
+   },
+   "foongus": {
+    "min": 25,
+    "max": 29,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-7/hidden-grotto": {
+  "hidden-grotto": {
+   "zangoose": {
+    "min": 30,
+    "max": 34,
+    "rarity": 76
+   },
+   "seviper": {
+    "min": 30,
+    "max": 34,
+    "rarity": 76
+   },
+   "watchog": {
+    "min": 30,
+    "max": 34,
+    "rarity": 40
+   },
+   "cubchoo": {
+    "min": 30,
+    "max": 34,
+    "rarity": 10
+   }
+  }
+ },
+ "unova-route-9/hidden-grotto": {
+  "hidden-grotto": {
+   "muk": {
+    "min": 35,
+    "max": 39,
+    "rarity": 20
+   },
+   "liepard": {
+    "min": 35,
+    "max": 39,
+    "rarity": 150
+   },
+   "garbodor": {
+    "min": 35,
+    "max": 39,
+    "rarity": 20
+   },
+   "bouffalant": {
+    "min": 35,
+    "max": 39,
+    "rarity": 10
+   }
+  }
+ },
+ "unova-route-13/hidden-grotto-giant-chasm": {
+  "hidden-grotto": {
+   "tangela": {
+    "min": 35,
+    "max": 39,
+    "rarity": 40
+   },
+   "skorupi": {
+    "min": 35,
+    "max": 39,
+    "rarity": 10
+   },
+   "foongus": {
+    "min": 35,
+    "max": 39,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-13/hidden-grotto-stairs": {
+  "hidden-grotto": {
+   "spheal": {
+    "min": 35,
+    "max": 39,
+    "rarity": 10
+   },
+   "drifloon": {
+    "min": 35,
+    "max": 39,
+    "rarity": 40
+   },
+   "foongus": {
+    "min": 35,
+    "max": 39,
+    "rarity": 150
+   }
+  }
+ },
+ "unova-route-18/hidden-grotto": {
+  "hidden-grotto": {
+   "kingler": {
+    "min": 55,
+    "max": 59,
+    "rarity": 76
+   },
+   "dragonite": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   },
+   "corsola": {
+    "min": 55,
+    "max": 59,
+    "rarity": 76
+   },
+   "chatot": {
+    "min": 55,
+    "max": 59,
+    "rarity": 40
+   }
+  }
+ },
+ "unova-route-22/hidden-grotto": {
+  "hidden-grotto": {
+   "pelipper": {
+    "min": 40,
+    "max": 44,
+    "rarity": 40
+   },
+   "amoonguss": {
+    "min": 40,
+    "max": 44,
+    "rarity": 150
+   },
+   "mienfoo": {
+    "min": 40,
+    "max": 44,
+    "rarity": 10
+   }
+  }
+ },
+ "unova-route-23/hidden-grotto": {
+  "hidden-grotto": {
+   "golduck": {
+    "min": 50,
+    "max": 54,
+    "rarity": 20
+   },
+   "gligar": {
+    "min": 50,
+    "max": 54,
+    "rarity": 10
+   },
+   "zangoose": {
+    "min": 50,
+    "max": 54,
+    "rarity": 76
+   },
+   "seviper": {
+    "min": 50,
+    "max": 54,
+    "rarity": 76
+   },
+   "absol": {
+    "min": 50,
+    "max": 54,
+    "rarity": 20
+   }
+  }
+ },
+ "floccesy-ranch/hidden-grotto": {
+  "hidden-grotto": {
+   "marill": {
+    "min": 10,
+    "max": 14,
+    "rarity": 150
+   },
+   "dunsparce": {
+    "min": 10,
+    "max": 14,
+    "rarity": 10
+   },
+   "herdier": {
+    "min": 10,
+    "max": 14,
+    "rarity": 40
+   }
+  }
+ },
+ "lostlorn-forest/hidden-grotto": {
+  "hidden-grotto": {
+   "pinsir": {
+    "min": 20,
+    "max": 24,
+    "rarity": 5
+   },
+   "heracross": {
+    "min": 20,
+    "max": 24,
+    "rarity": 5
+   },
+   "combee": {
+    "min": 20,
+    "max": 24,
+    "rarity": 150
+   },
+   "leavanny": {
+    "min": 20,
+    "max": 24,
+    "rarity": 40
+   }
+  }
+ },
+ "giant-chasm/hidden-grotto": {
+  "hidden-grotto": {
+   "clefairy": {
+    "min": 45,
+    "max": 49,
+    "rarity": 150
+   },
+   "ditto": {
+    "min": 45,
+    "max": 49,
+    "rarity": 10
+   },
+   "sneasel": {
+    "min": 45,
+    "max": 49,
+    "rarity": 20
+   },
+   "metang": {
+    "min": 45,
+    "max": 49,
+    "rarity": 20
+   }
+  }
+ },
+ "abundant-shrine/hidden-grotto-near-youngster": {
+  "hidden-grotto": {
+   "vulpix": {
+    "min": 35,
+    "max": 39,
+    "rarity": 10
+   },
+   "bronzor": {
+    "min": 35,
+    "max": 39,
+    "rarity": 40
+   },
+   "amoonguss": {
+    "min": 35,
+    "max": 39,
+    "rarity": 150
+   }
+  }
+ },
+ "abundant-shrine/hidden-grotto-shrine": {
+  "hidden-grotto": {
+   "golduck": {
+    "min": 35,
+    "max": 39,
+    "rarity": 40
+   },
+   "swablu": {
+    "min": 35,
+    "max": 39,
+    "rarity": 10
+   },
+   "amoonguss": {
+    "min": 35,
+    "max": 39,
+    "rarity": 150
+   }
+  }
+ },
+ "pinwheel-forest/hidden-grotto-outer-area": {
+  "hidden-grotto": {
+   "poliwhirl": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   },
+   "hariyama": {
+    "min": 55,
+    "max": 59,
+    "rarity": 80
+   },
+   "medicham": {
+    "min": 55,
+    "max": 59,
+    "rarity": 80
+   },
+   "bagon": {
+    "min": 55,
+    "max": 59,
+    "rarity": 30
+   }
+  }
+ },
+ "pinwheel-forest/hidden-grotto-inner-area": {
+  "hidden-grotto": {
+   "butterfree": {
+    "min": 55,
+    "max": 59,
+    "rarity": 20
+   },
+   "beedrill": {
+    "min": 55,
+    "max": 59,
+    "rarity": 20
+   },
+   "murkrow": {
+    "min": 55,
+    "max": 59,
+    "rarity": 10
+   },
+   "breloom": {
+    "min": 55,
+    "max": 59,
+    "rarity": 38
+   },
+   "amoonguss": {
+    "min": 55,
+    "max": 59,
+    "rarity": 112
+   }
+  }
+ },
+ "accumula-town": {
+  "npc-trade": {
+   "ambipom": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   },
+   "alakazam": {
+    "min": 40,
+    "max": 40,
+    "rarity": 200
+   }
+  }
+ },
+ "nacrene-city/nacrene-museum": {
+  "gift": {
+   "omanyte": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "kabuto": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "aerodactyl": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "lileep": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "anorith": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "cranidos": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "shieldon": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "tirtouga": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   },
+   "archen": {
+    "min": 25,
+    "max": 25,
+    "rarity": 200
+   }
+  }
+ }
+}

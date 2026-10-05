@@ -1,0 +1,226 @@
+diff --git a/sim/battle.ts b/sim/battle.ts
+index c17ef24..34fc62c 100644
+--- a/sim/battle.ts
++++ b/sim/battle.ts
+@@ -3198,7 +3198,7 @@ export class Battle {
+ 					ivs: null!,
+ 					level: set.level,
+ 				};
+-				if (this.gen === 8 && !this.ruleTable.has('dynamaxclause')) newSet.gigantamax = set.gigantamax;
++				if ((this.gen === 8 || (this as any).allowDynamax) && !this.ruleTable.has('dynamaxclause')) newSet.gigantamax = set.gigantamax;
+ 				if (this.gen === 9 && !this.ruleTable.has('terastalclause')) newSet.teraType = set.teraType;
+ 				// Only display Hidden Power type if the Pokemon has Hidden Power
+ 				// This is based on how team sheets were written in past VGC formats
+diff --git a/sim/dex-formats.ts b/sim/dex-formats.ts
+index 64c3959..19fe16c 100644
+--- a/sim/dex-formats.ts
++++ b/sim/dex-formats.ts
+@@ -1,3 +1,4 @@
++import { FORMATS } from './browser-shim';
+ import { Utils } from '../lib/utils';
+ import { assignMissingFields, toID, BasicEffect } from './dex-data';
+ import type { EventMethods } from './dex-conditions';
+@@ -632,18 +633,8 @@ export class DexFormats {
+ 		const formatsList = [];
+ 
+ 		// Load formats
+-		let customFormats;
+-		try {
+-			customFormats = require(`${__dirname}/../config/custom-formats`).Formats;
+-			if (!Array.isArray(customFormats)) {
+-				throw new TypeError(`Exported property 'Formats' from "./config/custom-formats.ts" must be an array`);
+-			}
+-		} catch (e: any) {
+-			if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ENOENT') {
+-				throw e;
+-			}
+-		}
+-		let Formats: AnyObject[] = require(`${__dirname}/../config/formats`).Formats;
++		const customFormats: any = undefined;
++		let Formats: AnyObject[] = FORMATS;
+ 		if (!Array.isArray(Formats)) {
+ 			throw new TypeError(`Exported property 'Formats' from "./config/formats.ts" must be an array`);
+ 		}
+diff --git a/sim/dex-species.ts b/sim/dex-species.ts
+index bfedc4e..85a149c 100644
+--- a/sim/dex-species.ts
++++ b/sim/dex-species.ts
+@@ -1,6 +1,6 @@
+ import { assignMissingFields, BasicEffect, toID, type ModdedEffectText } from './dex-data';
+ import { Utils } from '../lib/utils';
+-import { isDeepStrictEqual } from 'node:util';
++const isDeepStrictEqual = (a: any, b: any) => JSON.stringify(a) === JSON.stringify(b);
+ 
+ interface SpeciesAbility {
+ 	0: string;
+diff --git a/sim/dex-text.ts b/sim/dex-text.ts
+index c62e450..8a21bd1 100644
+--- a/sim/dex-text.ts
++++ b/sim/dex-text.ts
+@@ -1,3 +1,4 @@
++import { TEXT } from './browser-shim';
+ /**
+  * Dex Text
+  * Pokemon Showdown - http://pokemonshowdown.com/
+@@ -64,16 +65,8 @@ export class DexText {
+ 	static loadTextFile(
+ 		name: string, exportName: string, optional = false
+ 	): DexTable<MoveText | ItemText | AbilityText | TranslationString> {
+-		const filePath = `${TEXT_DIR}/${name}`;
+-		if (optional) {
+-			try {
+-				require.resolve(filePath);
+-			} catch (e: any) {
+-				if (e.code === 'MODULE_NOT_FOUND' || e.code === 'ENOENT') return {};
+-				throw e;
+-			}
+-		}
+-		return require(filePath)[exportName];
++		if (name.includes('/')) return optional ? {} as any : undefined as any;
++		return TEXT[name]?.[exportName];
+ 	}
+ 
+ 	static loadRawTextData(lang: TextLanguage = 'en'): RawTextTableData {
+diff --git a/sim/dex.ts b/sim/dex.ts
+index 07386e4..7a779c4 100644
+--- a/sim/dex.ts
++++ b/sim/dex.ts
+@@ -26,8 +26,7 @@
+  * @license MIT
+  */
+ 
+-import * as fs from 'fs';
+-import * as path from 'path';
++import { BASE_DATA, ALIASES } from './browser-shim';
+ 
+ import * as Data from './dex-data';
+ import { type OtherNameTable, type TextLanguage } from './dex-data';
+@@ -42,8 +41,8 @@ import { Utils } from '../lib/utils';
+ import { Tags } from '../data/tags';
+ 
+ const BASE_MOD = 'gen9' as ID;
+-const DATA_DIR = path.resolve(__dirname, '../data');
+-const MODS_DIR = path.resolve(DATA_DIR, './mods');
++const DATA_DIR = 'data';
++const MODS_DIR = 'data/mods';
+ 
+ const dexes: { [mod: string]: ModdedDex } = Object.create(null);
+ 
+@@ -446,8 +445,8 @@ export class ModdedDex {
+ 
+ 	loadDataFile(basePath: string, dataType: DataType): AnyObject | void {
+ 		try {
+-			const filePath = basePath + DATA_FILES[dataType];
+-			const dataObject = require(filePath);
++			if (basePath !== DATA_DIR + '/') return;
++			const dataObject = { [dataType]: BASE_DATA[dataType] };
+ 			if (!dataObject || typeof dataObject !== 'object') {
+ 				throw new TypeError(`${filePath}, if it exists, must export a non-null object`);
+ 			}
+@@ -472,7 +471,7 @@ export class ModdedDex {
+ 		if (!this.isBase) throw new Error(`This must be called on the base Dex`);
+ 		if (this.modsLoaded) return this;
+ 
+-		for (const mod of fs.readdirSync(MODS_DIR)) {
++		for (const mod of [] as string[]) {
+ 			dexes[mod] = new ModdedDex(mod);
+ 		}
+ 		this.modsLoaded = true;
+@@ -590,7 +589,7 @@ export class ModdedDex {
+ 	loadAliases(): NonNullable<ModdedDex['aliases']> {
+ 		if (!this.isBase) return Dex.loadAliases();
+ 		if (this.aliases) return this.aliases;
+-		const exported = require(path.resolve(DATA_DIR, 'aliases'));
++		const exported = ALIASES;
+ 		const aliases = new Map<ID, ID>();
+ 		for (const [alias, target] of Object.entries(exported.Aliases)) {
+ 			aliases.set(alias as ID, toID(target));
+diff --git a/sim/prng.ts b/sim/prng.ts
+index d75a850..5b97936 100644
+--- a/sim/prng.ts
++++ b/sim/prng.ts
+@@ -12,7 +12,6 @@
+  * @license MIT license
+  */
+ 
+-import { Chacha20 } from 'ts-chacha20';
+ import { Utils } from '../lib/utils';
+ 
+ export type PRNGSeed = `${'sodium' | 'gen5' | number},${string}`;
+@@ -199,7 +198,12 @@ export class SodiumRNG implements RNG {
+ 		const zeroBuf = new Uint8Array(36);
+ 		// tested to do the exact same thing as
+ 		// sodium.randombytes_buf_deterministic(buf, this.seed);
+-		const buf = new Chacha20(this.seed, SodiumRNG.NONCE).encrypt(zeroBuf);
++		// browser build: simple deterministic mixer instead of ChaCha20
++		const buf = new Uint8Array(36);
++		let h = 2166136261 >>> 0;
++		for (let i = 0; i < 32; i++) { h ^= this.seed[i]; h = Math.imul(h, 16777619) >>> 0; }
++		for (let i = 0; i < 36; i++) { h ^= h << 13; h >>>= 0; h ^= h >>> 17; h ^= h << 5; h >>>= 0; buf[i] = (h ^ (this.seed[i % 32] * 31 + i)) & 255; }
++		void zeroBuf;
+ 
+ 		// use the first 32 bytes for the next seed, and the next 4 bytes for the output
+ 		this.seed = buf.slice(0, 32);
+@@ -212,7 +216,7 @@ export class SodiumRNG implements RNG {
+ 		// TODO: Fix that @types/node >14 issue
+ 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ 		// @ts-ignore Web Crypto isn't actually in Node 18
+-		if (typeof crypto === 'undefined') globalThis.crypto = require('node:crypto');
++		
+ 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ 		// @ts-ignore Web Crypto _is_ available in newer Node
+ 		crypto.getRandomValues(seed);
+diff --git a/sim/side.ts b/sim/side.ts
+index dc15bbe..1e6ace2 100644
+--- a/sim/side.ts
++++ b/sim/side.ts
+@@ -261,7 +261,7 @@ export class Side {
+ 		this.faintedThisTurn = null;
+ 		this.totalFainted = 0;
+ 		this.zMoveUsed = false;
+-		this.dynamaxUsed = this.battle.gen !== 8;
++		this.dynamaxUsed = this.battle.gen !== 8 && !(this.battle as any).allowDynamax;
+ 
+ 		this.sideConditions = {};
+ 		this.slotConditions = [];
+@@ -309,7 +309,7 @@ export class Side {
+ 	}
+ 
+ 	canDynamaxNow(): boolean {
+-		if (this.battle.gen !== 8) return false;
++		if (this.battle.gen !== 8 && !(this.battle as any).allowDynamax) return false;
+ 		// In multi battles, players on a team are alternatingly given the option to dynamax each turn
+ 		// On turn 1, the players on their team's respective left have the first chance (p1 and p2)
+ 		if (this.battle.gameType === 'multi' && this.battle.turn % 2 !== [1, 1, 0, 0][this.n]) return false;
+diff --git a/sim/teams.ts b/sim/teams.ts
+index 1ed3b63..827fb0d 100644
+--- a/sim/teams.ts
++++ b/sim/teams.ts
+@@ -626,26 +626,7 @@ export const Teams = new class Teams {
+ 	}
+ 
+ 	getGenerator(format: Format | string, seed: PRNG | PRNGSeed | null = null) {
+-		let TeamGenerator;
+-		format = Dex.formats.get(format);
+-		let mod = format.mod;
+-		if (format.mod === 'monkeyspaw') mod = 'gen9';
+-		const formatID = toID(format);
+-		if (mod === 'gen9ssb') {
+-			TeamGenerator = require(`../data/mods/gen9ssb/random-teams`).default;
+-		} else if (mod === 'afd') {
+-			TeamGenerator = require(`../data/mods/afd/random-teams`).default;
+-		} else if (formatID.includes('gen9babyrandombattle')) {
+-			TeamGenerator = require(`../data/random-battles/gen9baby/teams`).default;
+-		} else if (formatID.includes('gen9randombattle') && format.ruleTable?.has('+tag:cap')) {
+-			TeamGenerator = require(`../data/random-battles/gen9cap/teams`).default;
+-		} else if (formatID.includes('gen9freeforallrandombattle')) {
+-			TeamGenerator = require(`../data/random-battles/gen9ffa/teams`).default;
+-		} else {
+-			TeamGenerator = require(`../data/random-battles/${mod}/teams`).default;
+-		}
+-
+-		return new TeamGenerator(format, seed);
++		throw new Error('Random teams not available in browser build');
+ 	}
+ 
+ 	generate(format: Format | string, options: PlayerOptions | null = null): PokemonSet[] {
