@@ -221,3 +221,43 @@ Plantar **una o dos por bloque**, sutiles. Anotar en `registro.md` cuáles ya sa
 7. **Español de España para nombres oficiales**, con un tono natural y cercano (el jugador es de CDMX, así que el habla neutra-latina en diálogos está bien). Cada NPC tiene su propia voz.
 8. **Cero spoilers en los textos visibles de la app** antes de tiempo. Las fichas de reto muestran solo lo que el jugador ya sabe.
 9. **Después de escribir:** actualizar `registro.md` (flags nuevos, apariciones, pistas plantadas y decisiones pendientes).
+
+---
+
+## 9. Pérdidas y golpes (petición de Mario, 2026-10-05)
+
+> Mario pidió **pérdidas importantes, de Pokémon o de NPCs, con giros que le hagan odiarnos y amarnos**. Su límite (elegido por él): **despedidas sí, muertes no** para los Pokémon de su equipo.
+
+### 9.1 Reglas
+
+1. **Tema:** cada pérdida sirve a la frase de A.Z.: *"Toda energía infinita se cobra en vidas. Siempre."* Nada de muertes de relleno o solo para impactar.
+2. **Pocas y grandes:** como mucho una pérdida importante por acto, y no en todos.
+3. **Siempre anunciadas (Ackroyd):** al menos 2 pistas, plantadas 1 o 2 bloques antes y anotadas en `registro.md`. Al releer, tiene que parecer inevitable.
+4. **Las decisiones cambian el cómo, no el qué:** en las pérdidas troncales el jugador no puede evitarlas, pero sus decisiones cambian quién está presente, las últimas palabras, qué se salva y cómo reaccionan los demás. Una sola pérdida en toda la historia puede depender de una decisión, y tiene que avisarse con claridad.
+5. **Equipo del jugador:** **ningún Pokémon de su equipo muere nunca.** Ninguno se pierde para siempre sin que él lo elija. Se permiten:
+   - **Separaciones temporales** de unas pocas horas de juego, con regreso garantizado y crecimiento.
+   - **Despedidas elegidas:** un desplazado que puede volver a su casa. Las dos opciones son válidas; si se va, deja un recuerdo (`art`/`read`) y se le puede visitar después.
+   - **Lucario** puede separarse temporalmente, pero siempre vuelve.
+6. **Límites:**
+   - Nunca muere un niño: Lucien puede perderse o desaparecer, pero se le encuentra.
+   - Ningún humano canon muere, salvo A.Z. (ya es una figura trágica en el canon).
+   - Ningún Pokémon de un personaje canon muere.
+   - Sin violencia gráfica: fuera de plano o en silencio.
+7. **Duelo que dura:**
+   - El hueco se nota: su sitio vacío en el lugar, NPCs que lo mencionan y su aparición en eventos anuales.
+   - Hay un recuerdo coleccionable (`art` o `read`) y una entrada del Diario.
+   - Tras la revelación del Acto V, releer el Diario tiene que doler el doble: el Eco de Ansel escribió el duelo por muertes que Ansel causó.
+8. **Humor:** vuelve poco a poco. Nunca un chiste en la misma escena.
+
+### 9.2 Plan (ajustable; anota en `registro.md` cada pista plantada)
+
+| Acto | Pérdida | Pistas antes | Giro / decisiones |
+|---|---|---|---|
+| II → III | **Don Aurelio** muere de viejo en su rancho; el viaje por la Fisura le pasó factura ("Lo que el tiempo se llevó"). | **B2:** tos, "ya no estoy para estos trotes", pregunta quién cuidará el rancho, regala el Ampharos "por si acaso". | **B3:** el jugador llega tarde y le espera una carta (`read`). Decide qué pasa con el rebaño (sobrina, el jugador o Lemnis "ofrece ayuda"). Copito reconoce al jugador. |
+| Año 2 (Día de Muertos 2027) | **La abuela Remedios** ya no está: su foto en la ofrenda. La lleva su nieta (OC nueva). | **2026:** "ya estoy vieja para viajes" (ya publicado). **B2/B3:** una aparición corta y cansada. Le da al jugador la receta del pan de muerto. | Misión nueva (`ev_muertos_2`, sin reabrir `ev_muertos`). El jugador pone algo de ella en la ofrenda; si lleva al Fuecoco/Skeledirge en el equipo, tiene su escena. Su frase vuelve: *"Acuérdate de lo que le gustaba, y ponlo en algún sitio. Así se queda."* |
+| V | **El Rotom** (si se purga el Eco): pierde la "personalidad" que lo acompañó desde el B1. Ya estaba en §3.5. | Calendario del Diario (§7). | Odiarlo y quererlo: el Diario más tierno lo escribió el villano. |
+| VI | **Noa Lambert** muere al abrir las jaulas de desplazados en el nodo de Galar. Las etiquetas «Destino: por asignar» de la Ruta 5 del B1 eran la pista. | **B1:** ya publicado (cuida a los desplazados). **B2–B4:** le pasa datos al jugador, cada vez más asustada; le hace un regalo de despedida a Bastien. | Es lo que hace que **Octavia** descubra el drenaje y se pase a tu lado (odio → amor). Con **Bastien resentido**, es él quien avisa a Lemnis sin saberlo y luego intenta salvarla (no llega). Con **Bastien leal**, llega a tiempo de oír sus últimas palabras. |
+| VII | **Lucario se va** a Isla Hierro con el linaje de Quinoa (separación temporal, de 1 a 3 h de juego). | **B1:** su origen. **B4–B6:** sueños de aura y reacciones a Quinoa. | Vuelve por decisión propia en el clímax del acto, con un movimiento de aura nuevo. El jugador sigue con el resto del equipo mientras tanto. |
+| IX | **A.Z. y Floette** dan su energía eterna para cerrar el último nodo. Mueren juntos y en paz, después de 3000 años. | **B1:** su advertencia (ya publicada). Una aparición por acto. | Si las decisiones acumuladas no lo permiten, paga otro: Octavia, como redención, o el propio Ansel. Siempre paga alguien. |
+
+**Despedida elegida (desplazado del jugador):** el Pokémon pequeño que tiembla bajo la manta en las jaulas de Lemnis (B1, Ruta 5) puede unirse al equipo en el B2. Cuando se cierra el nodo de su región, decide el jugador: se queda o vuelve a casa (en ese caso deja un recuerdo y se le puede visitar).

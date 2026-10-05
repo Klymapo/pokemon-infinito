@@ -56,6 +56,8 @@
 
 - **2026-10-05 · Decisión de balance: «fijo con revanchas»** (ver `balance.md` §4b). Aplicarlo en cada bloque que vuelva a zonas viejas. El B2 vuelve a Kalos: incluir allí la primera «nueva temporada» y las revanchas de Brock, Blanca y Corelia.
 
+- **2026-10-05 · Pérdidas importantes y giros que duelan** (Pokémon o NPCs). Límite elegido por Mario: **despedidas sí, muertes no** para su equipo. Reglas y plan en `biblia.md` §9. Cada bloque planta las pistas que tocan según §9.2 y las anota en `registro.md`.
+
 ## Bugs corregidos
 
 - 2026-10-05: Ciprés (y otros 5 NPCs) volvían a dar su regalo cada vez que les hablabas: las condiciones leían la etapa de una misión ya terminada. Arreglo de motor: una misión terminada se lee siempre como `'hecha'` y no se puede reabrir. El bot ahora detecta «REGALOS REPETIDOS» y la auditoría lo bloquea. **Al escribir condiciones de diálogo, usa `!done.x` o lee `quest.x == 'hecha'`.**

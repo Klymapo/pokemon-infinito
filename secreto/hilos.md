@@ -10,7 +10,7 @@
 | La delantera | Rhi (+ Nate) | Rival; conoce tu nombre | **B2:** Rhi va a la Gira. Combate en Johto. Primer momento vulnerable: le llega una carta de su padre |
 | La heredera | Sera | Según la decisión de Crómlech | **B2:** con `b01_trato_sera`, encargo de Sera (recuperar un fragmento robado por Melia); si no, Sera aparece como anfitriona fría de la Gira |
 | Letra pequeña | Bastien | Según la decisión de la cueva | **B2:** consecuencias. Si rompe el contrato, Lemnis lo demanda; si guarda silencio, aparece en carteles de Lemnis, más apagado |
-| Lana perdida | Don Aurelio | Rebaño a salvo; vuelve a Johto | **B2:** visita a su rancho (Ruta 42): Ampharos de regalo de amistad o Mareep shiny. Si un Mareep se quedó con Lemnis, aparece en el B3 en otra región (prueba de que no los devuelven) |
+| Lana perdida | Don Aurelio | Rebaño a salvo; vuelve a Johto | **B2:** visita a su rancho (Ruta 42): Ampharos de regalo de amistad o Mareep shiny. Si un Mareep se quedó con Lemnis, aparece en el B3 en otra región (prueba de que no los devuelven). **Plantar sus pistas de despedida** (biblia §9.2). **B3:** su pérdida |
 | El recetario | Gaspar | Recetario de Kalos | **B2:** recetario de Johto (dulces de Ciudad Iris). Duelo de cocina en el B4 (Alola) |
 | ¡Transformación! | Héctor | Héroe con Hawlucha | **B2:** conoce a Esprit (Matière) en Luminalia, o por holomisor. Fan total |
 | El show debe continuar | Tobías y Duquesa | Tras la Cueva Brillante | **B3:** nueva "mazmorra" (Torre Bellsprout o Pozo Slowpoke) |
@@ -22,6 +22,7 @@
 | Lucien | Lucien y Chespin | Fan de las Puertas | **B2:** intenta colarse en la Gira. **Acto VI:** desplazado por una Fisura (momento duro) |
 | Conde Vladimiro | Conde | Poké Flauta; Halloween anual | **B2:** pista sobre el retrato con el rey gigante (A.Z.) |
 | Lebrun | Inspector Lebrun | No apareció | **B2:** cameo. **Acto III:** revelación del topo |
-| Ortega / Remedios | Remedios | Evento anual de Día de Muertos | Cada año |
+| Ortega / Remedios | Remedios | Evento anual de Día de Muertos | **B2/B3:** una aparición corta y cansada, y la receta. **Día de Muertos 2027:** su ofrenda (biblia §9.2) |
 | Kaori | Kaori (candidata) | — | **B2:** presentación en Ciudad Iris (venenos en el teatro) |
 | Leilani | Leilani (candidata) | — | Acto IV |
+| Las jaulas | Noa Lambert (y Bastien, Octavia) | Noa presentada en la Ruta 5 | **B2–B4:** filtra datos, cada vez más asustada; regalo a Bastien. **Acto VI:** su pérdida (biblia §9.2) |
