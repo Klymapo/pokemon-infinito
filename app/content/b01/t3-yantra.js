@@ -108,7 +108,7 @@ export default {
 				{ label: 'Tienda Pokémon', action: { shop: 'tienda_1' } },
 				{ label: 'Piedras y Fósiles de Relieve', sub: 'Piedras evolutivas y minerales', icon: '💎', action: { shop: 'tienda_piedras' } },
 				{ label: 'Gimnasio de Relieve', sub: 'Una pared de escalada de treinta metros', icon: '🧗', action: { go: 'gym_relieve' }, new: '!beat("blanca_g2")' },
-				{ label: 'Muro de Escalada', sub: 'Entrenamiento (nivel recomendado 22)', icon: '🥋', action: { training: { cap: 22, trainers: ['muro_relieve_1', 'muro_relieve_2'], wild: [{ sp: 'dwebble', lv: [18, 20] }, { sp: 'binacle', lv: [18, 20] }], coach: 'Monitora del Muro', closed: 'Tu equipo ya trepa como una cabra. Aquí no vas a aprender nada más. Ve a por la medalla.' } } },
+				{ label: 'Muro de Escalada', sub: 'Entrenamiento (nivel recomendado 23)', icon: '🥋', action: { training: { cap: 23, trainers: ['muro_relieve_1', 'muro_relieve_2'], wild: [{ sp: 'dwebble', lv: [18, 20] }, { sp: 'binacle', lv: [18, 20] }], coach: 'Monitora del Muro', closed: 'Tu equipo ya trepa como una cabra. Aquí no vas a aprender nada más. Ve a por la medalla.' } } },
 				{ label: 'Una chica pelirroja colgada del muro', sub: 'Y un chico dormido en el suelo', icon: '⚽', cond: '!beat("blanca_g2")', new: '!flag.b01_rhi_relieve', talk: [{ cond: '!flag.b01_rhi_relieve', script: 'b01_rhi_relieve_1' }, { script: 'b01_rhi_relieve_2' }] },
 				{ label: 'Nate, en las escaleras del gimnasio', sub: 'Dormido. O casi', icon: '💤', cond: 'flag.b01_rhi_2_hecho', talk: [{ script: 'b01_nate_relieve' }] },
 				{ label: 'Alexia, la periodista', sub: 'Fotografía el muro', icon: '📷', new: '!flag.b01_alexia_relieve', talk: [{ cond: '!flag.b01_alexia_relieve', script: 'b01_alexia_relieve' }, { script: 'b01_alexia_relieve_2' }] },
@@ -130,10 +130,10 @@ export default {
 			desc: 'El Gimnasio de Relieve es una **pared de escalada** de treinta metros, con presas de colores y entrenadores esperando en las repisas. Lino lo diseñó así. Blanca no.\n\nArriba del todo, una chica de coletas rosas grita algo sobre su falda.',
 			descs: [{ cond: 'beat("blanca_g2")', text: 'La pared de escalada, ahora con una escalera de mano apoyada en un lado. Blanca la mandó poner «para las bajadas emocionales».' }],
 			spots: [
-				{ label: 'Escaladora Inès', sub: 'Primera repisa', action: { trainer: 'gym_relieve_1' } },
+				{ label: 'Escaladora Capucine', sub: 'Primera repisa', action: { trainer: 'gym_relieve_1' } },
 				{ label: 'Vaquero Toño', sub: 'Segunda repisa', action: { trainer: 'gym_relieve_2' } },
 				{ label: 'Animadora Paloma', sub: 'Tercera repisa', action: { trainer: 'gym_relieve_3' } },
-				{ label: 'Blanca, en lo alto del muro', sub: 'Líder de intercambio · tipo Normal', icon: '🎀', cond: 'beat("gym_relieve_1") && beat("gym_relieve_2") && beat("gym_relieve_3")', new: '!beat("blanca_g2")', talk: [{ cond: 'beat("blanca_g2")', script: 'b01_blanca_despues' }, { script: 'b01_blanca_reto' }] },
+				{ label: 'Blanca, en lo alto del muro', sub: 'Líder de intercambio · tipo Normal', icon: '🎀', cond: 'beat("gym_relieve_1") && beat("gym_relieve_2") && beat("gym_relieve_3")', new: '!beat("blanca_g2")', talk: [{ cond: 'beat("blanca_g2")', script: 'b01_blanca_despues' }, { cond: 'maxLv >= 25', script: 'b01_blanca_reto_fuerte' }, { script: 'b01_blanca_reto' }] },
 				{ label: 'Blanca, en lo alto del muro', sub: 'Demasiado arriba para hablar', icon: '🎀', cond: '!(beat("gym_relieve_1") && beat("gym_relieve_2") && beat("gym_relieve_3"))', talk: [{ script: 'b01_blanca_espera' }] },
 			],
 		},
@@ -144,6 +144,8 @@ export default {
 			bg: { type: 'ruins', ground: '#9cb86a', far: '#c9cfd6', flowers: '#f2d04a' },
 			desc: 'Un camino recto entre dos hileras de **menhires**, piedras grises más altas que una casa, plantadas aquí hace miles de años por alguien que no dejó instrucciones. Entre ellas crecen flores amarillas.\n\nNadie sabe para qué sirven. Todo el mundo baja la voz al pasar.',
 			links: ['relieve', 'cromlech'],
+			enterCond: 'badges >= 2',
+			blockedMsg: 'Una barrera de la Liga corta el Camino Menhires. Un cartel: «Tramo de nivel alto. Paso reservado a participantes del Circuito con **dos medallas**». Debajo, a mano: «Sí, la de Relieve cuenta. No, el muro de entrenamiento no cuenta».',
 			onEnter: [{ script: 'b01_r10_entrada', cond: '!quest.b01_m7', once: true }],
 			rumors: [
 				{ text: 'Los Sigilyph vuelan en círculo alrededor de los menhires. Siempre. O eso era antes.' },
@@ -230,6 +232,8 @@ export default {
 			bg: { type: 'route', ground: '#8fb46a', hill: '#7a9a5a', far: '#b9d4e6' },
 			desc: 'Un sendero de montaña con olor a pino y, de vez en cuando, a mar. Desde los claros se ve, muy lejos, una torre de piedra sobre un islote: la **Torre Maestra**.',
 			links: ['cromlech', 'cueva_reflejos'],
+			enterCond: 'flag.b01_cromlech_hecha',
+			blockedMsg: 'En la salida del pueblo, un turista con sombrero de paja y —inexplicablemente— gabardina te corta el paso. «¡Psst! Todavía no te vayas. Esta noche te necesito. Búscame junto a la fuente.»',
 			rumors: [
 				{ text: 'Los karatekas de Yantra suben a entrenar a esta ruta porque desde aquí se ve la Torre. Dicen que da fuerzas.' },
 				{ text: 'Un Dedenne de esta ruta capta emisoras de radio con los bigotes. Desde las Fisuras, también capta las de Galar.' },
@@ -356,7 +360,7 @@ export default {
 				{ label: 'Patinadora Elsa', sub: 'Primera rampa', action: { trainer: 'gym_yantra_1' } },
 				{ label: 'Cinturón Negro Hugues', sub: 'La curva del ocho', action: { trainer: 'gym_yantra_2' } },
 				{ label: 'Luchadora Ninon', sub: 'Última barandilla', action: { trainer: 'gym_yantra_3' } },
-				{ label: 'Corelia', sub: 'Líder · tipo Lucha', icon: '🛼', cond: 'beat("gym_yantra_1") && beat("gym_yantra_2") && beat("gym_yantra_3")', new: '!beat("corelia_g3")', talk: [{ cond: 'beat("corelia_g3")', script: 'b01_corelia_despues' }, { script: 'b01_corelia_reto' }] },
+				{ label: 'Corelia', sub: 'Líder · tipo Lucha', icon: '🛼', cond: 'beat("gym_yantra_1") && beat("gym_yantra_2") && beat("gym_yantra_3")', new: '!beat("corelia_g3")', talk: [{ cond: 'beat("corelia_g3")', script: 'b01_corelia_despues' }, { cond: 'maxLv >= 34', script: 'b01_corelia_reto_tope' }, { script: 'b01_corelia_reto' }] },
 				{ label: 'Corelia', sub: 'Pasa patinando a toda velocidad', icon: '🛼', cond: '!(beat("gym_yantra_1") && beat("gym_yantra_2") && beat("gym_yantra_3"))', talk: [{ script: 'b01_corelia_espera' }] },
 			],
 		},
@@ -367,19 +371,19 @@ export default {
 	// =====================================================================
 	trainers: {
 		// ----- Ruta 9 -----
-		jinete_r9_1: { name: 'Margaux', cls: 'Jinete', ai: 2, team: [{ sp: 'rhyhorn', lv: 18 }, { sp: 'hippopotas', lv: 17 }],
+		jinete_r9_1: { name: 'Solange', cls: 'Jinete', ai: 2, team: [{ sp: 'rhyhorn', lv: 18 }, { sp: 'hippopotas', lv: 17 }],
 			intro: '¡Eh, jinete! En el Paso hay una regla: quien se cruza, saluda. Y aquí saludamos así.', win: 'Buen trote. Mi Rhyhorn dice que el tuyo pisa demasiado fuerte. Viniendo de él, es un piropo.' },
-		jinete_r9_2: { name: 'Bruno', cls: 'Jinete', ai: 2, team: [{ sp: 'sandile', lv: 17 }, { sp: 'rhyhorn', lv: 19 }],
+		jinete_r9_2: { name: 'Basile', cls: 'Jinete', ai: 2, team: [{ sp: 'sandile', lv: 17 }, { sp: 'rhyhorn', lv: 19 }],
 			intro: 'Desde lo de las Fisuras, los Rhyhorn están nerviosos. Huelen cosas que no son de aquí. ¿Tú hueles raro?', win: 'No, tú hueles normal. Es tu Riolu el que huele a otra parte.' },
 		exc_r9: { name: 'Armel', cls: 'Excursionista', ai: 2, team: [{ sp: 'dwebble', lv: 17 }, { sp: 'helioptile', lv: 18 }],
 			intro: 'Llevo tres días buscando un Larvitar que vi en este cañón. ¡Un Larvitar! ¡En Kalos! Nadie me cree.', win: 'Si lo ves, atrápalo. O no. Pero dime que existía.' },
 
 		// ----- Cueva Brillante -----
-		mont_cueva: { name: 'Gilles', cls: 'Montañero', ai: 2, team: [{ sp: 'machop', lv: 18 }, { sp: 'onix', lv: 18 }],
+		mont_cueva: { name: 'Aubin', cls: 'Montañero', ai: 2, team: [{ sp: 'machop', lv: 18 }, { sp: 'onix', lv: 18 }],
 			intro: 'Cuidado dónde pisas: esta semana se han hundido tres galerías. Y no fue la cueva. Alguien está cavando.', win: 'Si sigues hacia el fondo, ojo. Hay gente vestida de rojo. Y no son bomberos.' },
-		cientifica_cueva: { name: 'Odile', cls: 'Científica', ai: 2, team: [{ sp: 'lunatone', lv: 18 }, { sp: 'mawile', lv: 18 }],
+		cientifica_cueva: { name: 'Hélène', cls: 'Científica', ai: 2, team: [{ sp: 'lunatone', lv: 18 }, { sp: 'mawile', lv: 18 }],
 			intro: '¿Sabes cuánto brillaban estos cristales hace un mes? Un treinta por ciento más. Alguien se está llevando la luz.', win: 'Treinta por ciento. Que alguien lo escriba en algún sitio, por favor.' },
-		mont_cueva_2: { name: 'Bernard', cls: 'Montañero', ai: 2, team: [{ sp: 'cubone', lv: 18 }, { sp: 'rhyhorn', lv: 19 }],
+		mont_cueva_2: { name: 'Roland', cls: 'Montañero', ai: 2, team: [{ sp: 'cubone', lv: 18 }, { sp: 'rhyhorn', lv: 19 }],
 			intro: 'Mi Cubone encontró un hueso en esta cueva y no lo suelta. No le pregunto de quién era. Él tampoco me lo cuenta.', win: 'Relieve está ahí arriba. Si vas al gimnasio, lleva guantes. La pared raspa.' },
 		recluta_flare_c1: { name: 'Recluta', cls: 'Team Flare', npc: 'recluta_flare', ai: 2, team: [{ sp: 'houndour', lv: 17 }, { sp: 'croagunk', lv: 18 }],
 			intro: 'Esta es una zona de belleza restringida. Tú, con esa ropa, no cumples los requisitos.', win: '¡Mi traje! ¡Me has arrugado el traje! ¿Sabes lo que cuesta planchar esto en una cueva?' },
@@ -407,7 +411,7 @@ export default {
 			lose: '¡El jefe de piso sigue en pie! ¡No cambien de canal!' },
 
 		// ----- Gimnasio de Relieve -----
-		gym_relieve_1: { name: 'Inès', cls: 'Escaladora', ai: 3, team: [{ sp: 'aipom', lv: 19 }, { sp: 'furret', lv: 20 }],
+		gym_relieve_1: { name: 'Capucine', cls: 'Escaladora', ai: 3, team: [{ sp: 'aipom', lv: 19 }, { sp: 'furret', lv: 20 }],
 			intro: 'Blanca nos trajo de Johto y Lino nos dejó la pared. ¡Ahora somos un gimnasio bilingüe!', win: '¡Sigue subiendo! ¡No mires abajo! …Vale, mira: mi Aipom se está llevando tu gorra.' },
 		gym_relieve_2: { name: 'Toño', cls: 'Vaquero', ai: 3, team: [{ sp: 'tauros', lv: 20 }, { sp: 'stantler', lv: 20 }],
 			intro: 'En el rancho de Blanca, los Tauros suben cuestas así todos los días. Bueno, cuestas más planas. Bastante más planas.', win: '¡Yija! …Perdón. En Kalos no se dice «yija», ¿verdad?' },
@@ -417,9 +421,9 @@ export default {
 			team: [
 				{ sp: 'clefairy', lv: 21, moves: ['disarmingvoice', 'attract', 'defensecurl', 'gravity'], ability: 'cutecharm', item: 'oranberry', nature: 'bold' },
 				{ sp: 'furfrou', lv: 22, moves: ['headbutt', 'bite', 'sandattack', 'babydolleyes'], ability: 'furcoat', item: 'silkscarf', nature: 'adamant' },
-				{ sp: 'miltank', lv: 24, moves: ['rollout', 'milkdrink', 'attract', 'stomp'], ability: 'thickfat', item: 'sitrusberry', nature: 'impish' },
+				{ sp: 'miltank', lv: 23, moves: ['rollout', 'milkdrink', 'attract', 'stomp'], ability: 'thickfat', item: 'sitrusberry', nature: 'impish' },
 			],
-			items: [{ id: 'superpotion', n: 2 }],
+			items: [{ id: 'superpotion', n: 1 }],
 			intro: '¡Miltank, a rodar! ¡Rueda, rueda, rueda!',
 			win: '¿Q-qué? ¿Ya está? ¿Ya se ha acabado?',
 			lose: '¡Gané! ¡Gané! ¡Waaah, qué emoción, voy a llorar! …Ya estoy llorando.' },
@@ -427,7 +431,7 @@ export default {
 		// ----- Relieve: Muro de Escalada (entrenamiento) -----
 		muro_relieve_1: { name: 'Fanny', cls: 'Escaladora', ai: 2, team: [{ sp: 'machop', lv: 20 }, { sp: 'onix', lv: 19 }],
 			intro: 'Tres presas más y bajamos a por un pain au chocolat. Pero primero, combate.', win: 'Buen agarre. Se nota en cómo das órdenes.' },
-		muro_relieve_2: { name: 'Corentin', cls: 'Escalador', ai: 2, team: [{ sp: 'diggersby', lv: 20 }, { sp: 'binacle', lv: 19 }],
+		muro_relieve_2: { name: 'Timéo', cls: 'Escalador', ai: 2, team: [{ sp: 'diggersby', lv: 20 }, { sp: 'binacle', lv: 19 }],
 			intro: 'Entreno aquí porque en el gimnasio me caigo. Aquí también me caigo, pero menos alto.', win: 'Mañana más. Siempre mañana más.' },
 
 		// ----- Relieve: rival -----
@@ -471,11 +475,11 @@ export default {
 			lose: 'Era de esperar.' },
 
 		// ----- Ruta 11 -----
-		r11_1: { name: 'Mathis', cls: 'Karateka', ai: 2, team: [{ sp: 'throh', lv: 24 }, { sp: 'sawk', lv: 24 }],
+		r11_1: { name: 'Sacha', cls: 'Karateka', ai: 2, team: [{ sp: 'throh', lv: 24 }, { sp: 'sawk', lv: 24 }],
 			intro: 'Entreno en esta ruta porque desde aquí se ve la Torre Maestra. Cuando estoy cansado, la miro. Sigo cansado, pero con vistas.', win: '¿Vas a la Torre? Saluda a la estatua de mi parte. Es la única que nunca me ha ganado.' },
 		r11_2: { name: 'Maëlle', cls: 'Luchadora', ai: 2, team: [{ sp: 'hariyama', lv: 24 }, { sp: 'staravia', lv: 24 }],
 			intro: '¡Eh, la aprendiz de la Torre! ¿Traes público? ¡Mejor! Mi hermano y yo vamos de dos en dos.', win: 'Ahora va mi hermano. Él pega más fuerte. Yo pego más bonito.' },
-		r11_3: { name: 'Loïc', cls: 'Luchador', ai: 2, team: [{ sp: 'nidorino', lv: 24 }, { sp: 'sawk', lv: 25 }],
+		r11_3: { name: 'Gabin', cls: 'Luchador', ai: 2, team: [{ sp: 'nidorino', lv: 24 }, { sp: 'sawk', lv: 25 }],
 			intro: 'Mi hermana dice que yo pego más fuerte. Es verdad. Lo que no dice es que también pego peor.', win: 'Vale. A la playa. A entrenar. Otra vez. Con ella.' },
 		r11_4: { name: 'Nadia', cls: 'Técnica de radio', ai: 2, team: [{ sp: 'dedenne', lv: 25 }, { sp: 'chingling', lv: 24 }],
 			intro: 'Mi Dedenne capta la radio con los bigotes. Desde las Fisuras, a veces capta emisoras de Galar. Ayer me enteré del resultado de un partido.', win: 'Ganó el equipo de casa, por cierto. Dos a uno. Con un gol de un tal Nueve.' },
@@ -483,7 +487,7 @@ export default {
 		// ----- Cueva Reflejos -----
 		cr_1: { name: 'Pascal', cls: 'Mimo', ai: 2, team: [{ sp: 'mrmime', lv: 25 }],
 			intro: '(El mimo no dice nada. Hace como que abre una puerta invisible. Luego como que te reta. Luego como que te gana.)', win: '(El mimo hace como que llora. Y lo hace muy bien.)' },
-		cr_2: { name: 'Ophélie', cls: 'Psíquica', ai: 2, team: [{ sp: 'solosis', lv: 25 }, { sp: 'wobbuffet', lv: 25 }],
+		cr_2: { name: 'Séverine', cls: 'Psíquica', ai: 2, team: [{ sp: 'solosis', lv: 25 }, { sp: 'wobbuffet', lv: 25 }],
 			intro: 'En los espejos de esta cueva se ve lo que vas a ser. Yo me vi con canas. Gracias, cueva.', win: 'Mira bien a tu compañero en los espejos del fondo. Hazme caso.' },
 		cr_3: { name: 'Rosalie', cls: 'Montañera', ai: 2, team: [{ sp: 'roggenrola', lv: 25 }, { sp: 'carbink', lv: 26 }],
 			intro: 'Este cristal vale una fortuna en Luminalia. Lemnis paga el doble que nadie. ¿Para qué querrá tanto cristal una empresa de puertas?', win: 'Bah. Se lo vendo igual. El alquiler no se paga con preguntas.' },
@@ -499,10 +503,10 @@ export default {
 			team: [
 				{ sp: 'mienfoo', lv: 29, moves: ['fakeout', 'forcepalm', 'uturn', 'detect'], ability: 'regenerator', item: 'expertbelt', nature: 'jolly' },
 				{ sp: 'machoke', lv: 30, moves: ['crosschop', 'bulkup', 'rockslide', 'knockoff'], ability: 'guts', item: 'muscleband', nature: 'adamant' },
-				{ sp: 'hawlucha', lv: 31, moves: ['flyingpress', 'aerialace', 'highjumpkick', 'swordsdance'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly' },
+				{ sp: 'hawlucha', lv: 31, moves: ['flyingpress', 'aerialace', 'highjumpkick', 'roost'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly' },
 				{ sp: 'lucario', lv: 32, moves: ['forcepalm', 'metalclaw', 'bonerush', 'extremespeed'], ability: 'justified', item: 'blackbelt', nature: 'adamant' },
 			],
-			items: [{ id: 'superpotion', n: 2 }],
+			items: [{ id: 'superpotion', n: 1 }],
 			intro: '¡Vamos a hacer RUIDO! ¡A TOPE!',
 			win: '¡Uaaah! ¡Qué combate! ¡Me tiemblan las ruedas!',
 			lose: '¡Así se hace, Lucario! ¡Vuelve cuando quieras, que la pista no se cierra nunca!' },
@@ -516,7 +520,7 @@ export default {
 			lose: 'Lo has visto, ¿verdad? Tu compañero no se ha rendido ni un segundo.' },
 
 		// ----- Yantra: Playa de la Torre (entrenamiento) -----
-		playa_yantra_1: { name: 'Margot', cls: 'Karateka', ai: 2, team: [{ sp: 'machoke', lv: 28 }, { sp: 'throh', lv: 27 }],
+		playa_yantra_1: { name: 'Agathe', cls: 'Karateka', ai: 2, team: [{ sp: 'machoke', lv: 28 }, { sp: 'throh', lv: 27 }],
 			intro: '¡Cien flexiones en la arena y luego combate! …Bueno, primero el combate.', win: 'Vale. Cien flexiones. Para mí.' },
 		playa_yantra_2: { name: 'Yanis', cls: 'Cinturón Negro', ai: 2, team: [{ sp: 'hariyama', lv: 28 }, { sp: 'mienfoo', lv: 28 }],
 			intro: 'Las olas son el mejor sparring: nunca se cansan y nunca se ofenden.', win: 'Tú tampoco te cansas. ¿Te ofendes?' },
@@ -673,14 +677,19 @@ export default {
 			{ text: 'Bastien se va por un túnel lateral, hacia la Ruta 9. Antes de doblar la esquina, se da la vuelta como si fuera a decir algo más. No lo dice.' },
 			{ set: { 'flag.b01_cueva_flare_hecha': true } },
 			{ quest: 'b01_m5', done: true },
-			{ diary: 'Hoy mi entrenador{|a|e} y yo entramos en la Cueva Brillante. ¡Los cristales brillan solos! Al fondo había unos trajes rojos muy raros, con gafas de sol dentro de una cueva (¿cómo ven algo?). También nos encontramos a Bastien. Estaba muy callado. Creo que estaba cansado. ¡Mañana, Ciudad Relieve y la segunda medalla!', cond: 'flag.b01_diario' },
+			{ diary: 'Hoy mi entrenador{|a|e} y yo entramos en la Cueva Brillante. ¡Los cristales brillan solos! Al fondo había unos trajes rojos muy raros, con gafas de sol dentro de una cueva (¿cómo ven algo?). También nos encontramos a Bastien. Al final se fue sin despedirse. ¡Mañana, Ciudad Relieve y la segunda medalla!', cond: 'flag.b01_diario' },
 		],
 
 		// ---- El fósil ----
 		b01_fosil: [
 			{ text: 'Cerca de la salida, alguien te llama a gritos desde atrás. Un hombre de bata blanca, gafas empañadas y pelo blanco rizado viene corriendo, sin aliento, con una caja térmica en los brazos.' },
-			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¡Por fin! ¡Te alcancé! Uf… Lazare. Doctor Lazare, de Petroglifo. Paleontólogo, restaurador y socorrista los martes. Hoy no es martes, pero he corrido igual.' },
-			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Después de que te fueras, pensé: los de rojo van a la Cueva Brillante, y en la Cueva Brillante hay fósiles. Así que entré de madrugada por la galería de los geólogos, la que no sale en los mapas.' },
+			{ if: 'flag.b01_lazare_1', then: [
+				{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¡Por fin! ¡Te alcancé! Uf… Soy yo, Lazare, el de Petroglifo. Hoy no es martes, pero he corrido como si fuera socorrista.' },
+				{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Después de que te fueras, pensé: los de rojo van a la Cueva Brillante, y en la Cueva Brillante hay fósiles. Así que entré de madrugada por la galería de los geólogos, la que no sale en los mapas.' },
+			], else: [
+				{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¡Eh! ¡Tú, {el|la|le} del Riolu! ¡Espera! Uf… Lazare. Doctor Lazare, del Laboratorio de Fósiles de Petroglifo. Paleontólogo, restaurador y socorrista los martes. No pasaste por mi laboratorio, así que he venido yo.' },
+				{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Unos tipos de rojo andaban preguntando por fósiles, y en la Cueva Brillante hay fósiles. Así que entré de madrugada por la galería de los geólogos, la que no sale en los mapas.' },
+			] },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Encontré dos: un **Fósil Mandíbula** y un **Fósil Aleta**. Los de rojo habían pasado a un metro. Ni los miraron. Buscaban cristales. Gente sin sensibilidad.' },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Me los llevé al laboratorio y los reviví esta mañana, antes de que alguien con gafas de sol cambiara de opinión. Rápido. Demasiado rápido para mi gusto. Pero aquí están.' },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Un fósil revivido necesita un entrenador, no una vitrina. Y tú tienes cara de no vendérselo a nadie. Elige uno. Solo uno: el otro se queda conmigo, que yo también me encariño.' },
@@ -783,11 +792,19 @@ export default {
 					{ af: { rhi: 1 } },
 					{ say: 'rhi', text: 'Eh. No pongas esa cara. Jugaste bien. Pero la delantera soy yo.' },
 					{ heal: 'Rhi te lanza una Superpoción sin mirar. «Que no se diga que gano con ventaja.»' },
+					{ quest: 'b01_t_rhi', stage: 'revancha' },
 				] },
 			{ say: 'nate', text: 'Tu {riolu} tiene buen toque.' },
 			{ say: 'rhi', text: '¿Qué? ¿Desde cuándo tú comentas algo?' },
 			{ say: 'nate', text: 'Desde que hay algo que comentar.' },
 			{ text: 'Rhi abre la boca. La cierra. Por primera vez desde que la conoces, no tiene respuesta. Se da la vuelta y sube la cuesta hacia el gimnasio, a zancadas. Nate la sigue, arrastrando los pies.' },
+			{ if: 'quest.b01_s_fennekin == "buscar" || quest.b01_s_fennekin == "pistas"', then: [
+				{ text: 'A mitad de la cuesta, Rhi se da la vuelta.' },
+				{ say: 'rhi', text: '¡Ah! Se me olvidaba. ¿Sabes el zorrito que se escapó en la inauguración? El Fennekin. Lo encontré yo, en el Bosque de Novarte, rodeado de bichos. Se lo devolví al profe de Luminalia. Me dio las gracias cuatro veces.' },
+				{ say: 'rhi', text: 'Me lo quería dar. Le dije que no: yo ya tengo delantero. Si tú lo quieres, pídeselo. Pero que conste que el rescate fue mío. Gol mío.' },
+				{ set: { 'flag.b01_fennekin_libre': true, 'flag.b01_fennekin_rhi': true, 'flag.b01_lucien_chespin': true } },
+				{ quest: 'b01_s_fennekin', done: true },
+			] },
 			{ intel: { npc: 'rhi', text: 'Su compañero, Nate, casi no habla. Cuando habla, Rhi se calla.' } },
 			{ intel: { npc: 'nate', text: 'Compañero de equipo de Rhi desde los ocho años. Genio. Vago. Dijo que tu Riolu «tiene buen toque».' } },
 		],
@@ -799,6 +816,10 @@ export default {
 		// ---- Gimnasio de Relieve ----
 		b01_blanca_espera: [
 			{ text: 'Desde lo alto del muro llega una voz: «¡Primero sube! ¡Con los entrenadores! ¡Es la regla de Lino, no la mía! ¡Yo habría puesto un ascensor!».' },
+		],
+		b01_blanca_reto_fuerte: [
+			{ say: 'blanca', text: '¡Eh, eh, eh! ¿Y ese equipo? ¡Has estado entrenando a escondidas! ¡Eso no es justo! …Vale, sí es justo. Pero me fastidia.' },
+			{ call: 'b01_blanca_reto' },
 		],
 		b01_blanca_reto: [
 			{ text: 'Llegas arriba. Te tiemblan los brazos. Blanca te espera sentada en una repisa, con los pies colgando y un batido en la mano.' },
@@ -993,7 +1014,7 @@ export default {
 					{ say: 'az', text: 'Conocí Crómlech cuando todavía no tenía nombre. Cuando estas piedras eran tumbas recién cerradas.' },
 				] },
 				{ text: 'Quedarte en silencio a su lado.', then: [
-					{ text: 'Se quedan los dos en silencio. La Floette baja de su hombro, se posa un segundo sobre la cabeza de {riolu} y vuelve. El hombre sonríe. Parece que hacía mucho que no lo hacía.' },
+					{ text: 'Os quedáis los dos en silencio. La Floette baja de su hombro, se posa un segundo sobre la cabeza de {riolu} y vuelve. El hombre sonríe. Parece que hacía mucho que no lo hacía.' },
 					{ happy: { who: 'riolu', n: 5 } },
 				] },
 			] },
@@ -1117,7 +1138,8 @@ export default {
 			{ if: '!flag.b01_cromlech_hecha', then: [
 				{ say: 'guardia_lemnis', text: 'Propiedad privada. Proyecto de conservación arqueológica. No hay nada que ver.' },
 				{ if: 'rep.lemnis >= 5', then: [{ say: 'guardia_lemnis', text: '…Usted es {el|la|le} de la inauguración. La empresa le tiene en buena estima. Aun así: no hay nada que ver.' }] },
-				{ if: 'rep.lemnis <= -5', then: [{ say: 'guardia_lemnis', text: '…Le conozco. Usted habló con la prensa. Circule.' }] },
+				{ if: 'flag.b01_prensa_verdad', then: [{ say: 'guardia_lemnis', text: '…Le conozco. Usted le habló de «grietas» a la prensa. Circule.' }] },
+				{ if: 'rep.lemnis <= -5 && !flag.b01_prensa_verdad', then: [{ say: 'guardia_lemnis', text: '…Le conozco. Tenemos su foto en la garita. Circule.' }] },
 			], else: [
 				{ if: 'flag.b01_trato_sera', then: [
 					{ say: 'guardia_lemnis', text: '…Buenos días. —Se cuadra un poco al verte. Alguien le ha dado instrucciones sobre ti.' },
@@ -1160,7 +1182,7 @@ export default {
 			{ say: 'handsome', text: 'El plan: yo distraigo a los guardias de la puerta principal. Tú entras por el lado oeste, donde la lona está suelta. Miras. Te fijas en todo. Sales. Nadie te ve.' },
 			{ choice: [
 				{ text: '«¿Cómo vas a distraerlos?»', then: [{ text: 'Handsome se pone el sombrero de paja.' }, { say: 'handsome', text: 'Soy un turista perdido. Un turista perdido muy, muy pesado.' }] },
-				{ text: '«¿Y si me ven?»', then: [{ say: 'handsome', text: 'Entonces eres un turista perdido. Un turista perdido muy, muy pesado. Es un buen plan. Sirve para todo.' }] },
+				{ text: '«¿Y si me ven?»', then: [{ say: 'handsome', text: 'Entonces eres {un|una|une} turista perdid{o|a|e}. {Un|Una|Une} turista perdid{o|a|e} muy, muy pesad{o|a|e}. Es un buen plan. Sirve para todo.' }] },
 			] },
 			{ text: 'Handsome se aleja hacia la entrada. A los diez segundos lo oyes: «¡Disculpen! ¡Buenas noches! ¿Esto es el museo? ¿Hay tienda de recuerdos? ¿Venden imanes de nevera?».' },
 			{ text: 'Los focos giran. Uno. Dos. Treinta y un segundos. Te cuelas por debajo de la lona.' },
@@ -1176,7 +1198,7 @@ export default {
 			{ text: 'Se gira. Te ve. No se asusta. Se sube el visor a la frente y te observa con el interés de quien acaba de encontrar un insecto raro.' },
 			{ say: 'xero', as: 'Científico', text: 'Oh. Un visitante. Llegas tarde para la visita guiada y pronto para la inauguración.' },
 			{ say: 'xero', text: 'Xero. Contratista de I+D, en libertad condicional, con permiso firmado para trabajar aquí. Todo legal. Todo en regla. ¿Ves? Me lo sé de memoria.' },
-			{ say: 'rotom', text: '¡Bzzt! Xero… Xerosic. Ex científico del Team Flare. Diseñó el traje de… ¡bzzt! Datos restringidos.' },
+			{ say: 'rotom', text: '¡Bzzt! Xero. Ex científico del Team Flare. Diseñó el traje de… ¡bzzt! Datos restringidos.' },
 			{ say: 'xero', text: '¿Sabes qué es esto? Claro que no. Nadie lo sabe. Bueno, *uno* sí, pero lleva tres mil años sin querer hablar del tema. ¡Bwahaha!' },
 			{ text: 'Unos pasos bajan por la escalera metálica. Tacones. Sin prisa.' },
 			{ say: 'sera', text: 'Doctor Xero. Váyase a dormir.' },
@@ -1325,7 +1347,7 @@ export default {
 				{ text: '{riolu} le da un toquecito en la frente con el puño. Lila se ríe por la nariz y luego se tapa la boca.' },
 			] },
 			{ happy: { who: 'riolu', n: 3 } },
-			{ say: 'lila', text: 'C-Corelia me mandó a buscarte. Dice que «el del Riolu de Isla Hierro» tiene que pasar por la Torre, que el abuelo Cornelio quiere conocerte. Y que si me pierdo por el camino, que no me preocupe, que ya me encontrarán. Eso último no sé si era broma.' },
+			{ say: 'lila', text: 'C-Corelia me mandó a buscarte. Dice que «{el|la|le} del Riolu de Isla Hierro» tiene que pasar por la Torre, que el abuelo Cornelio quiere conocerte. Y que si me pierdo por el camino, que no me preocupe, que ya me encontrarán. Eso último no sé si era broma.' },
 			{ say: 'lila', text: 'Te acompaño un trecho. Si… si no te molesta. Eevee quiere. Eevee siempre quiere.' },
 			{ set: { 'flag.b01_lila_r11': true } },
 			{ quest: 'b01_t_lila', stage: 'yantra' },
@@ -1341,14 +1363,14 @@ export default {
 				] },
 				{ text: '«Háblame de ti.»', then: [
 					{ af: { lila: 2 } },
-					{ say: 'lila', text: '¿De mí? N-no hay mucho. Vivo en la Torre desde siempre. Cornelio me encontró allí cuando era un bebé, en la escalinata, envuelta en una tela. Todavía la guardo. Tiene un bordado raro, como un ocho tumbado.' },
+					{ say: 'lila', text: '¿De mí? N-no hay mucho. Vivo en la Torre desde siempre. Cornelio me encontró allí cuando era un bebé, en la escalinata, envuelta en una tela. Todavía la guardo. Tiene un bordado de hilo azul y plata: un lazo que da vueltas y nunca se acaba.' },
 					{ say: 'lila', text: 'Soy aprendiz. Quiero ser **Guardiana de la Ceremonia**: la que entrega las Piedras Activadoras a los entrenadores. Para eso hay que pasar una prueba. La **Prueba de la Llama**.' },
 					{ say: 'lila', text: 'Siempre la suspendo. —Lo dice muy rápido, para que duela menos—. Pero bueno. Eso es otra historia.' },
 				] },
 			] },
 		],
 		b01_r11_pareja: [
-			{ say: 'lila', text: '¡Ah! Son Maëlle y Loïc. Entrenan en la playa de la Torre. Siempre retan de dos en dos, uno detrás del otro. N-no te preocupes, yo te sujeto la mochila.' },
+			{ say: 'lila', text: '¡Ah! Son Maëlle y Gabin. Entrenan en la playa de la Torre. Siempre retan de dos en dos, uno detrás del otro. N-no te preocupes, yo te sujeto la mochila.' },
 		],
 		b01_lila_despedida_r11: [
 			{ if: '!visited("yantra")', then: [
@@ -1541,6 +1563,10 @@ export default {
 			{ say: 'corelia', text: '¡Primero, la pista! ¡Los tres de la pista! ¡Si no, no vale! ¡A tope!' },
 			{ text: 'Y se va.' },
 		],
+		b01_corelia_reto_tope: [
+			{ say: 'corelia', text: '¡Uoh! ¡Ese equipo viene a tope de verdad! ¡Así me gusta! ¡Hoy no me voy a contener nada! Bueno, nunca me contengo. ¡Pero hoy menos!' },
+			{ call: 'b01_corelia_reto' },
+		],
 		b01_corelia_reto: [
 			{ text: 'Al final del ocho, en el centro de la pista, Corelia te espera con las manos en las caderas.' },
 			{ say: 'corelia', text: '¡LLEGASTE! ¡Y de pie! La mitad se cae en la segunda rampa. La otra mitad, en la primera.' },
@@ -1556,6 +1582,9 @@ export default {
 				{ if: '!done.b01_t_lila', then: [
 					{ say: 'corelia', text: 'Ah, y Lila me dijo que la vas a acompañar en su prueba. No le falles, ¿eh? Esa chica tiene más fuerza de la que cree. ¡Más que yo! ¡Y yo tengo MUCHA!' },
 				] },
+				{ text: 'Corelia te agarra de la muñeca y te lleva patinando, cuesta abajo, hasta el camino de la marea. No te suelta hasta la puerta de la Torre.' },
+				{ heal: 'En la entrada de la Torre, un aprendiz atiende a tu equipo sin preguntar. «Órdenes del abuelo», dice.' },
+				{ go: 'torre_maestra' },
 			] },
 		],
 		b01_corelia_despues: [
@@ -1642,7 +1671,8 @@ export default {
 			{ say: 'cornelio', text: '**Esfera Aural**. El movimiento de los Lucario de esta Torre. Ya la llevaba dentro. Solo le faltaba alguien a quien proteger con ella.' },
 			{ learn: { who: 'riolu', move: 'aurasphere' } },
 			{ if: 'flag.b01_lila_llama', then: [
-				{ say: 'lila', text: '{jugador}… e-eso ha sido lo más bonito que he visto en mi vida. Y anoche encendí una llama. Así que fíjate.' },
+				{ say: 'lila', text: '{jugador}… eso ha sido lo más bonito que he visto en mi vida. Y anoche encendí una llama. Así que fíjate.' },
+					{ text: 'Te das cuenta de que lo ha dicho de un tirón. Sin tropezar en ninguna palabra. Ella no se ha dado cuenta.' },
 			], else: [
 				{ say: 'lila', text: '{jugador}… e-eso ha sido lo más bonito que he visto en mi vida. Cuando sea Guardiana, quiero que todas las ceremonias sean así.' },
 			] },
@@ -1680,7 +1710,7 @@ export default {
 			{ text: 'Tu nombre. En todas las pantallas de Kalos.' },
 			{ text: 'El Holomisor de Serafina vibra en tu bolsillo. Un solo mensaje: «Nos vemos al otro lado. —S.»', cond: 'flag.b01_trato_sera && has("holomisorsera")' },
 			{ text: 'Te giras hacia {riolu}. Pero él no mira las pantallas.' },
-			{ text: 'Mira el mar. Hacia el este, hacia donde, muy lejos, queda Luminalia. Tiene los apéndices de la cabeza levantados, rígidos. El aura le tiembla en las patas, igual que el primer día en la plaza, justo antes de que el aire se rasgara.' },
+			{ text: 'Mira hacia el sur, por encima de los tejados, hacia donde, muy lejos, queda Luminalia. Tiene los apéndices de la cabeza levantados, rígidos. El aura le tiembla en las patas, igual que el primer día en la plaza, justo antes de que el aire se rasgara.' },
 			{ text: 'Le pones una mano en el hombro. No se relaja. Pero tampoco se aparta.' },
 			{ say: 'rotom', text: '¡Bzzt! ¡{jugador}! ¡Vamos a Johto! ¡Por la Puerta! ¡Voy a escribirlo ahora mismo!' },
 			{ diary: 'Hoy {riolu} evolucionó en lo alto de la Torre Maestra. ¡Ahora es altísimo! Y nos regalaron una piedra que brilla de todos los colores. Esta noche, la señorita Lemnis salió en todas las pantallas: ¡vamos a viajar por la Puerta, a Johto! Mi entrenador{|a|e} está en la lista. Estoy emocionado. ¡Bzzt! El doctor Moreau dice que es el futuro.', cond: 'flag.b01_evo_torre' },

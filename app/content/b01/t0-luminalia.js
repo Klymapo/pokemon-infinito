@@ -11,7 +11,7 @@ export default {
 				{ label: 'Plaza de la Torre Prisma', sub: 'La Puerta Lemnis', icon: '🗼', action: { go: 'luminalia_plaza' } },
 				{ label: 'Bulevar Sur', sub: 'Centro Pokémon, tiendas, Liga', icon: '🏙️', action: { go: 'luminalia_sur' } },
 				{ label: 'Laboratorio del Prof. Ciprés', icon: '🔬', action: { go: 'lab_cipres' }, new: 'quest.b01_s_fennekin == "volver"' },
-				{ label: 'Agencia de Detectives', icon: '🕵️', action: { go: 'agencia' }, cond: 'flag.b01_handsome_recluta', new: 'quest.b01_m2 == "agencia" || (flag.b01_agencia_1 && !flag.b01_macaron_resuelto && !quest.b01_t_agencia)' },
+				{ label: 'Agencia de Detectives', icon: '🕵️', action: { go: 'agencia' }, cond: 'flag.b01_handsome_recluta', new: 'quest.b01_m2 == "agencia" || (flag.b01_macaron_resuelto && !flag.b01_agencia_macaron_premio)' },
 				{ label: 'Café Soleil', sub: 'Terraza con vistas a la Torre', icon: '☕', action: { go: 'cafe_soleil' }, new: 'quest.b01_t_agencia == "macaron" || quest.b01_s_philippe == "volver"' },
 				{ label: 'Oficinas de Lemnis Kalos', icon: '♾️', action: { go: 'lemnis_kalos' }, cond: 'badges >= 1', new: 'quest.b01_m2 == "lemnis"' },
 			],
@@ -27,7 +27,7 @@ export default {
 			spots: [
 				{ label: 'Mirar la Puerta', icon: '♾️', talk: [{ cond: 'flag.b01_handsome_recluta', script: 'b01_mirar_puerta' }, { script: 'b01_mirar_puerta' }] },
 				{ label: 'Guardia de Lemnis', icon: '🛡️', talk: [{ script: 'b01_guardia_plaza' }] },
-				{ label: 'Lucien', sub: 'Un niño pegado a la valla', icon: '🧒', cond: 'flag.b01_handsome_recluta', talk: [{ cond: 'flag.b01_lucien_chespin', script: 'b01_lucien_2' }, { script: 'b01_lucien_1' }] },
+				{ label: 'Lucien', sub: 'Un niño pegado a la valla', icon: '🧒', cond: 'flag.b01_handsome_recluta', talk: [{ cond: 'flag.b01_lucien_chespin', script: 'b01_lucien_2' }, { cond: 'flag.b01_lucien_1', script: 'b01_lucien_3' }, { script: 'b01_lucien_1' }] },
 			],
 		},
 		luminalia_sur: {
@@ -71,7 +71,7 @@ export default {
 			spots: [
 				{ label: 'Investigar el robo del macaron', icon: '🔍', cond: 'quest.b01_t_agencia == "macaron"', talk: [{ script: 'b01_caso_macaron' }] },
 				{ label: 'La periodista del pódcast', sub: 'Habla sola delante de un micrófono', icon: '🎙️', cond: 'flag.b01_macaron_resuelto && !flag.b01_renata_1', talk: [{ script: 'b01_renata_1' }] },
-				{ label: 'Un chef que critica un macaron', icon: '👨‍🍳', cond: 'badges >= 1', talk: [
+				{ label: 'Un chef que critica un macaron', icon: '👨‍🍳', cond: 'badges >= 1 && !(quest.b01_t_gaspar == "ruta7" || done.b01_t_gaspar)', talk: [
 					{ cond: '!flag.b01_gaspar_1', script: 'b01_gaspar_1' },
 					{ script: 'b01_gaspar_cafe' },
 				] },
@@ -117,10 +117,10 @@ export default {
 			{ set: { 'flag.b01_lila_conocida': true } },
 			{ quest: 'b01_t_lila', stage: 'conocida', silent: true },
 			{ text: 'Alguien te pisa al pasar. Fuerte. Una chica pelirroja con una chaqueta de equipo de fútbol galarés, número 9, se abre paso hasta la primera fila.' },
-			{ say: 'rhi', as: 'Chica pelirroja', text: '¿Qué? Estabas en medio. —Te mira de arriba abajo—. Tú no tienes pinta de delantero.' },
+			{ say: 'rhi', as: 'Chica pelirroja', text: '¿Qué? Estabas en medio. —Te mira de arriba abajo—. Tú no tienes pinta de delanter{o|a|e}.' },
 			{ choice: [
 				{ text: '«¿Y tú tienes pinta de qué? ¿De árbitro?»', then: [{ af: { rhi: 3 } }, { say: 'rhi', as: 'Chica pelirroja', text: '¡Ja! Bueno. Al menos tienes boca. Rhi. De Galar. Acuérdate del nombre, porque lo vas a ver arriba de la tabla.' }] },
-				{ text: '«Perdón por existir.»', then: [{ af: { rhi: -1 } }, { say: 'rhi', as: 'Chica pelirroja', text: 'Eso. Pide perdón. —Se da la vuelta sin más.' }] },
+				{ text: '«Perdón por existir.»', then: [{ af: { rhi: -1 } }, { say: 'rhi', as: 'Chica pelirroja', text: 'Eso. Pide perdón. —Se da la vuelta, y luego, por encima del hombro—: Rhi. De Galar. Apréndetelo, que lo vas a oír mucho.' }] },
 				{ text: 'No decir nada y sostenerle la mirada.', then: [{ af: { rhi: 2 } }, { say: 'rhi', as: 'Chica pelirroja', text: '…Vale. Rhi. De Galar. Ya nos veremos en el campo.' }] },
 			] },
 			{ set: { 'flag.b01_rhi_conocida': true } },
@@ -132,7 +132,7 @@ export default {
 			{ say: 'sera', text: 'Un mundo. Una liga.' },
 			{ choice: [
 				{ text: 'Aplaudir.', then: [{ af: { sera: 1 } }, { text: 'Aplaudes. Desde el escenario, por un segundo, sus ojos grises se cruzan con los tuyos. Luego sigue con el discurso como si nada.' }] },
-				{ text: 'No aplaudir.', then: [{ text: 'Te quedas con los brazos cruzados. Toda la plaza aplaude. Lila aplaude por los dos, muy fuerte y muy rápido.' }] },
+				{ text: 'No aplaudir.', then: [{ text: 'Te quedas con los brazos cruzados. Toda la plaza aplaude. Lila aplaude por ella y por ti, muy fuerte y muy rápido.' }] },
 			] },
 			{ set: { 'flag.b01_sera_vista': true } },
 			{ quest: 'b01_t_sera', stage: 'discurso', silent: true },
@@ -164,7 +164,7 @@ export default {
 			{ set: { 'flag.b01_bastien_conocido': true } },
 			{ text: 'Un hombre con gabardina, sombrero de reportero y un bigote que no parece suyo se agacha junto a ti. Mira a Riolu. Luego a la grieta, que se cierra con un chasquido.' },
 			{ say: 'handsome', as: 'Reportero sospechoso', text: 'Interesante… Ese Riolu no es de aquí. Y te ha elegido a ti.' },
-			{ say: 'handsome', as: 'Reportero sospechoso', text: 'Hmm. Yo no creo en las casualidades. —Se levanta el bigote, que se le despega por un lado—. Es decir. El periodista que soy no cree en casualidades.' },
+			{ say: 'handsome', as: 'Reportero sospechoso', text: 'Hmm. Handsome no cree en las casualidades. —Se le despega el bigote por un lado. Se lo vuelve a pegar—. Es decir. Este humilde periodista no cree en las casualidades. ¿Quién es Handsome? Ni idea.' },
 			{ text: 'Unos guardias con uniforme azul y plata despejan la plaza. Un hombre de sonrisa perfecta da instrucciones por un megáfono: «¡Calma! ¡Un simple desajuste de calibración! ¡Todo está bajo control!»' },
 			{ text: 'En el escenario, Serafina Lemnis habla por un auricular. No ha levantado la voz ni una sola vez.' },
 			{ say: 'cipres', text: '¡Tú! Sí, tú, el del Riolu. Ven conmigo al laboratorio. Ese pequeño necesita que lo vean, y tú también, con esa cara.' },
@@ -219,7 +219,7 @@ export default {
 			{ text: 'Al salir del laboratorio, alguien te espera apoyado en una farola. El «reportero» de antes. Ya no lleva bigote.' },
 			{ say: 'handsome', text: 'Hmm. No hace falta disimular más. Me llamo **Handsome**. Policía Internacional.' },
 			{ say: 'handsome', text: 'Lemnis dice que lo de esta noche fue un fallo. Handsome tiene un olfato para los fallos, y esto no huele a fallo. Huele a algo que alguien no quiere que veamos.' },
-			{ say: 'handsome', text: 'Vi a tu Riolu antes de que se abriera la grieta. **Se giró hacia la Puerta antes que nadie.** Percibe estas cosas. Las Fisuras, voy a llamarlas así.' },
+			{ say: 'handsome', text: 'Vi a tu Riolu cuando la grieta se cerró. **Se giró hacia la Puerta un segundo antes del chasquido.** Antes que nadie. Antes que las máquinas de Lemnis. Percibe estas cosas. Las Fisuras, voy a llamarlas así.' },
 			{ say: 'handsome', text: 'Te propongo algo: compite en el Circuito, viaja, gana medallas… y de paso, sé mis ojos. **Colaborador Especial** de la Policía Internacional. Yo te cubro los gastos. Dentro de lo razonable. Handsome no es rico.' },
 			{ choice: [
 				{ text: '«Cuenta conmigo.»', then: [{ rep: { policia: 3 } }, { say: 'handsome', text: '¡Así me gusta! Handsome tenía un buen presentimiento contigo.' }] },
@@ -250,16 +250,24 @@ export default {
 		],
 		b01_guardia_plaza: [
 			{ say: 'guardia_lemnis', text: 'Circule, por favor. Zona de mantenimiento. No hay nada que ver.' },
-			{ if: 'rep.lemnis >= 5', then: [{ say: 'guardia_lemnis', text: '…Ah, usted. Lo vi en las noticias. Gracias por mantener la calma. La empresa lo agradece.' }] },
-			{ if: 'rep.lemnis <= -5', then: [{ say: 'guardia_lemnis', text: '…Usted es quien habló con la prensa. Circule. Ahora.' }] },
+			{ if: 'flag.b01_prensa_lemnis', then: [{ say: 'guardia_lemnis', text: '…Ah, usted. L{o|a|e} vi en las noticias. «Lemnis lo tiene controlado». Gracias por mantener la calma. La empresa lo agradece.' }] },
+			{ if: 'flag.b01_prensa_verdad', then: [{ say: 'guardia_lemnis', text: '…Usted es quien le habló de «grietas» a la prensa. Circule. Ahora.' }] },
 		],
 		b01_lucien_1: [
 			{ say: 'lucien', text: '¡Oye! ¿Tú estabas en la inauguración? ¿Viste la grieta de cerca? ¿Era violeta-violeta o violeta-morada? ¡En la tele no se veía bien!' },
 			{ say: 'lucien', text: 'Yo me llamo Lucien. ¡De mayor voy a viajar por todas las Puertas! Kanto, Galar, Alola… ¡A todas! Bueno, primero tengo que tener un Pokémon. Mi mamá dice que cuando tenga doce. Tengo doce. Ella dice que «doce de verdad».' },
+			{ say: 'lucien', text: '¿Y tú cómo te llamas? …¡{jugador}! Me lo apunto. Cuando seas famos{o|a|e}, diré que te conocí en la valla.' },
 			{ set: { 'flag.b01_lucien_1': true } },
 		],
+		b01_lucien_3: [
+			{ if: 'flag.b01_lucien_gorra', then: [
+				{ say: 'lucien', text: '¡{jugador}! ¡Mira mi gorra! Sigue oliendo a chimenea. Mi madre quiere lavarla. No la dejo. Es una prueba científica.' },
+			], else: [
+				{ say: 'lucien', text: '¡{jugador}! Hoy he contado los técnicos de la Puerta: once. Ayer eran nueve. Eso quiere decir algo. No sé qué, pero algo.' },
+			] },
+		],
 		b01_lucien_2: [
-			{ say: 'lucien', text: '¡{jugador}! ¡Mira, mira! ¡El profesor Ciprés me dio a **Chespin**! Dice que se quedó sin entrenador después del lío de la Puerta. ¡Ahora es mío! ¡Bueno, somos compañeros! ¡Él dice que no es de nadie!' },
+			{ say: 'lucien', text: '¡Eh! ¡Eh! ¡Mira, mira! ¡El profesor Ciprés me dio a **Chespin**! Dice que se quedó sin entrenador después del lío de la Puerta. ¡Ahora es mío! ¡Bueno, somos compañeros! ¡Él dice que no es de nadie!' },
 			{ say: 'lucien', text: 'Cuando abran la Puerta otra vez, Chespin y yo vamos a ser los primeros en cruzar. ¡Ya verás!' },
 		],
 
@@ -275,7 +283,12 @@ export default {
 				] },
 				{ text: 'No, gracias.', then: [{ say: 'empleado_liga', text: '¡Mucha suerte! ¡Un mundo, una liga!' }] },
 			] },
-			{ if: 'badges >= 1', then: [{ say: 'empleado_liga', text: 'Llevas {o|a|e}… ¡medallas! ¡Genial! Si sigues hacia el oeste por la Ruta 5 llegarás a la costa. Allí está el gimnasio de Ciudad Relieve.' }] },
+			{ if: 'badges == 1', then: [
+				{ say: 'empleado_liga', text: '¡Ya tienes tu primera medalla! ¡Genial! El siguiente gimnasio del Circuito en Kalos está en **Ciudad Relieve**, en la costa oeste.' },
+				{ say: 'empleado_liga', text: 'Se llega por la Ruta 5… cuando Lemnis quite las vallas. Dicen que es cuestión de días.', cond: '!flag.b01_ruta5_abierta' },
+				{ say: 'empleado_liga', text: 'Se va por la Ruta 5, hacia el oeste, y luego siguiendo la costa. Es un buen paseo. Lleva Pociones.', cond: 'flag.b01_ruta5_abierta' },
+			] },
+			{ if: 'badges >= 2', then: [{ say: 'empleado_liga', text: '¡Dos medallas o más! El siguiente gimnasio es el de **Ciudad Yantra**, al norte. Con tres medallas, dicen que viene una sorpresa. A mí no me cuentan nada.' }] },
 		],
 
 		// =================== Laboratorio ===================
@@ -298,14 +311,19 @@ export default {
 			{ quest: 'b01_s_fennekin', done: true },
 		],
 		b01_cipres_pedir_fennekin: [
-			{ say: 'cipres', text: 'Fennekin lleva días mirando por la ventana cada vez que pasas por la calle. Creo que quiere irse contigo. ¿Te lo llevas?' },
+			{ say: 'cipres', text: 'Lo trajo tu amiga de Galar, la pelirroja. Me explicó el rescate con una pizarra y tácticas de fútbol. No entendí nada, pero fue precioso.', cond: 'flag.b01_fennekin_rhi' },
+			{ say: 'cipres', text: 'Fennekin se pasa el día mirando por la ventana. Creo que espera a alguien. Creo que te espera a ti. ¿Te lo llevas?' },
 			{ choice: [
 				{ text: 'Llevarme a Fennekin.', then: [{ pokemon: { sp: 'fennekin', lv: 10, nature: 'modest', ability: 'blaze', happy: 120 } }, { set: { 'flag.b01_fennekin_pedido': true, 'flag.b01_fennekin_unido': true } }] },
 				{ text: 'Todavía no.', then: [{ say: 'cipres', text: 'Aquí estará. Comiendo de más.' }] },
 			] },
 		],
 		b01_cipres_mega: [
-			{ say: 'cipres', text: '¡Tres medallas! Y si lo que me cuentan de Yantra es cierto… ¿la Megaevolución? Mi especialidad. Cuéntamelo TODO. Con detalles. Con gráficas, si es posible.' },
+			{ if: 'has("megaring")', then: [
+				{ say: 'cipres', text: '¡Tres medallas! Y esa pulsera… ¿la Megaevolución? ¿En la Torre Maestra? Mi especialidad. Cuéntamelo TODO. Con detalles. Con gráficas, si es posible.' },
+			], else: [
+				{ say: 'cipres', text: '¡Tres medallas! Si ya has vencido a Corelia, sube a la Torre Maestra. Cornelio no le enseña la Megaevolución a cualquiera… pero a ti y a ese Riolu, sospecho que sí.' },
+			] },
 		],
 
 		// =================== Agencia ===================
@@ -316,11 +334,12 @@ export default {
 			{ say: 'matiere', text: '«Técnicamente» no existe, Handsome. Siéntate.' },
 			{ say: 'matiere', text: 'Bueno. Al grano. Desde la inauguración, Lemnis «recoge» Pokémon desplazados por toda Kalos. Dicen que los devuelven a sus regiones. Pero no hay ni un solo registro de que alguno haya vuelto.' },
 			{ say: 'handsome', text: 'Mis contactos en Johto y Galar dicen lo mismo: no ha llegado nada. Ni un Wooloo. Ni un Mareep.' },
-			{ say: 'matiere', text: 'Lemnis te ha invitado a sus oficinas. A ti. Quieren conocer a «la cara de la inauguración». —Pone los ojos en blanco—. Ve. Sonríe. Y fíjate en todo.' },
+			{ say: 'matiere', text: 'Lemnis te ha invitado a sus oficinas. A ti. Quieren conocer a «la cara de la inauguración». —Pone los ojos en blanco—. Ve. Sonríe. Y fíjate en todo.', cond: '!flag.b01_diario' },
+			{ say: 'matiere', text: 'Y por lo que veo, ya has pasado por sus oficinas. Rouxel lleva dos días presumiendo de ti en la radio. —Pone los ojos en blanco—. Bien. Sigue mirando. Sobre todo en la Ruta 5.', cond: 'flag.b01_diario' },
 			{ say: 'handsome', text: 'Y una cosa más: Matière también tiene casos más… mundanos. La agencia tiene que pagar el alquiler.' },
 			{ say: 'matiere', text: 'Ahí lo tienes: alguien robó el macaron especial de la dueña del **Café Soleil**. Tres sospechosos. La dueña está fuera de sí. Es un caso perfecto para empezar. Y la dueña paga en macarons.' },
 			{ set: { 'flag.b01_agencia_1': true } },
-			{ quest: 'b01_m2', stage: 'lemnis' },
+			{ quest: 'b01_m2', stage: 'lemnis', cond: '!flag.b01_diario' },
 			{ quest: 'b01_t_agencia', stage: 'macaron' },
 		],
 		b01_agencia_recordar: [
@@ -388,10 +407,11 @@ export default {
 				{ text: '«Lemnis está ocultando algo.»', then: [{ af: { renata: 2 } }, { rep: { lemnis: -1 } }, { say: 'renata', text: '…Eso ya lo sé. Por eso estoy en Kalos. Pero gracias por decirlo en voz alta. Me hacía falta una segunda voz.' }] },
 				{ text: '«Sin comentarios.»', then: [{ say: 'renata', text: '«Sin comentarios», la frase favorita de los culpables y de los aburridos. Y no pareces aburrid{o|a|e}.' }] },
 			] },
+			{ say: 'renata', text: 'Te cuento por qué estoy aquí, gratis, porque me caes bien: sigo un caso viejo. Muy viejo. Empieza mucho antes de esa Puerta. Y no, no te voy a contar más. Los buenos episodios se cuentan en dos partes.' },
 			{ say: 'renata', text: 'Toma mi tarjeta. Si Lemnis te da miedo, llámame. Si no te da miedo, llámame también, para saber por qué.' },
 			{ say: 'renata', text: 'Ah, y si te cruzas con mi productor, Simón, dile que no he gastado todo el presupuesto en macarons. Es mentira. Pero díselo.' },
 			{ set: { 'flag.b01_renata_1': true } },
-			{ intel: { npc: 'renata', text: 'Pódcaster de Teselia. Investiga a Lemnis por un caso viejo que no quiso contar. Te dio su tarjeta.' } },
+			{ intel: { npc: 'renata', text: 'Pódcaster de Teselia. Sigue un caso viejo, de antes de la Puerta, que no quiso contar. Te dio su tarjeta.' } },
 		],
 
 		// =================== Café Soleil: Gaspar y Philippe ===================
@@ -399,9 +419,9 @@ export default {
 			{ text: 'Un hombre corpulento con pañuelo en la cabeza y delantal blanco mira un macaron a contraluz. Lo muerde. Mastica despacio. Suspira.' },
 			{ say: 'gaspar', as: 'Chef', text: 'Técnicamente perfecto. Le falta valentía.' },
 			{ say: 'gaspar', text: 'Gaspar Rocafort. Cocino por el camino. Cocino con lo que el camino me da. Comer bien es la mitad de la aventura, ¿no crees?' },
-			{ say: 'gaspar', text: 'Una vez cociné algo en una mazmorra de Unova que… bueno. Nadie se atreve a preguntar qué era. Tú tampoco preguntes.' },
+			{ say: 'gaspar', text: 'Una vez cociné algo en una mazmorra de Teselia que… bueno. Nadie se atreve a preguntar qué era. Tú tampoco preguntes.' },
 			{ say: 'gaspar', text: 'Estoy preparando un **Menú de Kalos** para mi recetario. Me faltan tres cosas: **Miel** de los Combee de la Ruta 4, una **Miniseta** de algún bosque y una **Baya Meloc**. Si me las traes, te invito. Estaré por la **Ruta 7**, junto al río. Allí se cocina mejor.' },
-			{ set: { 'flag.b01_gaspar_1': true } },
+			{ set: { 'flag.b01_gaspar_1': true, 'flag.b01_gaspar_cafe': true } },
 			{ quest: 'b01_t_gaspar', stage: 'ingredientes' },
 		],
 		b01_gaspar_cafe: [
@@ -409,7 +429,7 @@ export default {
 		],
 		b01_philippe_1: [
 			{ say: 'philippe', text: '¡Hola, hola! ¿Te gustan los pisos con vistas? ¿Y la magia? ¡Mira! Elige una carta. Cualquiera. No me la enseñes.' },
-			{ text: 'Eliges una carta. El tres de Pokébolas. Philippe cierra los ojos, se concentra… y se le cae otra carta de la manga.' },
+			{ text: 'Eliges una carta. El tres de Poké Balls. Philippe cierra los ojos, se concentra… y se le cae otra carta de la manga.' },
 			{ say: 'philippe', text: '¡El as de Corazones! ¿No? Vale. Esa no era. Un clásico. La magia es así: a veces la magia eres tú.' },
 			{ say: 'philippe', text: 'Philippe Dumont, agente inmobiliario. Lo de la magia es un hobby. El problema es que mi **baraja de la suerte**, la buena, me la robó un Pancham en la **Ruta 5** mientras enseñaba un chalet. ¡En pleno cierre de venta! Si la encuentras, te deberé una. O un piso. Un piso pequeño. Una plaza de garaje.' },
 			{ set: { 'flag.b01_philippe_1': true } },
@@ -448,9 +468,10 @@ export default {
 					{ rep: { lemnis: -2, policia: 2 } },
 					{ say: 'rouxel', text: 'A casa, por supuesto. A sus regiones. Es un proceso delicado.' },
 					{ say: 'ansel', text: 'Muy delicado. Cruzar una Puerta tiene un coste energético que todavía estamos aprendiendo a calcular. Pero llegaremos. Los datos no mienten; se equivocan los que los leen.' },
+					{ set: { 'flag.b01_ansel_frase': true } },
 				] },
 			] },
-			{ if: '!flag.b01_ansel_frase', then: [{ say: 'ansel', text: 'Ten paciencia con nosotros. Esto es nuevo para todos. Como decía mi maestro: los datos no mienten; se equivocan los que los leen.' }] },
+			{ if: '!flag.b01_ansel_frase', then: [{ say: 'ansel', text: 'Ten paciencia con nosotros. Esto es nuevo para todos. Y como digo siempre: los datos no mienten; se equivocan los que los leen.' }] },
 			{ set: { 'flag.b01_ansel_frase': true } },
 			{ text: 'De vuelta en recepción, Rotom te recibe dando vueltas de alegría. El doctor Moreau te acompaña hasta la puerta.' },
 			{ say: 'ansel', text: 'Un momento. ¿Esa Pokédex lleva un Rotom de serie? ¡Qué maravilla! ¿Sabes? Mi equipo ha desarrollado un pequeño módulo para estos aparatos: un **Diario de Viaje**. El Rotom escribe lo que vivís juntos, para que no se te olvide nada.' },
@@ -468,7 +489,7 @@ export default {
 			{ quest: 'b01_m2', stage: 'ruta5' },
 			{ set: { 'flag.b01_ruta5_abierta': true } },
 			{ say: 'rotom', text: '¡Bzzt! ¡Ya tengo diario! Lo verás en el **Diario**, en la pestaña «Diario de Rotom». ¡Voy a escribir mi primera entrada AHORA MISMO!' },
-			{ diary: 'Hoy mi entrenador{|a|e} y yo fuimos a las oficinas de Lemnis. Yo me quedé en recepción (¡qué aburrido!), pero ellos estuvieron un buen rato con el señor Rouxel y con el doctor Moreau, el de la corbata azul de siempre. El doctor dijo algo que me gustó mucho: «Los datos no mienten; se equivocan los que los leen». Creo que vamos a ser buenos amigos. ¡Ah! Y me regaló este diario. ¡Es el mejor día de mi vida!' },
+			{ diary: 'Hoy mi entrenador{|a|e} y yo fuimos a las oficinas de Lemnis. Yo me quedé en recepción (¡qué aburrido! Conté doscientas doce baldosas), y {jugador} estuvo un buen rato en una sala con el señor Rouxel y con el doctor Moreau, el de la corbata azul de siempre. El doctor dijo algo que me gustó mucho: «Los datos no mienten; se equivocan los que los leen». Creo que vamos a ser buenos amigos. ¡Ah! Y me regaló este diario. ¡Es el mejor día de mi vida!' },
 			{ say: 'rotom', text: '¡Bzzt! Por cierto, ya puedes ir por la **Ruta 5**, al oeste de la ciudad. ¡Lemnis ha quitado las vallas!' },
 		],
 		b01_lemnis_recepcion: [

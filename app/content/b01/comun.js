@@ -44,9 +44,9 @@ export default {
 			cond: 'badges >= 1',
 			info: [
 				{ text: 'Líder de intercambio: **Blanca** (Johto), tipo **Normal**.' },
-				{ cond: 'visited("relieve")', text: '3 Pokémon, niveles 21 a 24.' },
-				{ cond: 'visited("relieve")', text: 'En toda Johto se habla de su **Miltank**. Nadie quiere hablar de su **Desenrollar**… digo, de su **Rodar**.' },
-				{ cond: 'flag.b01_rhi_conto_miltank', text: 'Rhi dice que Miltank se cura con **Batido** y que **Atracción** la dejó sin moverse. Un Pokémon del mismo género que Miltank (hembra) es inmune.' },
+				{ cond: 'visited("relieve")', text: '3 Pokémon, niveles 21 a 23.' },
+				{ cond: 'visited("relieve")', text: 'En toda Johto se habla de su **Miltank** y de su **Rodar**: cada vuelta pega más fuerte que la anterior.' },
+				{ cond: 'flag.b01_rhi_conto_miltank', text: 'Rhi dice que Miltank se cura con **Batido** y que **Atracción** la dejó sin moverse. Una Pokémon hembra (o uno sin género) es inmune.' },
 				{ cond: 'beat("blanca_g2")', text: '✔ Medalla Encanto conseguida.' },
 			],
 		},
@@ -69,7 +69,7 @@ export default {
 			],
 		},
 		rival_bastien: {
-			name: 'Rival: Bastien', npc: 'bastien', cond: 'flag.b01_bastien_conocido',
+			name: 'Rival: Bastien', npc: 'bastien', cond: 'flag.b01_bastien_ruta5',
 			info: [
 				{ text: 'Novato de Luminalia patrocinado por Lemnis. Se quedó con **Froakie**.' },
 				{ cond: 'beat("bastien_1")', text: 'Usa Froakie y Fletchling. Rápidos, pero frágiles.' },

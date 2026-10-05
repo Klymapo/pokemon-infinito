@@ -40,6 +40,7 @@ function findMon(who) {
 
 export async function runScript(idOrCmds, ctx = {}) {
 	const cmds = typeof idOrCmds === 'string' ? C.scripts[idOrCmds] : idOrCmds;
+	if (typeof idOrCmds === 'string') UI.onScript?.(idOrCmds);
 	if (!cmds) { console.warn('Guion inexistente', idOrCmds); return; }
 	try {
 		await runList(cmds, ctx);
@@ -159,7 +160,7 @@ async function runCmd(c, ctx) {
 		return;
 	}
 	if (c.cap !== undefined) { G.vars.cap = c.cap; return; }
-	if (c.call) { await runList(C.scripts[c.call] || [], ctx); return; }
+	if (c.call) { UI.onScript?.(c.call); await runList(C.scripts[c.call] || [], ctx); return; }
 	if (c.end) { ctx.ended = true; return; }
 	if (c.notice) { UI.toast?.(tx(c.notice)); return; }
 	if (c.toast) { UI.toast?.(tx(c.toast)); return; }

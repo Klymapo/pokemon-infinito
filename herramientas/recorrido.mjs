@@ -1,6 +1,6 @@
 // Bot que juega el contenido sin interfaz: explora, habla, combate, captura y entrena.
 // Sirve para auditar: detecta errores, atascos y problemas de balance.
-// Uso: node herramientas/recorrido.mjs [--semilla N] [--max 20000] [--hasta flag] [--verbose] [--elecciones primera|azar]
+// Uso: node herramientas/recorrido.mjs [--semilla N] [--max 20000] [--hasta flag] [--verbose] [--elecciones primera|azar] [--fecha MM-DD] [--hora HH]
 import { loadDataNode } from './test/node-env.mjs';
 import { D, toID } from '../app/js/data.js';
 import { C, registerBlock, topLoc } from '../app/js/content.js';
@@ -21,13 +21,15 @@ const MAX = +arg('--max', 25000);
 const UNTIL = arg('--hasta', null);
 const VERBOSE = process.argv.includes('--verbose');
 const CHOICES = arg('--elecciones', 'azar');
-// Fecha simulada (para probar eventos): --fecha MM-DD
+// Fecha y hora simuladas (para que el resultado no dependa de cuándo se ejecuta).
+// --fecha MM-DD (por defecto, hoy) · --hora HH (por defecto 13; usa 2 para probar la noche)
 const FECHA = arg('--fecha', null);
-if (FECHA) {
+const HORA = +arg('--hora', 13);
+{
 	const RealDate = Date;
-	const [mm, dd] = FECHA.split('-').map(Number);
+	const [mm, dd] = FECHA ? FECHA.split('-').map(Number) : [new RealDate().getMonth() + 1, new RealDate().getDate()];
 	globalThis.Date = class extends RealDate {
-		constructor(...a) { if (a.length) super(...a); else { super(); this.setMonth(mm - 1, dd); this.setHours(13); } }
+		constructor(...a) { if (a.length) super(...a); else { super(); this.setMonth(mm - 1, dd); this.setHours(HORA); } }
 		static now() { return RealDate.now(); }
 	};
 }
@@ -92,7 +94,8 @@ function battle(cfg) {
 	if (cfg.trainer) { trainer = C.trainers[cfg.trainer]; foes = buildTrainerTeam(trainer, createPokemon); kind = 'trainer'; }
 	else { const w = cfg.wild; foes = [w.mon || createPokemon(w.sp, { level: w.lv, tera: w.tera, moves: w.moves })]; kind = 'wild'; }
 	if (!G.party.some(p => p.hp > 0)) return { result: 'lose' };
-	const ctl = new BattleCtl({ kind, foes, trainer, terrain: 'grass', loc: G.loc, wildGimmick: cfg.wild?.gimmick, noCatch: cfg.wild?.noCatch });
+	const hex = () => Math.floor(Math.random() * 4294967296).toString(16).padStart(8, '0');
+	const ctl = new BattleCtl({ seed: 'sodium,' + hex() + hex() + hex() + hex(), kind, foes, trainer, terrain: 'grass', loc: G.loc, wildGimmick: cfg.wild?.gimmick, noCatch: cfg.wild?.noCatch });
 	ctl.start();
 	let r = {}, turns = 0;
 	const wantCatch = kind === 'wild' && !cfg.wild?.noCatch && !G.dex.caught[D.species[foes[0].sp].num];
@@ -106,7 +109,14 @@ function battle(cfg) {
 			const foe = ctl.battle.p2.active[0];
 			const me = ctl.battle.p1.active[0];
 			const balls = ['ultraball', 'greatball', 'pokeball'].filter(b => count(b) > 0);
-			if (wantCatch && balls.length && foe.hp / foe.maxhp < 0.5) action = { type: 'ball', ball: balls[0] };
+			const easy = (D.species[foes[0].sp].catch || 45) >= 120;
+			if (wantCatch && balls.length && (foe.hp / foe.maxhp < 0.5 || easy || turns > 6)) action = { type: 'ball', ball: balls[0] };
+			else if (wantCatch) {
+				// golpe más flojo que haga daño, para no debilitarlo
+				const sc = AI.scoreMoves(ctl.battle, me, foe, 4).filter(x => x.move.category !== 'Status' && x.score > 0).sort((a, b) => a.score - b.score);
+				action = sc.length ? { type: 'move', i: sc[0].i } : { type: 'move', i: 0 };
+			}
+			if (action) { /* ya decidido */ }
 			else if (me.hp / me.maxhp < 0.25 && count('potion') + count('superpotion') > 0 && kind === 'trainer' && Math.random() < 0.6) {
 				action = { type: 'item', item: count('superpotion') ? 'superpotion' : 'potion', uid: ctl.partyOf(me).uid };
 			} else {
@@ -148,6 +158,7 @@ async function enter(id, { from } = {}) {
 	const loc = L(id);
 	if (!loc) { report.errors.push('enter a lugar inexistente ' + id); return; }
 	G.visited[id] = true;
+	for (let p = L(id)?.parent; p && !G.visited[p]; p = L(p)?.parent) G.visited[p] = true;
 	G.loc = id;
 	if (isRoute(loc)) { const r = loc.route; G.route = { id, pos: from === r.to ? r.length : 0 }; markTramo(id, G.route.pos); }
 	else G.route = null;
@@ -162,6 +173,7 @@ async function enter(id, { from } = {}) {
 		if (G.loc !== id) return;
 	}
 }
+UI.onScript = id => report.scripts.add(id);
 async function run(id) {
 	const prev = curScript; curScript = typeof id === 'string' ? id : '(inline)';
 	report.scripts.add(curScript);
@@ -270,7 +282,12 @@ function manageTeam() {
 	const all = G.party.concat(G.boxes[0]);
 	all.sort((a, b) => (b.uid === G.vars.riolu_uid) - (a.uid === G.vars.riolu_uid) || b.lv - a.lv);
 	const core = all.slice(0, 5), rest = all.slice(5);
-	if (rest.length) { rot = (rot + 1) % rest.length; core.push(rest[rot]); rest.splice(rot, 1); }
+	// si algún sitio de aquí pide un Pokémon concreto en el equipo (inParty("x")), lo mete en el hueco libre
+	const loc = L(G.loc);
+	const wanted = loc ? new Set([...JSON.stringify(loc.spots || []).matchAll(/inParty\(\\?"(\w+)\\?"\)/g)].map(m => m[1])) : new Set();
+	const want = wanted.size && !core.some(p => wanted.has(p.sp)) ? rest.findIndex(p => wanted.has(p.sp)) : -1;
+	if (want >= 0) { core.push(rest[want]); rest.splice(want, 1); }
+	else if (rest.length) { rot = (rot + 1) % rest.length; core.push(rest[rot]); rest.splice(rot, 1); }
 	G.party = core;
 	G.boxes[0] = rest;
 }
@@ -322,10 +339,10 @@ for (step = 0; step < MAX; step++) {
 		if (a.center || a.pc || a.shop) { if (!rec.n) { rec.n = 1; await doSpot(s); } continue; }
 		if (a.training) continue;
 		if (a.trainer) { if (!G.beaten[a.trainer] && rec.n < 8) { rec.n++; await doSpot(s); did = true; break; } continue; }
-		if (a.go && G.visited[a.go] && !isNew) continue;
+		if (a.go && G.visited[a.go]) { if (isNew && rec.n < 15 && Math.random() < 0.5) { rec.n++; await doSpot(s); did = true; break; } continue; }
 		if (a.explore) { if (rec.n < 12 && Math.random() < 0.5) { rec.n++; await doSpot(s); did = true; break; } continue; }
-		if (rec.n === 0 || (isNew && rec.n < 4) || (rec.sig !== sg && rec.n < 6 && (s.talk || s.script || a.script))) {
-			rec.n++; rec.sig = sg;
+		if (rec.n === 0 || (isNew && (rec.n < 4 || (rec.n < 25 && step - (rec.last || 0) > 40))) || (rec.sig !== sg && rec.n < 6 && (s.talk || s.script || a.script))) {
+			rec.n++; rec.sig = sg; rec.last = step;
 			await doSpot(s);
 			did = true;
 			break;
@@ -357,7 +374,7 @@ const open = Object.entries(G.quests).filter(([k, q]) => !q.done).map(([k, q]) =
 const never = Object.keys(C.quests).filter(k => !G.quests[k]);
 const unvisited = Object.keys(C.locations).filter(k => !G.visited[k]);
 const unusedScripts = Object.keys(C.scripts).filter(k => !report.scripts.has(k));
-console.log(`\n=== RECORRIDO (semilla ${seed}) ===`);
+console.log(`\n=== RECORRIDO (semilla ${seed}${FECHA ? ' · fecha ' + FECHA : ''} · hora ${HORA}) ===`);
 console.log(`Final alcanzado: ${G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 'SÍ' : 'NO'} · pasos ${step} · ${((Date.now() - t0) / 1000).toFixed(1)} s`);
 console.log(`Medallas: ${G.player.badges.join(', ')} · Dinero ₽${G.player.money} · Equipo: ${G.party.map(p => `${p.sp} ${p.lv}`).join(', ')}`);
 console.log(`Combates: ${report.battles.trainer} entrenador, ${report.battles.wild} salvajes · ganados ${report.battles.won} · perdidos ${report.battles.lost}`);

@@ -100,7 +100,7 @@ export class BattleCtl {
 
 	start() {
 		setTextMode(this.wild);
-		const b = this.battle = new Battle({ formatid: 'gen9infinite' });
+		const b = this.battle = new Battle({ formatid: 'gen9infinite', ...(this.cfg.seed ? { seed: this.cfg.seed } : {}) });
 		b.allowDynamax = true;
 		b.send = (type, data) => {
 			if (type === 'sideupdate' && typeof data === 'string' && data.includes('|error|')) this.lastError = data.split('|error|')[1];

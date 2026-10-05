@@ -58,7 +58,7 @@ export default {
 			{ say: 'gadd', text: '¡Hola, hola! Ernesto Gadd, inventor. Vine a probar mi **Aspiradora Espectral** con los Gastly del castillo. ¡Esta noche he aspirado once! Bueno, diez y un sombrero. ¿La calabaza? Ni la he visto. Estuve TODO el rato en el sótano, con la aspiradora. Pregunta a los Gastly.' },
 			{ say: 'tobias', text: '¡Episodio especial de Halloween! ¡Patrocinadores, gracias por los disfraces! Yo soy inocente: llevo toda la noche grabando en el jardín con Duquesa. —Duquesa, el Persian, bufa—. Ella lo confirma. Mira qué cara de confirmar.' },
 			{ say: 'conde', text: 'Y yo, naturalmente, también soy sospechoso. Es mi castillo. Es mi calabaza. Y adoro robármela. —Sonríe con unos colmillos que seguramente son postizos—. Seguramente.' },
-			{ text: 'Revisas el salón. En la vitrina vacía hay polvo de calabaza y un pelo largo y grisáceo. En la alfombra, unas huellas de patas que se alejan hacia el jardín. En el sótano, la aspiradora del Prof. Gadd está apagada… y fría.' },
+			{ text: 'Revisas el salón. En la vitrina vacía hay polvo de calabaza y unos pelos cortos de color crema. En la alfombra, unas huellas de patas que se alejan hacia el jardín. En el sótano, la aspiradora del Prof. Gadd está apagada… y fría.' },
 			{ prompt: '¿Quién tiene la Calabaza de Oro?', choice: [
 				{ text: 'El Prof. Gadd.', then: [
 					{ text: '«Dijo que estuvo toda la noche en el sótano con la aspiradora», dices. «Pero la aspiradora está fría. Lleva horas apagada.»' },
@@ -68,19 +68,19 @@ export default {
 				] },
 				{ text: 'Tobías (y Duquesa).', then: [{ call: 'ev_hw_solucion' }] },
 				{ text: 'El Conde.', then: [
-					{ say: 'conde', text: 'Oh, qué halagador. Pero yo no tengo pelo gris. Ni patas. Aún. —Te guiña un ojo rojo.' },
+					{ say: 'conde', text: 'Oh, qué halagador. Pero yo no suelto pelo color crema. Ni tengo patas. Aún. —Te guiña un ojo rojo.' },
 					{ call: 'ev_hw_segunda' },
 				] },
 			] },
 		],
 		ev_hw_segunda: [
-			{ prompt: 'Piensa en el pelo gris y las huellas de patas…', choice: [
+			{ prompt: 'Piensa en los pelos color crema y en las huellas de patas…', choice: [
 				{ text: 'Tobías (y Duquesa).', then: [{ call: 'ev_hw_solucion' }] },
 				{ text: 'Rendirme por esta noche.', then: [{ say: 'conde', text: 'La noche es joven. Vuelva cuando quiera… mientras dure Halloween.' }] },
 			] },
 		],
 		ev_hw_solucion: [
-			{ text: '«Las huellas de patas van hacia el jardín, donde dice que estuvo grabando. Y el pelo gris de la vitrina…» Miras a Duquesa. Duquesa te mira. Duquesa aparta la mirada.' },
+			{ text: '«Las huellas de patas van hacia el jardín, donde dice que estuvo grabando. Y los pelos color crema de la vitrina…» Miras a Duquesa. Duquesa te mira. Duquesa aparta la mirada.' },
 			{ say: 'tobias', text: '¡¿Duquesa?! ¡¿Fuiste tú?! ¡En pleno directo! ¡Patrocinadores, esto no es lo que parece!' },
 			{ text: 'Duquesa empuja con la pata, muy digna, la Calabaza de Oro de detrás de una maceta. No pide perdón. Duquesa nunca pide perdón.' },
 			{ say: 'conde', text: '¡Magnífico! ¡Una deducción digna de este castillo! La Calabaza de Oro es suya… hasta el año que viene.' },
@@ -89,7 +89,7 @@ export default {
 			{ pokemon: { sp: 'pumpkaboo', lv: 15, nature: 'impish', ability: 'pickup', happy: 120 } },
 			{ give: 'rarecandy' },
 			{ quest: 'ev_halloween', done: true },
-			{ diary: '¡Hoy resolvimos un misterio de verdad! En el castillo del Conde, la ladrona era Duquesa, la Persian de Tobías. Yo ya lo sospechaba (bueno, un poquito). El Conde tiene unos colmillos rarísimos. ¡Bzzt! Feliz Halloween.', cond: 'flag.b01_diario' },
+			{ diary: '¡Hoy resolvimos un misterio de verdad! En el castillo del Conde, la ladrona era Duquesa, la Persian de Tobías. Yo sospechaba del Conde. Me equivoqué del todo. El Conde tiene unos colmillos rarísimos. ¡Bzzt! Feliz Halloween.', cond: 'flag.b01_diario' },
 		],
 		ev_hw_despues: [
 			{ say: 'conde', text: 'La Calabaza de Oro le sienta bien. El año que viene, alguien se la robará a usted. Es la tradición. Duerma con un ojo abierto.' },
@@ -97,14 +97,14 @@ export default {
 		// ===== Día de Muertos =====
 		ev_muertos_inicio: [
 			{ text: 'En un rincón del Bulevar Sur, alguien ha montado un altar de tres niveles: papel picado de colores, velas, pan, fotos antiguas y un plato de dulces con forma de calavera.' },
-			{ say: 'remedios', text: 'Ay, mijo… perdón, ¿cómo te llamas? {jugador}. Qué bonito nombre. Yo soy Remedios, la abuela de los Ortega. Venimos de Paldea, pero mi familia era de mucho más lejos. Esta es nuestra **ofrenda**.' },
+			{ say: 'remedios', text: 'Ay, mij{o|a|e}… perdona, que no te he preguntado. ¿Cómo te llamas? {jugador}. Qué bonito nombre. Yo soy Remedios, la abuela de los Ortega. Venimos de Paldea, pero mi familia era de mucho más lejos. Esta es nuestra **ofrenda**.' },
 			{ say: 'remedios', text: 'Aquí en Kalos celebran el día de todos los santos. Nosotros celebramos el **Día de Muertos**: ponemos lo que les gustaba a los que se fueron, para que vengan a visitarnos una noche. Y no es triste, ¿eh? Es una fiesta. Es recordar.' },
 			{ say: 'remedios', text: 'Pero me faltan **flores de cempasúchil**, las naranjas. Su olor les enseña el camino a casa. En Kalos no se venden… pero desde lo de la Puerta han empezado a brotar en las rutas. ¿Será la grieta? Quién sabe.' },
 			{ say: 'remedios', text: 'Si me traes **cinco**, te lo agradecería con el alma. Búscalas con cuidado en las **Rutas 4, 5 y 7**. A veces se esconden entre la hierba.' },
 			{ quest: 'ev_muertos', stage: 'flores' },
 		],
 		ev_muertos_recordar: [
-			{ say: 'remedios', text: 'Llevas {jugador}… —cuenta con los dedos— algunas flores. Me faltan cinco en total. Búscalas en las Rutas 4, 5 y 7, entre la hierba.' },
+			{ say: 'remedios', text: '¿Ya traes alguna, {jugador}? —Cuenta con los dedos—. Necesito cinco, mij{o|a|e}. Búscalas en las Rutas 4, 5 y 7, entre la hierba. Se esconden, como los nietos cuando toca fregar.' },
 		],
 		ev_muertos_entrega: [
 			{ take: 'cempasuchil', n: 5 },
@@ -124,7 +124,7 @@ export default {
 		ev_cumple: [
 			{ if: 'vars.cumple_year == year', then: [{ say: 'joy', text: '¡Que sigas teniendo un cumpleaños precioso, {jugador}!' }, { end: true }] },
 			{ say: 'joy', text: '¡Sorpresa! Rotom nos avisó de que hoy es tu cumpleaños. ¡Feliz cumpleaños, {jugador}!' },
-			{ say: 'rotom', text: '¡Bzzt! ¡Feliz cumpleaños! Lo tenía apuntado en mi memoria interna. Bueno, en la memoria. Bueno, lo puso Claude. ¡Pero yo me acordé!' },
+			{ say: 'rotom', text: '¡Bzzt! ¡Feliz cumpleaños! Lo tenía apuntado desde que te inscribiste en el Circuito. Lo miré cuarenta veces esta mañana. ¡Pero me acordé yo solito!' },
 			{ text: 'Todo el Centro Pokémon canta. Tus Pokémon salen de sus Poké Balls y se suman al jaleo. Alguien ha hecho un pastel con forma de Poké Ball. Está un poco torcido. Es perfecto.' },
 			{ give: 'rarecandy', n: 3 }, { give: 'lavacookie' },
 			{ heal: true, silent: true },

@@ -446,6 +446,7 @@ export async function enterLocation(id, { from, silent } = {}) {
 	if (!loc) { toast('Lugar desconocido: ' + id); return; }
 	const firstTime = !G.visited[id];
 	G.visited[id] = true;
+	for (let p = loc.parent; p && !G.visited[p]; p = L(p)?.parent) G.visited[p] = true;
 	G.loc = id;
 	if (isRoute(loc)) {
 		const r = loc.route;

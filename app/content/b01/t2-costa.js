@@ -242,7 +242,7 @@ export default {
 					],
 					4: [
 						{ script: 'b01_r7_snorlax_ve', mark: true },
-						{ talk: [{ script: 'b01_r7_snorlax' }], label: 'Snorlax dormido', sub: 'Ronca atravesado en el camino', icon: '💤', cond: '!flag.b01_snorlax', new: 'has("pokeflute")' },
+						{ talk: [{ cond: 'has("pokeflute")', script: 'b01_r7_snorlax_flauta' }, { script: 'b01_r7_snorlax' }], label: 'Snorlax dormido', sub: 'Ronca atravesado en el camino', icon: '💤', cond: '!flag.b01_snorlax', new: 'has("pokeflute")' },
 						{ block: { cond: 'flag.b01_snorlax', msg: 'Un Snorlax enorme ronca atravesado en el paseo. Por un lado, el río. Por el otro, un talud. No hay forma de pasar.', dir: 1 } },
 						{ text: 'Ronquidos como truenos lejanos. Las flores del paseo tiemblan a cada respiración.', cond: '!flag.b01_snorlax' },
 						{ text: 'En el suelo, donde dormía el Snorlax, queda la forma de su cuerpo aplastada en la hierba. Y un plato vacío.', cond: 'flag.b01_snorlax' },
@@ -432,14 +432,14 @@ export default {
 	trainers: {
 		// ----- Ruta 5 -----
 		r5_patinadora_odile: {
-			name: 'Odile', cls: 'Patinadora', ai: 2,
+			name: 'Lou', cls: 'Patinadora', ai: 2,
 			team: [{ sp: 'furfrou', lv: 12 }, { sp: 'bunnelby', lv: 11 }],
 			intro: '¡Desde lo de la Puerta, la pista se llena de turistas de Galar que no saben frenar! ¡Tú tampoco tienes pinta de saber!',
 			win: 'Vale, frenas mejor de lo que pensaba.',
 			look: { hair: 'ponytail', hairColor: '#e98aa8', outfit: '#f2b33d', outfit2: '#2b2b38', skin: 1, acc: 'headphones', mouth: 'grin' },
 		},
 		r5_patinador_lucas: {
-			name: 'Lucas', cls: 'Patinador', ai: 2,
+			name: 'Maxime', cls: 'Patinador', ai: 2,
 			team: [{ sp: 'skiddo', lv: 13 }],
 			intro: 'Lemnis cerró la ruta tres semanas «para investigar». Yo creo que era para que no les rayáramos el asfalto nuevo.',
 			win: 'Me caí. Del combate, no de la barandilla. Eso ya pasó antes.',
@@ -455,8 +455,8 @@ export default {
 		r5_patinador_remi: {
 			name: 'Rémi', cls: 'Patinador', ai: 2,
 			team: [{ sp: 'scraggy', lv: 13 }, { sp: 'pancham', lv: 14 }],
-			intro: 'Llevo un mes con un truco que se llama «el Infinito». Le puse el nombre antes de lo de la Puerta. Ahora suena a anuncio. Bueno, tú dime: ¿cómo quieres hacerlo?',
-			win: 'Así. Así es como querías hacerlo. Entendido.',
+			intro: 'Llevo un mes con un truco que se llama «el Infinito». Le puse el nombre antes de lo de la Puerta. Ahora suena a anuncio. ¿Te lo enseño? En combate luce más.',
+			win: 'Vale. Al Infinito le falta un final. Lo estoy trabajando.',
 			look: { hair: 'spiky', hairColor: '#d8a85a', outfit: '#c4473a', outfit2: '#2b2b38', skin: 1, acc: 'bandana', mouth: 'grin' },
 		},
 		bastien_1: {
@@ -496,7 +496,7 @@ export default {
 
 		// ----- Ruta 7 -----
 		r7_pescador_gilles: {
-			name: 'Gilles', cls: 'Pescador', ai: 2,
+			name: 'Yves', cls: 'Pescador', ai: 2,
 			team: [{ sp: 'goldeen', lv: 14 }, { sp: 'psyduck', lv: 13 }],
 			intro: 'Ayer pesqué un Arrokuda. Un pez de Galar, en un río de Kalos. Lo devolví al agua. No sé si al agua correcta.',
 			win: 'Hoy no pican ni los combates.',
@@ -533,7 +533,7 @@ export default {
 			look: { hair: 'short', hairColor: '#2b2b38', outfit: '#3f9d58', outfit2: '#8a7a5a', skin: 4, acc: 'goggles', mouth: 'open' },
 		},
 		gruta_arqueologa_ines: {
-			name: 'Inès', cls: 'Arqueóloga', ai: 2,
+			name: 'Clémence', cls: 'Arqueóloga', ai: 2,
 			team: [{ sp: 'meditite', lv: 16 }, { sp: 'zubat', lv: 15 }],
 			intro: 'Unos tipos con trajes rojos me preguntaron si aquí había «cristales energéticos». ¿Cristales? Aquí hay murciélagos y humedad. ¿Tú también buscas cristales?',
 			win: 'Vale, vale. Tú no buscas cristales. Tú buscas pelea.',
@@ -542,7 +542,7 @@ export default {
 
 		// ----- Ruta 8 -----
 		r8_pescador_loic: {
-			name: 'Loïc', cls: 'Pescador', ai: 2,
+			name: 'Erwan', cls: 'Pescador', ai: 2,
 			team: [{ sp: 'luvdisc', lv: 15 }, { sp: 'tentacool', lv: 16 }],
 			intro: 'Desde la Fisura saco del mar cosas que no sé ni nombrar. Ayer, un Finizen. Hoy, una bota. La bota sí era de Kalos.',
 			win: 'Mejor que la bota. Bastante mejor.',
@@ -594,7 +594,7 @@ export default {
 		b01_r5_lemnis: [
 			{ set: { 'flag.b01_bastien_ruta5': true } },
 			{ quest: 'b01_t_bastien', stage: 'ruta5', silent: true },
-			{ quest: 'b01_m2', stage: 'hecha' },
+			{ quest: 'b01_m2', done: true },
 			{ quest: 'b01_m4', stage: 'vanitas' },
 			{ text: 'En un ensanche del camino hay dos camiones blancos con la lemniscata azul y plata pintada en el lateral, un toldo, y una fila de **jaulas de contención**: acolchadas por dentro, con el logo bordado en el cojín.' },
 			{ text: 'Dentro hay un Wooloo, un Skwovet, un Rookidee y algo pequeño que tiembla bajo una manta. En cada jaula, una etiqueta: «**Destino: por asignar**».' },
@@ -603,7 +603,7 @@ export default {
 			{ say: 'noa', as: 'Mujer de Lemnis', text: '¡Hola! ¿Vienes de Luminalia? Perdona el lío: estamos en plena recogida. Soy Noa. Noa Lambert.' },
 			{ say: 'noa', text: 'Normalmente me dedico a buscar talentos para el Circuito. Hoy hago de pastora. —Se ríe—. Lemnis está recogiendo a los Pokémon que trajo la Fisura para **devolverlos a sus regiones**. Pobrecillos, están muy lejos de casa.' },
 			{ text: 'Detrás de ella, cargando una jaula con cara de no querer cargarla, hay un chico rubio con un uniforme de Lemnis que le queda una talla grande. Lo conoces: el que atrapó al vuelo la Ball de Froakie en la inauguración.' },
-			{ say: 'bastien', text: 'Ah. Hola. Eres… el del Riolu. No mires el uniforme. Es de contrato.' },
+			{ say: 'bastien', text: 'Ah. Hola. Eres… {el|la|le} del Riolu. No mires el uniforme. Es de contrato.' },
 			{ say: 'bastien', text: 'Bastien Lacroix. Lemnis me patrocina en el Circuito. Me pagan el equipo, los viajes, las Pociones… y a cambio, pues. Esto.' },
 			{ say: 'noa', text: 'Bastien es mi mejor fichaje del año. Lo que pasa es que todavía no se lo cree.' },
 			{ say: 'bastien', text: 'Noa, ¿le cuento lo del contrato o se lo cuentas tú?' },
@@ -667,7 +667,7 @@ export default {
 			{ say: 'noa', text: 'Bueno. Seguimos hacia Vánitas en un rato. Si ves Pokémon perdidos por la ruta, avísanos. ¡Lemnis cuida de los suyos!' },
 			{ say: 'bastien', text: 'Oye, {jugador}. La próxima vez que combatamos, que sea sin uniforme. Me gustaría saber quién gana de verdad.' },
 			{ intel: { npc: 'noa', text: 'Cazatalentos de Lemnis. Cree de verdad que los Pokémon desplazados vuelven a casa. No sabe decir adónde.' } },
-			{ diary: 'Hoy conocimos a Noa, de Lemnis. ¡Es simpatiquísima! Ella y Bastien cuidan de los Pokémon que trajo la grieta y los van a llevar de vuelta a sus casas, en unas jaulas con cojines bordados. Bastien y mi entrenador{|a|e} combatieron y fue emocionante. {riolu} estaba un poco nervioso; creo que tenía hambre.' },
+			{ diary: 'Hoy conocimos a Noa, de Lemnis. ¡Es simpatiquísima! Ella y Bastien recogen a los Pokémon que trajo la grieta. Noa dice que los van a llevar de vuelta a sus casas. Las jaulas tienen cojines bordados, ¡con el logo y todo! Bastien y mi entrenador{|a|e} combatieron y fue emocionante. {riolu} estuvo muy serio todo el rato.' },
 		],
 		b01_r5_campamento: [
 			{ if: 'flag.b01_mareep_lemnis && flag.b01_mareep_jaula', then: [
@@ -972,7 +972,7 @@ export default {
 		b01_cenit_entrega: [
 			{ text: 'Princesa sube la escalinata delante de ti, despacio, como en un desfile.' },
 			{ say: 'dueno_cenit', text: '¡PRINCESA! ¡Mi reina! ¡Mi corte Reina! ¡Mírate el pelo, qué desastre! ¡Qué precioso desastre!' },
-			{ say: 'dueno_cenit', text: 'Gracias, gracias. Es usted digno de mi jardín. Tome: una **Maxipepita**. Y una foto conmigo. Las dos cosas valen mucho; la foto, más.' },
+			{ say: 'dueno_cenit', text: 'Gracias, gracias. Es usted dign{o|a|e} de mi jardín. Tome: una **Maxipepita**. Y una foto conmigo. Las dos cosas valen mucho; la foto, más.' },
 			{ give: 'bignugget' },
 			{ say: 'rotom', text: '¡Bzzt! ¡Foto! ¡Sonrían! …El señor sale con los ojos cerrados. Otra. …Princesa sale con los ojos cerrados. Otra. ¡Bzzt! Perfecta. Bueno, aceptable.' },
 			{ quest: 'b01_s_cenit', done: true },
@@ -1037,7 +1037,7 @@ export default {
 			{ text: 'El olor atrae a medio río: tus Pokémon salen de sus Poké Balls sin que nadie los llame, un Croagunk se asoma entre las cañas y dos Ducklett aterrizan en la orilla con cara de inocentes.' },
 			{ say: 'gaspar', text: 'Regla de oro de la cocina de camino: primero, dieta equilibrada. Segundo, que coma todo el grupo. Tercero, no preguntar qué hay en la olla si no quieres saberlo.' },
 			{ choice: [
-				{ text: '«¿Qué cocinaste en aquella mazmorra de Unova?»', then: [
+				{ cond: 'flag.b01_gaspar_cafe', text: '«¿Qué cocinaste en aquella mazmorra de Teselia?»', then: [
 					{ say: 'gaspar', text: '…' },
 					{ say: 'gaspar', text: 'Estaba bueno. Eso es todo lo que voy a decir. Estaba muy bueno.' },
 				] },
@@ -1073,6 +1073,9 @@ export default {
 				{ say: 'rotom', text: '¡Bzzt! Necesitamos música. O un terremoto. Prefiero la música.' },
 				{ end: true },
 			] },
+			{ call: 'b01_r7_snorlax_flauta' },
+		],
+		b01_r7_snorlax_flauta: [
 			{ text: 'Te acercas a la oreja de Snorlax y tocas la **Poké Flauta**. La melodía es suave, rara, como de otro tiempo. Los Volbeat del río se ponen a brillar al compás.' },
 			{ text: 'Snorlax abre un ojo. Luego el otro. Bosteza tan fuerte que se te vuela el pelo. Se incorpora, te mira… y decide que tiene hambre. Y que tú pareces tener comida.' },
 			{ wild: { sp: 'snorlax', lv: 18, moves: ['yawn', 'bite', 'lick', 'defensecurl'] }, lose: 'continue',
@@ -1124,7 +1127,7 @@ export default {
 			{ text: 'Un chico con chaqueta verde y amarilla habla con entusiasmo hacia un móvil sobre un trípode. A su lado, sentada sobre una roca como sobre un trono, una **Persian** con un collar de pedrería mira el mar con infinito desprecio.' },
 			{ say: 'tobias', as: 'Chico del trípode', text: '¡Patrocinadores, gracias por las Pociones! ¡Episodio cuarenta y siete: la costa! Hoy, Duquesa y yo exploramos la temible Muralla Costera, donde…' },
 			{ text: 'La Persian gira la cabeza hacia ti. Te mira de arriba abajo, muy despacio. Luego bosteza. Es el bostezo más ofensivo que has visto en tu vida.' },
-			{ say: 'tobias', as: 'Chico del trípode', text: '¡Un momento! ¡Giro de guion! ¡Un aventurero salvaje aparece! —Te enfoca con el móvil—. ¡Saluda a la audiencia! ¡Hay como… doce personas mirando! ¡Doce!' },
+			{ say: 'tobias', as: 'Chico del trípode', text: '¡Un momento! ¡Giro de guion! ¡{Un|Una|Une} aventurer{o|a|e} salvaje aparece! —Te enfoca con el móvil—. ¡Saluda a la audiencia! ¡Hay como… doce personas mirando! ¡Doce!' },
 			{ say: 'tobias', text: 'Tobías Quiroga. Y ella es **Duquesa**. La verdadera estrella. Yo solo llevo la cámara y las bolsas. Y las Pociones. Y el champú de Duquesa.' },
 			{ say: 'tobias', text: 'Los patrocinadores quieren acción. ¡Y la acción eres tú! ¿Combate? ¡Di que sí! Los combates suben los números.' },
 			{ battle: 'tobias_1', lose: 'continue',
@@ -1147,7 +1150,7 @@ export default {
 		b01_lazare_1: [
 			{ text: 'Un hombre de pelo blanco y rizado, con gafas gruesas y una bata con quemaduras en las mangas, se gira con una lupa en una mano y un hueso en la otra.' },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¡Una visita! ¡Por fin alguien que no viene a preguntar por los baños! Lazare. Doctor Lazare. Paleontólogo, restaurador de fósiles y, los martes, socorrista del puerto.' },
-			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Esta máquina devuelve la vida a Pokémon que llevan millones de años convertidos en piedra. Funciona con una probabilidad de éxito del diez mil millones por ciento. Bueno. Del noventa y ocho. Pero suena mejor lo otro.' },
+			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Esta máquina devuelve la vida a Pokémon que llevan millones de años convertidos en piedra. Funciona con una probabilidad de éxito del cien por cien. Bueno. Del noventa y ocho. Pero redondeo hacia arriba, por optimismo.' },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Qué día llevo, por cierto. Hace diez minutos se fueron dos técnicos de Lemnis. Me preguntaron si había pasado por aquí un entrenador con un Riolu.' },
 			{ text: 'El doctor mira a {riolu}. Te mira a ti. Vuelve a mirar a {riolu}.', cond: 'inParty("riolu") || inParty("lucario")' },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '…Les dije que no. Era verdad, en ese momento. Ahora ya no lo es. Qué cosas.' },
@@ -1159,7 +1162,7 @@ export default {
 			] },
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: 'Si vas a la Cueva Brillante y encuentras un fósil, tráemelo. O mejor: no te muevas, que ya iré yo a buscarte. Tengo buenas piernas. Los martes, de socorrista.' },
 			{ set: { 'flag.b01_lazare_1': true } },
-			{ quest: 'b01_m5', stage: 'paso', silent: true },
+			{ quest: 'b01_m5', stage: 'paso', silent: true, cond: '!quest.b01_m5' },
 		],
 		b01_lazare_generico: [
 			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¿Algún fósil? ¿No? Paciencia. Los fósiles llevan millones de años esperando. Pueden esperar a que termines tu Circuito.' },
@@ -1240,7 +1243,7 @@ export default {
 
 	// =================================================================
 	quests: {
-		b01_s_cenit: { name: 'La flauta del rey', type: 'side', est: 15, stages: {
+		b01_s_cenit: { name: 'Princesa en el laberinto', type: 'side', est: 15, stages: {
 			buscar: 'La Furfrou del dueño del **Palacio Cénit**, Princesa, se perdió en el laberinto de setos. Odia la lavanda, adora las rosas, nunca va por la sombra y lleva un lacito rosa.',
 			hecha: 'Princesa volvió a casa. Despeinada, pero feliz.',
 		} },
