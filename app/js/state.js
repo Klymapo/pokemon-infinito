@@ -92,6 +92,7 @@ export function migrate(g) {
 	if (!g || typeof g !== 'object') return null;
 	g.settings ||= { expShare: true, textSpeed: 2, anim: true };
 	g.eventsDone ||= {};
+	g.eventsSeen ||= {};
 	g.notices ||= {};
 	g.stats ||= { battles: 0, caught: 0, steps: 0 };
 	g.vars ||= {};

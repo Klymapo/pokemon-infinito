@@ -4,7 +4,7 @@ import { C, topLoc } from './content.js';
 import { G, evalCond, count, removeItem, addItem } from './state.js';
 import { createPokemon, addHappy, healFull } from './pokemon.js';
 import { weightedPick, rint, rng } from './util.js';
-import { inDateRange, phase } from './time.js';
+import { inDateRange, phase, now } from './time.js';
 
 export const L = id => C.locations[id];
 export const isRoute = loc => !!loc?.route;
@@ -12,6 +12,42 @@ export const isRoute = loc => !!loc?.route;
 // ---------- Eventos por fecha ----------
 export function activeEvents() {
 	return C.events.filter(e => inDateRange(e.from, e.to) && (e.cond === undefined || evalCond(e.cond)));
+}
+
+/**
+ * Calendario de eventos para los avisos: activos, próximos (≤ 7 días) y bloqueados por la historia.
+ * Devuelve [{ e, state: 'active'|'soon', locked, done, daysTo, daysLeft, places }].
+ * Los eventos con `surprise: true` no se anuncian antes de empezar.
+ */
+export function eventCalendar(days = 7, d = now()) {
+	const today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+	const at = (md, y) => { const [m, dd] = md.split('-').map(Number); return new Date(y, m - 1, dd); };
+	const out = [];
+	for (const e of C.events) {
+		const locked = e.cond !== undefined && !evalCond(e.cond);
+		const done = !!(e.doneCond && evalCond(e.doneCond));
+		const places = eventPlaces(e);
+		if (inDateRange(e.from, e.to, d)) {
+			let end = at(e.to, today.getFullYear());
+			if (end < today) end = at(e.to, today.getFullYear() + 1);
+			out.push({ e, state: 'active', locked, done, daysLeft: Math.round((end - today) / 864e5), places });
+		} else if (!e.surprise) {
+			let start = at(e.from, today.getFullYear());
+			if (start < today) start = at(e.from, today.getFullYear() + 1);
+			const daysTo = Math.round((start - today) / 864e5);
+			if (daysTo <= days) out.push({ e, state: 'soon', locked, done: false, daysTo, places });
+		}
+	}
+	return out.sort((a, b) => (a.state === 'active' ? -1 : a.daysTo) - (b.state === 'active' ? -1 : b.daysTo));
+}
+
+/** Lugares donde pasa algo durante un evento (sin decir qué). */
+export function eventPlaces(e) {
+	const ids = new Set([...Object.keys(e.spots || {}), ...Object.keys(e.onEnter || {}), ...Object.keys(e.tramos || {}), ...Object.keys(e.encounters || {})]);
+	return [...ids].map(id => C.locations[id]).filter(Boolean).map(l => {
+		const top = topLoc(l.id);
+		return { id: l.id, name: top && top.id !== l.id ? `${top.name} › ${l.name}` : l.name, known: !!G.visited?.[l.id] || !!G.visited?.[top?.id], night: !!Object.values(e.encounters?.[l.id] || {}).flat().length && Object.values(e.encounters[l.id]).flat().every(x => x.time === 'night'), mons: !!e.encounters?.[l.id] };
+	});
 }
 
 /** Spots visibles de una ubicación (incluye eventos activos). */

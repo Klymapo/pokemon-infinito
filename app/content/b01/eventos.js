@@ -4,6 +4,8 @@ export default {
 		// ---------- Halloween ----------
 		{
 			id: 'halloween', name: 'El Gran Atraco de Halloween', from: '10-24', to: '10-31', cond: 'flag.b01_handsome_recluta',
+			icon: '🎃', doneCond: 'done.ev_halloween',
+			blurb: 'Un misterio de una noche en un castillo, y Pokémon de temporada entre la hierba cuando oscurece.',
 			spots: {
 				luminalia: [{ label: 'Cartel naranja: «Gran Atraco de Halloween»', icon: '🎃', talk: [{ script: 'ev_hw_cartel' }] }],
 				castillo_caduco: [{ label: 'El Gran Atraco de Halloween', icon: '🎃', new: '!done.ev_halloween', talk: [{ cond: 'done.ev_halloween', script: 'ev_hw_despues' }, { script: 'ev_hw_atraco' }] }],
@@ -16,6 +18,8 @@ export default {
 		// ---------- Día de Muertos ----------
 		{
 			id: 'muertos', name: 'Día de Muertos', from: '10-28', to: '11-03', cond: 'flag.b01_handsome_recluta',
+			icon: '🕯️', doneCond: 'done.ev_muertos',
+			blurb: 'Una familia ha montado su ofrenda en Luminalia. Flores naranjas en las rutas y visitantes de temporada por la noche.',
 			spots: {
 				luminalia: [{ label: 'Ofrenda de la familia Ortega', sub: 'Velas, papel picado y flores naranjas', icon: '🕯️', new: '!quest.ev_muertos', talk: [
 					{ cond: 'done.ev_muertos', script: 'ev_muertos_despues' },
@@ -38,6 +42,8 @@ export default {
 		// ---------- Cumpleaños del jugador (7 de junio) ----------
 		{
 			id: 'cumple', name: 'Cumpleaños', from: '06-07', to: '06-07', cond: 'flag.b01_handsome_recluta',
+			icon: '🎂', surprise: true, doneCond: 'vars.cumple_year == year',
+			blurb: 'Hoy es un día especial. Pásate por Luminalia.',
 			spots: {
 				luminalia: [{ label: '¿Una fiesta en el Centro Pokémon?', icon: '🎂', new: 'vars.cumple_year != year', talk: [{ script: 'ev_cumple' }] }],
 			},

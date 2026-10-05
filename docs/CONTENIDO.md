@@ -297,8 +297,19 @@ events: [ {
   encounters: { ruta5: { grass: [ { sp: 'litwick', lv: [10, 14], w: 15, time: 'night' } ] } },
   tramos: { ruta4: { 3: [ { item: 'cempasuchil', hidden: true } ] } },
   onEnter: { luminalia: [ { script: 'ev_muertos_aviso', once: true } ] },
+  // para los avisos (obligatorios; el validador avisa si faltan):
+  icon: '🕯️',
+  blurb: 'Una frase SIN spoilers: qué tipo de cosas hay, nunca qué pasa.',
+  doneCond: 'done.ev_muertos',   // cuándo el jugador ya lo completó (este año, si se repite)
+  surprise: false,               // true = no se anuncia antes de empezar (p. ej., el cumpleaños)
 } ]
 ```
+
+**Avisos de eventos (automáticos):**
+- Cada lugar muestra arriba un recuadro con los eventos activos sin completar y los que empiezan en los próximos 7 días (si no son `surprise`). El último día se resalta.
+- Rotom avisa una vez al año, la primera vez que abres el juego con el evento activo.
+- El Diario (pestaña «Por hacer») lista todos, con su ficha: fechas, descripción y «Dónde» (lugares de `spots`, `tramos`, `encounters` y `onEnter`; los no visitados salen como «un lugar que aún no conoces»).
+- Si `cond` no se cumple, el aviso dice que se desbloquea al avanzar en la historia.
 
 ---
 

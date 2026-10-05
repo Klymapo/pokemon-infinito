@@ -9,7 +9,7 @@ import {
 } from '../pokemon.js';
 import {
 	L, isRoute, spotsOf, descOf, tramoItems, tramoTerrain, encounterTable, encounterOdds, rollWild, mounted, encounterRate, canMove,
-	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents,
+	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents, eventCalendar,
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
 import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS } from '../art.js';
@@ -178,6 +178,8 @@ export function render() {
 	const scene = h('div', { class: 'scene' }, sceneCanvas({ ...(loc.bg || {}), seed: loc.bg?.seed || loc.id }),
 		topL && topL.id !== loc.id ? h('div', { class: 'scene-label' }, `${topL.name} › ${loc.name}`) : null);
 	main.append(scene);
+	const evs = eventStrip();
+	if (evs) main.append(evs);
 	const tracker = questTracker();
 	if (tracker) main.append(tracker);
 	if (isRoute(loc)) renderRoute(main, loc);
@@ -186,6 +188,58 @@ export function render() {
 	// avisos de ritmo pendientes
 	const notes = pendingNotices();
 	if (notes.length) setTimeout(() => showPaceNotice(notes[0]), 300);
+	else { const ev = eventCalendar().find(c => c.state === 'active' && !c.locked && !c.done && G.eventsSeen?.[c.e.id] !== new Date().getFullYear()); if (ev) setTimeout(() => showEventNotice(ev), 300); }
+}
+
+// =================== Eventos por fecha: avisos ===================
+const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const fmtMD = md => { const [m, d] = md.split('-').map(Number); return `${d} ${MESES[m - 1]}`; };
+function eventWhen(c) {
+	if (c.state === 'soon') return c.daysTo === 1 ? 'Empieza mañana' : `Empieza en ${c.daysTo} días (${fmtMD(c.e.from)})`;
+	if (c.done) return '✔ Completado' + (c.daysLeft ? ` · sigue hasta el ${fmtMD(c.e.to)}` : ' · hoy es el último día');
+	return c.daysLeft === 0 ? '¡Hoy es el último día!' : c.daysLeft === 1 ? 'Termina mañana' : `Quedan ${c.daysLeft + 1} días · hasta el ${fmtMD(c.e.to)}`;
+}
+function eventRow(c) {
+	const sub = c.locked ? (c.state === 'active' ? 'Evento activo · se desbloquea al avanzar un poco en la historia' : eventWhen(c) + ' · se desbloquea al avanzar en la historia') : eventWhen(c);
+	return h('button', { class: 'evrow ' + c.state + (c.done ? ' done' : '') + (c.locked ? ' locked' : '') + (c.state === 'active' && !c.done && !c.locked && c.daysLeft === 0 ? ' last' : ''), onclick: () => openEventSheet(c) },
+		h('span', { class: 'evico' }, c.e.icon || '🎉'),
+		h('span', { class: 'evtxt' }, h('b', {}, c.e.name), h('small', {}, sub)),
+		h('span', { class: 'chev' }, '›'));
+}
+/** Recuadro en cada lugar: eventos activos sin completar y los que empiezan esta semana. */
+function eventStrip() {
+	const list = eventCalendar().filter(c => !c.done);
+	if (!list.length) return null;
+	return h('div', { class: 'evstrip' }, ...list.map(eventRow));
+}
+function openEventSheet(c) {
+	const e = c.e;
+	const sheet = openSheet(`${e.icon || '🎉'} ${e.name}`, null);
+	const dates = e.from === e.to ? `El ${fmtMD(e.from)}, cada año` : `Del ${fmtMD(e.from)} al ${fmtMD(e.to)}, cada año`;
+	const body = [
+		h('div', { class: 'qgroup' + (c.state === 'active' ? '' : ' log') }, h('b', {}, c.state === 'active' ? (c.done ? 'Completado' : 'Evento activo') : 'Próximamente'), h('span', {}, eventWhen(c))),
+		h('div', { class: 'pad', html: fmtText(tx(e.blurb || '')) }),
+		h('div', { class: 'note' }, '🗓️ ' + dates + '.'),
+	];
+	if (c.locked) body.push(h('div', { class: 'note' }, '🔒 Todavía no puedes participar: se desbloquea al avanzar un poco en la historia principal.'));
+	if (c.places.length) {
+		body.push(h('div', { class: 'section-title' }, 'Dónde'));
+		body.push(h('div', { class: 'list' }, ...c.places.map(p => h('div', { class: 'row' }, h('div', { class: 'ico' }, p.mons ? '🌿' : '📍'),
+			h('div', { class: 'lbl' }, h('div', { class: 't' }, p.known ? p.name : 'Un lugar que aún no conoces'), p.mons ? h('div', { class: 's' }, 'Pokémon de temporada' + (p.night ? ', de noche' : '')) : null)))));
+	}
+	sheet.set(body);
+}
+async function showEventNotice(c) {
+	if (busy) return;
+	G.eventsSeen ||= {};
+	G.eventsSeen[c.e.id] = new Date().getFullYear();
+	busy = true;
+	try {
+		await say({ name: 'Rotom', look: { hair: 'spiky', hairColor: '#e07a3a', skin: '#f6f0e6', eyes: '#4c7cf0', outfit: '#e07a3a', outfit2: '#4c7cf0', eyesStyle: 'happy', mouth: 'grin' } },
+			tx(`¡Bzzt! ¡Empezó un evento! ${c.e.icon || '🎉'} **${c.e.name}**. ${c.e.blurb || ''} ${c.daysLeft === 0 ? 'Solo dura hoy.' : `Dura hasta el ${fmtMD(c.e.to)}.`} Lo tienes arriba, en cada lugar.`));
+	} finally { busy = false; }
+	await saveGame();
+	render();
 }
 
 function navBar() {
@@ -1233,6 +1287,8 @@ function openDiary(startTab = 'active') {
 				}
 			};
 			if (tab === 'log') body.append(h('div', { class: 'qgroup log' }, h('b', {}, '📖 Registro'), h('span', {}, 'Historias abiertas que seguirán más adelante. No tienes que hacer nada por ahora: se avisará cuando haya novedades.')));
+			const cal = tab === 'active' ? eventCalendar() : [];
+			if (cal.length) body.append(h('div', { class: 'section-title' }, '🎉 Eventos de temporada'), h('div', { class: 'evstrip inlist' }, ...cal.map(eventRow)));
 			if (tab === 'active' && qs.length) body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Toca una misión para ver todo lo que necesitas. Con 📌 Seguir la tienes siempre a la vista.')));
 			byType(qs, body);
 		}

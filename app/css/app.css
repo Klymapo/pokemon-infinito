@@ -393,3 +393,20 @@ button.cmpmove:active { transform: scale(.98); }
 .row.need .needwhere { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
 .row.need .need-sp { width: 40px; height: 40px; flex: none; display: grid; place-items: center; }
 .row.need .need-sp img, .row.need .need-sp .fallback { max-width: 40px; max-height: 40px; }
+
+/* Eventos por fecha */
+.evstrip { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px 0; }
+.evstrip.inlist { padding: 0 12px 4px; }
+.evrow { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 9px 12px; border-radius: 12px; border: 1px solid rgba(242,179,61,.55); background: linear-gradient(90deg, rgba(242,179,61,.18), rgba(242,179,61,.05)); color: var(--text, #f6f0e6); font: inherit; cursor: pointer; }
+.evrow .evico { font-size: 22px; line-height: 1; }
+.evrow .evtxt { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.evrow .evtxt b { font-family: var(--pixel); font-weight: 400; font-size: 15px; color: var(--gold); }
+.evrow .evtxt small { font-size: 12.5px; color: var(--muted); }
+.evrow.last { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.evrow.last .evtxt small { color: var(--gold); font-weight: 700; }
+.evrow.soon { border-style: dashed; background: rgba(143,176,255,.06); border-color: var(--line); }
+.evrow.soon .evtxt b { color: var(--aura-soft); }
+.evrow.locked .evico, .evrow.done .evico { filter: grayscale(.6); opacity: .8; }
+.evrow.done { border-color: var(--line); background: transparent; }
+.evrow.done .evtxt b { color: var(--muted); }
+.evrow:active { transform: scale(.99); }

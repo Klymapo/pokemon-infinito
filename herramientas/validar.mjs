@@ -170,6 +170,9 @@ for (const ev of C.events) {
 	const w = 'evento ' + ev.id;
 	if (!/^\d\d-\d\d$/.test(ev.from) || !/^\d\d-\d\d$/.test(ev.to)) E(w, 'fechas inválidas');
 	checkCond(w, ev.cond);
+	checkCond(w, ev.doneCond);
+	if (!ev.icon || !ev.blurb) W(w, 'sin `icon` o `blurb` (los usa el aviso de eventos; el blurb no debe tener spoilers)');
+	if (!ev.doneCond) W(w, 'sin `doneCond`: el aviso no sabrá cuándo lo completaste');
 	for (const loc in ev.spots || {}) { if (!C.locations[loc]) E(w, 'lugar inexistente ' + loc); for (const s of ev.spots[loc]) for (const t of s.talk || []) if (!C.scripts[t.script]) E(w, 'guion inexistente ' + t.script); }
 	for (const loc in ev.encounters || {}) { if (!C.locations[loc]) E(w, 'lugar inexistente ' + loc); for (const t in ev.encounters[loc]) for (const e of ev.encounters[loc][t]) checkSpecies(w, e.sp); }
 	for (const loc in ev.tramos || {}) { if (!C.locations[loc]) E(w, 'lugar inexistente ' + loc); for (const n in ev.tramos[loc]) for (const it of ev.tramos[loc][n]) if (it.item) checkItem(w, it.item); }
