@@ -39,6 +39,21 @@
     - En Ajustes: volumen de música, de efectos y de gritos, por separado.
     - El audio empieza tras el primer toque, como exige el navegador.
 
+- **2026-10-05 · Combates dobles y hordas.** Hoy el motor solo hace combates individuales (`active[0]`).
+  - **Dobles:** el simulador de Showdown los soporta de serie, con un formato de dobles basado en `gen9infinite`. Hay que adaptar:
+    - `battle.js`: varias posiciones, elección por posición y objetivos.
+    - La IA: objetivo y movimientos de área.
+    - La interfaz: dos tarjetas por lado y elegir objetivo al tocar un movimiento que lo necesite.
+    - El bot y una prueba en `herramientas/test/`.
+    - Contenido: entrenadores con `double: true`, parejas de entrenadores y combates en equipo con un aliado de la IA (Lila, Rhi, Handsome… como compañeros en combates de historia).
+  - **Hordas** (canon de Kalos, XY): 1 contra 5 salvajes. Showdown no tiene 1 contra 5; implementarlo propio:
+    - Opción A: formato *free-for-all* (hasta 3 rivales) con la IA salvaje apuntando siempre al jugador.
+    - Opción B: un modo propio que gestione los 5 como cola de apariciones.
+    - Elegir la más fiel que se pueda probar bien.
+    - En hordas no se puede capturar hasta que quede uno.
+    - Encuentros de horda: un 5–10 % de los encuentros en hierba y cuevas de rutas avanzadas; nunca obligatorios.
+  - Hacerlo en una madrugada dedicada al motor, con su prueba incluida en `auditar.mjs`.
+
 ## Hecho a petición de Mario
 
 - 2026-10-05: ver los datos de un Pokémon desde el menú de cambio en combate; estilo de combate «Cambio» (preguntar si quieres cambiar cuando cae un Pokémon rival, se puede poner en «Fijo» en Ajustes); descripciones de habilidades en español; pantalla para comparar movimientos al aprender uno nuevo (tipo, categoría, potencia, precisión, PP, descripción y si es del mismo tipo); diario de misiones con pestañas Activas / Nuevas / Hechas / Rotom, agrupadas por tipo y con 📍 dónde avanzar o empezar cada una.
