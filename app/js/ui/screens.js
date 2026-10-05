@@ -11,7 +11,7 @@ import {
 	L, isRoute, spotsOf, descOf, tramoItems, tramoTerrain, encounterTable, rollWild, mounted, encounterRate, canMove,
 	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents,
 } from '../world.js';
-import { runScript, runFirst, UI, tx, findRiolu } from '../script.js';
+import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
 import { monImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS } from '../art.js';
 import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';

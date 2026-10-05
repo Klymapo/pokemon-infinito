@@ -204,4 +204,6 @@ node herramientas/build-sw.mjs                         # antes de cada commit
 
 Para probar a mano, sirve `app/` con `python3 -m http.server -d app 8000` y ábrelo con Playwright en una pantalla de 412×860.
 
+**Nombres de archivo:** no uses nombres que bloquean los bloqueadores de anuncios (`script.js`, `ads`, `analytics`, `track`, `banner`, `pixel`…). Al móvil de Mario no le llegaba `script.js` por eso; ahora se llama `guion.js`.
+
 Sobre la red del entorno: `raw.githubusercontent.com` suele estar bloqueado, así que los sprites no cargan en las pruebas. Es normal y no es un error del juego.

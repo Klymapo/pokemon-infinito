@@ -6,7 +6,7 @@ import { D, toID } from '../app/js/data.js';
 import { C, registerBlock, topLoc } from '../app/js/content.js';
 import { G, newGame, evalCond, setExtraScope, addItem, removeItem, count, markCaught } from '../app/js/state.js';
 import { timeScope } from '../app/js/time.js';
-import { runScript, runFirst, UI } from '../app/js/script.js';
+import { runScript, runFirst, UI } from '../app/js/guion.js';
 import { createPokemon, healFull, maxHp, checkEvolution, evolve, movesLearnedAt, canLearn, displayName } from '../app/js/pokemon.js';
 import { BattleCtl, buildTrainerTeam } from '../app/js/battle.js';
 import * as AI from '../app/js/ai.js';

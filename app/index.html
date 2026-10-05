@@ -32,7 +32,7 @@
 function diagnose() {
 	var el = document.getElementById('boot-msg');
 	el.innerHTML = 'No se pudo descargar el juego. Revisando archivos…';
-	var files = ['js/main.js', 'js/data.js', 'js/content.js', 'js/state.js', 'js/time.js', 'js/util.js', 'js/art.js', 'js/ai.js', 'js/battle.js', 'js/pokemon.js', 'js/script.js', 'js/world.js', 'js/ui/core.js', 'js/ui/screens.js', 'js/ui/battle-ui.js', 'lib/battle-text.js', 'lib/ps-sim.js'];
+	var files = ['js/main.js', 'js/data.js', 'js/content.js', 'js/state.js', 'js/time.js', 'js/util.js', 'js/art.js', 'js/ai.js', 'js/battle.js', 'js/pokemon.js', 'js/guion.js', 'js/world.js', 'js/ui/core.js', 'js/ui/screens.js', 'js/ui/battle-ui.js', 'lib/battle-text.js', 'lib/ps-sim.js'];
 	Promise.all(files.map(function (f) {
 		var t0 = Date.now();
 		return fetch(f, { cache: 'no-store' }).then(function (r) {

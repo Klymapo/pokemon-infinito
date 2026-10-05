@@ -8,7 +8,7 @@ import { monImg, sceneCanvas } from '../art.js';
 import { h, say, choose, prompt, toast } from './core.js';
 import { sleep, fmtText } from '../util.js';
 import { isNight } from '../time.js';
-import { tx } from '../script.js';
+import { tx } from '../guion.js';
 
 const STATUS_ES = { par: 'PAR', brn: 'QUE', psn: 'ENV', tox: 'ENV', slp: 'DOR', frz: 'CON', fnt: 'DEB' };
 const BG_FOR = { grass: 'route', cave: 'cave', water: 'coast', gym: 'gym', city: 'city', forest: 'forest' };
