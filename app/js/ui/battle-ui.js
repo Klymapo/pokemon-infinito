@@ -367,9 +367,8 @@ export async function learnMoveUI(p, moveId, { force = false } = {}) {
 	}
 	while (true) {
 		await say(null, `**${name}** quiere aprender **${md.name}**, pero ya conoce cuatro movimientos.`);
-		const opts = p.moves.map(m => `Olvidar ${D.moves[m.id]?.name} (${typeName(D.moves[m.id]?.type)})`).concat([`No aprender ${md.name}`]);
-		const i = await choose(`${md.name}: ${typeName(md.type)} · ${md.cat === 'Physical' ? 'Físico' : md.cat === 'Special' ? 'Especial' : 'Estado'}${md.bp ? ' · Pot. ' + md.bp : ''}. ${md.desc || ''}`, opts);
-		if (i >= 4) {
+		const i = await compareMoves(p, moveId);
+		if (i < 0) {
 			if (force) continue;
 			await say(null, `**${name}** no ha aprendido **${md.name}**.`);
 			return false;
@@ -379,6 +378,40 @@ export async function learnMoveUI(p, moveId, { force = false } = {}) {
 		await say(null, `1, 2 y… ¡Puf! **${name}** ha olvidado **${old}**… y ha aprendido **${md.name}**.`);
 		return true;
 	}
+}
+
+/** Pantalla para comparar el movimiento nuevo con los cuatro actuales. Devuelve el índice a olvidar o -1. */
+function compareMoves(p, newId) {
+	return new Promise(resolve => {
+		const types = D.species[p.sp]?.types || [];
+		const catName = c => c === 'Physical' ? 'Físico' : c === 'Special' ? 'Especial' : 'Estado';
+		const card = (id, extra = {}) => {
+			const md = D.moves[id] || {};
+			const stab = md.cat !== 'Status' && types.includes(md.type);
+			const pp = extra.pp !== undefined ? `PP ${extra.pp}/${md.pp}` : `PP ${md.pp}`;
+			return h(extra.onclick ? 'button' : 'div', { class: 'cmpmove' + (extra.isNew ? ' new' : ''), onclick: extra.onclick, style: { borderLeftColor: TYPE_COLORS[md.type] || '#567', borderLeftWidth: '6px' } },
+				h('div', { class: 'cm-top' },
+					h('b', {}, md.name || id),
+					h('span', { class: 'type', style: { background: TYPE_COLORS[md.type] } }, typeName(md.type))),
+				h('div', { class: 'cm-stats' },
+					h('span', {}, catName(md.cat)),
+					h('span', {}, 'Pot. ' + (md.bp || '—')),
+					h('span', {}, 'Prec. ' + (md.acc === true || !md.acc ? '—' : md.acc)),
+					h('span', {}, pp),
+					stab ? h('span', { class: 'stab' }, 'Mismo tipo ×1.5') : null),
+				md.desc ? h('div', { class: 'cm-desc' }, md.desc) : null);
+		};
+		const ov = h('div', { class: 'overlay dim' });
+		const close = v => { ov.remove(); resolve(v); };
+		const box = h('div', { class: 'choices cmpbox' },
+			h('div', { class: 'prompt' }, 'Movimiento nuevo'),
+			card(newId, { isNew: true }),
+			h('div', { class: 'prompt' }, `Toca el movimiento que ${displayName(p)} debe olvidar`),
+			...p.moves.map((m, i) => card(m.id, { pp: m.pp, onclick: () => close(i) })),
+			h('button', { class: 'cm-cancel', onclick: () => close(-1) }, `No aprender ${D.moves[newId]?.name || newId}`));
+		ov.append(box);
+		document.body.append(ov);
+	});
 }
 
 // ---------- Evolución ----------

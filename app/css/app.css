@@ -243,3 +243,18 @@ b { font-weight: 800; }
 .evo-stage.glow img { animation: evoglow 1.2s ease-in-out infinite; }
 @keyframes evoglow { 50% { filter: brightness(4) saturate(0); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* Comparar movimientos al aprender uno nuevo */
+.cmpbox { max-height: 88vh; overflow-y: auto; }
+.cmpmove { display: block; width: 100%; text-align: left; background: var(--panel, #1f2a48); color: inherit; border: 1px solid rgba(243,230,196,.18); border-left: 6px solid #567; border-radius: 12px; padding: 9px 12px; margin: 0 0 7px; font: inherit; }
+button.cmpmove { cursor: pointer; }
+button.cmpmove:active { transform: scale(.98); }
+.cmpmove.new { border-color: var(--gold, #f2b33d); border-left-width: 6px; box-shadow: 0 0 0 1px var(--gold, #f2b33d) inset; }
+.cmpmove .cm-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px; }
+.cmpmove .cm-top .type { font-size: 12px; padding: 2px 8px; border-radius: 999px; color: #fff; font-weight: 800; }
+.cmpmove .cm-stats { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--muted, #a9b3cf); margin-top: 3px; }
+.cmpmove .cm-stats .stab { color: var(--gold, #f2b33d); font-weight: 700; }
+.cmpmove .cm-desc { font-size: 13px; color: var(--muted, #a9b3cf); margin-top: 4px; line-height: 1.35; }
+.cmpbox .cm-cancel { text-align: center; }
+.choices button.cmpmove { border: 1px solid rgba(243,230,196,.25); border-left: 6px solid #567; font-weight: 400; padding: 9px 12px; background: var(--ink-2, #1f2a48); }
+.choices button.cmpmove .cm-top b { font-weight: 800; }
