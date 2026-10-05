@@ -26,6 +26,24 @@
 	setTimeout(function () { var el = document.getElementById('boot-msg'); if (el && !/Error/.test(el.innerHTML)) el.innerHTML += '<br><br>Sigue cargando… si pasa más de un minuto, recarga la página.'; }, 20000);
 })();
 </script>
-<script type="module" src="js/main.js" onerror="document.getElementById('boot-msg').innerHTML='No se pudo descargar js/main.js. Revisa la conexión y recarga.'"></script>
+<script type="module" src="js/main.js" onerror="diagnose()"></script>
+<script>
+// Diagnóstico: si el juego no descarga, revisa archivo por archivo cuál falla y lo muestra.
+function diagnose() {
+	var el = document.getElementById('boot-msg');
+	el.innerHTML = 'No se pudo descargar el juego. Revisando archivos…';
+	var files = ['js/main.js', 'js/data.js', 'js/content.js', 'js/state.js', 'js/time.js', 'js/util.js', 'js/art.js', 'js/ai.js', 'js/battle.js', 'js/pokemon.js', 'js/script.js', 'js/world.js', 'js/ui/core.js', 'js/ui/screens.js', 'js/ui/battle-ui.js', 'lib/battle-text.js', 'lib/ps-sim.js'];
+	Promise.all(files.map(function (f) {
+		var t0 = Date.now();
+		return fetch(f, { cache: 'no-store' }).then(function (r) {
+			return r.text().then(function (txt) { return { f: f, ok: r.ok && /javascript/.test(r.headers.get('content-type') || ''), info: r.status + ' · ' + (r.headers.get('content-type') || 'sin tipo') + ' · ' + Math.round(txt.length / 1024) + ' KB · ' + (Date.now() - t0) + ' ms' }; });
+		}).catch(function (e) { return { f: f, ok: false, info: 'error de red: ' + e.message + ' · ' + (Date.now() - t0) + ' ms' }; });
+	})).then(function (res) {
+		var bad = res.filter(function (r) { return !r.ok; });
+		el.innerHTML = (bad.length ? '<b>Fallan ' + bad.length + ' archivo(s):</b><br>' + bad.map(function (r) { return r.f + ' → ' + r.info; }).join('<br>') : 'Todos los archivos se descargan bien (' + navigator.userAgent.replace(/</g, '') + ').') +
+			'<br><br>Mándale una captura de esto a Claude.<br><br><button class="btn" onclick="location.reload()">Reintentar</button>';
+	});
+}
+</script>
 </body>
 </html>
