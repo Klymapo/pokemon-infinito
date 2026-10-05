@@ -164,6 +164,18 @@ for (const [id, t] of Object.entries(C.trainers)) {
 for (const [id, s] of Object.entries(C.scripts)) walk('guion ' + id, s);
 // ---------- Misiones, retos, tiendas ----------
 for (const [id, q] of Object.entries(C.quests)) { if (!q.name) E('misión ' + id, 'sin nombre'); if (!q.stages || !Object.keys(q.stages).length) E('misión ' + id, 'sin etapas'); if (!['main', 'thread', 'side', 'event'].includes(q.type)) E('misión ' + id, 'tipo inválido'); if (!questStagesUsed.some(x => x.startsWith(id + '.'))) W('misión ' + id, 'ningún guion la inicia'); }
+for (const [id, q] of Object.entries(C.quests)) if (q.parts) {
+	const w = 'misión ' + id + ' (parts)';
+	if (!Array.isArray(q.parts.items) || !q.parts.items.length) E(w, 'sin items');
+	for (const it of q.parts.items || []) {
+		if (!it.label) E(w, 'parte sin label');
+		if (!it.done) E(w, `parte ${it.label} sin done`);
+		checkCond(w, it.done); checkCond(w, it.got);
+		if (it.where && !C.locations[it.where]) E(w, `lugar inexistente ${it.where}`);
+		if (it.tramo && C.locations[it.where]?.route && it.tramo > C.locations[it.where].route.length) E(w, `tramo ${it.tramo} fuera de ${it.where}`);
+		for (const x of [].concat(it.hint || [])) if (typeof x === 'object') checkCond(w, x.cond);
+	}
+}
 for (const [id, c] of Object.entries(C.challenges)) { if (c.trainer && !C.trainers[c.trainer]) E('reto ' + id, 'entrenador inexistente'); if (c.npc && !C.npcs[c.npc]) E('reto ' + id, 'npc inexistente'); checkCond('reto ' + id, c.cond); for (const i of c.info || []) checkCond('reto ' + id, i.cond); }
 for (const [id, s] of Object.entries(C.shops)) for (const e of s.items) checkItem('tienda ' + id, typeof e === 'string' ? e : e.id);
 for (const ev of C.events) {

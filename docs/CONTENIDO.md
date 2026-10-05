@@ -205,6 +205,21 @@ quests: {
 
 Se controlan desde los guiones con `{ quest: 'b01_m1', stage: 'huida' }` y `{ quest: 'b01_m1', done: true }`.
 
+**Lista de partes (`parts`), obligatoria en misiones de reunir varias cosas** (rescatar N Pokémon, encontrar N piezas, hablar con N personas). La ficha muestra cada parte con ✔ (hecha), ◐ (a medias) u ○, su lugar y tramo, y una pista. Sustituye al contador `vars.X` de «Lo que necesitas».
+
+```js
+parts: { title: 'Los 6 Mareep', var: 'mareep', items: [
+  { label: 'Copito', where: 'ruta5', tramo: 4,
+    done: 'flag.b01_mareep_copito',       // ya está
+    got: 'has("lanamareep1")',            // opcional: a medias (encontraste la pista)
+    hint: 'Pista corta de cómo encontrarlo.', gotHint: 'Qué hacer cuando está a medias.' },
+  { label: 'Chispita', where: 'ruta5', tramo: 5, done: 'flag.b01_mareep_jaula',
+    hint: [ { cond: 'flag.b01_mareep_lemnis', text: 'Pista si…' }, { text: 'Pista por defecto' } ] },
+] }
+```
+
+Los objetos que piden los diálogos (`has`, `count`) no necesitan `parts`: la ficha ya dice en qué tramo están tirados o escondidos y cuántos recogiste.
+
 ---
 
 ## 7. Guiones

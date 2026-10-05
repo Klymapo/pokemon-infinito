@@ -410,3 +410,9 @@ button.cmpmove:active { transform: scale(.98); }
 .evrow.done { border-color: var(--line); background: transparent; }
 .evrow.done .evtxt b { color: var(--muted); }
 .evrow:active { transform: scale(.99); }
+.row.need.part .ico { font-size: 18px; color: var(--muted); }
+.row.need.part.ok .ico { color: #6fd08c; }
+.row.need.part.half .ico { color: var(--gold); }
+.row.need.part.half { border-color: rgba(242,179,61,.5); }
+.row.need.part b { font-size: 12px; color: var(--muted); }
+.row.need.part.half b { color: var(--gold); }

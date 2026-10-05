@@ -1324,8 +1324,9 @@ function questTracker() {
 	const box = h('div', { class: 'tracker' });
 	for (const id of ids) {
 		const def = C.quests[id], q = G.quests[id];
-		const needs = questNeeds(id).filter(n => n.kind === 'item' || n.kind === 'var');
-		const prog = needs.map(n => n.kind === 'item' ? `${itemName(n.id)} ${Math.min(count(n.id), n.n)}/${n.n}` : `${n.id.charAt(0).toUpperCase() + n.id.slice(1)} ${Math.min(G.vars[n.id] || 0, n.n)}/${n.n}`).join(' · ');
+		const needs = questNeeds(id).filter(n => (n.kind === 'item' || n.kind === 'var') && !(def.parts && n.kind === 'var' && n.id === def.parts.var));
+		const partsProg = def.parts ? [`${def.parts.title || 'Lista'} ${(def.parts.items || []).filter(it => { try { return evalCond(it.done); } catch (e) { return false; } }).length}/${(def.parts.items || []).length}`] : [];
+		const prog = partsProg.concat(needs.map(n => n.kind === 'item' ? `${itemName(n.id)} ${Math.min(count(n.id), n.n)}/${n.n}` : `${n.id.charAt(0).toUpperCase() + n.id.slice(1)} ${Math.min(G.vars[n.id] || 0, n.n)}/${n.n}`)).join(' · ');
 		const stage = (def.stages?.[q.stage] || '').replace(/\*\*/g, '');
 		box.append(h('button', { class: 'trk', onclick: () => openQuestDetail(id) },
 			h('div', { class: 'trk-t' }, '📌 ' + def.name),
@@ -1352,7 +1353,11 @@ function questNeeds(id) {
 	const touch = questTouches();
 	// Una condición vale si no habla de otra etapa de esta misión (si menciona una, debe ser la actual)
 	const stageOk = c => { const m = [...c.matchAll(new RegExp(`quest\\.${id}\\s*==\\s*["'](\\w+)["']`, 'g'))]; return !m.length || m.some(x => x[1] === q.stage); };
-	const scan = (sp) => { for (const t of [].concat(sp.talk || sp.spot?.talk || [])) if (t.cond && (touch[t.script] || new Set()).has(id) && stageOk(t.cond)) conds.push(t.cond); };
+	const scan = (sp) => {
+		for (const t of [].concat(sp.talk || sp.spot?.talk || [])) if (t.cond && (touch[t.script] || new Set()).has(id) && stageOk(t.cond)) conds.push(t.cond);
+		// escenas de tramo que se disparan solas cuando cumples algo (p. ej., al encontrar un objeto)
+		if (sp.script && sp.cond && (touch[sp.script] || new Set()).has(id) && stageOk(sp.cond)) conds.push(sp.cond);
+	};
 	// También los «si…» dentro de los guiones cuyo «entonces» avanza la misión
 	const touchesList = (list, d = 0) => (list || []).some(c => c && typeof c === 'object' && (c.quest === id || (c.call && d < 4 && touchesList(C.scripts[c.call], d + 1)) || ['then', 'else', 'onWin', 'onCatch'].some(k => Array.isArray(c[k]) && touchesList(c[k], d)) || (Array.isArray(c.choice) && c.choice.some(o => touchesList(o.then, d)))));
 	const walkIfs = (list, d = 0) => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.if && touchesList(c.then) && stageOk(c.if)) conds.push(c.if); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) walkIfs(c[k], d); if (Array.isArray(c.choice)) for (const o of c.choice) walkIfs(o.then, d); } };
@@ -1361,9 +1366,59 @@ function questNeeds(id) {
 		for (const sp of loc.spots || []) scan(sp);
 		if (loc.route) for (const n in loc.route.tramos || {}) for (const it of [].concat(loc.route.tramos[n] || [])) scan(it);
 	}
+	// contadores de una sola escena (el guion los pone a 0 antes de usarlos): no son algo que reunir
+	const scratch = new Set([...JSON.stringify(C.scripts).matchAll(/"vars\.(\w+)":0[,}]/g)].map(m => m[1]));
 	const out = [], keys = new Set();
-	for (const c of conds) for (const [rx, mk] of NEED_RX) for (const m of c.matchAll(rx)) { const n = mk(m); const k = n.kind + ':' + n.id; if (!keys.has(k)) { keys.add(k); out.push({ ...n, alt: /\|\|/.test(c) }); } }
+	for (const c of conds) for (const [rx, mk] of NEED_RX) for (const m of c.matchAll(rx)) { const n = mk(m); if (n.kind === 'var' && scratch.has(n.id)) continue; const k = n.kind + ':' + n.id; if (!keys.has(k)) { keys.add(k); out.push({ ...n, alt: /\|\|/.test(c) }); } }
 	return out;
+}
+/** Nombre de un punto de ruta: «Ruta 5 · tramo 4 de 9 (desde Ciudad Luminalia)». */
+function tramoName(locId, n) {
+	const loc = L(locId);
+	if (!loc) return locId;
+	if (!loc.route || !n) return loc.name;
+	const from = L(loc.route.from);
+	return `${loc.name} · tramo ${n} de ${loc.route.length}` + (from ? ` (desde ${from.name})` : '');
+}
+/** Dónde hay un objeto tirado o escondido en las rutas (incluye eventos activos), con tramo y si ya lo recogiste. */
+function itemSpots(itemId) {
+	const out = [];
+	for (const loc of Object.values(C.locations)) {
+		if (!loc.route) continue;
+		const pr = G.routeProg?.[loc.id] || { items: {} };
+		for (let n = 0; n <= (loc.route.length || 0); n++) {
+			const list = [].concat(loc.route.tramos?.[n] || []);
+			for (const e of activeEvents()) if (e.tramos?.[loc.id]?.[n]) list.push(...e.tramos[loc.id][n]);
+			for (const it of list) if (it.item === itemId) {
+				const top = topLoc(loc.id);
+				out.push({ loc: loc.id, n, hidden: !!it.hidden, got: !!pr.items?.[n + ':' + itemId], known: !!G.visited[loc.id] || !!G.visited[top?.id] || (loc.links || []).some(x => G.visited[x]) });
+			}
+		}
+	}
+	return out;
+}
+/** Lista de partes de una misión (`parts` en el contenido): qué llevas, qué falta y dónde. */
+function questPartsList(def) {
+	const P = def.parts;
+	const safe = c => { try { return !!c && evalCond(c); } catch (e) { return false; } };
+	const items = P.items || [];
+	const doneN = items.filter(it => safe(it.done)).length;
+	const list = h('div', { class: 'list' });
+	for (const it of items) {
+		const ok = safe(it.done), half = !ok && safe(it.got);
+		const hint = Array.isArray(it.hint) ? (it.hint.find(x => x.cond === undefined || safe(x.cond)) || {}).text : it.hint;
+		const info = [];
+		if (!ok) {
+			if (it.where) info.push('📍 ' + tramoName(it.where, it.tramo));
+			const txt = half ? (it.gotHint || hint) : hint;
+			if (txt) info.push(txt);
+		}
+		list.append(h('div', { class: 'row need part' + (ok ? ' ok' : half ? ' half' : '') },
+			h('div', { class: 'ico' }, ok ? '✔' : half ? '◐' : '○'),
+			h('div', { class: 'lbl' }, h('div', { class: 't' }, ok ? (it.doneLabel || it.label) : it.label), ...info.map(t => h('div', { class: 'needwhere', html: fmtText(tx(t)) }))),
+			h('b', {}, ok ? 'Listo' : half ? 'Casi' : '')));
+	}
+	return [h('div', { class: 'section-title' }, `${P.title || 'Lista'} · ${doneN}/${items.length}`), list];
 }
 function openQuestDetail(id, places, onChange) {
 	const def = C.quests[id], q = G.quests[id];
@@ -1389,7 +1444,8 @@ function openQuestDetail(id, places, onChange) {
 	if (q?.done) body.push(h('div', { class: 'qd-now done' }, h('div', { class: 'qd-label' }, 'Desenlace'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || def.stages?.hecha || 'Completada.')) })));
 	if (!q) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Cómo empezarla'), h('div', {}, (places?.[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza sola cuando llegues al lugar indicado.' : 'Habla con quien la ofrece.')));
 	// Lo que necesitas
-	const needs = questNeeds(id);
+	const needs = questNeeds(id).filter(n => !(def.parts && q && !q.done && n.kind === 'var' && n.id === def.parts.var));
+	if (def.parts && q && !q.done) body.push(...questPartsList(def));
 	if (needs.length) {
 		const list = h('div', { class: 'list' });
 		const party = needs.filter(n => n.kind === 'party');
@@ -1402,7 +1458,13 @@ function openQuestDetail(id, places, onChange) {
 			if (n.kind === 'item') {
 				const have = count(n.id); ok = have >= n.n; label = itemName(n.id); extra = `${Math.min(have, n.n)}/${n.n}`;
 				info.push(have ? `Ya tienes ${have}` : 'No tienes ninguno');
-				if (!ok) {
+				const spots = itemSpots(n.id);
+				if (!ok && spots.length) {
+					const left = spots.filter(x => !x.got);
+					if (spots.length > 1) info.push(`Recogidos en el mapa: ${spots.length - left.length} de ${spots.length}`);
+					for (const x of left.slice(0, 4)) info.push('📍 ' + (x.known ? tramoName(x.loc, x.n) : 'Un lugar que aún no conoces') + (x.hidden ? ' · escondido: usa 🔍 Buscar' : ' · en el camino'));
+					if (left.length > 4) info.push(`…y ${left.length - 4} sitios más`);
+				} else if (!ok) {
 					const src = [...(uni[n.id] || [])].filter(w => w !== 'encontrado');
 					const shown = src.filter(w => w !== 'historia');
 					info.push(shown.length ? '📍 ' + shown.slice(0, 3).join(' · ') : src.includes('historia') ? '📍 Te lo darán en la historia' : '📍 Sigue explorando');

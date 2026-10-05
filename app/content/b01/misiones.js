@@ -79,7 +79,25 @@ export default {
 		buscar: 'Don Aurelio perdió 6 Mareep al cruzar la Fisura. Búscalos en las **Rutas 5, 7 y 8** y en la **Gruta Tierraunida**. (Usa «Buscar».)',
 		volver: 'Ya tienes suficientes Mareep. Vuelve con **Don Aurelio** en la Ruta 5.',
 		hecha: 'El rebaño de Don Aurelio está a salvo. Algún día te devolverá el favor en Johto.',
-	} },
+	},
+	// Lista de la ficha de misión: cada Mareep, dónde está y si ya lo tienes
+	parts: { title: 'Los 6 Mareep', var: 'mareep', items: [
+		{ label: 'Copito', where: 'ruta5', tramo: 4, done: 'flag.b01_mareep_copito', got: 'has("lanamareep1")',
+			hint: 'Mechones blancos en las ramas de un arbusto. Usa 🔍 Buscar ahí y luego «Seguir el rastro de lana».', gotHint: 'Ya tienes su lana: toca «Seguir el rastro de lana» en ese tramo.' },
+		{ label: 'Chispita', where: 'ruta5', tramo: 5, done: 'flag.b01_mareep_jaula',
+			hint: [
+				{ cond: 'flag.b01_mareep_lemnis', text: 'La tiene Lemnis en una jaula del campamento. De día hay muchos agentes; de noche (de 20:00 a 6:00), solo un guardia. Si prefieres no arriesgarte, con los otros 5 ya puedes volver con Don Aurelio.' },
+				{ text: 'La más chiquita y asustadiza. Pasa por el campamento de ese tramo.' },
+			] },
+		{ label: 'Borla', where: 'ruta5', tramo: 8, done: 'flag.b01_mareep_borla', got: 'has("lanamareep2")',
+			hint: 'Le encantan los patinadores: busca lana cerca de la rampa con 🔍 Buscar y sigue el rastro.', gotHint: 'Ya tienes su lana: toca «Seguir el rastro de lana» en ese tramo.' },
+		{ label: 'Nube', where: 'ruta7', tramo: 6, done: 'flag.b01_mareep_nube', got: 'has("lanamareep3")',
+			hint: 'Duerme entre las flores altas. 🔍 Buscar y sigue el rastro.', gotHint: 'Ya tienes su lana: toca «Seguir el rastro de lana» en ese tramo.' },
+		{ label: 'Candela', where: 'gruta_tierraunida', tramo: 3, done: 'flag.b01_mareep_candela', got: 'has("lanamareep4")',
+			hint: 'Le da miedo la oscuridad. 🔍 Buscar en la cueva y sigue la lucecita.', gotHint: 'Ya la encontraste: toca «Seguir la lucecita» en ese tramo.' },
+		{ label: 'Algodón', where: 'ruta8', tramo: 2, done: 'flag.b01_mareep_algodon', got: 'has("lanamareep5")',
+			hint: 'Atrapada en el acantilado. 🔍 Buscar y sigue el rastro hacia la cornisa.', gotHint: 'Ya tienes su lana: toca «Seguir el rastro de lana» en ese tramo.' },
+	] } },
 	b01_t_gaspar: { name: 'El recetario de Kalos', type: 'thread', stages: {
 		ingredientes: 'Gaspar necesita **Miel**, una **Miniseta** y una **Baya Meloc** para su menú de Kalos.',
 		ruta7: 'Gaspar está cocinando en la **Ruta 7**. Llévale los ingredientes.',

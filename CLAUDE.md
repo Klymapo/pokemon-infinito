@@ -113,6 +113,7 @@ Trabaja en este orden. Usa la lista de tareas para que Mario vea el progreso si 
    - **Aviso de ritmo:** un `milestone` con `hoursLeft: 3` unas 3 h antes del final del bloque.
    - Zona de entrenamiento con tope antes de cada jefe. Ficha de reto (`challenges`) y nota de mapa (`mapNote`) para cada zona nueva.
    - Riolu/Lucario tiene que poder lucirse: al menos un momento de historia y combates donde brille.
+   - **Misiones de reunir varias cosas** (rescatar N Pokémon, encontrar N piezas…): ponles `parts` (ver `docs/CONTENIDO.md` §6), para que la ficha diga cuáles faltan y en qué tramo están.
    - **Pérdidas y giros:** sigue `secreto/biblia.md` §9 (reglas, límites y plan). Planta las pistas que tocan en cada bloque.
    - Mecánicas por región (biblia §3.3): no des Z, Dinamax ni Tera antes de su acto.
    - **Colección:** cada bloque añade puntos de recolección (`gather`) en sus rutas y cuevas, 2 o 3 objetos para leer (`read`: cartas, notas, diarios de NPCs que cuenten algo de su historia) y al menos un recuerdo para mirar (`art`). Mario pidió poder ver y recolectar muchas cosas.
