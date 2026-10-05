@@ -97,6 +97,9 @@
 | **Los Legendarios**: Nico Ferrer, la Tía Rosa y "El Escéptico" Simón | *Leyendas Legendarias* | El equipo del podcast de Renata. Rumores de legendarios. | B1 cameo (Simón en Vánitas) · Acto V |
 | **El Conde Vladimiro de Caduco** (∞?), dueño del Castillo Caduco | Strahd | Noble excéntrico de Pueblo Vánitas con niebla, Ghost/Dark y modales de vampiro teatral (no lo es… ¿o sí?). Da la **Poké Flauta** (Snorlax de la Ruta 7, canon). | B1 Vánitas + Halloween · B2 · evento anual |
 | **Profesor Ernesto Gadd** (60), cazafantasmas | *Luigi's Mansion* (E. Gadd) | Inventor de la **Aspiradora Espectral**, Rotom incluido. Investiga fantasmas desplazados. | Halloween B1 · B3 Lavanda · B5 |
+| **Petra Brossard** (31), paleontóloga de campo (npc `petra`) | Prehistoria / viaje a una era antigua (idea de Mario) | Torpe y entrañable: se cae, tropieza, rompe cosas… menos los fósiles. Su Diggersby **Pala** la saca de los agujeros. Fue alumna de tesis del Dr. Lazare. Encontró el **Ámbar sin registro** (objeto clave `ambarsinregistro`). | B1 Petroglifo, Lab. de Fósiles, Crómlech · B2 Johto (Encinar / bosque «donde los relojes se paran») · bloque de la misión prehistórica |
+| **Ulises** (¿?), el viajero de la cabina azul (npc `viajero`) | *Doctor Who* (cabina azul, bufanda, «más grande por dentro», «¿qué año es?») | Excéntrico, rapidísimo, se va antes de explicar nada. «Ulises» no es su nombre («pero me queda bien»). Conoce al jugador desde *antes* (para él). Busca «algo pequeñito que late a destiempo»: un **Dialga joven e inestable**. | B1 Acuarela, Palacio Cénit, Yantra · B2/B3 (Celebi / Encinar: cruce con el hilo del tiempo) · misión Doctor Who |
+| **Ysolde** (26), de los **Vencejos** (npc `ysolde`) | *Assassin's Creed* (hermandad encapuchada, salto de fe, hoja oculta, plumas) | Vigila a Lemnis desde los tejados. Salta al vacío sobre carros de flores. Deja **plumas grises** (Fletchinder teñido) y notas sin firma. Su «hoja oculta» es un **Honedge** que viaja en su manga. Combate opcional en Crómlech (Fletchinder 25, Honedge 26). | B1 Luminalia, Relieve, Crómlech, Torre Maestra · B2 Johto (al cruzar la Puerta: «mira quién te mira») · misión Assassin's Creed |
 
 ---
 
@@ -106,3 +109,36 @@
   - **Lema actual:** "La belleza del mundo nuevo".
   - **Quieren:** reactivar el arma, creyendo que esta vez será "para todos".
   - **Melia** cree que Lemnis comparte su visión. Se sentirá traicionada en el Acto II.
+
+---
+
+## Fichas de los recurrentes nuevos (Publicación 1b, 2026-10-05)
+
+### Petra Brossard · `petra`
+
+- **Aspecto:** coleta naranja, pecas, gafas de protección en la frente, chaleco de campo color arena. Siempre con un cubo en cada mano.
+- **Compañero:** Diggersby, **Pala** (cava y la rescata). En el futuro: Tyrunt o Amaura (de Lazare), Archen.
+- **Voz:** entusiasta, se ríe de sí misma, habla de sus caídas como de datos científicos («solo me he roto la misma muñeca dos veces»). Frases de paleontóloga: capas, estratos, «la primera regla». Cuando algo le importa, se calla.
+- **Relación:** alumna del **Dr. Lazare** (le suspendió el primer borrador porque se le cayó encima de su Fósil Domo; Lazare le admite al fin que la tesis era buena).
+- **Hilo:** `b01_t_ambar` («El ámbar sin registro»). El ámbar está **tibio**, tiene una pluma diminuta y un **brillo azul que late a destiempo**. La máquina de Lazare dice «SIN COINCIDENCIAS». Late más deprisa cerca de Crómlech (capas de tierra «dobladas»).
+- **Verdad (no revelar aún):** el brillo azul es un fragmento de tiempo cristalizado: el ámbar viene de una grieta temporal, no de una capa geológica. Conecta con el Dialga joven del hilo de Ulises.
+- **Plan de apariciones:** B2 Johto (Encinar o Ruinas Alfa, buscando «el bosque donde los relojes se paran»); misión prehistórica (ver `referencias.md`): el ámbar abre una zona concreta.
+
+### Ulises · `viajero`
+
+- **Aspecto:** rizos castaños, sonrisa enorme, abrigo granate, bufanda de rayas tan larga que sigue saliendo de la cabina cuando él ya ha llegado.
+- **Cabina:** de madera, azul, con farolillo y ventanitas. Aparece y desaparece con un **ruido de acordeón respirando hondo**. Deja un cuadrado de hierba aplastada (o de arena seca).
+- **Voz:** rapidísima, mezcla tiempos verbales («me lo dirás. Me lo dijiste»), pregunta qué año o qué día es (siempre cree que es martes), se despide antes de explicar. Una sola frase seria por escena, y luego se arrepiente de haberla dicho.
+- **Hilo:** `b01_t_cabina` («La cabina azul»). Busca «algo pequeñito, muy joven, con un corazón que hace tic y tac a destiempo; cuando se asusta, el tiempo se le escapa»: es un **Dialga joven e inestable** (desplazado temporal). Avisó: «que no lo vea nadie con corbata. Ni con bata» (Lemnis / Ansel).
+- **Reglas:** nunca dice «Dialga» antes de su misión. Nunca usa nombres de la franquicia original (ni «TARDIS», ni «Doctor», ni «Gallifrey»). Su tarjeta (`tarjetaviajero`, se puede leer) firma solo «U.».
+- **Plan de apariciones:** B2/B3 cruce con Celebi y el Encinar; misión Doctor Who: viaje a otro momento de Kalos/Johto con la cabina.
+
+### Ysolde · `ysolde`
+
+- **Aspecto:** melena oscura bajo una capucha gris (capa y pelo del mismo tono), ojos color miel, cicatriz finísima en la barbilla.
+- **Equipo:** Fletchinder (sus plumas, teñidas de gris), **Honedge** en la manga izquierda («la hoja que nadie ve»). Futuro: Talonflame, Doublade → Aegislash.
+- **Voz:** seca, cortante, metáforas de altura («desde arriba se ve quién mueve los hilos», «mira quién te mira»). No es fría: tiene humor muy seco («Fe. Y un carro de flores que pasa a las once y cuarto. Sobre todo, el carro»). Nunca levanta la voz.
+- **Los Vencejos:** hermandad discreta que vigila a quien quiere «una energía que no se acaba» desde mucho antes de Lemnis (conectan con A.Z. y la guerra de hace 3000 años: lo sabrán más adelante). Rangos visibles (gusto de Mario): **Pluma**, **Ala**, **Vencejo**, **Cumbre**. Ysolde es **Ala**.
+- **Hilo:** `b01_t_vencejos` («Plumas en el tejado»). Dejó la **Pluma gris** y la **Nota sin firma** (`notavencejo`, se puede leer). Sabe que «en toda empresa hay quien firma y hay quien decide»; **no sabe** quién es el Arquitecto.
+- **Límites:** no mata ni hiere a nadie; sus «saltos de fe» siempre caen sobre algo blando y cómico (carro de flores, toldo, mar).
+- **Plan de apariciones:** B2 Johto (al cruzar la Puerta, en un tejado de Iris o Trigal); B3 la sede de los Vencejos; misión Assassin's Creed (infiltración vertical en un edificio de Lemnis, con la Pluma gris como llave de su red).

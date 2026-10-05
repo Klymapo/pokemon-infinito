@@ -252,6 +252,7 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 | `{ unlock: 'mega' }` | habilita la mecánica (además hace falta el objeto clave: `megaring`, `zring`, `dynamaxband`, `teraorb`) |
 | `{ shop: 'id' }`, `{ center: true }`, `{ pc: true }`, `{ save: true }`, `{ evolveCheck: true }` | |
 | `{ nickname: 'last' }`, `{ clearRoute: 'ruta4' }`, `{ wait: 500 }` | |
+| `{ cutscene: { bg: { type: 'cave' }, start: 'dark', frames: [ { text, item, npc, mon, fx, clear } ] } }` | cinemática a pantalla completa con bandas de cine; se avanza tocando. `fx`: `light` (la luz se abre desde el centro), `dark`, `flash`, `shake`, `glow`, `zoom`. `item` usa el pixel art de `PX_ITEMS` (`app/js/art.js`) si existe. Úsala en momentos clave: recibir un objeto clave, abrir una zona nueva, giros |
 
 **Marcadores en textos:**
 

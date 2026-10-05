@@ -21,8 +21,26 @@
 | Philippe | Philippe | Baraja recuperada | **B2:** "oferta" de casa (sistema de base futuro) |
 | Lucien | Lucien y Chespin | Fan de las Puertas | **B2:** intenta colarse en la Gira. **Acto VI:** desplazado por una Fisura (momento duro) |
 | Conde Vladimiro | Conde | Poké Flauta; Halloween anual | **B2:** pista sobre el retrato con el rey gigante (A.Z.) |
-| Lebrun | Inspector Lebrun | No apareció | **B2:** cameo. **Acto III:** revelación del topo |
+| Lebrun | Inspector Lebrun | 3 escenas en el B1 (Agencia, Relieve, Yantra): siempre sabe dónde estuviste; archiva lo de Melia | **B2:** cameo con Handsome al cruzar la Puerta (sabe a qué hora llegaste). **Acto III:** revelación del topo |
 | Ortega / Remedios | Remedios | Evento anual de Día de Muertos | **B2/B3:** una aparición corta y cansada, y la receta. **Día de Muertos 2027:** su ofrenda (biblia §9.2) |
 | Kaori | Kaori (candidata) | — | **B2:** presentación en Ciudad Iris (venenos en el teatro) |
 | Leilani | Leilani (candidata) | — | Acto IV |
 | Las jaulas | Noa Lambert (y Bastien, Octavia) | Noa presentada en la Ruta 5 | **B2–B4:** filtra datos, cada vez más asustada; regalo a Bastien. **Acto VI:** su pérdida (biblia §9.2) |
+| El ámbar sin registro | Petra Brossard (+ Dr. Lazare) | El jugador guarda el Ámbar sin registro (`ambarsinregistro`); late cerca de Crómlech | **B2:** Petra en Johto busca «el bosque donde los relojes se paran» (Encinar). El ámbar reacciona cerca de Celebi. **Misión prehistórica** más adelante |
+| La cabina azul | Ulises (el viajero) | Tres encuentros; tarjeta `tarjetaviajero`; busca «algo pequeñito que late a destiempo» | **B2/B3:** cruza con el hilo del tiempo (Celebi). Primer indicio del **Dialga joven**. Ulises reconoce el ámbar de Petra |
+| Plumas en el tejado | Ysolde y los Vencejos | Pluma gris, Nota sin firma; combate opcional en Crómlech (`b01_enc_ysolde_duelo`) | **B2:** al cruzar la Puerta, Ysolde en un tejado de Johto («mira quién te mira»). Pista: los Vencejos ya vigilaban a alguien de Lemnis antes de que existiera el logo |
+
+## Reapariciones añadidas en el B1 (Publicación 1b, `t4-encuentros.js`)
+
+Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y momentos. **No cambian ningún hilo troncal**, solo los alimentan:
+
+- **Lebrun** (0 → 3): Agencia (tras el caso), Relieve (tras la Cueva Brillante), Yantra (tras Crómlech). Pistas del topo: **siempre sabe dónde estuviste** y cuánto tiempo; archiva lo de Melia («caso cerrado»); deja un **caramelo de menta en papel azul** (eco de Ansel). `b01_lebrun_conocido` evita presentarse dos veces.
+- **Rouxel** (1 → 3): rodaje de la campaña «Volver a casa» (antes de Crómlech) y llamada con «la señora» pidiéndole un **informe de responsabilidades** (después): prepara su caída del B2.
+- **Ansel** (1 → 3): en el laboratorio de Ciprés (las Fisuras «se abren donde la tierra es más antigua, como si buscaran algo»; «podar alguna rama») y en el Café Soleil (crucigrama: «infinito»; «el techo está para quitarlo»). Sin entradas de Diario nuevas.
+- **Noa** (2 → 4): Vánitas (el Wooloo **Merengue** no consta en Galar) y Relieve (no la dejan entrar al centro de procesamiento; reacciona a la decisión de Bastien). Avanza «Las jaulas».
+- **Melia** (2 → 3): Relieve, busca cristales «que no se cansen»; «hay órdenes que se archivan solas» (pista del topo).
+- **Gadd** (2 → 3): Castillo Caduco fuera de Halloween, persigue un Gastly desplazado de Kanto (Lavanda), adelanta su B3.
+- **Irene** (2 → 3): Torre Maestra, runas de «tomar» raspadas a propósito; Riolu hace brillar una (afinidad +3).
+- **Renata** (1 → 3): Relieve (título del caso: «El ingeniero que no volvió a casa», hace 12 años) y Yantra (marea, Torre Prisma y Crómlech «tienen algo en común»).
+- **Secundarios:** Lucien (la Puerta zumba a las 2:17), Don Aurelio (espera la Puerta a Johto; ve a Candela), Héctor (en Luminalia, no se atreve a entrar en la Agencia: prepara su encuentro con Matière del B2), Philippe (casa en Novarte: semilla del sistema de base), Gaspar (en Yantra, quiere conocer a Brock; próximo destino Iris), Tobías (episodio 49; encuesta: Torre Bellsprout), Nate (en la playa de Yantra con Rhi).
+

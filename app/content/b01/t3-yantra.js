@@ -779,6 +779,16 @@ export default {
 			{ say: 'rhi', text: 'Yo entro ahora a por mi revancha. Pero antes necesito calentar. Y tú eres el mejor calentamiento de esta ciudad. Es un cumplido. Más o menos.' },
 			{ say: 'nate', text: 'Qué flojera. Rhi, ya, vámonos.' },
 			{ say: 'rhi', text: 'No.' },
+			{ choice: [
+				{ text: '«Dame cinco minutos en el Centro. Vengo de pelear.»', then: [
+					{ say: 'rhi', text: '¿Cinco minutos? ¡En cinco minutos se remonta un partido entero! …Vale. Ve. Que luego no digas que te gané con ventaja.' },
+					{ heal: 'Bajas al Centro Pokémon. La enfermera te devuelve el equipo como nuevo. Cuando sales, Rhi sigue en la cuesta, dando toques a una Poké Ball como si fuera un balón.' },
+				] },
+				{ text: '«Así como estoy. Vamos.»', then: [
+					{ say: 'rhi', text: '¿Con el equipo a medias? Eso no es valentía, es salir a jugar con un solo tenis.' },
+					{ heal: 'Rhi te lanza un puñado de Superpociones sin mirar y espera, dando toques con el pie, a que cures a todo tu equipo. «Si te gano, quiero que sea limpio.»' },
+				] },
+			] },
 			{ battle: 'rhi_2', lose: 'continue',
 				onWin: [
 					{ af: { rhi: 6 } },

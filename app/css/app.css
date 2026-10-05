@@ -458,3 +458,112 @@ button.cmpmove:active { transform: scale(.98); }
 .pc-moving span { font-size: 12.5px; color: var(--muted); }
 .pc-name.small { font-size: 10px; font-weight: 600; bottom: 2px; right: 26px; text-align: left; color: var(--muted); }
 .pc-grid.box .pc-slot .pc-sp { height: 78%; align-self: start; }
+
+/* Combate: entrenador rival y equipos */
+.bcard .tchip { display: flex; align-items: center; gap: 6px; margin: -2px 0 4px; font-size: 12px; font-weight: 800; color: #5a4a30; }
+.bcard .tchip .tpic { width: 22px; height: 22px; border-radius: 6px; overflow: hidden; background: #2a3c66; flex: none; display: grid; place-items: center; }
+.bcard .tchip .tpic > * { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.bcard .tchip .tname { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bcard .teamrow { display: flex; align-items: center; gap: 3px; margin-top: 5px; }
+.bcard .teamrow .tb { display: block; flex: none; box-sizing: border-box; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #2a2418; background: linear-gradient(#d8443a 0 45%, #2a2418 45% 55%, #fffaf0 55%); }
+.bcard .teamrow .tb.sick { background: linear-gradient(#e0a030 0 45%, #2a2418 45% 55%, #fffaf0 55%); }
+.bcard .teamrow .tb.out { background: #8a7f6c; opacity: .55; }
+.bcard .teamrow .tleft { margin-left: auto; font-family: var(--pixel); font-size: 12px; }
+.bsprite .tintro { height: 100%; aspect-ratio: 1; display: grid; place-items: end center; animation: tin .35s ease-out; transition: transform .28s ease-in, opacity .28s; }
+.bsprite .tintro > * { width: 78%; height: auto; image-rendering: pixelated; border-radius: 12px; }
+.bsprite .tintro.out { transform: translateX(60%); opacity: 0; }
+@keyframes tin { from { transform: translateX(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Tienda */
+.shop-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 12px 2px; }
+.shop-money { display: flex; flex-direction: column; }
+.shop-money .lab { font-size: 12px; color: var(--muted); font-weight: 700; }
+.shop-money b { font-family: var(--pixel); font-size: 22px; color: var(--gold); line-height: 1.1; }
+.shop-mode { display: flex; background: var(--ink-2); border: 1px solid var(--line); border-radius: 99px; padding: 3px; }
+.shop-mode button { padding: 7px 14px; border-radius: 99px; font-weight: 800; font-size: 14px; color: var(--muted); }
+.shop-mode button.on { background: var(--aura); color: white; }
+.shop-cats { padding-top: 6px; }
+.shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 4px 12px 12px; }
+.shop-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 6px 8px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 14px; text-align: center; transition: transform .12s, border-color .12s; }
+.shop-card:active { transform: scale(.97); }
+.shop-card.sel { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold) inset; }
+.shop-card.locked { opacity: .5; }
+.shop-card .sc-ico .itemicon, .shop-foot .sc-ico .itemicon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 24px; }
+.shop-card .sc-ico img, .shop-foot .sc-ico img { width: 40px; height: 40px; image-rendering: pixelated; }
+.shop-card .sc-name { font-weight: 800; font-size: 13px; line-height: 1.15; min-height: 2.3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.shop-card .sc-price { font-family: var(--pixel); font-size: 13px; color: var(--gold); }
+.shop-card .sc-price.short { color: #d9776a; }
+.shop-card .sc-lock { font-size: 11px; color: var(--muted); font-weight: 700; }
+.shop-card .sc-have { position: absolute; top: 5px; right: 6px; font-family: var(--pixel); font-size: 11px; color: var(--muted); }
+.shop-foot { position: sticky; bottom: 0; background: var(--ink-3); border-top: 2px solid var(--gold); padding: 12px; display: flex; flex-direction: column; gap: 10px; animation: sfup .18s ease-out; }
+@keyframes sfup { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+.shop-foot .sf-top { display: flex; gap: 10px; align-items: flex-start; }
+.shop-foot .sf-name { font-weight: 900; font-size: 16px; }
+.shop-foot .sf-desc { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.shop-foot .sf-have { font-size: 12px; font-weight: 700; margin-top: 2px; }
+.shop-foot .sf-row { display: flex; gap: 8px; align-items: stretch; }
+.stepper { display: flex; align-items: center; background: var(--ink-2); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.stepper button { min-width: 34px; height: 44px; font-weight: 900; font-size: 15px; }
+.stepper button[disabled] { opacity: .3; }
+.stepper b { min-width: 30px; text-align: center; font-family: var(--pixel); font-size: 17px; }
+.shop-foot .sf-go { flex: 1; min-height: 44px; font-size: 14.5px; }
+.shop-foot .sf-bonus { font-size: 12.5px; color: var(--gold); font-weight: 700; }
+
+/* Poké Ball pixelada y captura */
+.ballico { display: block; image-rendering: pixelated; }
+.nav button .i .ballico { width: 21px; height: 21px; }
+.qb-ico .ballico { width: 22px; height: 22px; }
+.cball { position: absolute; right: 27%; top: 22%; width: 40px; height: 40px; transform-origin: 50% 90%; }
+.cball.throw { animation: cthrow .42s cubic-bezier(.3,.7,.4,1) both; }
+@keyframes cthrow { from { transform: translate(-190%, 260%) rotate(-540deg) scale(.7); } to { transform: none; } }
+.cball.land { animation: cland .38s ease-in both; }
+@keyframes cland { 0% { transform: none; } 60% { transform: translateY(70%); } 80% { transform: translateY(55%); } 100% { transform: translateY(70%); } }
+.cball.shake, .cball.caught, .cball.pop { transform: translateY(70%); }
+.cball.shake { animation: cshake .6s ease-in-out; }
+@keyframes cshake { 0%,100% { transform: translateY(70%) rotate(0); } 25% { transform: translateY(70%) rotate(-22deg); } 75% { transform: translateY(70%) rotate(22deg); } }
+.cball.caught .ballico { filter: brightness(.75); transition: filter .3s; }
+.cball.pop { animation: cpop .22s ease-out forwards; }
+@keyframes cpop { to { transform: translateY(50%) scale(1.4); opacity: 0; } }
+.cstar { position: absolute; right: 30%; top: 30%; color: #ffe27a; font-size: 18px; text-shadow: 0 0 6px #fff6; animation: cstar .9s ease-out forwards; }
+.cstar.s1 { animation-delay: .08s; } .cstar.s2 { animation-delay: .16s; }
+.cstar.s0 { --dx: -34px; } .cstar.s1 { --dx: 0px; } .cstar.s2 { --dx: 34px; }
+@keyframes cstar { from { transform: translate(0, 10px) scale(.4); opacity: 0; } 30% { opacity: 1; } to { transform: translate(var(--dx), -38px) scale(1); opacity: 0; } }
+
+/* Tope de nivel */
+.capbox { display: flex; align-items: center; gap: 12px; margin: 4px 12px 8px; padding: 10px 12px; border-radius: var(--r); background: var(--ink-2); border: 1px solid var(--line); }
+.capbox.hit { border-color: var(--gold); }
+.capbox .capn { font-family: var(--pixel); font-size: 18px; color: var(--gold); white-space: nowrap; }
+.capbox .capt { font-weight: 800; font-size: 14.5px; }
+.capbox .caps { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+.status.capped { background: #b08a2a; }
+
+/* Cinemáticas */
+.cutscene { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: #000; max-width: 560px; margin: 0 auto; opacity: 0; transition: opacity .3s; }
+.cutscene.in { opacity: 1; }
+.cs-bar { background: #000; flex: none; }
+.cs-bar.top { height: 12vh; }
+.cs-bar.bot { min-height: 22vh; padding: 14px 18px calc(14px + var(--safe-b)); display: flex; flex-direction: column; justify-content: space-between; }
+.cs-cap { color: #f3e6c4; font-size: 17px; font-weight: 700; line-height: 1.45; }
+.cs-cap b { color: #ffe27a; }
+.cs-hint { align-self: flex-end; font-size: 11.5px; color: #8a8f9c; font-weight: 700; animation: cshint 1.6s ease-in-out infinite; }
+@keyframes cshint { 50% { opacity: .35; } }
+.cs-stage { position: relative; flex: 1; overflow: hidden; }
+.cs-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.cs-center { position: absolute; inset: 0; display: grid; place-items: center; }
+.cs-obj { display: grid; place-items: center; animation: csobj .5s ease-out; }
+.cs-obj > * { width: 112px; height: 112px; image-rendering: pixelated; }
+@keyframes csobj { from { transform: translateY(14px) scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+.cs-veil { position: absolute; inset: 0; pointer-events: none; background: #000; opacity: 0; transition: opacity .6s; }
+.cs-veil.on { opacity: .94; }
+.cs-veil.open { opacity: 0; background: radial-gradient(circle at 50% 50%, transparent 0, #000 0); animation: csopen 1.8s ease-out forwards; }
+@keyframes csopen { 0% { opacity: .94; -webkit-mask: radial-gradient(circle at 50% 50%, transparent 0%, #000 1%); mask: radial-gradient(circle at 50% 50%, transparent 0%, #000 1%); } 100% { opacity: .94; -webkit-mask: radial-gradient(circle at 50% 50%, transparent 70%, #000 100%); mask: radial-gradient(circle at 50% 50%, transparent 70%, #000 100%); } }
+.cs-stage.fx-glow .cs-obj > * { filter: drop-shadow(0 0 14px var(--glow, #ffe27a)) drop-shadow(0 0 30px var(--glow, #ffe27a)); animation: csglow 1.4s ease-in-out infinite; }
+@keyframes csglow { 50% { filter: drop-shadow(0 0 22px var(--glow, #ffe27a)) drop-shadow(0 0 48px var(--glow, #ffe27a)); } }
+.cs-stage.fx-shake { animation: csshake .5s steps(4) 1; }
+@keyframes csshake { 25% { transform: translate(-6px, 3px); } 50% { transform: translate(5px, -4px); } 75% { transform: translate(-3px, 2px); } }
+.cs-stage.fx-zoom .cs-bg { animation: cszoom 3s ease-out forwards; }
+@keyframes cszoom { to { transform: scale(1.18); } }
+.cs-flash { position: absolute; inset: 0; background: #fff; animation: csflash .6s ease-out forwards; pointer-events: none; }
+@keyframes csflash { from { opacity: .9; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .cutscene *, .cutscene { animation-duration: .01s !important; transition-duration: .01s !important; } }
+.itemicon.px svg { width: 100%; height: 100%; }

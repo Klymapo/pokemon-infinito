@@ -7,6 +7,7 @@ import t0 from './t0-luminalia.js';
 import t1 from './t1-novarte.js';
 import t2 from './t2-costa.js';
 import t3 from './t3-yantra.js';
+import t4 from './t4-encuentros.js';
 import recoleccion from './recoleccion.js';
 
 const block = {
@@ -17,7 +18,7 @@ const block = {
 	gather: recoleccion.gather, patches: recoleccion.patches,
 };
 const extraSpots = {};
-for (const part of [comun, eventos, t0, t1, t2, t3]) {
+for (const part of [comun, eventos, t0, t1, t2, t3, t4]) {
 	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs']) {
 		for (const id in part[k] || {}) {
 			if (block[k][id] && k !== 'npcs') console.warn(`[b01] ${k} duplicado: ${id}`);

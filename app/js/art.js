@@ -65,6 +65,8 @@ export function itemImg(id, { found = true } = {}) {
 	const box = document.createElement('span');
 	box.className = 'itemicon' + (found ? '' : ' unknown');
 	const emoji = () => { box.textContent = it.icon || POCKET_EMOJI[it.pocket] || '✦'; };
+	const px = PX_ITEMS[toID(id)];
+	if (px) { box.classList.add('px'); box.append(pxItem(toID(id), 32)); return box; }
 	if (it.ic && !it.custom) {
 		const img = document.createElement('img');
 		img.alt = ''; img.decoding = 'async'; img.draggable = false;
@@ -441,4 +443,107 @@ export function portraitCanvas(look = {}, size = 32) {
 	g.fillStyle = shade(bg, 0.08); for (let y = 0; y < N; y += 4) g.fillRect(0, y, N, 2);
 	for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (grid[y][x]) { g.fillStyle = grid[y][x]; g.fillRect(x, y, 1, 1); }
 	return cv;
+}
+
+// ---------------- Poké Ball pixelada (icono de interfaz) ----------------
+const BALL_PX = [
+	'.....KKKKKK.....',
+	'...KKRRRRRRKK...',
+	'..KRRRRRRWRRRK..',
+	'.KRRRRRRRRWWRRK.',
+	'.KRRRRRRRRRWRRK.',
+	'KRRRRRRRRRRRRRRK',
+	'KRRRRRKKKKRRRRRK',
+	'KKKKKKKWWKKKKKKK',
+	'KWWWWKKWWKKWWWWK',
+	'KWWWWWKKKKWWWWWK',
+	'.KWWWWWWWWWWWWK.',
+	'.KWWWWWWWWWWWSK.',
+	'..KWWWWWWWWWSK..',
+	'...KKSSWWSSSKK..',
+	'.....KKKKKK.....',
+	'................',
+];
+const BALL_PAL = {
+	poke: { R: '#e0453a', W: '#f6f1e4', S: '#c9bfa8', K: '#1d2233' },
+	great: { R: '#3b6fc4', W: '#f6f1e4', S: '#c9bfa8', K: '#1d2233' },
+	ultra: { R: '#2b2b38', W: '#f6f1e4', S: '#c9bfa8', K: '#1d2233' },
+	dim: { R: '#7d8597', W: '#c9cdd6', S: '#a3a9b5', K: '#3a4052' },
+};
+/** Poké Ball pixel art en SVG nítido. kind: poke|great|ultra|dim */
+export function ballIcon(size = 20, kind = 'poke') {
+	const pal = BALL_PAL[kind] || BALL_PAL.poke;
+	const ns = 'http://www.w3.org/2000/svg';
+	const svg = document.createElementNS(ns, 'svg');
+	svg.setAttribute('viewBox', '0 0 16 16');
+	svg.setAttribute('width', size); svg.setAttribute('height', size);
+	svg.setAttribute('shape-rendering', 'crispEdges');
+	svg.setAttribute('aria-hidden', 'true');
+	svg.classList.add('ballico');
+	BALL_PX.forEach((row, y) => {
+		let x = 0;
+		while (x < 16) {
+			const c = row[x];
+			if (c === '.') { x++; continue; }
+			let w = 1; while (x + w < 16 && row[x + w] === c) w++;
+			const r = document.createElementNS(ns, 'rect');
+			r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', w); r.setAttribute('height', 1);
+			r.setAttribute('fill', pal[c]);
+			svg.append(r); x += w;
+		}
+	});
+	return svg;
+}
+
+// ---------------- Objetos clave propios en pixel art ----------------
+// Cada letra es un color de la paleta; '.' es transparente. 16×16.
+export const PX_ITEMS = {
+	farollana: {
+		pal: { K: '#1d2233', M: '#9aa0ad', m: '#5f6574', Y: '#fff1a8', y: '#f2b33d', o: '#d9822b', W: '#f6f1e4', w: '#cfc6b0' },
+		px: [
+			'......KKKK......',
+			'.....K....K.....',
+			'.....K....K.....',
+			'....KKKKKKKK....',
+			'...KMMMMMMMMK...',
+			'...KmKYYYYKmK...',
+			'...KmYWWWWYmK...',
+			'...KmYWYYWyKK...',
+			'...KmWYYYYWmK...',
+			'...KmWwYYwWmK...',
+			'...KmYWWWWymK...',
+			'...KmKyyyyKmK...',
+			'...KMMMMMMMMK...',
+			'....KmmmmmmK....',
+			'.....KKKKKK.....',
+			'................',
+		],
+		glow: '#ffe27a',
+	},
+};
+/** Dibuja un objeto de PX_ITEMS como SVG nítido. */
+export function pxItem(id, size = 32) {
+	const d = PX_ITEMS[id];
+	if (!d) return null;
+	const ns = 'http://www.w3.org/2000/svg';
+	const svg = document.createElementNS(ns, 'svg');
+	svg.setAttribute('viewBox', '0 0 16 16');
+	svg.setAttribute('width', size); svg.setAttribute('height', size);
+	svg.setAttribute('shape-rendering', 'crispEdges');
+	svg.setAttribute('aria-hidden', 'true');
+	svg.classList.add('pxitem');
+	if (d.glow) svg.style.setProperty('--glow', d.glow);
+	d.px.forEach((row, y) => {
+		let x = 0;
+		while (x < 16) {
+			const c = row[x];
+			if (c === '.') { x++; continue; }
+			let w = 1; while (x + w < 16 && row[x + w] === c) w++;
+			const r = document.createElementNS(ns, 'rect');
+			r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', w); r.setAttribute('height', 1);
+			r.setAttribute('fill', d.pal[c]);
+			svg.append(r); x += w;
+		}
+	});
+	return svg;
 }

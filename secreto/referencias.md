@@ -32,3 +32,29 @@
 | B1 | Philippe | Truco de cartas fallido, "Phil-osofía" (Modern Family) | media |
 | B1 | Ansel | "Los datos no mienten; se equivocan los que los leen" (y es la pista Ackroyd) | sutil |
 | B1 | Rotom | "Contaré las baldosas" | sutil |
+| B1 (1b) | Ulises, el viajero | Cabina azul que aparece y desaparece con ruido de acordeón, bufanda larguísima, «¿qué año es?», «más grande por dentro», tiempos verbales mezclados (*Doctor Who*) | evidente (una por escena, sin nombres) |
+| B1 (1b) | Ysolde y los Vencejos | Hermandad encapuchada que vigila desde los tejados, salto al vacío sobre un carro de flores, «hoja oculta» (Honedge en la manga), plumas como firma (*Assassin's Creed*) | evidente en su primera escena; luego sutil |
+| B1 (1b) | Petra y el ámbar | Ámbar con algo dentro que no coincide con ningún registro; capas de tierra «dobladas» (prehistoria / viaje a una era antigua) | sutil |
+| B1 (1b) | Ansel | Crucigrama: «unión que no se puede romper», ocho letras: *infinito* | sutil |
+
+## Ideas de misiones que le gustan a Mario (semillas plantadas; misiones completas pendientes)
+
+> Encargo de Mario (2026-10-05): «Haz más personajes y vuelve más recurrentes a los nuevos y a los actuales». Le gustan estas tres ideas como misiones secundarias futuras. **Referencias sutiles, sin nombres registrados ni personajes de esas franquicias: personajes originales con guiños.**
+
+| Idea | Semilla en el B1 | Personaje | Cómo podría ser la misión |
+|---|---|---|---|
+| **Prehistórica** (ámbar raro, fósiles, viaje a una era antigua) | `ambarsinregistro` (tibio, late, «SIN COINCIDENCIAS»); capas dobladas en Crómlech | Petra Brossard (+ Dr. Lazare) | El ámbar es tiempo cristalizado. Con Petra y Pala se abre una **grieta temporal** a un valle prehistórico de Kalos (Tyrunt, Amaura, Archen, Kabuto, Omanyte… nativos de esa época, con niveles de la curva). El ámbar es la llave. |
+| **Doctor Who** (viajero excéntrico, cabina azul, Dialga joven e inestable) | 3 apariciones de Ulises; `tarjetaviajero`; «algo pequeñito que late a destiempo» | Ulises | Un **Dialga joven** (no capturable en esa misión, o solo al final de un acto alto) se asusta y desordena el tiempo de un pueblo. Hay que calmarlo, no vencerlo. La cabina lleva a 2 o 3 momentos de un mismo lugar. Cruza con Celebi (B2/B3) y con el ámbar de Petra. |
+| **Assassin's Creed** (hermandad encapuchada que vigila a Lemnis, saltos de fe, hoja oculta) | Pluma gris, Nota sin firma, combate opcional con Ysolde | Ysolde y los Vencejos | Infiltración **vertical** en un edificio de Lemnis: subir por fuera, mirar desde arriba (Guía de zona con «puntos de observación»), saltos de fe a toldos. Rangos de la hermandad visibles (Pluma, Ala, Vencejo, Cumbre). La hoja oculta = Honedge → Aegislash. |
+
+### El patrón favorito de Mario
+
+> **Misión con personaje entrañable → objeto clave con cara propia → ese objeto abre una zona concreta del mapa.**
+> Ejemplos ya publicados: los Mareep de **Don Aurelio** → **Farol de Lana** → Galería Honda y Cueva Reflejos.
+
+Aplícalo a las tres ideas:
+
+- **Petra** → **Ámbar sin registro** (ya en la mochila) → la grieta temporal del valle prehistórico.
+- **Ulises** → **Tarjeta del viajero** (ya en la mochila) → la cabina deja entrar al jugador (zona «más grande por dentro»).
+- **Ysolde** → **Pluma gris** (ya en la mochila) → los tejados: una capa de mapa nueva sobre una ciudad (rutas por arriba, sitios a los que no se llega por la calle).
+

@@ -49,4 +49,8 @@ export default {
 	simon: { name: 'Simón', title: 'Pódcast «Casos Fríos», el escéptico', look: { hair: 'short', hairColor: '#2b2b38', outfit: '#4a4f6a', outfit2: '#f2b33d', skin: 3, acc: 'headphones', mouth: 'flat' } },
 	lebrun: { name: 'Inspector Lebrun', title: 'Policía Internacional · Kalos', look: { hair: 'short', hairColor: '#8a8a8a', outfit: '#2b2b38', outfit2: '#ffffff', skin: 1, eyesStyle: 'sharp', mouth: 'flat', acc: 'mustache tie' } },
 	cientifico_fosiles: { name: 'Dr. Lazare', title: 'Laboratorio de Fósiles de Petroglifo', look: { hair: 'curly', hairColor: '#cfd6e2', outfit: '#ffffff', outfit2: '#3b5bb5', skin: 2, acc: 'glasses', mouth: 'open' } },
+	// Tres recurrentes nuevos (t4-encuentros.js). Siluetas distintas: coleta y gafas en la frente / melena y bufanda / capucha.
+	petra: { name: 'Petra', title: 'Paleontóloga de campo', look: { hair: 'tied', hairColor: '#e07a3a', eyes: '#5aa36b', outfit: '#c9a66b', outfit2: '#5aa36b', skin: 1, acc: 'goggles freckles', eyesStyle: 'happy', mouth: 'open' } },
+	viajero: { name: 'Ulises', title: 'Viajero de la cabina azul', look: { hair: 'curly', hairColor: '#8a5a2f', eyes: '#3f8a4f', outfit: '#8a3a3a', outfit2: '#f2b33d', skin: 1, acc: '', eyesStyle: 'happy', mouth: 'grin', bg: '#2f4f9c' } },
+	ysolde: { name: 'Ysolde', title: 'Vencejo', look: { hair: 'long', hairColor: '#3c4050', eyes: '#d8a85a', outfit: '#3c4050', outfit2: '#cfd6e2', skin: 3, acc: 'scar', eyesStyle: 'sharp', mouth: 'flat', bg: '#1c1a2a' } },
 };

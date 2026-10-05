@@ -12,7 +12,7 @@ import {
 	markTramo, walkFriendship, findPath, canEnter, healParty, whiteout, trainingOpen, avgLevel, pendingNotices, routeProg, activeEvents, eventCalendar,
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
-import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS } from '../art.js';
+import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS, ballIcon, pxItem } from '../art.js';
 import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
@@ -44,7 +44,47 @@ export function installHooks() {
 		pc: () => openPC(),
 		evolveCheck: async () => { for (const p of G.party) await tryEvolve(p, { trigger: 'level' }); },
 		forceEvolve: (p, to) => evolveUI(p, to),
+		cutscene: spec => playCutscene(spec),
 	});
+}
+
+// =================== Cinemáticas ===================
+/**
+ * Escena corta a pantalla completa con bandas de cine. spec:
+ * { bg: {type, ...}, start: 'dark'|'light', frames: [{ text, item, npc, mon, fx }] }
+ * fx: 'light' (la luz se abre desde el centro), 'dark', 'flash', 'shake', 'glow', 'zoom'.
+ * Se avanza tocando. Respeta «reducir movimiento» del sistema.
+ */
+async function playCutscene(spec = {}) {
+	const bg = sceneCanvas({ ...(spec.bg || {}), seed: (spec.bg?.seed || G.loc || 'cs') + 'cs' });
+	bg.classList.add('cs-bg');
+	const veil = h('div', { class: 'cs-veil' + (spec.start === 'dark' ? ' on' : '') });
+	const center = h('div', { class: 'cs-center' });
+	const cap = h('div', { class: 'cs-cap' });
+	const hint = h('div', { class: 'cs-hint' }, 'Toca para seguir');
+	const stage = h('div', { class: 'cs-stage' }, bg, center, veil);
+	const root = h('div', { class: 'cutscene', role: 'dialog', 'aria-label': 'Escena' }, h('div', { class: 'cs-bar top' }), stage, h('div', { class: 'cs-bar bot' }, cap, hint));
+	document.body.append(root);
+	requestAnimationFrame(() => root.classList.add('in'));
+	const tap = () => new Promise(r => { const f = () => { root.removeEventListener('click', f); r(); }; setTimeout(() => root.addEventListener('click', f), 250); });
+	for (const fr of spec.frames || []) {
+		if (fr.item || fr.npc || fr.mon) {
+			center.innerHTML = '';
+			const el = fr.item ? (pxItem(fr.item, 96) || itemImg(fr.item)) : fr.npc ? portraitFor({ id: fr.npc, ...C.npcs[fr.npc] }) : monImg(fr.mon, { anim: true });
+			center.append(h('div', { class: 'cs-obj' }, el));
+		}
+		if (fr.clear) center.innerHTML = '';
+		for (const k of ['light', 'glow', 'shake', 'zoom']) stage.classList.remove('fx-' + k);
+		if (fr.fx === 'dark') veil.className = 'cs-veil on';
+		if (fr.fx === 'light') { veil.className = 'cs-veil on'; void veil.offsetWidth; veil.className = 'cs-veil open'; }
+		if (fr.fx === 'flash') { const f = h('div', { class: 'cs-flash' }); stage.append(f); setTimeout(() => f.remove(), 600); }
+		if (fr.fx && fr.fx !== 'dark' && fr.fx !== 'flash') { void stage.offsetWidth; stage.classList.add('fx-' + fr.fx); }
+		cap.innerHTML = fr.text ? fmtText(tx(fr.text)) : '';
+		await tap();
+	}
+	root.classList.remove('in');
+	await new Promise(r => setTimeout(r, 300));
+	root.remove();
 }
 
 // =================== Título ===================
@@ -244,7 +284,7 @@ async function showEventNotice(c) {
 
 function navBar() {
 	const nav = h('div', { class: 'nav' });
-	const items = [['🗺️', 'Mapa', openMap], ['◓', 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
+	const items = [['🗺️', 'Mapa', openMap], [ballIcon(22), 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
 	for (const [i, t, f] of items) nav.append(h('button', { onclick: f }, h('span', { class: 'i' }, i), t));
 	return nav;
 }
@@ -861,7 +901,7 @@ function monRow(p, onclick, { sel = false } = {}) {
 	return h('button', { class: 'mon' + (p.hp <= 0 ? ' fainted' : '') + (sel ? ' sel' : ''), onclick },
 		h('div', { class: 'sprite' }, monImg(p.sp, { anim: false, shiny: p.shiny })),
 		h('div', { class: 'info' },
-			h('div', { class: 'name' }, displayName(p), p.gender === 'M' ? '♂' : p.gender === 'F' ? '♀' : '', h('span', { class: 'lv' }, 'Nv.' + p.lv),
+			h('div', { class: 'name' }, displayName(p), p.gender === 'M' ? '♂' : p.gender === 'F' ? '♀' : '', h('span', { class: 'lv' }, 'Nv.' + p.lv), G.vars.cap && p.lv >= G.vars.cap ? h('span', { class: 'status capped', title: 'En el tope de nivel' }, 'TOPE') : null,
 				p.status ? h('span', { class: 'status ' + p.status }, STATUS_ES[p.status]) : null, p.hp <= 0 ? h('span', { class: 'status fnt' }, 'DEB') : null,
 				p.item ? h('span', { title: itemName(p.item) }, '✦') : null),
 			h('div', { class: 'hpbar' }, h('i', { class: r > .5 ? '' : r > .2 ? 'mid' : 'low', style: { width: (r * 100) + '%' } })),
@@ -874,7 +914,13 @@ function openParty() {
 		const list = h('div', { class: 'list' });
 		G.party.forEach((p, i) => list.append(monRow(p, () => openSummary(p, draw))));
 		if (!G.party.length) list.append(h('div', { class: 'empty' }, 'Todavía no tienes Pokémon.'));
-		sheet.set([list, h('div', { class: 'note' }, 'Toca un Pokémon para ver sus datos, cambiar su orden, darle objetos o ponerle mote.')]);
+		const cap = G.vars.cap;
+		const capBox = cap ? h('div', { class: 'capbox' + (G.party.some(p => p.lv >= cap) ? ' hit' : '') },
+			h('span', { class: 'capn' }, 'Nv. ' + cap),
+			h('div', {}, h('div', { class: 'capt' }, 'Tope de nivel'), h('div', { class: 'caps' }, G.party.some(p => p.lv >= cap)
+				? 'Los que están en el tope casi no ganan experiencia. Sube al vencer al siguiente líder o jefe.'
+				: 'Por encima de este nivel casi no se gana experiencia. Sube al vencer al siguiente líder o jefe.'))) : null;
+		sheet.set([capBox, list, h('div', { class: 'note' }, 'Toca un Pokémon para ver sus datos, cambiar su orden, darle objetos o ponerle mote.')].filter(Boolean));
 	};
 	draw();
 }
@@ -1129,45 +1175,85 @@ async function useItemOutside(id) {
 async function openShop(id) {
 	const shop = C.shops[id];
 	if (!shop) return;
+	const CATS = [
+		['all', 'Todo'], ['pokeballs', 'Balls'], ['heal', 'Curación'], ['status', 'Estados'], ['other', 'Otros'],
+	];
+	const catOf = it => it.pocket === 'pokeballs' ? 'pokeballs'
+		: it.pocket === 'medicine' ? (/heal|antidote|awakening|parlyz|paralyz|fullheal|burn|ice/i.test(it.ic || '') && !/potion|revive|restore|water|lemonade|milk/i.test(it.ic || '') ? 'status' : 'heal')
+		: 'other';
 	return new Promise(resolve => {
-		let mode = 'buy';
+		let mode = 'buy', cat = 'all', sel = null, qty = 1;
 		const sheet = openSheet(shop.name || 'Tienda', null, { onClose: resolve });
+		const entries = () => shop.items.map(e => typeof e === 'string' ? { id: e } : e).map(o => {
+			const it = D.items[toID(o.id)] || {};
+			const ok = o.cond === undefined || evalCond(o.cond);
+			const m = !ok && /^\s*badges\s*>=\s*(\d+)\s*$/.exec(o.cond || '');
+			return { id: toID(o.id), it, price: o.price ?? it.cost ?? 100, ok, lockBadges: m ? +m[1] : null };
+		}).filter(e => e.ok || e.lockBadges);
+		const sellable = () => Object.keys(G.bag).filter(k => G.bag[k] > 0 && D.items[k] && D.items[k].pocket !== 'key' && D.items[k].cost > 0)
+			.map(k => ({ id: k, it: D.items[k], price: Math.floor(D.items[k].cost / 2), ok: true }));
 		const draw = () => {
-			const tabs = h('div', { class: 'tabs' }, h('button', { class: mode === 'buy' ? 'on' : '', onclick: () => { mode = 'buy'; draw(); } }, 'Comprar'), h('button', { class: mode === 'sell' ? 'on' : '', onclick: () => { mode = 'sell'; draw(); } }, 'Vender'));
-			const list = h('div', { class: 'list' });
-			if (mode === 'buy') {
-				for (const e of shop.items) {
-					const o = typeof e === 'string' ? { id: e } : e;
-					if (o.cond !== undefined && !evalCond(o.cond)) continue;
-					const it = D.items[toID(o.id)] || {};
-					const price = o.price ?? it.cost ?? 100;
-					list.append(h('button', { class: 'row', onclick: async () => {
-						const q = await choose(`${it.name} · ${fmtMoney(price)}\n${it.desc || ''}\nTienes: ${count(o.id)}. Dinero: ${fmtMoney(G.player.money)}`, ['×1', '×5', '×10', 'Cancelar']);
-						const n = [1, 5, 10][q];
-						if (!n) return;
-						if (G.player.money < price * n) { toast('No tienes suficiente dinero'); return; }
-						G.player.money -= price * n;
-						addItem(o.id, n);
-						if (toID(o.id) === 'pokeball' && n >= 10) { addItem('premierball', 1); toast('¡De regalo, una Honor Ball!'); }
-						toast(`Has comprado ${it.name} ×${n}`);
-						draw();
-					} }, h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name || o.id), h('div', { class: 's' }, it.desc || '')), h('b', { style: { color: 'var(--gold)' } }, fmtMoney(price))));
-				}
-			} else {
-				for (const id2 of Object.keys(G.bag).filter(k => D.items[k] && D.items[k].pocket !== 'key' && D.items[k].cost > 0)) {
-					const it = D.items[id2];
-					const price = Math.floor(it.cost / 2);
-					list.append(h('button', { class: 'row', onclick: async () => {
-						const q = await choose(`Vender ${it.name} a ${fmtMoney(price)} cada uno (tienes ${G.bag[id2]}).`, ['×1', 'Todos', 'Cancelar']);
-						const n = q === 0 ? 1 : q === 1 ? G.bag[id2] : 0;
-						if (!n) return;
-						removeItem(id2, n); G.player.money += price * n;
-						toast(`Has vendido ${it.name} ×${n}`); draw();
-					} }, h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name), h('div', { class: 's' }, '×' + G.bag[id2])), h('b', { style: { color: 'var(--gold)' } }, fmtMoney(price))));
-				}
-				if (!list.children.length) list.append(h('div', { class: 'empty' }, 'No tienes nada que vender.'));
+			const all = mode === 'buy' ? entries() : sellable();
+			const present = new Set(all.map(e => catOf(e.it)));
+			if (cat !== 'all' && !present.has(cat)) cat = 'all';
+			const shown = all.filter(e => cat === 'all' || catOf(e.it) === cat);
+			if (sel && !all.some(e => e.id === sel && e.ok)) sel = null;
+
+			const head = h('div', { class: 'shop-head' },
+				h('div', { class: 'shop-money' }, h('span', { class: 'lab' }, 'Tu dinero'), h('b', {}, fmtMoney(G.player.money))),
+				h('div', { class: 'shop-mode' },
+					h('button', { class: mode === 'buy' ? 'on' : '', onclick: () => { mode = 'buy'; sel = null; draw(); } }, 'Comprar'),
+					h('button', { class: mode === 'sell' ? 'on' : '', onclick: () => { mode = 'sell'; sel = null; draw(); } }, 'Vender')));
+			const chips = h('div', { class: 'tabs shop-cats' }, ...CATS.filter(([k]) => k === 'all' || present.has(k))
+				.map(([k, n]) => h('button', { class: cat === k ? 'on' : '', onclick: () => { cat = k; draw(); } }, n)));
+			const grid = h('div', { class: 'shop-grid' });
+			for (const e of shown) {
+				const have = count(e.id);
+				const card = h('button', { class: 'shop-card' + (sel === e.id ? ' sel' : '') + (e.ok ? '' : ' locked'), disabled: !e.ok, onclick: () => { sel = sel === e.id ? null : e.id; qty = 1; draw(); } },
+					h('div', { class: 'sc-ico' }, itemImg(e.id)),
+					h('div', { class: 'sc-name' }, e.it.name || e.id),
+					e.ok ? h('div', { class: 'sc-price' + (mode === 'buy' && G.player.money < e.price ? ' short' : '') }, fmtMoney(e.price))
+						: h('div', { class: 'sc-lock' }, `🔒 ${e.lockBadges} medalla${e.lockBadges === 1 ? '' : 's'}`),
+					have ? h('div', { class: 'sc-have' }, '×' + have) : null);
+				grid.append(card);
 			}
-			sheet.set([tabs, h('div', { class: 'note' }, `Dinero: ${fmtMoney(G.player.money)}`), list]);
+			if (!shown.length) grid.append(h('div', { class: 'empty' }, mode === 'buy' ? 'Aquí no hay nada de esto.' : 'No tienes nada que vender.'));
+
+			let foot = null;
+			const e = all.find(x => x.id === sel);
+			if (e) {
+				const have = count(e.id);
+				const max = mode === 'buy' ? Math.max(0, Math.min(99, Math.floor(G.player.money / e.price))) : have;
+				qty = Math.max(1, Math.min(qty, Math.max(1, max)));
+				const total = e.price * qty;
+				const can = max >= 1;
+				const step = d => () => { qty = Math.max(1, Math.min(Math.max(1, max), qty + d)); draw(); };
+				const bonus = mode === 'buy' && e.id === 'pokeball' && qty >= 10;
+				foot = h('div', { class: 'shop-foot' },
+					h('div', { class: 'sf-top' }, h('div', { class: 'sc-ico' }, itemImg(e.id)),
+						h('div', { class: 'sf-txt' }, h('div', { class: 'sf-name' }, e.it.name), h('div', { class: 'sf-desc' }, e.it.desc || ''), h('div', { class: 'sf-have' }, `Tienes ${have}`))),
+					h('div', { class: 'sf-row' },
+						h('div', { class: 'stepper' },
+							h('button', { onclick: step(-10), disabled: qty <= 1, 'aria-label': 'Diez menos' }, '−10'),
+							h('button', { onclick: step(-1), disabled: qty <= 1, 'aria-label': 'Uno menos' }, '−'),
+							h('b', {}, qty),
+							h('button', { onclick: step(1), disabled: qty >= max, 'aria-label': 'Uno más' }, '+'),
+							h('button', { onclick: step(10), disabled: qty >= max, 'aria-label': 'Diez más' }, '+10')),
+						h('button', { class: 'btn primary sf-go', disabled: !can, onclick: () => {
+							if (mode === 'buy') {
+								if (G.player.money < total) { toast('No te alcanza'); return; }
+								G.player.money -= total; addItem(e.id, qty);
+								toast(`Has comprado ${e.it.name} ×${qty}`);
+								if (bonus) { addItem('premierball', 1); toast('¡De regalo, una Honor Ball!'); }
+							} else {
+								removeItem(e.id, qty); G.player.money += total;
+								toast(`Has vendido ${e.it.name} ×${qty}`);
+							}
+							qty = 1; draw();
+						} }, can ? `${mode === 'buy' ? 'Comprar' : 'Vender'} · ${fmtMoney(total)}` : 'No te alcanza')),
+					bonus ? h('div', { class: 'sf-bonus' }, '🎁 Por 10 Poké Balls te regalan una Honor Ball') : null);
+			}
+			sheet.set([head, chips, grid, foot].filter(Boolean));
 		};
 		draw();
 	});

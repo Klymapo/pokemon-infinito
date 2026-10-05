@@ -4,7 +4,8 @@ import { G, count, markCaught } from '../state.js';
 import { C } from '../content.js';
 import { BattleCtl, buildTrainerTeam, isBattleUsable, healInfo } from '../battle.js';
 import { createPokemon, displayName, maxHp, expProgress, checkEvolution, evolve, movesLearnedAt, isBall } from '../pokemon.js';
-import { monImg, sceneCanvas } from '../art.js';
+import { monImg, sceneCanvas, ballIcon } from '../art.js';
+import { portraitFor } from './core.js';
 import { h, say, choose, prompt, toast } from './core.js';
 import { sleep, fmtText } from '../util.js';
 import { isNight } from '../time.js';
@@ -54,6 +55,7 @@ export async function runBattle(cfg, hooks) {
 	const mkCard = side => {
 		const c = h('div', { class: 'bcard ' + side, style: { visibility: 'hidden' } });
 		c.innerHTML = `<div class="n"><span class="nm"></span><span class="lv"></span></div><div class="hpbar"><i></i></div>${side === 'me' ? '<div class="hpn"></div><div class="expbar"><i></i></div>' : ''}<div class="tags"></div>`;
+		if (side === 'me' || kind === 'trainer') c.append(h('div', { class: 'teamrow' }));
 		return c;
 	};
 	const foeCard = mkCard('foe'), meCard = mkCard('me');
@@ -62,6 +64,32 @@ export async function runBattle(cfg, hooks) {
 	const panel = h('div', { class: 'bpanel' });
 	const root = h('div', { class: 'battle' }, field, log, panel);
 	document.body.append(root);
+
+	// Ficha del entrenador rival: retrato pequeño + nombre, dentro de la tarjeta rival
+	let trainerPortrait = null;
+	if (trainer) {
+		const tn = trainer.npc ? { id: trainer.npc, ...C.npcs[trainer.npc] } : { name: trainer.name, look: trainer.look || { seed: trainer.name }, sprite: trainer.sprite };
+		trainerPortrait = () => portraitFor(tn);
+		const chip = h('div', { class: 'tchip' }, h('span', { class: 'tpic' }, trainerPortrait()), h('span', { class: 'tname' }, (trainer.cls ? trainer.cls + ' ' : '') + trainer.name));
+		foeCard.prepend(chip);
+	}
+	// Fila de Poké Balls: una por Pokémon del equipo (llena, con problema de estado o debilitado)
+	function renderTeams() {
+		if (!ctl.battle) return;
+		for (const [side, card] of [['p1', meCard], ['p2', foeCard]]) {
+			const row = card.querySelector('.teamrow');
+			if (!row) continue;
+			const mons = ctl.battle[side].pokemon;
+			row.innerHTML = '';
+			const left = mons.filter(p => !p.fainted && p.hp > 0).length;
+			for (const p of mons) {
+				const st = (p.fainted || p.hp <= 0) ? 'out' : p.status ? 'sick' : 'ok';
+				row.append(h('span', { class: 'tb ' + st }));
+			}
+			row.setAttribute('aria-label', side === 'p2' ? `Le quedan ${left} de ${mons.length}` : `Te quedan ${left} de ${mons.length}`);
+			if (side === 'p2') row.append(h('span', { class: 'tleft' }, `${left}/${mons.length}`));
+		}
+	}
 
 	const vis = { p1: {}, p2: {} };
 	const cardOf = side => side === 'p1' ? meCard : foeCard;
@@ -125,7 +153,7 @@ export async function runBattle(cfg, hooks) {
 				Object.assign(v, e.info, { tera: null });
 				if (e.side === 'p1') v.uid = ctl.partyOf(ctl.active('p1'))?.uid;
 				setSprite(e.side, e.info.sp, e.info.shiny);
-				renderCard(e.side);
+				renderCard(e.side); renderTeams();
 				if (e.info.shiny) { flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); }
 				await sleep(250);
 				break;
@@ -160,24 +188,34 @@ export async function runBattle(cfg, hooks) {
 			}
 			case 'faint':
 				spriteOf(e.side).classList.add('faint');
-				vis[e.side].hp = 0; renderCard(e.side);
+				vis[e.side].hp = 0; renderCard(e.side); renderTeams();
 				await sleep(450);
 				break;
-			case 'status': vis[e.side].status = e.status; renderCard(e.side); break;
+			case 'status': vis[e.side].status = e.status; renderCard(e.side); renderTeams(); break;
 			case 'tera': vis[e.side].tera = e.type; spriteOf(e.side).classList.add('tera'); renderCard(e.side); flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); await sleep(400); break;
 			case 'dyn': spriteOf(e.side).classList.toggle('dyn', e.on); await sleep(400); break;
 			case 'crit': flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); break;
 			case 'exp': if (vis.p1.uid === e.uid) { const p = G.party.find(x => x.uid === e.uid); if (p) { meCard.querySelector('.expbar i').style.width = (expProgress(p) * 100) + '%'; } } break;
 			case 'levelup': if (vis.p1.uid === e.uid) { vis.p1.lv = e.lv; renderCard('p1'); } break;
 			case 'ball': {
-				const fs = foeSprite.querySelector('img,.fallback');
-				if (fs) fs.style.opacity = '0';
-				const ball = h('div', { style: { position: 'absolute', right: '24%', top: '24%', fontSize: '34px', transition: 'transform .2s' } }, '◓');
+				const fs = foeSprite.querySelector('img,.fallback,canvas');
+				const kindB = e.ball === 'greatball' ? 'great' : e.ball === 'ultraball' ? 'ultra' : 'poke';
+				const ball = h('div', { class: 'cball throw' }, ballIcon(40, kindB));
 				fx.append(ball);
-				await sleep(450);
-				for (let i = 0; i < e.shakes; i++) { ball.style.transform = 'rotate(-25deg)'; await sleep(220); ball.style.transform = 'rotate(25deg)'; await sleep(220); ball.style.transform = ''; await sleep(380); }
-				if (e.caught) { ball.textContent = '◓✨'; await sleep(700); }
-				else { ball.remove(); if (fs) fs.style.opacity = '1'; }
+				await sleep(420);
+				if (fs) { fs.style.transition = 'transform .25s, opacity .25s, filter .25s'; fs.style.filter = 'brightness(3) saturate(0)'; fs.style.transform = 'scale(.2)'; fs.style.opacity = '0'; }
+				ball.classList.remove('throw'); ball.classList.add('land');
+				await sleep(380);
+				for (let i = 0; i < e.shakes; i++) { ball.classList.remove('shake'); void ball.offsetWidth; ball.classList.add('shake'); await sleep(620); }
+				if (e.caught) {
+					ball.classList.add('caught');
+					for (let k = 0; k < 3; k++) fx.append(h('div', { class: 'cstar s' + k }, '✦'));
+					await sleep(900);
+					fx.querySelectorAll('.cstar').forEach(x => x.remove());
+				} else {
+					ball.classList.add('pop'); await sleep(220); ball.remove();
+					if (fs) { fs.style.filter = ''; fs.style.transform = ''; fs.style.opacity = '1'; }
+				}
 				break;
 			}
 			}
@@ -209,7 +247,7 @@ export async function runBattle(cfg, hooks) {
 					const pTxt = p >= 0.995 ? '100 %' : p < 0.01 ? '<1 %' : Math.round(p * 100) + ' %';
 					panel.append(h('div', { class: 'quickball' },
 						h('button', { class: 'btn qb-throw', onclick: () => { G.settings.lastBall = best; resolve({ type: 'ball', ball: best }); } },
-							h('span', { class: 'qb-ico' }, '◓'), h('span', {}, `Lanzar ${D.items[best]?.name || best}`), h('span', { class: 'qb-n' }, `×${G.bag[best]} · ${pTxt}`)),
+							h('span', { class: 'qb-ico' }, ballIcon(22, best === 'greatball' ? 'great' : best === 'ultraball' ? 'ultra' : 'poke')), h('span', {}, `Lanzar ${D.items[best]?.name || best}`), h('span', { class: 'qb-n' }, `×${G.bag[best]} · ${pTxt}`)),
 						h('button', { class: 'btn qb-pick', 'aria-label': 'Elegir Ball', onclick: async () => {
 							const opts = ['auto', ...balls];
 							const i = await choose('¿Qué Ball quieres en el botón rápido?', opts.map(id => id === 'auto' ? `Automática (la de más probabilidad)${pref === 'auto' ? ' ✔' : ''}` : `${D.items[id]?.name} ×${G.bag[id]} · ${Math.round(odds[id] * 100)} %${pref === id ? ' ✔' : ''}`).concat(['Cancelar']), { cancel: opts.length });
@@ -304,6 +342,15 @@ export async function runBattle(cfg, hooks) {
 	});
 
 	// ---------- Bucle ----------
+	// Entrada: el entrenador aparece en su sitio antes de sacar a su primer Pokémon
+	if (trainer && trainerPortrait) {
+		const big = h('div', { class: 'tintro' }, trainerPortrait());
+		foeSprite.append(big);
+		log.innerHTML = fmtText(`¡**${(trainer.cls ? trainer.cls + ' ' : '') + trainer.name}** quiere combatir!`);
+		await wait(1100);
+		big.classList.add('out');
+		await sleep(280);
+	}
 	await play(ctl.start());
 	let res = { result: null };
 	let guard = 0;
