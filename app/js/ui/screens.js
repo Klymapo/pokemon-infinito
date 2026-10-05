@@ -748,6 +748,7 @@ async function itemMenu(id, redraw) {
 	}
 	const usable = USE_ON_MON[id] !== undefined || CURES[id] || REVIVES[id] || VITAMINS[id] !== undefined || id === 'rarecandy' || it.cat === 'evolution' || REPELS[id] || id === 'ppup' || id === 'ppmax' || id === 'ether' || id === 'elixir' || id === 'maxether' || id === 'maxelixir' || it.use;
 	const opts = [];
+	if (it.art) opts.push(['Mirar', async () => { const { viewArt } = await import('./acuarela.js'); await viewArt(id); }]);
 	if (usable) opts.push(['Usar', () => useItemOutside(id)]);
 	if (it.pocket !== 'key') opts.push(['Dar a un Pokémon', async () => {
 		const i = await choose('¿A quién?', G.party.map(p => displayName(p)).concat(['Cancelar']));

@@ -33,6 +33,7 @@ export default {
   badges: { medalla_roca: { name: 'Medalla Roca', type: 'Rock', desc: '...' } },
   shops: { tienda_luminalia: { name: 'Tienda de Luminalia', items: ['pokeball', 'potion', { id: 'superpotion', cond: 'badges >= 1' }] } },
   items: { farollana: { name: 'Farol de Lana', pocket: 'key', desc: '...' } }, // objetos propios (los ids van sin guiones ni espacios)
+  // art: 'acuarela_riolu' → el objeto clave se puede «Mirar» en la mochila (cuadros pintados por código en app/js/ui/acuarela.js)
   events: [ ... ],           // §10 eventos por fecha
   milestones: [ { flag: 'b01_m_relieve', hoursLeft: 3 } ],  // §11 aviso de ritmo
 };

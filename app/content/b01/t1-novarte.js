@@ -928,6 +928,6 @@ export default {
 	},
 
 	items: {
-		acuarelariolu: { name: 'Acuarela de Riolu', pocket: 'key', desc: 'Un cuadro pequeño pintado en el puente de Pueblo Acuarela. Tú y tu Riolu. Alrededor de Riolu, un halo azul que la pintora no sabe por qué pintó.' },
+		acuarelariolu: { name: 'Acuarela de Riolu', pocket: 'key', art: 'acuarela_riolu', desc: 'Un cuadro pequeño pintado en el puente de Pueblo Acuarela. Tú y tu Riolu. Alrededor de Riolu, un halo azul que la pintora no sabe por qué pintó.' },
 	},
 };
