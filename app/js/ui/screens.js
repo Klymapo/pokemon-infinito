@@ -178,6 +178,8 @@ export function render() {
 	const scene = h('div', { class: 'scene' }, sceneCanvas({ ...(loc.bg || {}), seed: loc.bg?.seed || loc.id }),
 		topL && topL.id !== loc.id ? h('div', { class: 'scene-label' }, `${topL.name} › ${loc.name}`) : null);
 	main.append(scene);
+	const tracker = questTracker();
+	if (tracker) main.append(tracker);
 	if (isRoute(loc)) renderRoute(main, loc);
 	else renderPlace(main, loc);
 	root.append(top, main, navBar());
@@ -1186,8 +1188,12 @@ function openDiary(startTab = 'active') {
 		const active = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && !q.done);
 		const done = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && q.done);
 		const avail = Object.keys(places).filter(id => C.quests[id] && !G.quests[id]).map(id => [id, null]);
-		const counts = { active: active.length, avail: avail.length, done: done.length };
-		const tabs = h('div', { class: 'tabs' }, ...[['active', 'Activas'], ['avail', 'Nuevas'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
+		// Por hacer: hay un sitio donde avanzar o algo concreto que conseguir. Registro: historias abiertas sin nada que hacer ahora.
+		const isTodo = id => (places[id] || []).length || C.quests[id].type === 'main' || questNeeds(id).length;
+		const todo = active.filter(([id]) => isTodo(id));
+		const logq = active.filter(x => !todo.includes(x));
+		const counts = { active: todo.length, avail: avail.length, log: logq.length, done: done.length };
+		const tabs = h('div', { class: 'tabs' }, ...[['active', 'Por hacer'], ['avail', 'Nuevas'], ['log', 'Registro'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
 			h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, counts[k] ? h('span', { class: 'tabcount' }, String(counts[k])) : null)));
 		const body = h('div', {});
 		if (tab === 'diary') {
@@ -1197,12 +1203,13 @@ function openDiary(startTab = 'active') {
 				body.append(h('div', { class: 'diary-entry' }, h('div', { class: 'when' }, d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) + ' · ' + (L(e.loc)?.name || '')), h('div', { html: fmtText(e.text) })));
 			}
 		} else {
-			const qs = tab === 'active' ? active : tab === 'avail' ? avail : done;
+			const qs = tab === 'active' ? todo : tab === 'avail' ? avail : tab === 'log' ? logq : done;
 			if (tab === 'done') qs.sort((a, b) => (b[1].finished || 0) - (a[1].finished || 0));
 			if (!qs.length) body.append(h('div', { class: 'empty' }, {
 				active: 'No tienes misiones en curso. Mira en «Nuevas» o habla con la gente: siempre hay alguien que necesita ayuda.',
 				avail: 'No hay misiones nuevas en los lugares que conoces. Explora y vuelve a hablar con la gente después de avanzar en la historia.',
 				done: 'Aún no has completado misiones.',
+				log: 'No hay historias en pausa. Todo lo abierto tiene algo que puedes hacer ahora.',
 			}[tab]));
 			const rowOf = (id, q, extraCls = '') => {
 				const def = C.quests[id];
@@ -1210,12 +1217,12 @@ function openDiary(startTab = 'active') {
 				const icon = (TYPES.find(t => t[0] === type) || TYPES[2])[1];
 				const where = (places[id] || []).slice(0, 2);
 				const lines = [];
-				if (tab === 'active') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
+				if (tab === 'active' || tab === 'log') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
 				if (tab === 'done') lines.push(h('div', { class: 's' }, '✔ Completada' + (q.finished ? ' el ' + new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '')));
 				if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
 				if (tab !== 'done') for (const w of where) lines.push(h('div', { class: 'qwhere' }, '📍 ' + w));
-				return h('button', { class: 'row quest' + extraCls + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : ''), onclick: () => openQuestDetail(id, places) },
-					h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name), ...lines), h('span', { class: 'chev' }, '›'));
+				return h('button', { class: 'row quest' + extraCls + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : '') + (tab === 'log' ? ' logq' : ''), onclick: () => openQuestDetail(id, places, draw) },
+					h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name, (G.settings.tracked || []).includes(id) ? h('span', { class: 'pinmark' }, ' 📌') : null), ...lines), h('span', { class: 'chev' }, '›'));
 			};
 			const byType = (list, intoBody) => {
 				for (const [type, icon, title] of TYPES) {
@@ -1225,20 +1232,32 @@ function openDiary(startTab = 'active') {
 					intoBody.append(h('div', { class: 'list' }, ...group.map(([id, q]) => rowOf(id, q))));
 				}
 			};
-			if (tab === 'active') {
-				// Por hacer: tienen un sitio donde avanzarlas ahora mismo. Registro: esperan a que pase algo en la historia.
-				const todo = qs.filter(([id]) => (places[id] || []).length || C.quests[id].type === 'main');
-				const log = qs.filter(x => !todo.includes(x));
-				if (todo.length) { body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Tienen un sitio donde avanzarlas ahora'))); byType(todo, body); }
-				if (log.length) {
-					body.append(h('div', { class: 'qgroup log' }, h('b', {}, '📖 En pausa · registro'), h('span', {}, 'Historias abiertas que seguirán más adelante. No tienes que hacer nada por ahora.')));
-					body.append(h('div', { class: 'list' }, ...log.map(([id, q]) => rowOf(id, q, ' logq'))));
-				}
-			} else byType(qs, body);
+			if (tab === 'log') body.append(h('div', { class: 'qgroup log' }, h('b', {}, '📖 Registro'), h('span', {}, 'Historias abiertas que seguirán más adelante. No tienes que hacer nada por ahora: se avisará cuando haya novedades.')));
+			if (tab === 'active' && qs.length) body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Toca una misión para ver todo lo que necesitas. Con 📌 Seguir la tienes siempre a la vista.')));
+			byType(qs, body);
 		}
 		sheet.set([tabs, body]);
 	};
 	draw();
+}
+
+// ---------- Seguimiento en pantalla (hasta 3 misiones con 📌) ----------
+function questTracker() {
+	const ids = (G.settings.tracked || []).filter(id => C.quests[id] && G.quests[id] && !G.quests[id].done);
+	if (G.settings.tracked && ids.length !== G.settings.tracked.length) G.settings.tracked = ids;
+	if (!ids.length) return null;
+	const box = h('div', { class: 'tracker' });
+	for (const id of ids) {
+		const def = C.quests[id], q = G.quests[id];
+		const needs = questNeeds(id).filter(n => n.kind === 'item' || n.kind === 'var');
+		const prog = needs.map(n => n.kind === 'item' ? `${itemName(n.id)} ${Math.min(count(n.id), n.n)}/${n.n}` : `${n.id.charAt(0).toUpperCase() + n.id.slice(1)} ${Math.min(G.vars[n.id] || 0, n.n)}/${n.n}`).join(' · ');
+		const stage = (def.stages?.[q.stage] || '').replace(/\*\*/g, '');
+		box.append(h('button', { class: 'trk', onclick: () => openQuestDetail(id) },
+			h('div', { class: 'trk-t' }, '📌 ' + def.name),
+			h('div', { class: 'trk-s' }, tx(stage)),
+			prog ? h('div', { class: 'trk-p' }, prog) : null));
+	}
+	return box;
 }
 
 // ---------- Ficha de una misión ----------
@@ -1271,7 +1290,7 @@ function questNeeds(id) {
 	for (const c of conds) for (const [rx, mk] of NEED_RX) for (const m of c.matchAll(rx)) { const n = mk(m); const k = n.kind + ':' + n.id; if (!keys.has(k)) { keys.add(k); out.push({ ...n, alt: /\|\|/.test(c) }); } }
 	return out;
 }
-function openQuestDetail(id, places) {
+function openQuestDetail(id, places, onChange) {
 	const def = C.quests[id], q = G.quests[id];
 	if (!def) return;
 	const TL = { main: ['⭐', 'Historia principal'], thread: ['🧵', 'Historia de personaje'], side: ['📜', 'Secundaria'], event: ['🎉', 'Evento'] }[def.type || 'side'] || ['📜', 'Secundaria'];
@@ -1282,6 +1301,15 @@ function openQuestDetail(id, places) {
 		h('span', { class: 'qd-type' }, `${TL[0]} ${TL[1]}`),
 		h('span', { class: 'qd-status ' + status[1] }, status[0]),
 		def.est ? h('span', { class: 'qd-est' }, `⏱ ~${def.est >= 60 ? Math.round(def.est / 60 * 10) / 10 + ' h' : def.est + ' min'}`) : null));
+	if (q && !q.done) {
+		const tracked = (G.settings.tracked ||= []).includes(id);
+		body.push(h('div', { class: 'qd-actions' }, h('button', { class: 'btn' + (tracked ? '' : ' primary'), onclick: () => {
+			const t = (G.settings.tracked ||= []);
+			if (tracked) t.splice(t.indexOf(id), 1);
+			else { t.unshift(id); if (t.length > 3) t.length = 3; }
+			sheet.close(); onChange?.(); render(); openQuestDetail(id, places, onChange);
+		} }, tracked ? 'Dejar de seguir' : '📌 Seguir en pantalla')));
+	}
 	if (q && !q.done) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Ahora'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || '')) })));
 	if (q?.done) body.push(h('div', { class: 'qd-now done' }, h('div', { class: 'qd-label' }, 'Desenlace'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || def.stages?.hecha || 'Completada.')) })));
 	if (!q) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Cómo empezarla'), h('div', {}, (places?.[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza sola cuando llegues al lugar indicado.' : 'Habla con quien la ofrece.')));
