@@ -1149,11 +1149,11 @@ function questPlaces() {
 		if (spot.action?.script) scripts.push(spot.action.script);
 		const top = topLoc(loc.id);
 		const where = top && top.id !== loc.id ? `${top.name} · ${loc.name}` : loc.name;
-		for (const sc of scripts) for (const q of touch[sc] || []) {
-			const arr = (out[q] ||= []);
-			const txt = spot.label ? `${where} · ${spot.label}` : where;
-			if (!arr.includes(txt)) arr.push(txt);
-		}
+		const txt = spot.label ? `${where} · ${spot.label}` : where;
+		const put = q => { const arr = (out[q] ||= []); if (!arr.includes(txt)) arr.push(txt); };
+		for (const sc of scripts) for (const q of touch[sc] || []) put(q);
+		// Misiones ya en curso: también los diálogos que se abrirán cuando cumplas lo que piden
+		if (Array.isArray(spot.talk)) for (const e of spot.talk) for (const q of touch[e.script] || []) if (G.quests[q] && !G.quests[q].done) put(q);
 	};
 	for (const loc of Object.values(C.locations)) {
 		const top = topLoc(loc.id);
@@ -1241,6 +1241,25 @@ function openDiary(startTab = 'active') {
 	draw();
 }
 
+/** Dónde sale una especie en lo publicado: lugares conocidos primero, con la hora si importa. */
+function speciesWhere(sp, onlyKnown = false) {
+	const found = [];
+	for (const loc of Object.values(C.locations)) {
+		const enc = loc.route?.encounters || loc.encounters || {};
+		const es = Object.values(enc).flat().filter(e => e.sp === sp);
+		if (!es.length) continue;
+		const known = G.visited[loc.id] || (loc.links || []).some(n => G.visited[n]);
+		if (onlyKnown && !known) continue;
+		const times = new Set(es.map(e => e.time || 'any'));
+		const t = times.has('any') || (times.has('day') && times.has('night')) ? '' : times.has('night') ? ' (🌙 de noche)' : times.has('day') ? ' (☀️ de día)' : '';
+		found.push({ name: known ? loc.name : 'un lugar que aún no conoces', t, known });
+	}
+	found.sort((a, b) => b.known - a.known);
+	const uniq = [...new Map(found.map(f => [f.name, f])).values()];
+	if (!uniq.length) return onlyKnown ? '' : 'Se consigue por otra vía (historia o intercambio)';
+	return uniq.slice(0, 3).map(f => f.name + f.t).join(' · ');
+}
+
 // ---------- Seguimiento en pantalla (hasta 3 misiones con 📌) ----------
 function questTracker() {
 	const ids = (G.settings.tracked || []).filter(id => C.quests[id] && G.quests[id] && !G.quests[id].done);
@@ -1318,24 +1337,51 @@ function openQuestDetail(id, places, onChange) {
 	if (needs.length) {
 		const list = h('div', { class: 'list' });
 		const party = needs.filter(n => n.kind === 'party');
+		const uni = itemUniverse();
+		const ownedWhere = sp => G.party.some(m => m.sp === sp) ? 'en tu equipo' : G.boxes.flat().some(m => m.sp === sp) ? 'en el PC' : '';
+		const whereLine = txt => h('div', { class: 'needwhere' }, txt);
 		for (const n of needs) {
 			if (n.kind === 'party') continue;
-			let label = '', ok = false, extra = '';
-			if (n.kind === 'item') { const have = count(n.id); ok = have >= n.n; label = itemName(n.id); extra = `${Math.min(have, n.n)}/${n.n}`; }
-			else if (n.kind === 'var') { const v = G.vars[n.id] || 0; ok = v >= n.n; label = n.id.charAt(0).toUpperCase() + n.id.slice(1).replace(/_/g, ' '); extra = `${Math.min(v, n.n)}/${n.n}`; }
+			let label = '', ok = false, extra = '', info = [];
+			if (n.kind === 'item') {
+				const have = count(n.id); ok = have >= n.n; label = itemName(n.id); extra = `${Math.min(have, n.n)}/${n.n}`;
+				info.push(have ? `Ya tienes ${have}` : 'No tienes ninguno');
+				if (!ok) {
+					const src = [...(uni[n.id] || [])].filter(w => w !== 'encontrado');
+					const shown = src.filter(w => w !== 'historia');
+					info.push(shown.length ? '📍 ' + shown.slice(0, 3).join(' · ') : src.includes('historia') ? '📍 Te lo darán en la historia' : '📍 Sigue explorando');
+				}
+			} else if (n.kind === 'var') { const v = G.vars[n.id] || 0; ok = v >= n.n; label = n.id.charAt(0).toUpperCase() + n.id.slice(1).replace(/_/g, ' '); extra = `${Math.min(v, n.n)}/${n.n}`; if (!ok) info.push(`Te faltan ${n.n - v}. Mira las zonas de interés de abajo.`); }
 			else if (n.kind === 'beat') { ok = !!G.beaten[n.id]; const t = C.trainers[n.id]; label = `Vencer a ${t ? (t.cls ? t.cls + ' ' : '') + t.name : n.id}`; }
-			else { const sp = D.species[n.id]; const num = sp?.num; ok = n.kind === 'seen' ? !!G.dex.seen[num] : !!G.dex.caught[num]; label = `${n.kind === 'seen' ? 'Ver a' : 'Tener a'} ${sp?.name || n.id}`; }
-			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, n.kind === 'item' ? itemImg(n.id) : h('div', { class: 'ico' }, n.kind === 'beat' ? '⚔️' : n.kind === 'var' ? '🔢' : '◓'),
-				h('div', { class: 'lbl' }, h('div', { class: 't' }, label), extra ? h('div', { class: 'needbar' }, h('i', { style: { width: (n.kind === 'item' ? Math.min(1, count(n.id) / n.n) : Math.min(1, (G.vars[n.id] || 0) / n.n)) * 100 + '%' } })) : null),
+			else {
+				const sp = D.species[n.id]; const num = sp?.num;
+				ok = n.kind === 'seen' ? !!G.dex.seen[num] : !!G.dex.caught[num];
+				label = `${n.kind === 'seen' ? 'Ver a' : 'Capturar a'} ${G.dex.seen[num] ? sp?.name : sp?.name || n.id}`;
+				const w = ownedWhere(n.id);
+				if (ok) info.push(n.kind === 'seen' ? 'Ya lo viste' + (G.dex.caught[num] ? ' y lo capturaste' : '') : 'Ya lo tienes' + (w ? ' (' + w + ')' : ''));
+				else info.push('📍 ' + speciesWhere(n.id));
+			}
+			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, n.kind === 'item' ? itemImg(n.id) : n.kind === 'seen' || n.kind === 'caught' || n.kind === 'owns' ? (G.dex.seen[D.species[n.id]?.num] ? h('div', { class: 'sprite need-sp' }, monImg(n.id, { anim: false })) : h('div', { class: 'ico' }, '❔')) : h('div', { class: 'ico' }, n.kind === 'beat' ? '⚔️' : n.kind === 'var' ? '🔢' : '◓'),
+				h('div', { class: 'lbl' }, h('div', { class: 't' }, label), extra ? h('div', { class: 'needbar' }, h('i', { style: { width: (n.kind === 'item' ? Math.min(1, count(n.id) / n.n) : Math.min(1, (G.vars[n.id] || 0) / n.n)) * 100 + '%' } })) : null, ...info.map(whereLine)),
 				h('b', {}, ok ? '✔' : extra || '✘')));
 		}
 		if (party.length) {
 			const names = party.map(n => D.species[n.id]).filter(Boolean);
-			const ok = party.some(n => G.party.some(p => p.sp === n.id));
+			const inTeam = party.filter(n => G.party.some(p => p.sp === n.id)).map(n => D.species[n.id].name);
+			const inBox = party.filter(n => !G.party.some(p => p.sp === n.id) && G.boxes.flat().some(p => p.sp === n.id)).map(n => D.species[n.id].name);
+			const ok = inTeam.length > 0;
 			let text;
 			if (names.length <= 5) text = 'Lleva en tu equipo a ' + names.map(s => s.name).join(' o ');
-			else { const types = {}; names.forEach(s => s.types.forEach(t => types[t] = (types[t] || 0) + 1)); const top = Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([t]) => typeName(t)); text = `Lleva en tu equipo un Pokémon como estos: tipo ${top.join(' o ')} (hay ${names.length} que valen)`; }
-			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, h('div', { class: 'ico' }, '◓'), h('div', { class: 'lbl' }, h('div', { class: 't' }, text)), h('b', {}, ok ? '✔' : '✘')));
+			else { const types = {}; names.forEach(s => s.types.forEach(t => types[t] = (types[t] || 0) + 1)); const top = Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([t]) => typeName(t)); text = `Lleva en tu equipo un Pokémon de tipo ${top.join(' o ')} (valen ${names.length} especies)`; }
+			const info = [];
+			if (inTeam.length) info.push('Ya lo cumples con: ' + inTeam.join(', '));
+			else if (inBox.length) info.push('Tienes en el PC a ' + inBox.slice(0, 4).join(', ') + ': sácalo en un Centro Pokémon');
+			else {
+				// dónde atrapar alguno de los que valen, empezando por los de zonas que ya conoces
+				const near = party.map(n => ({ name: D.species[n.id]?.name, w: speciesWhere(n.id, true) })).filter(x => x.w && x.name).slice(0, 3);
+				info.push(near.length ? '📍 ' + near.map(x => `${x.name}: ${x.w}`).join(' · ') : '📍 Busca en cuevas, bosques y de noche');
+			}
+			list.append(h('div', { class: 'row need' + (ok ? ' ok' : '') }, h('div', { class: 'ico' }, '◓'), h('div', { class: 'lbl' }, h('div', { class: 't' }, text), ...info.map(whereLine)), h('b', {}, ok ? '✔' : '✘')));
 		}
 		body.push(h('div', { class: 'section-title' }, 'Lo que necesitas'), list);
 	}

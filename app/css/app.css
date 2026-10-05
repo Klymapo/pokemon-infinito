@@ -390,3 +390,6 @@ button.cmpmove:active { transform: scale(.98); }
 .qd-actions .btn { width: 100%; }
 .pinmark { font-size: 13px; }
 .tabs button { padding: 8px 11px; }
+.row.need .needwhere { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
+.row.need .need-sp { width: 40px; height: 40px; flex: none; display: grid; place-items: center; }
+.row.need .need-sp img, .row.need .need-sp .fallback { max-width: 40px; max-height: 40px; }
