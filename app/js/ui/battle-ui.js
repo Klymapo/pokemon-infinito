@@ -71,6 +71,7 @@ export async function runBattle(cfg, hooks) {
 		const v = vis[side], c = cardOf(side);
 		c.style.visibility = v.name ? 'visible' : 'hidden';
 		c.querySelector('.nm').textContent = v.name + (v.gender === 'M' ? ' ♂' : v.gender === 'F' ? ' ♀' : '');
+		if (side === 'p2' && kind === 'wild' && v.sp && G.dex.caught[D.species[v.sp]?.num]) c.querySelector('.nm').append(h('span', { class: 'caughtmark', title: 'Ya lo capturaste' }, '◓'));
 		c.querySelector('.lv').textContent = 'Nv.' + v.lv;
 		const r = v.maxhp ? v.hp / v.maxhp : 0;
 		const bar = c.querySelector('.hpbar i');
@@ -85,7 +86,6 @@ export async function runBattle(cfg, hooks) {
 		tags.innerHTML = '';
 		if (v.status) tags.append(h('span', { class: 'status ' + v.status }, STATUS_ES[v.status] || v.status));
 		if (v.tera) tags.append(h('span', { class: 'type', style: { background: TYPE_COLORS[v.tera] } }, 'Tera ' + typeName(v.tera)));
-		if (side === 'p2' && kind === 'wild' && v.sp && G.dex.caught[D.species[v.sp]?.num]) tags.append(h('span', { style: { fontSize: '12px' } }, '◓ capturado'));
 	}
 	function setSprite(side, sp, shiny) {
 		const s = spriteOf(side);

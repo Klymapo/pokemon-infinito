@@ -377,6 +377,7 @@ function renderRoute(main, loc) {
 		h('button', { class: 'btn', onclick: () => guarded(searchHere) }, '🔍 Buscar'),
 		G.cleared[loc.id] ? h('button', { class: 'btn', onclick: () => guarded(shortcut) }, '⏩ Atajo') : h('button', { class: 'btn', onclick: openZoneGuide }, '📍 Guía'),
 	);
+	actions.append(h('button', { class: 'btn dexnav-btn', onclick: () => openDexNav() }, '🔎 DexNav · rastrear un Pokémon'));
 	main.append(actions);
 	if (routeMsg) main.append(h('div', { class: 'route-log', html: fmtText(routeMsg) }));
 	if (mounted()) main.append(h('div', { class: 'note' }, `Vas a lomos de tu montura: avanzas dos tramos por paso y hay menos encuentros.`));
@@ -465,6 +466,81 @@ async function searchHere() {
 	} else {
 		routeMsg = 'Buscas un rato, pero no encuentras nada.';
 	}
+}
+
+// =================== DexNav ===================
+// Rastrea una especie ya vista en este tramo. Cada éxito seguido con la misma especie sube la cadena:
+// más nivel, más IVs perfectos, más probabilidad de habilidad oculta y de variocolor. Huir o fallar rompe la cadena.
+function dexnavBonus(chain) {
+	return {
+		perfect: chain >= 20 ? 3 : chain >= 10 ? 2 : chain >= 5 ? 1 : 0,
+		hidden: Math.min(0.35, 0.05 + chain * 0.015),
+		shinyRate: Math.max(400, Math.round(4096 / (1 + chain / 4))),
+		lv: chain >= 15 ? 3 : chain >= 10 ? 2 : chain >= 5 ? 1 : 0,
+		find: Math.min(0.92, 0.7 + chain * 0.01),
+	};
+}
+function openDexNav() {
+	const loc = L(G.loc);
+	if (!loc?.route) return;
+	const pos = G.route?.pos || 0;
+	const terrain = tramoTerrain(loc, pos);
+	const all = encounterTable(loc, terrain);
+	const odds = encounterOdds(loc, terrain);
+	const dn = G.dexnav || {};
+	const sheet = openSheet('DexNav', null);
+	const TN = { grass: 'hierba alta', cave: 'cueva', water: 'agua', forest: 'bosque', flowers: 'flores', sand: 'arena', snow: 'nieve', path: 'camino', rocks: 'rocas' };
+	const body = [h('div', { class: 'note' }, `Rastrea un Pokémon que ya hayas visto en este tramo (${TN[terrain] || terrain}). Si lo encuentras varias veces seguidas, la cadena sube: más nivel, más potencial, más opciones de habilidad oculta y de variocolor. Huir o fallar el rastreo rompe la cadena.`)];
+	if (dn.sp) { const b = dexnavBonus(dn.chain); body.push(h('div', { class: 'note' }, `🔗 Cadena actual: **${D.species[dn.sp]?.name}** ×${dn.chain} · IVs perfectos: ${b.perfect} · Hab. oculta: ${Math.round(b.hidden * 100)} % · Variocolor: 1/${b.shinyRate}`.replace(/\*\*/g, ''))); }
+	const list = h('div', { class: 'list' });
+	const species = [...new Set(all.map(e => e.sp))].sort((a, b) => (odds[b] || 0) - (odds[a] || 0));
+	for (const sp of species) {
+		const s = D.species[sp];
+		const seen = G.dex.seen[s.num], caught = G.dex.caught[s.num];
+		const chain = dn.sp === sp ? dn.chain : 0;
+		const p = odds[sp] || 0;
+		const row = h('div', { class: 'mon' + (seen ? '' : ' fainted') },
+			h('div', { class: 'sprite' }, seen ? monImg(sp, { anim: false }) : h('div', { style: { fontSize: '26px' } }, '❔')),
+			h('div', { class: 'info' },
+				h('div', { class: 'name' }, seen ? s.name : '???', caught ? h('span', { class: 'caughtmark' }, '◓') : null, all.find(e => e.sp === sp)?.displaced ? h('span', { class: 'status', style: { background: '#7a5cd6' } }, 'DESPLAZADO') : null),
+				h('div', { class: 'hptext' }, h('span', {}, seen ? (caught ? 'Capturado' : 'Visto, sin capturar') + (chain ? ` · 🔗 ${chain}` : '') : 'Aún no lo has visto'), h('span', {}, p ? `1 de cada ${Math.round(1 / p)}` : ''))),
+			seen ? h('button', { class: 'btn primary dn-go', onclick: async () => { sheet.close(); await guarded(() => dexnavTrack(loc, terrain, sp)); } }, 'Rastrear') : null);
+		list.append(row);
+	}
+	if (!species.length) list.append(h('div', { class: 'empty' }, 'Aquí no hay Pokémon que rastrear ahora mismo.'));
+	body.push(list);
+	sheet.set(body);
+}
+async function dexnavTrack(loc, terrain, sp) {
+	const entries = encounterTable(loc, terrain).filter(e => e.sp === sp);
+	if (!entries.length) { await say(null, 'Ahora mismo no hay rastro de ese Pokémon por aquí.'); return; }
+	G.dexnav ||= {};
+	if (G.dexnav.sp !== sp) G.dexnav = { sp, chain: 0 };
+	const b = dexnavBonus(G.dexnav.chain);
+	await say(null, `Rotom marca un movimiento entre la ${terrain === 'cave' ? 'roca' : terrain === 'water' ? 'superficie del agua' : 'hierba'}. Te acercas despacio…`);
+	if (rng() > b.find) {
+		const had = G.dexnav.chain;
+		G.dexnav.chain = 0;
+		await say(null, `¡Vaya! Se ha dado cuenta y ha huido.${had ? ' La cadena se rompe.' : ''}`);
+		return;
+	}
+	const e = entries[Math.floor(rng() * entries.length)];
+	const [l0, l1] = Array.isArray(e.lv) ? e.lv : [e.lv, e.lv];
+	const level = Math.min(100, l0 + Math.floor(rng() * (l1 - l0 + 1)) + b.lv);
+	const ivIdx = [0, 1, 2, 3, 4, 5].sort(() => rng() - 0.5).slice(0, b.perfect);
+	const ivs = [0, 1, 2, 3, 4, 5].map(i => ivIdx.includes(i) ? 31 : Math.floor(rng() * 32));
+	const mon = createPokemon(sp, { level, ivs, hidden: rng() < b.hidden, shinyRate: count('shinycharm') ? Math.round(b.shinyRate / 3) : b.shinyRate, form: e.form });
+	const res = await battle({ wild: { mon }, terrain });
+	if (res?.result === 'win' || res?.result === 'caught') {
+		G.dexnav.chain = (G.dexnav.chain || 0) + 1;
+		const nb = dexnavBonus(G.dexnav.chain);
+		toast(`🔗 Cadena DexNav: ${D.species[sp].name} ×${G.dexnav.chain}${nb.perfect > b.perfect ? ' · ¡más potencial!' : ''}`);
+	} else {
+		G.dexnav.chain = 0;
+		toast('🔗 La cadena DexNav se ha roto');
+	}
+	await saveGame();
+	render();
 }
 
 async function shortcut() {
@@ -1277,7 +1353,7 @@ export function openZoneGuide() {
 			list.append(h('div', { class: 'mon' + (pNow ? '' : ' fainted') },
 				h('div', { class: 'sprite' }, seen ? monImg(sp, { anim: false }) : h('div', { style: { fontSize: '26px' } }, '❔')),
 				h('div', { class: 'info' },
-					h('div', { class: 'name' }, seen ? s.name : '???', G.dex.caught[s.num] ? '◓' : '', e.displaced ? h('span', { class: 'status', style: { background: '#7a5cd6' } }, 'DESPLAZADO') : null),
+					h('div', { class: 'name' }, seen ? s.name : '???', G.dex.caught[s.num] ? h('span', { class: 'caughtmark' }, '◓') : null, e.displaced ? h('span', { class: 'status', style: { background: '#7a5cd6' } }, 'DESPLAZADO') : null),
 					h('div', { class: 'hptext' }, h('span', {}, h('b', { style: { color: rCol } }, rName), ' · ' + nowTxt), h('span', {}, lvTxt)),
 					split ? h('div', { class: 'oddsplit' }, split) : null)));
 		}

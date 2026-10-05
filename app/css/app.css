@@ -311,3 +311,9 @@ button.cmpmove:active { transform: scale(.98); }
 .bpanel .qb-throw .qb-ico { font-size: 22px; color: #c2443a; line-height: 1; }
 .bpanel .qb-throw .qb-n { font-weight: 700; opacity: .75; font-size: 14px; }
 .bpanel .qb-pick { min-height: 56px; font-size: 20px; padding: 0; }
+
+/* DexNav y marca de capturado */
+.route-actions .dexnav-btn { grid-column: 1 / -1; }
+.caughtmark { color: #e0453a; margin-left: 5px; font-size: .9em; }
+.mon .dn-go { min-height: 40px; padding: 6px 12px; align-self: center; margin-left: 6px; flex: none; }
+.caughtmark { display: inline-block; width: 13px; height: 13px; border-radius: 50%; margin-left: 6px; vertical-align: -1px; font-size: 0; color: transparent; border: 1.5px solid #1d2233; background: linear-gradient(#e0453a 0 42%, #1d2233 42% 58%, #f4f4f4 58%); box-shadow: inset 0 0 0 0 transparent; flex: none; }
