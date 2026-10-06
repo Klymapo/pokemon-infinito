@@ -598,3 +598,5 @@ button.cmpmove:active { transform: scale(.98); }
 .row .ico.tut-mon { width: 44px; height: 44px; background: transparent; }
 .row .ico.tut-mon img { max-width: 100%; max-height: 100%; image-rendering: pixelated; }
 .tut-search { display: block; width: calc(100% - 24px); margin: 8px 12px; }
+.tut-info { align-items: flex-start; }
+.tut-info .tut-where { margin-top: 4px; color: var(--text); opacity: .9; line-height: 1.35; }

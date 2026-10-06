@@ -76,5 +76,19 @@ G.bag.mt_bola_sombra = 1;
 const R3 = M.moveReport('shadowball');
 ok(R3.later.some(o => o.p === gas), 'Gastly aprenderá Bola Sombra por nivel');
 
+// ---------- Cómo evoluciona y dónde se consigue ----------
+const ev = M.evolutionInfo('haunter');
+ok(ev[0]?.to === 'gengar' && ev[0].item === 'linkingcord', 'Haunter → Gengar con Cordón Unión');
+ok(M.evolutionInfo('roselia')[0]?.how.includes('Piedra Día'), 'Roselia → Roserade con Piedra Día');
+ok(/39 de día/.test(M.evolutionInfo('tyrunt')[0]?.how), 'Tyrunt: nivel 39 de día');
+const sinVisitar = M.itemSources('firestone');
+ok(!sinVisitar.shops.length && sinVisitar.unknown > 0, 'sin visitar no se nombran tiendas (sin spoilers)');
+const relieve = Object.values(C.locations).find(l => (l.spots || []).some(sp => sp.action?.shop === 'tienda_piedras'));
+G.visited[relieve.id] = true;
+const conVisita = M.itemSources('firestone');
+ok(conVisita.shops.some(x => x.name.includes('Piedras')), `al visitarla sale la tienda de piedras: ${M.sourcesText('firestone')}`);
+const guia = M.shopGuide();
+ok(guia.stones.some(x => x.id === 'firestone'), 'la guía de tiendas lista la Piedra Fuego');
+
 console.log(fails ? `\n${fails} fallos` : '\nTodo bien');
 process.exit(fails ? 1 : 0);

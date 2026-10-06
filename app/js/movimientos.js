@@ -1,6 +1,7 @@
 // Lógica del Tutor de movimientos (sin interfaz, para poder probarla en Node).
 import { D, toID } from './data.js';
-import { G } from './state.js';
+import { G, evalCond } from './state.js';
+import { C, topLoc } from './content.js';
 import { learnsetOf, canLearn } from './pokemon.js';
 
 const mvName = id => D.moves[id]?.name || id;
@@ -82,3 +83,109 @@ export function moveReport(moveId) {
 	return { has, recall, later, viaTM, dex, tmItem: all[moveId] || null, haveTM: !!tms[moveId] };
 }
 
+
+// =================== Dónde se consigue un objeto (sin spoilers) ===================
+// Solo nombra lugares que ya conoces; del resto dice cuántos hay. Las tiendas con condición
+// (p. ej. «badges >= 5») salen como «más adelante» hasta que se cumple.
+const knownLoc = id => { const t = topLoc(id); return !!(G.visited[id] || (t && G.visited[t.id])); };
+const placeOf = id => { const t = topLoc(id); return t && t.id !== id ? t.name : C.locations[id]?.name || id; };
+
+export function itemSources(itemId) {
+	itemId = toID(itemId);
+	const shops = [], gather = [], ground = [];
+	let unknown = 0, story = false;
+	const seen = new Set();
+	const push = (arr, key, v) => { if (seen.has(key)) return; seen.add(key); arr.push(v); };
+	for (const loc of Object.values(C.locations)) {
+		const spots = [...(loc.spots || [])];
+		if (loc.route) for (const n in loc.route.tramos || {}) for (const it of [].concat(loc.route.tramos[n] || [])) {
+			if (it?.spot) spots.push(it.spot);
+			if (it?.item === itemId) {
+				if (!knownLoc(loc.id)) { unknown++; continue; }
+				if (G.routeProg?.[loc.id]?.items?.[n + ':' + itemId]) continue; // ya lo recogiste
+				push(ground, 'g' + loc.id + n, { place: loc.name, hidden: !!it.hidden });
+			}
+		}
+		for (const sp of spots) {
+			const a = sp?.action || {};
+			if (a.shop && C.shops[a.shop]) {
+				const e = (C.shops[a.shop].items || []).find(x => toID(typeof x === 'string' ? x : x.id) === itemId);
+				if (e) {
+					if (!knownLoc(loc.id)) { unknown++; continue; }
+					const cond = typeof e === 'object' ? e.cond : undefined;
+					push(shops, 's' + a.shop, { name: C.shops[a.shop].name, place: placeOf(loc.id), ok: cond === undefined || evalCond(cond), price: typeof e === 'object' ? e.price : undefined });
+				}
+			}
+			const g = a.gather && C.gather[a.gather];
+			if (g) {
+				const e = (g.table || []).find(x => x.id === itemId);
+				if (e) {
+					if (!knownLoc(loc.id)) { unknown++; continue; }
+					if (e.cond !== undefined && !evalCond(e.cond)) continue;
+					push(gather, 'r' + a.gather + loc.id, { name: g.name, place: placeOf(loc.id), rare: (e.w || 0) <= 4 });
+				}
+			}
+		}
+	}
+	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give && toID(c.give) === itemId) story = true; for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o?.then); } };
+	for (const id in C.scripts) { scan(C.scripts[id]); if (story) break; }
+	return { shops, gather, ground, unknown, story };
+}
+
+/** Texto corto de dónde se consigue. */
+export function sourcesText(itemId) {
+	const S = itemSources(itemId);
+	const parts = [];
+	const cap = (xs, f, more) => { const out = xs.slice(0, 3).map(f); if (xs.length > 3) out.push(more(xs.length - 3)); return out; };
+	const ok = S.shops.filter(s => s.ok), later = S.shops.filter(s => !s.ok);
+	parts.push(...cap(ok, s => `🛒 ${s.name} (${s.place})`, n => `🛒 y ${n} ${n === 1 ? 'tienda' : 'tiendas'} más`));
+	if (later.length) parts.push(`🛒 Más adelante en ${later.length === 1 ? later[0].name + ' (' + later[0].place + ')' : later.length + ' tiendas que ya conoces'}`);
+	parts.push(...cap(S.gather, g => `🍒 ${g.name}, ${g.place}${g.rare ? ' (rara)' : ''}`, n => `🍒 y ${n} ${n === 1 ? 'punto' : 'puntos'} de recolección más`));
+	parts.push(...cap(S.ground, g => `📍 ${g.place}${g.hidden ? ' (escondida)' : ''}`, n => `📍 y ${n} más por el camino`));
+	if (S.story) parts.push('🎁 Como premio o regalo en la historia');
+	if (S.unknown) parts.push(`❔ ${S.unknown === 1 ? 'Un sitio' : S.unknown + ' sitios'} que aún no conoces`);
+	return parts.length ? parts.join(' · ') : 'Aún no se puede conseguir en el juego.';
+}
+
+// =================== Cómo evoluciona ===================
+const TIME_ES = c => /night/i.test(c || '') ? ' de noche' : /day/i.test(c || '') ? ' de día' : '';
+export function evolutionInfo(sp) {
+	const s = D.species[toID(sp)];
+	if (!s?.evos) return [];
+	return s.evos.map(id => ({ id, e: D.species[id] })).filter(x => x.e).map(({ id, e }) => {
+		const cond = e.evoCondition || '';
+		let how = '', item = null;
+		switch (e.evoType) {
+		case undefined: case null:
+			how = e.evoLevel ? `Al nivel ${e.evoLevel}${TIME_ES(cond)}` : 'Subiendo de nivel';
+			if (/female/i.test(cond)) how += ' (solo hembras)'; else if (/male/i.test(cond)) how += ' (solo machos)';
+			if (/atk > def/i.test(cond)) how += ' si su Ataque es mayor que su Defensa';
+			if (/atk < def/i.test(cond)) how += ' si su Defensa es mayor que su Ataque';
+			if (/atk = def/i.test(cond)) how += ' si Ataque y Defensa son iguales';
+			break;
+		case 'levelFriendship': how = `Subir de nivel con amistad alta${TIME_ES(cond)}`; break;
+		case 'levelHold': item = toID(e.evoItem); how = `Subir de nivel${TIME_ES(cond)} con ${D.items[item]?.name || e.evoItem} equipado`; break;
+		case 'levelMove': how = `Subir de nivel sabiendo ${D.moves[toID(e.evoMove)]?.name || e.evoMove}`; break;
+		case 'useItem': item = toID(e.evoItem); how = `Usar ${D.items[item]?.name || e.evoItem}`; break;
+		case 'trade': item = 'linkingcord'; how = 'Usar el Cordón Unión (no hay intercambios)'; break;
+		default: item = 'linkingcord'; how = 'Condición especial: el Cordón Unión también sirve'; break;
+		}
+		if (e.evoRegion) how += ` (forma de ${e.evoRegion})`;
+		return { to: id, name: e.name, how, item, where: item ? sourcesText(item) : null };
+	});
+}
+
+/** Objetos de evolución y MT que ya se pueden conseguir en sitios que conoces (para la pestaña «Dónde conseguir»). */
+export function shopGuide() {
+	const ids = Object.keys(D.items).filter(id => D.items[id]?.cat === 'evolution' || D.items[id]?.tm);
+	const out = { stones: [], tms: [] };
+	for (const id of ids) {
+		const S = itemSources(id);
+		const known = S.shops.length + S.gather.length + S.ground.length;
+		if (!known && !(G.bag[id] > 0)) continue;
+		(D.items[id].tm ? out.tms : out.stones).push({ id, name: D.items[id].name, have: G.bag[id] || 0, text: sourcesText(id), tm: D.items[id].tm ? toID(D.items[id].tm) : null });
+	}
+	out.stones.sort((a, b) => a.name.localeCompare(b.name));
+	out.tms.sort((a, b) => a.name.localeCompare(b.name));
+	return out;
+}
