@@ -113,10 +113,18 @@ AUDIT_JS = r"""
       if (el.width < r.width * 1.5 && cs.imageRendering !== 'pixelated' && cs.imageRendering !== 'crisp-edges') add('·', 'lienzo', el, `Lienzo de ${el.width}px pintado a ${Math.round(r.width)}px sin \`image-rendering: pixelated\`: el pixel art se ve borroso.`);
     }
   }
-  // Botones que se pisan
+  // Botones que se pisan (solo cuenta la parte visible: lo que queda tapado por el borde de una lista con scroll no se puede tocar)
+  const visRect = el => {
+    let r = el.getBoundingClientRect(), x0 = r.left, y0 = r.top, x1 = r.right, y1 = r.bottom;
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      const o = getComputedStyle(p);
+      if (/(auto|scroll|hidden)/.test(o.overflowY + o.overflowX)) { const q = p.getBoundingClientRect(); x0 = Math.max(x0, q.left); y0 = Math.max(y0, q.top); x1 = Math.min(x1, q.right); y1 = Math.min(y1, q.bottom); }
+    }
+    return { left: x0, top: y0, right: x1, bottom: y1 };
+  };
   const taps = all.filter(el => el.matches('button, a[href], input, [role=button]') && !el.closest('.cs-stage'));
   for (let i = 0; i < taps.length; i++) for (let j = i + 1; j < taps.length; j++) {
-    const a = taps[i].getBoundingClientRect(), b = taps[j].getBoundingClientRect();
+    const a = visRect(taps[i]), b = visRect(taps[j]);
     if (taps[i].contains(taps[j]) || taps[j].contains(taps[i])) continue;
     const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left), oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
     if (ox > 4 && oy > 4) add('✖', 'pisan', taps[i], `Se pisa con otro botón («${txt(taps[j]).slice(0, 25)}»): un toque puede caer en el equivocado.`);
