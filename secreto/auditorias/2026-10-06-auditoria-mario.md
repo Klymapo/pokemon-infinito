@@ -174,6 +174,21 @@ Repartir en las noches de **profundidad** y en los bloques nuevos. Cada uno con 
 
 ## 13. Orden recomendado
 
+> **Actualizado 14:58: Mario eligió «Puzzles y mecánicas» como prioridad.** Este orden manda sobre el de abajo:
+>
+> **Motor (0:47), varias noches seguidas:**
+> 1. Bug PC «80/30» y únicos con `vars.hitos` (rápidos, siguen primero).
+> 2. **Componente de rejilla táctil** (`app/js/ui/rejilla.js`): cuadrícula de hasta 7×7 con rocas empujables (Fuerza), hielo que desliza, interruptores, puertas y meta; definida en el contenido como `puzzle: { grid: [...], ... }` desde un guion; con prueba en `herramientas/test/` y soporte en el bot (que resuelva por BFS) y en el validador (que compruebe que tiene solución). Documentarlo en `docs/CONTENIDO.md`.
+> 3. **Expediente con pruebas**: pestaña en el Diario con pruebas recogidas (`proof` en guiones) y un paso `accuse`/careo que pide presentar N pruebas; equivocarse tiene consecuencia (flag), no reintento gratis.
+> 4. **Expediciones**: mandar hasta 3 Pokémon de la caja a una zona visitada durante 1–8 h reales; vuelven con objetos según tipo, nivel y zona (tabla en contenido). Funciona sin conexión con la hora del móvil; sin trampas por cambiar la hora (si el reloj retrocede, no se cobra).
+> 5. **Puertas de tipo/movimiento** y **puzles de horario** como condiciones nuevas del guion (`cond: { teamType: 'electric' }`, `{ teamMove: 'flash' }`, ya existe la hora).
+> 6. **Inscripciones Unown**: texto cifrado que se descifra letra a letra según las formas de Unown registradas.
+> 7. Después: pesca con minijuego, cocina/campamento, rival que estudia tus combates, combates dobles/con aliado, torre/ranking, álbum/museo, reputación visible, concursos.
+>
+> **Historia (3:00):** en cuanto exista cada componente, usarlo en zonas que Mario ya pisa (B2–B3) como profundidad: al menos un puzle de rejilla por cueva o ruina importante, un caso con Expediente, una puerta de tipo y una inscripción Unown en las Ruinas Alfa. Cada uno con su mini historia y NPC que vuelva. La pasada de español neutro sigue siendo prioritaria en texto.
+>
+> Orden original (para lo demás):
+
 **Noche de motor/arte (0:47):**
 1. Bug PC «80/30».
 2. Únicos con contador propio (`vars.hitos`) antes del B5.
