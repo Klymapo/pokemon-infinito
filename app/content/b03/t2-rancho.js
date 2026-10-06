@@ -638,8 +638,13 @@ export default {
 			{ if: 'has("tinymushroom")', then: [{ say: 'gaspar', text: 'Y esa Miniseta… pequeñita, terca, amarga. Perfecta.' }], else: [{ say: 'gaspar', text: 'Las setas crecen en las paredes húmedas de las galerías del Monte Mortero, cerca del principio. Las pálidas. Las que brillan un poco.' }] },
 		],
 		b03_gaspar_cocina: [
-			{ take: 'honey' },
-			{ take: 'tinymushroom' },
+			{ if: 'has("honey") && has("tinymushroom")', then: [
+				{ take: 'honey' },
+				{ take: 'tinymushroom' },
+			], else: [
+				{ say: 'gaspar', text: '…Espera. Aquí falta algo. Sin miel y sin Miniseta no hay furia que valga. Tráemelas y lo hacemos bien.' },
+				{ end: true },
+			] },
 			{ text: 'Gaspar tuesta la Miniseta en una sartén de hierro hasta que huele a bosque. La muele. Pone la miel al fuego, con mantequilla y azúcar moreno, y remueve, y remueve, y remueve.' },
 			{ say: 'gaspar', text: 'Ahora viene lo importante. La abuela del panadero dice que el Caramelo Furia hay que hacerlo enfadado. Que si lo haces contento, sale caramelo y ya. Necesito furia.' },
 			{ say: 'gaspar', text: 'Yo no sé enfadarme. Lo he intentado. Me sale pena. —Te da la cuchara—. Hazlo tú.' },

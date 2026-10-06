@@ -46,7 +46,7 @@ export default {
 				{ text: 'Líder de intercambio: **Blanca** (Johto), tipo **Normal**.' },
 				{ cond: 'visited("relieve")', text: '3 Pokémon, niveles 21 a 23.' },
 				{ cond: 'visited("relieve")', text: 'En toda Johto se habla de su **Miltank** y de su **Rodar**: cada vuelta pega más fuerte que la anterior.' },
-				{ cond: 'flag.b01_rhi_conto_miltank', text: 'Rhi dice que Miltank se cura con **Batido** y que **Atracción** la dejó sin moverse. Una Pokémon hembra (o uno sin género) es inmune.' },
+				{ cond: 'flag.b01_rhi_conto_miltank', text: 'Rhi dice que Blanca cura a Miltank con **Leche Mu-mu** y que **Atracción** la dejó sin moverse. Una Pokémon hembra (o uno sin género) es inmune.' },
 				{ cond: 'beat("blanca_g2")', text: '✔ Medalla Encanto conseguida.' },
 			],
 		},

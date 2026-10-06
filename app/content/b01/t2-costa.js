@@ -295,6 +295,7 @@ export default {
 			bg: { type: 'cave', crystals: '#7fd6e0' },
 			desc: 'Un túnel natural que atraviesa la sierra hasta la costa. Las paredes tienen **vetas de cristal** que recogen la luz de fuera y la devuelven, azulada, a lo largo del pasillo principal.\n\nHay galerías laterales donde el cristal no llega. Ahí dentro, la oscuridad es completa.',
 			links: ['ruta7', 'ruta8'],
+			mapNote: 'Paso a la costa · Galería Honda (hace falta luz)',
 			rumors: [
 				{ text: 'El pasillo principal se cruza sin lámpara. La **Galería Honda**, no: ahí abajo no llega ni el cristal.' },
 				{ text: 'En lo más hondo hay dibujos en la roca. Más viejos que Kalos, dicen.' },
@@ -382,6 +383,7 @@ export default {
 			name: 'Pueblo Petroglifo', short: 'Petroglifo', region: 'kalos', kind: 'town', map: { x: 6, y: 101 },
 			bg: { type: 'town', roofs: ['#f3efe6', '#e9e3d0', '#5aa3c4'] },
 			desc: 'Un pueblo de pescadores de casas blancas, con barcas varadas en la arena y redes secándose al sol. En las rocas de la playa hay **petroglifos**: figuras talladas hace miles de años que nadie ha sabido leer.\n\nAl norte, una senda pedregosa sube hacia el **Paso de Rhyhorn**.',
+			descNight: 'De noche, la marea sube y cubre la mitad de las rocas talladas. Las barcas cabecean en la arena y las redes gotean colgadas de los postes.\n\nCon la luna y el agua moviéndose encima, los **petroglifos** que quedan fuera parecen moverse también. Los pescadores no miran hacia la playa al volver a casa.',
 			links: ['ruta8'],
 			mapNote: 'Laboratorio de Fósiles · Acuario',
 			onEnter: [{ script: 'b01_llegada_petroglifo', once: true }],
@@ -565,11 +567,11 @@ export default {
 		tobias_1: {
 			name: 'Tobías', cls: '«Estrella» del show', npc: 'tobias', ai: 3,
 			team: [
-				{ sp: 'persian', lv: 17, moves: ['fakeout', 'payday', 'bite', 'growl'], ability: 'technician', nature: 'jolly', iv: 22 },
+				{ sp: 'meowth', lv: 17, moves: ['fakeout', 'payday', 'bite', 'growl'], ability: 'technician', nature: 'jolly', iv: 22 },
 				{ sp: 'spoink', lv: 15, moves: ['psybeam', 'confusion', 'growl', 'splash'], ability: 'thickfat', nature: 'modest', iv: 20 },
 			],
 			items: [{ id: 'potion', n: 1 }],
-			intro: '¡Patrocinadores, atentos! ¡Combate en directo! ¡Duquesa, haz lo tuyo! …Lo tuyo. No eso. Lo OTRO.',
+			intro: '¡Patrocinadores, atentos! ¡Combate en directo! ¡Duquesa, haz lo tuyo! …¿No? ¿Hoy no sales? Vale. ¡Que salga la doble de acción!',
 			win: '¡Derrota épica! ¡Eso engancha! ¡Los números van a subir! …¿Verdad, Duquesa? …Duquesa no me habla.',
 			lose: '¡VICTORIA! ¡Patrocinadores, eso ha sido por ustedes! ¡Y por Duquesa! Sobre todo por Duquesa.',
 		},
@@ -609,6 +611,15 @@ export default {
 			{ say: 'bastien', text: 'Noa, ¿le cuento lo del contrato o se lo cuentas tú?' },
 			{ say: 'noa', text: '…Hay una cláusula. Los patrocinados tienen que demostrar el nivel del programa «ante testigos cualificados». Y tú tienes una medalla. Eres testigo cualificado.' },
 			{ say: 'bastien', text: 'Cláusula 14. Literalmente. La 14 es la que lo dice todo: tiene subapartados hasta la letra ñ. Así que… ¿combatimos? Te prometo que no es personal. Bueno, un poco sí. Froakie tiene ganas.' },
+			{ choice: [
+				{ text: '«Antes deja que cure a mi equipo.»', then: [
+					{ say: 'bastien', text: 'Claro, claro. Lemnis me paga las Pociones. Por una vez, que sirvan para algo bueno.' },
+					{ heal: 'Bastien abre una caja de Superpociones con la lemniscata en la tapa y te pasa unas cuantas. Noa lo apunta en su libreta: «gasto de cortesía».' },
+				] },
+				{ text: '«Así como estoy. Vamos.»', then: [
+					{ say: 'bastien', text: 'Vale. Si luego pierdes, no vale decir que fue por eso. Bueno, sí vale. Yo lo diría.' },
+				] },
+			] },
 			{ battle: 'bastien_1', lose: 'continue',
 				onWin: [
 					{ say: 'bastien', text: 'Ganaste. Me alegro, ¿sabes? Pero no se lo digas a mi contrato.' },
@@ -1037,7 +1048,12 @@ export default {
 		],
 		b01_gaspar_cocina: [
 			{ say: 'gaspar', text: '¡Miel, Miniseta y Baya Meloc! ¡Lo tienes todo! Siéntate. Siéntate y no toques nada.' },
-			{ take: 'honey' }, { take: 'tinymushroom' }, { take: 'pechaberry' },
+			{ if: GASPAR_TODO, then: [
+				{ take: 'honey' }, { take: 'tinymushroom' }, { take: 'pechaberry' },
+			], else: [
+				{ say: 'gaspar', text: '…Un momento. Aquí falta algo. Sin los tres ingredientes no hay plato. Vuelve cuando lo tengas todo, que la olla no se va a ningún lado.' },
+				{ end: true },
+			] },
 			{ text: 'Gaspar trabaja como si bailara. La seta, a la plancha con mantequilla. La baya, reducida con un chorro de agua del río hasta que se vuelve almíbar. La miel, al final, en hilo fino, «para que se entere de que es Kalos».' },
 			{ text: 'El olor atrae a medio río: tus Pokémon salen de sus Poké Balls sin que nadie los llame, un Croagunk se asoma entre las cañas y dos Ducklett aterrizan en la orilla con cara de inocentes.' },
 			{ say: 'gaspar', text: 'Regla de oro de la cocina de camino: primero, dieta equilibrada. Segundo, que coma todo el grupo. Tercero, no preguntar qué hay en la olla si no quieres saberlo.' },
@@ -1143,6 +1159,15 @@ export default {
 			{ say: 'tobias', as: 'Chico del trípode', text: '¡Un momento! ¡Giro de guion! ¡{Un|Una|Une} aventurer{o|a|e} salvaje aparece! —Te enfoca con el móvil—. ¡Saluda a la audiencia! ¡Hay como… doce personas mirando! ¡Doce!' },
 			{ say: 'tobias', text: 'Tobías Quiroga. Y ella es **Duquesa**. La verdadera estrella. Yo solo llevo la cámara y las bolsas. Y las Pociones. Y el champú de Duquesa.' },
 			{ say: 'tobias', text: 'Los patrocinadores quieren acción. ¡Y la acción eres tú! ¿Combate? ¡Di que sí! Los combates suben los números.' },
+			{ choice: [
+				{ text: '«Primero curo a mi equipo.»', then: [
+					{ say: 'tobias', text: '¡Pausa publicitaria! ¡Este momento de recuperación se lo traen nuestros patrocinadores!' },
+					{ heal: 'Tobías te lanza un puñado de Pociones «cortesía de los patrocinadores». Duquesa mira cómo curas a tu equipo con cara de estar pagándolas ella.' },
+				] },
+				{ text: '«Así como estoy. ¡Acción!»', then: [
+					{ say: 'tobias', text: '¡Sin cortes! ¡Directo y sin red! ¡Eso a la audiencia le encanta!' },
+				] },
+			] },
 			{ battle: 'tobias_1', lose: 'continue',
 				onWin: [{ say: 'tobias', text: '¡Increíble! ¡Perdimos! ¡En directo! ¡Los comentarios están ardiendo! …Un comentario. Dice «jajaja». Pero ARDE.' }],
 				onLose: [{ say: 'tobias', text: '¡Victoria! ¡Duquesa, mira, ganamos! …Duquesa no mira. Duquesa nunca mira. Es parte de su encanto.' }] },

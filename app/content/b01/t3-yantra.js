@@ -50,6 +50,7 @@ export default {
 			desc: 'Una cueva enorme con las paredes cuajadas de **cristales** que brillan solos, sin luz que los toque. Los geólogos dicen que es por la energía que guardan. Los niños de Relieve dicen que es porque la cueva está contenta.',
 			descs: [{ cond: 'flag.b01_cueva_flare_hecha', text: 'Los cristales siguen brillando… salvo en la galería del fondo, donde los arrancaron de cuajo. Allí quedan huecos negros en la pared, como dientes que faltan.' }],
 			links: ['ruta9', 'relieve'],
+			mapNote: 'Cristales luminosos · paso a Relieve',
 			onEnter: [{ script: 'b01_cueva_entrada', once: true }],
 			rumors: [
 				{ text: 'Hay Cubone en la cueva. Dicen que algunos llevan huesos que no son de su madre. Mejor no preguntar de quién.' },
@@ -96,6 +97,7 @@ export default {
 			name: 'Ciudad Relieve', short: 'Relieve', region: 'kalos', kind: 'city', map: { x: 8, y: 64 },
 			bg: { type: 'city', roofs: ['#c97a4a', '#e0b070', '#8a5a3a'], hill: '#b08a5a' },
 			desc: 'Una ciudad en cuesta, de casas color arena apoyadas unas en otras como si se ayudaran a subir. Algunas calles tienen barandilla. Arriba del todo, el **gimnasio**: una pared de escalada de treinta metros.\n\nEn la plaza, un cartel del Circuito: «Líder de intercambio: **Blanca** (Johto). El líder titular, Lino, está de intercambio en Kanto».',
+			descNight: 'De noche, Relieve es una escalera de ventanas encendidas. Las barandillas de las calles brillan de rocío y ya huele al pan de mañana.\n\nArriba del todo, el muro del gimnasio es una sombra enorme contra el cielo. Alguien se ha dejado una linterna colgada de una presa, a media altura.',
 			links: ['cueva_brillante', 'ruta10'],
 			mapNote: 'Gimnasio: Blanca (Normal)',
 			onEnter: [
@@ -248,14 +250,14 @@ export default {
 						{ text: 'Un claro entre pinos. Desde aquí se ve la Torre Maestra, diminuta, sobre el mar.', cond: '!flag.b01_lila_r11 || visited("yantra")' },
 						{ item: 'hyperpotion', hidden: true },
 					],
-					4: [{ script: 'b01_r11_pareja' }, { trainer: 'r11_2' }, { trainer: 'r11_3' }],
-					5: [{ script: 'b01_lila_despedida_r11', mark: true }, { item: 'blackbelt' }],
+					4: [{ script: 'b01_r11_pareja' }, { trainer: 'r11_2' }],
+					5: [{ trainer: 'r11_3' }, { script: 'b01_lila_despedida_r11', mark: true }, { item: 'blackbelt' }],
 					6: [{ trainer: 'r11_4', optional: true, label: 'Lleva unos auriculares enormes y un Dedenne en el hombro' }],
 					7: [{ text: 'El sendero baja hacia una boca de roca pulida que devuelve tu reflejo, un poco deformado: la **Cueva Reflejos**.' }],
 				},
 				encounters: {
 					grass: [
-						{ sp: 'hariyama', lv: [23, 25], w: 30 },
+						{ sp: 'hariyama', lv: [24, 25], w: 30 },
 						{ sp: 'staravia', lv: [23, 25], w: 30 },
 						{ sp: 'sawk', lv: [23, 25], w: 15 },
 						{ sp: 'throh', lv: [23, 25], w: 15 },
@@ -275,6 +277,7 @@ export default {
 			bg: { type: 'cave', crystals: '#e8f4ff', dark: true },
 			desc: 'Las paredes de esta cueva son **espejos naturales**: roca pulida por el agua durante milenios. Tu reflejo te sigue por todas partes, multiplicado, a veces con un segundo de retraso.\n\nMás adentro, la luz se acaba.',
 			links: ['ruta11', 'yantra'],
+			mapNote: 'Espejos naturales · tramo oscuro (hace falta luz)',
 			rumors: [
 				{ text: 'Dicen que en los espejos del fondo se ve lo que uno va a ser. Una señora de Yantra se vio con nietos. No tenía hijos. Ahora tiene tres.' },
 				{ text: 'Hay un Sableye que roba linternas. Si se la lleva, no corras detrás. Es lo que quiere.' },
@@ -403,10 +406,10 @@ export default {
 			team: [
 				{ sp: 'spoink', lv: 18, moves: ['psybeam', 'confuseray', 'magiccoat', 'zenheadbutt'] },
 				{ sp: 'woobat', lv: 18, moves: ['aircutter', 'attract', 'confusion', 'imprison'] },
-				{ sp: 'persian', lv: 20, moves: ['fakeout', 'bite', 'payday', 'taunt'], ability: 'technician', item: 'silkscarf' },
+				{ sp: 'meowth', lv: 20, moves: ['fakeout', 'bite', 'payday', 'taunt'], ability: 'technician', item: 'silkscarf' },
 			],
 			items: [{ id: 'superpotion', n: 1 }],
-			intro: '¡Música dramática, por favor! …Bueno, imagínensela. ¡EL JEFE DE PISO HA APARECIDO!',
+			intro: '¡Música dramática, por favor! …Bueno, imagínensela. ¡EL JEFE DE PISO HA APARECIDO! Duquesa no se despeina por un jefe de piso: para eso está su doble de acción.',
 			win: '¡Y el jefe de piso cae! ¡Patrocinadores, eso es lo que yo llamo un giro de guion!',
 			lose: '¡El jefe de piso sigue en pie! ¡No cambien de canal!' },
 
@@ -421,9 +424,9 @@ export default {
 			team: [
 				{ sp: 'clefairy', lv: 21, moves: ['disarmingvoice', 'attract', 'defensecurl', 'gravity'], ability: 'cutecharm', item: 'oranberry', nature: 'bold' },
 				{ sp: 'furfrou', lv: 22, moves: ['headbutt', 'bite', 'sandattack', 'babydolleyes'], ability: 'furcoat', item: 'silkscarf', nature: 'adamant' },
-				{ sp: 'miltank', lv: 23, moves: ['rollout', 'milkdrink', 'attract', 'stomp'], ability: 'thickfat', item: 'sitrusberry', nature: 'impish' },
+				{ sp: 'miltank', lv: 23, moves: ['rollout', 'defensecurl', 'attract', 'stomp'], ability: 'thickfat', item: 'sitrusberry', nature: 'impish' },
 			],
-			items: [{ id: 'superpotion', n: 1 }],
+			items: [{ id: 'moomoomilk', n: 1 }],
 			intro: '¡Miltank, a rodar! ¡Rueda, rueda, rueda!',
 			win: '¿Q-qué? ¿Ya está? ¿Ya se ha acabado?',
 			lose: '¡Gané! ¡Gané! ¡Waaah, qué emoción, voy a llorar! …Ya estoy llorando.' },
@@ -437,9 +440,9 @@ export default {
 		// ----- Relieve: rival -----
 		rhi_2: { name: 'Rhi', cls: 'Rival', npc: 'rhi', ai: 3, iv: 25,
 			team: [
-				{ sp: 'farfetchdgalar', lv: 21, moves: ['rocksmash', 'brutalswing', 'furycutter', 'detect'], ability: 'steadfast', item: 'leek' },
+				{ sp: 'farfetchdgalar', lv: 21, moves: ['rocksmash', 'brutalswing', 'furycutter', 'sandattack'], ability: 'steadfast', item: 'leek' },
 				{ sp: 'corvisquire', lv: 21, moves: ['pluck', 'furyattack', 'scaryface', 'taunt'], ability: 'keeneye' },
-				{ sp: 'raboot', lv: 22, moves: ['doublekick', 'flamecharge', 'quickattack', 'headbutt'], ability: 'blaze', item: 'charcoal' },
+				{ sp: 'raboot', lv: 22, moves: ['doublekick', 'flamecharge', 'quickattack', 'takedown'], ability: 'blaze', item: 'charcoal' },
 			],
 			items: [{ id: 'superpotion', n: 1 }],
 			intro: '¡Saque de centro! ¡Raboot, a la delantera!',
@@ -478,7 +481,7 @@ export default {
 		r11_1: { name: 'Sacha', cls: 'Karateka', ai: 2, team: [{ sp: 'throh', lv: 24 }, { sp: 'sawk', lv: 24 }],
 			intro: 'Entreno en esta ruta porque desde aquí se ve la Torre Maestra. Cuando estoy cansado, la miro. Sigo cansado, pero con vistas.', win: '¿Vas a la Torre? Saluda a la estatua de mi parte. Es la única que nunca me ha ganado.' },
 		r11_2: { name: 'Maëlle', cls: 'Luchadora', ai: 2, team: [{ sp: 'hariyama', lv: 24 }, { sp: 'staravia', lv: 24 }],
-			intro: '¡Eh, la aprendiz de la Torre! ¿Traes público? ¡Mejor! Mi hermano y yo vamos de dos en dos.', win: 'Ahora va mi hermano. Él pega más fuerte. Yo pego más bonito.' },
+			intro: '¡Eh, la aprendiz de la Torre! ¿Traes público? ¡Mejor! Mi hermano y yo vamos de dos en dos.', win: 'Ahora va mi hermano. Te espera un poco más abajo, en la curva. Él pega más fuerte. Yo pego más bonito.' },
 		r11_3: { name: 'Gabin', cls: 'Luchador', ai: 2, team: [{ sp: 'nidorino', lv: 24 }, { sp: 'sawk', lv: 25 }],
 			intro: 'Mi hermana dice que yo pego más fuerte. Es verdad. Lo que no dice es que también pego peor.', win: 'Vale. A la playa. A entrenar. Otra vez. Con ella.' },
 		r11_4: { name: 'Nadia', cls: 'Técnica de radio', ai: 2, team: [{ sp: 'dedenne', lv: 25 }, { sp: 'chingling', lv: 24 }],
@@ -502,9 +505,9 @@ export default {
 		corelia_g3: { name: 'Corelia', cls: 'Líder', npc: 'corelia', ai: 4, iv: 28, reward: 3200,
 			team: [
 				{ sp: 'mienfoo', lv: 29, moves: ['fakeout', 'forcepalm', 'uturn', 'detect'], ability: 'regenerator', item: 'expertbelt', nature: 'jolly' },
-				{ sp: 'machoke', lv: 30, moves: ['crosschop', 'bulkup', 'rockslide', 'knockoff'], ability: 'guts', item: 'muscleband', nature: 'adamant' },
-				{ sp: 'hawlucha', lv: 31, moves: ['flyingpress', 'aerialace', 'highjumpkick', 'roost'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly' },
-				{ sp: 'lucario', lv: 32, moves: ['forcepalm', 'metalclaw', 'bonerush', 'extremespeed'], ability: 'justified', item: 'blackbelt', nature: 'adamant' },
+				{ sp: 'machoke', lv: 30, moves: ['brickbreak', 'bulkup', 'rockslide', 'knockoff'], ability: 'guts', item: 'muscleband', nature: 'adamant' },
+				{ sp: 'hawlucha', lv: 31, moves: ['brickbreak', 'aerialace', 'bounce', 'roost'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly' },
+				{ sp: 'lucario', lv: 32, moves: ['forcepalm', 'metalclaw', 'bulldoze', 'quickattack'], ability: 'justified', item: 'blackbelt', nature: 'adamant' },
 			],
 			items: [{ id: 'superpotion', n: 1 }],
 			intro: '¡Vamos a hacer RUIDO! ¡A TOPE!',
@@ -512,7 +515,7 @@ export default {
 			lose: '¡Así se hace, Lucario! ¡Vuelve cuando quieras, que la pista no se cierra nunca!' },
 		corelia_torre: { name: 'Corelia', cls: 'Heredera de la Megaevolución', npc: 'corelia', ai: 5, iv: 31, reward: 4000, gimmick: 'mega', ace: 'lucario', bg: 'tower',
 			team: [
-				{ sp: 'lucario', lv: 34, moves: ['aurasphere', 'flashcannon', 'bonerush', 'extremespeed'], ability: 'justified', item: 'lucarionite', nature: 'hasty' },
+				{ sp: 'lucario', lv: 34, moves: ['aurasphere', 'flashcannon', 'bulldoze', 'quickattack'], ability: 'justified', item: 'lucarionite', nature: 'hasty' },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }],
 			intro: '¡Lucario! ¡Respondamos al vínculo! ¡MEGAEVOLUCIÓN!',
@@ -595,10 +598,17 @@ export default {
 			], else: [
 				{ text: 'Bastien sigue detrás de la estalagmita. Te hace un gesto con la cabeza: «otra vez». Los reclutas siguen ahí.' },
 			] },
-			{ if: '!beat("recluta_flare_c1")', then: [{ battle: 'recluta_flare_c1' }] },
+			{ if: '!beat("recluta_flare_c1")', then: [
+				{ say: 'bastien', text: 'Toma, rápido. —Te pone en la mano una bolsa de Pociones con la lemniscata—. Me las paga Lemnis. Que sirvan para algo.' },
+				{ heal: 'Agachad{o|a|e} detrás de la estalagmita, curas a tu equipo a toda prisa con las Pociones de Bastien.' },
+				{ battle: 'recluta_flare_c1' },
+			] },
 			{ text: 'Mientras tanto, Frogadier sale disparado de detrás de la roca y se encarga de un tercer recluta, que acaba en el suelo con la cara llena de espuma.' },
 			{ say: 'recluta_flare', text: '¡Eh! ¡Que me manchas el traje! ¡Es de temporada!' },
-			{ if: '!beat("recluta_flare_c2")', then: [{ battle: 'recluta_flare_c2' }] },
+			{ if: '!beat("recluta_flare_c2")', then: [
+				{ heal: 'Mientras el recluta se limpia la espuma de las gafas, Bastien te lanza otra Poción por encima de la roca. Tu equipo aprovecha para recuperar el aliento.' },
+				{ battle: 'recluta_flare_c2' },
+			] },
 			{ text: 'Los reclutas se apartan. Entre ellos camina una mujer de pelo rosa cortado a cuchilla, con un visor rojo sobre los ojos y una bata de laboratorio encima del traje. No corre. No le hace falta.' },
 			{ say: 'melia', as: 'Mujer del visor', text: 'Basta. No malgasten energía en niños. La energía es lo único que no nos sobra.' },
 			{ say: 'rotom', text: '¡Bzzt! **Melia**. Administradora del Team Flare. Orden de busca y captura… ¡bzzt! …archivada. Qué raro. ¿Quién archiva una orden así?' },
@@ -666,6 +676,8 @@ export default {
 			] },
 			{ choice: [
 				{ text: '«Venga. Diez minutos.»', then: [
+					{ say: 'bastien', text: 'Espera. Después de esos dos, tu equipo está hecho polvo. Así no cuenta.' },
+					{ heal: 'Bastien vacía en tus manos lo que le queda de Superpociones. Curas a tu equipo mientras él le limpia la espuma a Frogadier.' },
 					{ battle: 'bastien_2', lose: 'continue',
 						onWin: [{ say: 'bastien', text: 'Frogadier, lo has hecho genial. Yo no tanto. Pero tú sí.' }],
 						onLose: [{ heal: 'Bastien te pasa un par de Pociones sin decir nada. Tu equipo se recupera.' }] },
@@ -737,7 +749,7 @@ export default {
 				{ text: '«¿Quieres que te ayude a entrenar?»', then: [
 					{ af: { rhi: -1 } },
 					{ say: 'rhi', text: '¿Ayudarme? ¿Tengo cara de necesitar ayuda? ¡Yo soy la delantera! ¡La delantera no necesita…!' },
-					{ say: 'nate', text: 'Miltank. Rodar. Batido. Atracción. Ya está, ya lo dije. ¿Me puedo dormir?' },
+					{ say: 'nate', text: 'Miltank. Rodar. Leche Mu-mu. Atracción. Ya está, ya lo dije. ¿Me puedo dormir?' },
 					{ say: 'rhi', text: '¡NATE!' },
 					{ say: 'nate', text: 'Si Atracción no le hace nada a una hembra, que lleve una hembra. Fin. —Se da la vuelta en la colchoneta.' },
 					{ set: { 'flag.b01_rhi_conto_miltank': true } },
@@ -749,13 +761,13 @@ export default {
 			] },
 		],
 		b01_rhi_miltank: [
-			{ say: 'rhi', text: 'Su Miltank. Empieza con **Rodar**, y cada vuelta pega más fuerte. Cuando por fin la tienes casi, se bebe un **Batido** y vuelve a estar como nueva. ¡Como nueva!' },
+			{ say: 'rhi', text: 'Su Miltank. Empieza con **Rodar**, y cada vuelta pega más fuerte. Cuando por fin la tienes casi, Blanca le da una **Leche Mu-mu** y vuelve a estar como nueva. ¡Como nueva!' },
 			{ say: 'rhi', text: 'Y luego **Atracción**. Mi Raboot se quedó mirándola como un idiota. Mi Raboot es macho. Y bobo.' },
 			{ say: 'nate', text: 'Si llevas una hembra, Atracción no le hace nada.' },
 			{ say: 'rhi', text: '¡Eso iba a decir yo!' },
 			{ say: 'nate', text: 'Ya. Pero tardabas.' },
 			{ set: { 'flag.b01_rhi_conto_miltank': true } },
-			{ intel: { npc: 'rhi', text: 'Perdió contra Blanca en Relieve. Dice que su Miltank usa Rodar, Batido y Atracción.' } },
+			{ intel: { npc: 'rhi', text: 'Perdió contra Blanca en Relieve. Dice que su Miltank usa Rodar y Atracción, y que Blanca la cura con Leche Mu-mu.' } },
 		],
 		b01_rhi_relieve_2: [
 			{ if: '!flag.b01_rhi_conto_miltank', then: [
@@ -948,6 +960,15 @@ export default {
 			{ text: 'Se pone la máscara. Tarda un poco, porque se le engancha en las gafas. Se quita las gafas. Se pone la máscara. Ahora no ve nada.' },
 			{ say: 'hector', text: 'Mi inspiración es **Esprit**, el héroe enmascarado de Luminalia. ¿Lo conoces? ¿La conoces? Nadie sabe quién es. Salvó la ciudad del Team Flare hace años y desapareció sin pedir nada. ¡Un verdadero héroe no necesita que le den las gracias!' },
 			{ say: 'hector', text: 'Pero un héroe necesita entrenar. ¡Combate conmigo, en nombre de la justicia!' },
+			{ choice: [
+				{ text: '«Antes déjame curar a mi equipo.»', then: [
+					{ say: 'hector', text: '¡Por supuesto! ¡Un héroe jamás pelea con ventaja! Lo pone en el código. Bueno, en mi código. Lo escribí yo.' },
+					{ heal: 'Héctor abre el maletín, aparta unas carpetas y saca un botiquín con pegatinas de estrellas. Cura a tu equipo con mucha ceremonia y muy poca vista.' },
+				] },
+				{ text: '«Así como estoy. ¡Adelante!»', then: [
+					{ say: 'hector', text: '¡Valiente! ¡Eso es espíritu heroico! Hawlucha, apúntalo también.' },
+				] },
+			] },
 			{ battle: 'hector_r10', lose: 'continue', onLose: [{ heal: 'Héctor saca del maletín un botiquín con pegatinas de estrellas y cura a tu equipo. «¡Un héroe siempre lleva botiquín!»' }] },
 			{ text: 'Un maullido agudo, desde arriba. En lo alto del menhir más alto, a cinco metros del suelo, un Skitty los mira con los ojos como platos.' },
 			{ say: 'hector', text: 'Ah. Ella. Lleva ahí desde ayer. Es de una niña de Crómlech. ¡He intentado rescatarla catorce veces! Pero cada vez que subo, ella sube más. ¡Y ya no queda más menhir!' },
@@ -1380,7 +1401,7 @@ export default {
 			] },
 		],
 		b01_r11_pareja: [
-			{ say: 'lila', text: '¡Ah! Son Maëlle y Gabin. Entrenan en la playa de la Torre. Siempre retan de dos en dos, uno detrás del otro. N-no te preocupes, yo te sujeto la mochila.' },
+			{ say: 'lila', text: '¡Ah! Son Maëlle y Gabin. Entrenan en la playa de la Torre. Siempre retan de dos en dos: ella aquí y él un poco más abajo, en la curva. N-no te preocupes, yo te sujeto la mochila.' },
 		],
 		b01_lila_despedida_r11: [
 			{ if: '!visited("yantra")', then: [

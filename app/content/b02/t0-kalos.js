@@ -134,9 +134,9 @@ export default {
 					grass: [
 						{ sp: 'diggersby', lv: [28, 30], w: 14, cond: T0 },
 						{ sp: 'furfrou', lv: [28, 30], w: 12, cond: T0 },
-						{ sp: 'gogoat', lv: [29, 31], w: 8, cond: T0 },
-						{ sp: 'pangoro', lv: [29, 31], w: 7, cond: T0 },
-						{ sp: 'scrafty', lv: [29, 31], w: 5, cond: T0 },
+						{ sp: 'gogoat', lv: [32, 33], w: 8, cond: T0 },
+						{ sp: 'pangoro', lv: [32, 33], w: 7, cond: T0 },
+						{ sp: 'scraggy', lv: [29, 31], w: 5, cond: T0 },
 						{ sp: 'kadabra', lv: [28, 30], w: 6, time: 'night', cond: T0 },
 						{ sp: 'dubwool', lv: 29, w: 4, displaced: true, cond: T0 },
 					],
@@ -151,7 +151,7 @@ export default {
 				},
 				encounters: {
 					grass: [
-						{ sp: 'toxicroak', lv: [29, 31], w: 10, cond: T0 },
+						{ sp: 'croagunk', lv: [29, 31], w: 10, cond: T0 },
 						{ sp: 'ducklett', lv: [28, 30], w: 10, cond: T0 },
 						{ sp: 'smeargle', lv: [29, 31], w: 8, cond: T0 },
 						{ sp: 'roselia', lv: [28, 30], w: 8, cond: T0 },
@@ -197,7 +197,7 @@ export default {
 			team: [
 				{ sp: 'boldore', lv: 35, moves: ['rockslide', 'bulldoze', 'irondefense', 'smackdown'], ability: 'sturdy', item: 'sitrusberry', nature: 'impish', iv: 27 },
 				{ sp: 'graveler', lv: 35, moves: ['rockslide', 'earthquake', 'firepunch', 'rollout'], ability: 'rockhead', item: 'hardstone', nature: 'adamant', iv: 27 },
-				{ sp: 'kabutops', lv: 36, moves: ['aquajet', 'rockslide', 'xscissor', 'slash'], ability: 'battlearmor', item: 'mysticwater', nature: 'jolly', iv: 28 },
+				{ sp: 'kabuto', lv: 36, moves: ['aquajet', 'rockslide', 'liquidation', 'knockoff'], ability: 'battlearmor', item: 'eviolite', nature: 'jolly', iv: 28 },
 				{ sp: 'steelix', lv: 37, moves: ['ironhead', 'earthquake', 'rockslide', 'crunch'], ability: 'rockhead', item: 'leftovers', nature: 'adamant', iv: 30 },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }],
@@ -208,7 +208,7 @@ export default {
 			team: [
 				{ sp: 'clefable', lv: 35, moves: ['moonblast', 'thunderwave', 'meteormash', 'softboiled'], ability: 'magicguard', item: 'sitrusberry', nature: 'bold', iv: 27 },
 				{ sp: 'furfrou', lv: 35, moves: ['return', 'bite', 'uturn', 'thunderwave'], ability: 'furcoat', item: 'silkscarf', nature: 'jolly', iv: 27 },
-				{ sp: 'lopunny', lv: 36, moves: ['highjumpkick', 'return', 'bounce', 'icepunch'], ability: 'limber', item: 'expertbelt', nature: 'jolly', iv: 28 },
+				{ sp: 'lopunny', lv: 36, moves: ['drainpunch', 'return', 'bounce', 'icepunch'], ability: 'limber', item: 'expertbelt', nature: 'jolly', iv: 28 },
 				{ sp: 'miltank', lv: 37, moves: ['rollout', 'milkdrink', 'bodyslam', 'earthquake'], ability: 'thickfat', item: 'leftovers', nature: 'impish', iv: 30 },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }],
@@ -217,10 +217,10 @@ export default {
 			lose: '¡Gané! ¡Gané la revancha! ¡Voy a llorar de alegría, que es como llorar normal pero con sonrisa!' },
 		corelia_r2: { name: 'Corelia', cls: 'Líder', npc: 'corelia', ai: 5, reward: 3000, bg: 'gym', gimmick: 'mega', ace: 'lucario',
 			team: [
-				{ sp: 'mienshao', lv: 36, moves: ['fakeout', 'highjumpkick', 'uturn', 'stoneedge'], ability: 'regenerator', item: 'expertbelt', nature: 'jolly', iv: 28 },
-				{ sp: 'pangoro', lv: 36, moves: ['crunch', 'hammerarm', 'bulletpunch', 'bulkup'], ability: 'ironfist', item: 'blackglasses', nature: 'adamant', iv: 28 },
-				{ sp: 'hawlucha', lv: 37, moves: ['flyingpress', 'xscissor', 'roost', 'encore'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly', iv: 29 },
-				{ sp: 'lucario', lv: 38, moves: ['aurasphere', 'flashcannon', 'extremespeed', 'darkpulse'], ability: 'justified', item: 'lucarionite', nature: 'hasty', iv: 31 },
+				{ sp: 'mienfoo', lv: 36, moves: ['fakeout', 'drainpunch', 'uturn', 'stoneedge'], ability: 'regenerator', item: 'expertbelt', nature: 'jolly', iv: 28 },
+				{ sp: 'pangoro', lv: 36, moves: ['crunch', 'drainpunch', 'bulletpunch', 'bulkup'], ability: 'ironfist', item: 'blackglasses', nature: 'adamant', iv: 28 },
+				{ sp: 'hawlucha', lv: 37, moves: ['closecombat', 'acrobatics', 'roost', 'encore'], ability: 'unburden', item: 'sitrusberry', nature: 'jolly', iv: 29 },
+				{ sp: 'lucario', lv: 38, moves: ['aurasphere', 'flashcannon', 'quickattack', 'darkpulse'], ability: 'justified', item: 'lucarionite', nature: 'hasty', iv: 31 },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }],
 			intro: '¡Lucario! ¡Respondamos al vínculo! ¡Nueva temporada, A TOPE! ¡MEGAEVOLUCIÓN!',
@@ -467,7 +467,7 @@ export default {
 			{ say: 'matiere', text: 'Pero si conoce a alguien que admira tanto a un héroe como para venir siete veces a una oficina, dígale que eso ya es bastante heroico. Encantada, señor Batista.' },
 			{ text: 'Héctor mira la mano. Se pone rojo. Tan rojo que se le nota por debajo de la máscara, que lleva puesta sin darse cuenta.' },
 			{ say: 'hector', text: '¡TRANSFORMACIÓN!' },
-			{ text: 'Es un reflejo. Hawlucha lo entiende como una orden: salta, gira en el aire y aterriza con un Plancha Voladora perfecto sobre el escritorio de Handsome. La torre de macarons sale disparada. Llueve rosa y pistacho.' },
+			{ text: 'Es un reflejo. Hawlucha lo entiende como una orden: salta, gira en el aire y aterriza con una Plancha Voladora perfecta sobre el escritorio de Handsome. La torre de macarons sale disparada. Llueve rosa y pistacho.' },
 			{ text: 'Silencio. Un macaron rueda por el suelo y se para a los pies de Matière.' },
 			{ say: 'matiere', text: '…Buen salto. Muy buen salto. Esprit lo habría aprobado. —Recoge el macaron—. Si lo conociera, claro. Que no.' },
 			{ say: 'hector', text: 'Perdón. Perdón, perdón, perdón. Lo pago. Pago los macarons. Pago el escritorio. Trabajo en seguros: sé exactamente cuánto vale todo.' },

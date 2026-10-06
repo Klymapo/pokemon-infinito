@@ -92,7 +92,7 @@ export default {
 	} },
 	b02_t_ambar: { name: 'El ámbar sin registro (II)', type: 'thread', stages: {
 		encinar: 'Petra está en el **Encinar**, buscando «el bosque donde los relojes se paran». Lo ha encontrado. Más o menos.',
-		late: 'El ámbar late cuando el destello verde del bosque anda cerca.',
+		late: 'El ámbar late cuando el destello verde anda cerca. Sigue con **Petra** en el **Encinar** hasta saber qué es.',
 		abierto: 'Petra sabe un poco más de su ámbar. Lo justo para tener más preguntas.',
 	} },
 	b02_t_cabina: { name: 'La cabina azul (II)', type: 'thread', stages: {
@@ -108,7 +108,7 @@ export default {
 	b02_t_kaori: { name: 'Dulce veneno', type: 'thread', stages: {
 		trigal: 'Una boticaria de Johto miraba los caramelos de la Gira como quien mira una serpiente.',
 		iris: 'Kaori, la boticaria del **Teatro de Danza** de Ciudad Iris, necesita ayuda con los Pokémon enfermos.',
-		muestra: 'Kaori necesita una muestra del origen del «veneno».',
+		muestra: 'Kaori necesita una muestra del polvo de la **Torre Quemada**, sin tocar. Llévasela al **Teatro de Danza** de Ciudad Iris.',
 		abierto: 'Kaori trabaja en un antídoto. Dice que tardará. Dice que le encanta.',
 	} },
 };

@@ -199,17 +199,17 @@ export default {
 					],
 					3: [
 						{ terrain: 'path' },
-						{ trainer: 'pepita_3' },
-						{ text: 'La tercera farola del puente. Hay marcas de trípode en la madera. Muchas.' },
+						{ text: 'La tercera farola del puente. Hay marcas de trípode en la madera. Muchas. Aquí nadie reta a nadie: es el sitio de las fotos, y el puente lo respeta. Te apoyas en la barandilla y dejas que tu equipo respire.' },
 						{ talk: [{ script: 'b04_foto_puente' }], label: 'La tercera farola', sub: 'Rotom quiere su foto', icon: '📸', cond: 'badge("medalla_cascada") && !has("fotopuente")', new: 'true' },
 						{ item: 'pearl', hidden: true },
 					],
 					4: [
 						{ terrain: 'path' },
-						{ trainer: 'pepita_4' },
+						{ trainer: 'pepita_3' },
 					],
 					5: [
 						{ terrain: 'path' },
+						{ trainer: 'pepita_4' },
 						{ script: 'b04_pepita_5', once: false, mark: true, cond: '!flag.b04_puente_hecho' },
 					],
 					6: [

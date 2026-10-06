@@ -130,7 +130,7 @@ export default {
 					{ sp: 'lanturn', lv: [43, 45], w: 6, time: 'night' },
 				],
 				grass: [
-					{ sp: 'noctowl', lv: [42, 45], w: 22 },
+					{ sp: 'noctowl', lv: [42, 45], w: 22, time: 'night' },
 					{ sp: 'exeggcute', lv: [42, 44], w: 18 },
 					{ sp: 'pineco', lv: [42, 43], w: 14 },
 					{ sp: 'forretress', lv: [44, 46], w: 6 },
@@ -251,7 +251,7 @@ export default {
 				{ sp: 'weezing', lv: 44, moves: ['sludgebomb', 'thunderbolt', 'willowisp', 'painsplit'], ability: 'levitate', item: 'blacksludge', nature: 'bold' },
 				{ sp: 'arbok', lv: 44, moves: ['poisonjab', 'crunch', 'earthquake', 'coil'], ability: 'intimidate', item: 'poisonbarb', nature: 'adamant' },
 				{ sp: 'crobat', lv: 45, moves: ['crosspoison', 'airslash', 'confuseray', 'uturn'], ability: 'innerfocus', item: 'sharpbeak', nature: 'jolly' },
-				{ sp: 'weavile', lv: 45, moves: ['nightslash', 'iceshard', 'poisonjab', 'lowkick'], ability: 'pressure', item: 'blackglasses', nature: 'jolly' },
+				{ sp: 'weavile', lv: 45, moves: ['knockoff', 'iceshard', 'poisonjab', 'lowkick'], ability: 'pressure', item: 'blackglasses', nature: 'jolly' },
 				{ sp: 'houndoom', lv: 49, moves: ['darkpulse', 'firefang', 'suckerpunch', 'thunderfang'], ability: 'flashfire', item: 'sitrusberry', nature: 'modest' },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }, { id: 'superpotion', n: 1 }],

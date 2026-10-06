@@ -23,7 +23,7 @@ export default {
 	} },
 	b04_m5: { name: 'Lo que hay bajo Celeste', type: 'main', est: 180, stages: {
 		cueva: 'La señal termina en la **Cueva Celeste**, junto a Ciudad Celeste.',
-		nodo: 'Sigue el hilo de luz hasta el fondo de la cueva.',
+		nodo: 'Sigue el hilo de luz hasta el fondo de la **Cueva Celeste**.',
 		decision: 'Alguien a quien conoces está delante de ti. Decide.',
 		hecha: 'La cueva está en silencio. No todo lo que había dentro sigue allí.',
 	} },
@@ -54,8 +54,8 @@ export default {
 		hecha: 'Sobreviviste al especial de fantasmas.',
 	} },
 	b04_t_lebrun: { name: 'Quien sabe a qué hora llegas', type: 'thread', stages: {
-		sospecha: 'Alguien sabe siempre a qué hora llegas a los sitios.',
-		prueba: 'Tienes un informe firmado con una sola letra: **L.**',
+		sospecha: 'Alguien sabe siempre a qué hora llegas a los sitios. Ten los ojos abiertos en **Ciudad Azafrán**.',
+		prueba: 'Tienes un informe firmado con una sola letra: **L.** Salió de los archivos de **Silph S.A.** Guárdalo bien hasta saber quién es L.',
 		hecha: 'Ya sabes quién era. Y decidiste qué hacer.',
 	} },
 

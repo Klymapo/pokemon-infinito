@@ -241,6 +241,7 @@ export default {
 			desc: 'Un pueblo pequeño a orillas de un río, con un **puente de piedra**, un molino y una terraza con sombrillas a rayas. Huele a pan y a pintura fresca. Medio pueblo pinta; la otra mitad posa.',
 			descNight: 'El río de Acuarela refleja las farolas del puente. En la terraza ya han recogido las sombrillas, pero el camarero sigue sirviendo a quien llegue cansado.',
 			links: ['ruta2', 'ruta1'],
+			mapNote: 'Puente de piedra · Terraza para descansar',
 			spots: [
 				{ label: 'Terraza del Puente', sub: 'Sentarse a descansar', icon: '☕', talk: [{ script: 'b01_acuarela_terraza' }] },
 				{ label: 'Una pintora en el puente', sub: 'Pinta el río sin mirarlo', icon: '🎨', new: '!flag.b01_pintora', talk: [
@@ -288,6 +289,7 @@ export default {
 			name: 'Pueblo Boceto', short: 'Boceto', region: 'kalos', kind: 'town', map: { x: 55, y: 137 },
 			bg: { type: 'town', roofs: ['#c4473a', '#e9dcc0', '#8a5a2f'] },
 			desc: 'El pueblo más al sur de Kalos: cuatro calles, un pozo, casas con establo y una **pista de carreras de Rhyhorn** marcada con piedras pintadas. Todo el mundo saluda. Los Rhyhorn también, a su manera: con un resoplido.',
+			descNight: 'De noche, Boceto se acuesta temprano. En los establos se oye a los Rhyhorn resoplar en sueños, y las piedras pintadas de la pista brillan un poco con la luna. En todo el pueblo solo queda una ventana encendida: la de una tele que nadie apaga.',
 			links: ['ruta1'],
 			mapNote: 'Montura: Rhyhorn',
 			spots: [
@@ -428,6 +430,15 @@ export default {
 				] },
 				{ text: 'Plantarte delante del Lechonk.', then: [
 					{ say: 'agente_lemnis', text: '¿En serio? Mire que esto va a quedar en mi informe.' },
+					{ say: 'agente_lemnis', text: 'Reglamento, punto cuatro: no se procede contra un ciudadano con Pokémon heridos. ¿Necesita atenderlos antes? Tiene un minuto. Lo pone en el folleto.' },
+					{ choice: [
+						{ text: '«Sí. Un minuto.»', then: [
+							{ heal: 'El agente, sin dejar de mirar el reloj, rocía a tu equipo con un pulverizador azul y plata. Huele a menta y a papeleo.' },
+						] },
+						{ text: '«No hace falta.»', then: [
+							{ say: 'agente_lemnis', text: 'Como quiera. Anoto: «el ciudadano renuncia al minuto».' },
+						] },
+					] },
 					{ battle: 'agente_lemnis_r4', lose: 'continue',
 						onWin: [{ rep: { lemnis: -3, policia: 2 } }, { set: { 'flag.b01_agente_vencido': true } }, { text: 'El agente se ajusta las gafas. Le tiembla un poco el dedo sobre el aparato.' }, { say: 'agente_lemnis', text: 'Protocolo es protocolo. Con o sin su permiso.' }],
 						onLose: [{ heal: true, silent: true }, { text: '{riolu} se levanta tambaleándose. El agente ni os mira: ya está apuntando el aparato.' }] },
@@ -547,6 +558,15 @@ export default {
 			{ say: 'rotom', text: '¡Bzzt! Consejo de Rotom: en el **Patio del Gimnasio** se puede entrenar antes de la pared. Y en la **Guía de Retos** está lo que sabemos de Brock. ¡Ahora sabemos lo del Onix!' },
 		],
 		b01_rhi_combate: [
+			{ choice: [
+				{ text: '«Antes, déjame pasar por el Centro.»', then: [
+					{ say: 'rhi', text: '¿Ahora? ¿En serio? …Vale. Descanso de medio tiempo. Pero rapidito, que se me enfría la pierna.' },
+					{ heal: 'Pasas por el Centro Pokémon de la plaza. Cuando sales, Rhi está dando toques a una piedra contra el borde de la fuente. Lleva la cuenta en voz alta.' },
+				] },
+				{ text: '«Así como estoy. Saca tú.»', then: [
+					{ say: 'rhi', text: '¡Eso! ¡Sin calentar ni nada! ¡Como los valientes!' },
+				] },
+			] },
 			{ battle: 'rhi_1', lose: 'continue',
 				onWin: [
 					{ af: { rhi: 5 } }, { set: { 'flag.b01_rhi_vencida_1': true } },
@@ -790,7 +810,7 @@ export default {
 			{ text: 'Al fondo de un claro, contra un tronco hueco, hay un **Fennekin**. Tiene las orejas echando humo y la cola erizada. Delante, tres Spewpa le cierran el paso. No atacan: lo empujan, rodando, una y otra vez, contra el tronco. Como si quisieran echarlo de su bosque.' },
 			{ text: 'El Fennekin intenta lanzar fuego. Le sale una chispa. Una sola. Está agotado.' },
 			{ text: 'Uno de los Spewpa se gira hacia ti.' },
-			{ wild: { sp: 'spewpa', lv: 8, noCatch: true }, canRun: false, lose: 'continue',
+			{ wild: { sp: 'spewpa', lv: 9, noCatch: true }, canRun: false, lose: 'continue',
 				onWin: [{ text: 'El Spewpa rueda hacia atrás. Los otros dos se miran, lo miran a él, te miran a ti… y se van rodando entre los helechos.' }],
 				onLose: [{ heal: true, silent: true }, { text: 'Tu equipo cae. Pero al verte en el suelo, el Fennekin saca fuerzas de algún sitio y suelta unas **Ascuas** de verdad. Los Spewpa salen rodando como piedras cuesta abajo.' }] },
 			{ text: 'Silencio. Solo el crujido del humo.' },

@@ -204,7 +204,7 @@ export default {
 			team: [
 				{ sp: 'falinks', lv: 45, moves: ['closecombat', 'megahorn', 'rockslide', 'ironhead'], ability: 'battlearmor', nature: 'adamant', iv: 26 },
 				{ sp: 'sirfetchd', lv: 46, moves: ['leafblade', 'brutalswing', 'closecombat', 'knockoff'], ability: 'steadfast', item: 'leek', nature: 'adamant', iv: 27 },
-				{ sp: 'toxtricity', lv: 46, moves: ['overdrive', 'sludgebomb', 'boomburst', 'voltswitch'], ability: 'punkrock', nature: 'modest', iv: 27 },
+				{ sp: 'toxtricity', lv: 46, moves: ['overdrive', 'sludgebomb', 'hypervoice', 'voltswitch'], ability: 'punkrock', nature: 'modest', iv: 27 },
 				{ sp: 'corviknight', lv: 47, moves: ['bravebird', 'ironhead', 'bodypress', 'payback'], ability: 'mirrorarmor', nature: 'impish', iv: 27 },
 				{ sp: 'cinderace', lv: 49, moves: ['pyroball', 'bounce', 'uturn', 'zenheadbutt'], ability: 'blaze', item: 'sitrusberry', nature: 'jolly', iv: 29 },
 			],
@@ -226,7 +226,7 @@ export default {
 		tren_mireille: { name: 'Mireille', cls: 'Aspirante', ai: 2, reward: 1880,
 			team: [
 				{ sp: 'florges', lv: 46, moves: ['moonblast', 'petalblizzard', 'grassknot', 'synthesis'] },
-				{ sp: 'dragalge', lv: 46, moves: ['sludgebomb', 'dragonpulse', 'scald', 'toxic'] },
+				{ sp: 'dragalge', lv: 48, moves: ['sludgebomb', 'dragonpulse', 'scald', 'toxic'] },
 				{ sp: 'pyroar', lv: 47, moves: ['flamethrower', 'hypervoice', 'darkpulse', 'nobleroar'] },
 			],
 			intro: 'En Kalos los trenes tienen moqueta. Aquí, no. Necesito pegarle a algo. ¿Te importa?',

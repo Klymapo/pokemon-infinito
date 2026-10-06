@@ -2,7 +2,7 @@
 // Uso: node herramientas/auditar.mjs [--semillas 12] [--rapido]
 //
 // Ejecuta, en este orden:
-//   1. Validador de contenido (bloquea si hay ERRORES) y Superfan (detalles de canon; solo avisa).
+//   1. Validador de contenido (bloquea si hay ERRORES) y los bots Superfan (canon), Game Tester (lógica) y Game Designer (diseño); estos tres solo avisan.
 //   2. Bot de recorrido con N semillas de día (13 h) y N de noche (3 h).
 //   3. Bot en la fecha de inicio de cada evento por fechas.
 //   4. Registro automático de continuidad.
@@ -51,6 +51,15 @@ report.push('### Superfan (detalles de canon)', '', '```', fan.out.trim().slice(
 const fanGraves = +(fan.out.match(/Superfan: (\d+) graves/)?.[1] || 0);
 if (fan.code !== 0) warns.push('El Superfan no pudo terminar su revisión');
 else if (fanGraves) warns.push(`El Superfan encontró ${fanGraves} detalles graves de canon (ver su informe)`);
+
+// 1a-bis. Game Tester (lógica: combates sin curar, escenas que se atascan…) y Game Designer (hub de misiones, reglas de bloque, colección)
+for (const [nombre, archivo, fich] of [['Game Tester', 'tester.mjs', 'tester'], ['Game Designer', 'disenador.mjs', 'disenador']]) {
+	const r = await run('node', ['herramientas/' + archivo]);
+	report.push(`### ${nombre}`, '', '```', r.out.trim().slice(-1500), '```', '', `Detalle completo en \`secreto/auditorias/${fich}-${fecha}.md\`.`, '');
+	const g = +(r.out.match(/: (\d+) graves/)?.[1] || 0);
+	if (r.code !== 0) warns.push(`El ${nombre} no pudo terminar su revisión`);
+	else if (g) warns.push(`El ${nombre} encontró ${g} problemas graves (ver su informe)`);
+}
 
 // 1b. Pruebas del motor
 for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs']) {

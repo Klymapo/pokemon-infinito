@@ -113,7 +113,12 @@ export default {
 			{ say: 'remedios', text: '¿Ya traes alguna, {jugador}? —Cuenta con los dedos—. Necesito cinco, mij{o|a|e}. Búscalas en las Rutas 4, 5 y 7, entre la hierba. Se esconden, como los nietos cuando toca fregar.' },
 		],
 		ev_muertos_entrega: [
-			{ take: 'cempasuchil', n: 5 },
+			{ if: 'count("cempasuchil") >= 5', then: [
+				{ take: 'cempasuchil', n: 5 },
+			], else: [
+				{ say: 'remedios', text: 'Ay, mij{o|a|e}, aquí no me salen las cinco. Cuéntalas otra vez, que a mí los números ya se me escapan. Te espero aquí.' },
+				{ end: true },
+			] },
 			{ text: 'La abuela Remedios coloca las flores en la ofrenda, una a una, y hace un caminito de pétalos desde la calle hasta el altar.' },
 			{ say: 'remedios', text: 'Así. Para que no se pierdan.' },
 			{ say: 'remedios', text: 'Mira, te voy a confiar algo. Hace unos días, por la noche, salió un pequeño de la grieta de la Puerta. Un **Fuecoco**, de Paldea. Estaba temblando de frío, el pobrecito. Lo he cuidado yo.' },

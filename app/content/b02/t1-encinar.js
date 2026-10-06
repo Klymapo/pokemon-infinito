@@ -154,6 +154,7 @@ export default {
 				{ cond: 'flag.b02_kurt_1 && !flag.b02_pozo_hecho', text: 'Un pueblo pequeño de casas de madera oscura y tejados de teja, pegado al Encinar. Del horno del carbonero sale humo todo el día.\n\nFaltan Slowpoke. Se nota: hay huecos en la plaza con la forma exacta de un Slowpoke tumbado. Los vecinos miran hacia el **Pozo** y bajan la voz.' },
 				{ cond: 'flag.b02_pozo_hecho', text: 'Un pueblo pequeño de casas de madera oscura y tejados de teja, pegado al Encinar. Del horno del carbonero sale humo todo el día.\n\nLos Slowpoke han vuelto a sus sitios: en la plaza, en los escalones, en mitad de la calle. Uno de ellos lleva una bufanda que le ha tejido alguien a toda prisa. Bosteza.' },
 			],
+			descNight: 'De noche, el horno del carbonero sigue encendido y tiñe de naranja las casas de madera. Los Slowpoke duermen donde les pilló el sueño: en la plaza, en los escalones, en mitad de la calle.\n\nDel Encinar llega un silencio espeso, de bosque viejo. Solo se oye, de vez en cuando, a Kurt tallando madera.',
 			links: ['encinar'],
 			mapNote: 'Gimnasio: Antón (Bicho) · Kurt · Pozo Slowpoke',
 			onEnter: [
@@ -278,7 +279,7 @@ export default {
 		// ----- Pozo Slowpoke -----
 		recluta_pozo_1: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'raticate', lv: 31 }, { sp: 'golbat', lv: 32 }],
 			intro: '¡Alto! Esto es una obra. Con casco imaginario. Aquí abajo no hay nada que ver. Sobre todo, no hay Slowpoke.', win: 'Vale, sí hay Slowpoke. Pero son para una buena causa. La nuestra.' },
-		recluta_pozo_2: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket_f', ai: 3, team: [{ sp: 'arbok', lv: 32 }, { sp: 'koffing', lv: 32 }, { sp: 'houndour', lv: 33 }],
+		recluta_pozo_2: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket_f', ai: 3, team: [{ sp: 'arbok', lv: 32 }, { sp: 'koffing', lv: 32 }, { sp: 'houndoom', lv: 33 }],
 			intro: 'Soy la Tercera. Tercera en cerraduras, en códigos y en llegar a tiempo. En esta familia todos tenemos una especialidad. La mía es que no pases.', win: 'Al Primero no le va a gustar esto. Al Primero nunca le gusta nada. Por eso es el Primero.' },
 		recluta_pozo_3: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 3, team: [{ sp: 'grimer', lv: 32 }, { sp: 'hypno', lv: 33 }],
 			intro: 'Cuando el jefe se fue, nos quedamos sin sueldo, sin uniforme y sin casa. Me lo quedé todo yo, menos lo primero. ¡Hypno, que duerma!', win: 'Dicen que si cumplimos este encargo, vuelve la familia. Toda. Hasta el primo que se fue a Hoenn.' },
@@ -286,8 +287,8 @@ export default {
 			intro: 'Yo soy la Mayor. La que cuida de los demás. Y ahora mismo, cuidar de los demás es que tú no llegues al fondo.', win: 'Los pequeños de la familia comieron caliente esta semana gracias a esas cajas. Piénsalo cuando las abras.' },
 		proton_1: { name: 'Protón', cls: 'Admin Rocket', npc: 'proton', ai: 5, iv: 28, reward: 2900, bg: 'cave',
 			team: [
-				{ sp: 'golbat', lv: 33, moves: ['airslash', 'poisonfang', 'confuseray', 'bite'], ability: 'innerfocus', nature: 'jolly', iv: 27 },
-				{ sp: 'muk', lv: 33, moves: ['poisonjab', 'rocktomb', 'icepunch', 'disable'], ability: 'stickyhold', item: 'blacksludge', nature: 'adamant', iv: 27 },
+				{ sp: 'golbat', lv: 33, moves: ['airslash', 'poisonfang', 'supersonic', 'bite'], ability: 'innerfocus', nature: 'jolly', iv: 27 },
+				{ sp: 'grimer', lv: 33, moves: ['poisonjab', 'rocktomb', 'icepunch', 'disable'], ability: 'stickyhold', item: 'blacksludge', nature: 'adamant', iv: 27 },
 				{ sp: 'skuntank', lv: 35, moves: ['crunch', 'poisonjab', 'suckerpunch', 'toxic'], ability: 'aftermath', nature: 'adamant', iv: 26 },
 				{ sp: 'weezing', lv: 36, moves: ['sludgebomb', 'darkpulse', 'willowisp', 'clearsmog'], ability: 'levitate', item: 'sitrusberry', nature: 'bold', iv: 27 },
 			],

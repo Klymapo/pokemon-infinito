@@ -405,7 +405,7 @@ export default {
 
 		// ----- Ruta 35 -----
 		r35_jacinto: { name: 'Jacinto', cls: 'Cazabichos', ai: 2,
-			team: [{ sp: 'yanma', lv: 33, moves: ['wingattack', 'quickattack', 'ancientpower', 'uproar'] }, { sp: 'ledian', lv: 34 }],
+			team: [{ sp: 'yanma', lv: 33, moves: ['aircutter', 'quickattack', 'ancientpower', 'uproar'] }, { sp: 'ledian', lv: 34 }],
 			intro: '¡Este año en el concurso del parque salen bichos que no vienen en ningún libro! ¡Yo los quiero todos! Empezando por los tuyos.',
 			win: 'Vale. Los tuyos no. Los del libro tampoco. Me quedan los raros.',
 			look: { hair: 'cap', hairColor: '#8a5a2f', outfit: '#5aa36b', outfit2: '#f2b33d', skin: 1, mouth: 'open' } },
@@ -420,14 +420,14 @@ export default {
 			win: 'Treinta y nueve veces es a las 2:17. Una fue a las 2:16. Esa me quita el sueño.',
 			look: { hair: 'curly', hairColor: '#5a3a26', outfit: '#e9e3d0', outfit2: '#3b5bb5', skin: 1, acc: 'glasses headphones', mouth: 'open' } },
 		r35_fausto: { name: 'Fausto', cls: 'Ornitólogo', ai: 2,
-			team: [{ sp: 'pidgeot', lv: 35 }, { sp: 'noctowl', lv: 35, moves: ['airslash', 'hypnosis', 'extrasensory', 'reflect'] }],
+			team: [{ sp: 'pidgeot', lv: 36 }, { sp: 'noctowl', lv: 36, moves: ['airslash', 'hypnosis', 'extrasensory', 'reflect'] }],
 			intro: 'Los Noctowl de esta ruta llevan tres noches sin ulular. Como si alguien les hubiera parado el reloj. Un Noctowl sin reloj es un Noctowl perdido.',
 			win: 'Si oyes ulular esta noche, avísame. Aunque sea mentira.',
 			look: { hair: 'short', hairColor: '#8a8a8a', outfit: '#8a7a5a', outfit2: '#3f8a4f', skin: 2, acc: 'hat', mouth: 'flat' } },
 
 		// ----- Parque Nacional -----
 		pq_ruben: { name: 'Rubén', cls: 'Cazabichos', ai: 2,
-			team: [{ sp: 'scyther', lv: 35, moves: ['xscissor', 'wingattack', 'quickattack', 'slash'] }, { sp: 'beedrill', lv: 34, moves: ['poisonjab', 'fellstinger', 'pinmissile', 'agility'] }],
+			team: [{ sp: 'scyther', lv: 35, moves: ['xscissor', 'wingattack', 'quickattack', 'slash'] }, { sp: 'beedrill', lv: 34, moves: ['poisonjab', 'uturn', 'pinmissile', 'focusenergy'] }],
 			intro: 'Gané el concurso tres años seguidos. Este año un bicho morado con patas de saltamontes me dio una patada y me robó la red. ¡No lo pienso superar!',
 			win: 'Tampoco esto lo pienso superar.',
 			look: { hair: 'cap', hairColor: '#2b2b38', outfit: '#f2b33d', outfit2: '#5aa36b', skin: 3, mouth: 'grin' } },
@@ -458,7 +458,7 @@ export default {
 
 		// ----- Trigal: recluta del gimnasio en obras -----
 		recluta_trigal: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2,
-			team: [{ sp: 'golbat', lv: 35, moves: ['bite', 'confuseray', 'poisonfang', 'airslash'] }, { sp: 'raticate', lv: 35, moves: ['superfang', 'crunch', 'hyperfang', 'suckerpunch'] }],
+			team: [{ sp: 'golbat', lv: 35, moves: ['bite', 'supersonic', 'poisonfang', 'airslash'] }, { sp: 'raticate', lv: 35, moves: ['superfang', 'crunch', 'hyperfang', 'suckerpunch'] }],
 			intro: '¿Y tú quién eres? ¡El jefe dice que un gimnasio vacío es un almacén con buena ventilación! ¡Fuera!',
 			win: 'Vale, vale. No es buen almacén. Hay demasiada gente que pega fuerte.' },
 
@@ -479,7 +479,7 @@ export default {
 				{ sp: 'talonflame', lv: 35, moves: ['aerialace', 'flamecharge', 'steelwing', 'roost'], ability: 'flamebody', nature: 'jolly', iv: 25 },
 				{ sp: 'pyroar', lv: 35, moves: ['incinerate', 'echoedvoice', 'darkpulse', 'nobleroar'], ability: 'unnerve', nature: 'modest', iv: 25 },
 				{ sp: 'doublade', lv: 35, moves: ['ironhead', 'nightslash', 'shadowsneak', 'swordsdance'], ability: 'noguard', nature: 'adamant', iv: 25 },
-				{ sp: 'greninja', lv: 38, moves: ['waterpulse', 'nightslash', 'aerialace', 'extrasensory'], ability: 'torrent', item: 'sitrusberry', nature: 'hasty', iv: 28 },
+				{ sp: 'greninja', lv: 38, moves: ['waterpulse', 'nightslash', 'aerialace', 'icywind'], ability: 'torrent', item: 'sitrusberry', nature: 'hasty', iv: 28 },
 			],
 			items: [{ id: 'superpotion', n: 1 }],
 			intro: 'Esto no viene en ninguna cláusula. ¡Greninja, al final! ¡Talonflame, abre tú!',

@@ -23,7 +23,7 @@ export default {
 	} },
 	b03_m5: { name: 'El rancho de la Ruta 42', type: 'main', est: 90, stages: {
 		rancho: 'Vuelve al **rancho de Don Aurelio**, en la Ruta 42.',
-		decision: 'Alguien tiene que decidir qué pasa con el rancho.',
+		decision: 'Habla con **Adela** en el porche del **rancho de Don Aurelio** (Ruta 42): hay que decidir qué pasa con el rebaño.',
 		hecha: 'El rebaño ya tiene quien lo cuide.',
 	} },
 	b03_m6: { name: 'Las aguas revueltas', type: 'main', est: 180, stages: {

@@ -126,7 +126,7 @@ export default {
 		reto: 'La campeona retirada de **Pueblo Boceto** te reta a una carrera de Rhyhorn.',
 		hecha: '¡Tienes montura! Rhyhorn te lleva por las rutas.',
 	} },
-	b01_s_fotos: { name: 'Fotos de lo imposible', type: 'side', est: 0, stages: {
+	b01_s_fotos: { name: 'Fotos de lo imposible', type: 'side', est: 40, stages: {
 		registrar: 'Alexia quiere fotos de Pokémon desplazados. Registra **5 especies desplazadas** en la Pokédex y vuelve con ella (Ciudad Novarte).',
 		hecha: 'Alexia publicó tus fotos. Su artículo da que hablar.',
 	} },
@@ -153,11 +153,11 @@ export default {
 	} },
 
 	// 🎉 Eventos
-	ev_halloween: { name: 'El Gran Atraco de Halloween', type: 'event', stages: {
+	ev_halloween: { name: 'El Gran Atraco de Halloween', type: 'event', est: 30, stages: {
 		inicio: 'El Conde Vladimiro organiza un «atraco» en el Castillo Caduco. Alguien robó la **Calabaza de Oro**. Interroga a los sospechosos.',
 		hecha: 'Resolviste el Gran Atraco de Halloween.',
 	} },
-	ev_muertos: { name: 'La ofrenda', type: 'event', stages: {
+	ev_muertos: { name: 'La ofrenda', type: 'event', est: 25, stages: {
 		flores: 'La abuela Remedios necesita **5 Flores de Cempasúchil** para su ofrenda (búscalas en las Rutas 4, 5 y 7 con «Buscar»).',
 		hecha: 'La ofrenda de la familia Ortega está completa.',
 	} },

@@ -120,6 +120,7 @@ Trabaja en este orden. Usa la lista de tareas para que Mario vea el progreso si 
    - **Misiones de reunir varias cosas** (rescatar N Pokémon, encontrar N piezas…): ponles `parts` (ver `docs/CONTENIDO.md` §6), para que la ficha diga cuáles faltan y en qué tramo están.
    - **Pérdidas y giros:** sigue `secreto/biblia.md` §9 (reglas, límites y plan). Planta las pistas que tocan en cada bloque.
    - Mecánicas por región (biblia §3.3): no des Z, Dinamax ni Tera antes de su acto.
+   - **Colección completa (pedido de Mario, 2026-10-06):** quiere poder tener **todos** los iniciales, pseudolegendarios, fósiles, legendarios, singulares, ultraentes, paradojas y Pokémon especiales. Mira la tabla del Game Designer y reparte en cada bloque unos cuantos de los que faltan, con sentido en la región: iniciales y especiales como regalos o capturas raras con su escena; fósiles con su laboratorio; legendarios, singulares y ultraentes **siempre con historia** (misión, evento o clímax de bloque), nunca tirados en la hierba. Respeta los actos de la biblia para los legendarios de trama.
    - **Colección:** cada bloque añade puntos de recolección (`gather`) en sus rutas y cuevas, 2 o 3 objetos para leer (`read`: cartas, notas, diarios de NPCs que cuenten algo de su historia) y al menos un recuerdo para mirar (`art`). Mario pidió poder ver y recolectar muchas cosas.
 5. **Registro:**
    - Añade el bloque a `BLOCKS` en `app/content/index.js`.
@@ -142,14 +143,16 @@ Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea.
 
 1. **Validador** (`herramientas/validar.mjs`): referencias rotas, condiciones inválidas, aprendizajes imposibles, flags que se leen pero nunca se activan, NPCs con pocas apariciones y **evoluciones imposibles** (un Pokémon conseguible que necesita un objeto que no se puede obtener). **0 errores.**
 2. **Superfan** (`herramientas/superfan.mjs`): lee el contenido como un fan que se sabe la Pokédex de memoria y apunta lo que chirría: niveles imposibles para una evolución, básicos que ya deberían haber evolucionado, movimientos que aún no podrían saber, habilidades y géneros imposibles, Megapiedras o cristales Z que no sirven, líderes fuera de su tipo, formas regionales fuera de su región, hábitats y horarios raros, nombres en inglés en los textos y precios que no cuadran. Escribe `secreto/auditorias/superfan-AAAA-MM-DD.md`. **No bloquea**, pero los ✖ (graves) se corrigen esa misma noche si son de contenido nuevo; los de contenido publicado, cuando se toque esa zona. Las · son opinables: si algo es a propósito (un Pokémon de Fisura, un guiño), se deja.
-3. **Bot de recorrido** (`herramientas/recorrido.mjs`): juega todo el contenido sin interfaz, de día y de noche.
+3. **Game Tester** (`herramientas/tester.mjs`): recorre todos los caminos de cada guion como un probador que intenta romper el juego. Avisa de combates de rivales o jefes sin ofrecer curar antes (nació de «Rhi me reta sin dejarme curar»), combates encadenados sin respiro, varios entrenadores obligatorios en el mismo tramo, escenas de una sola vez que se pierden si pierdes el combate, decisiones que pueden salir vacías y objetos que se quitan sin comprobar que los tienes. **Regla:** todo combate contra un personaje con nombre ofrece curar antes (pociones del NPC o pasar por el Centro). Los ✖ se corrigen esa noche.
+4. **Game Designer** (`herramientas/disenador.mjs`): revisa el hub de misiones (que cada ficha diga qué hacer y dónde, con `type`, `est`, `parts` en las de reunir cosas, textos de ≤ 240 caracteres con un lugar o personaje de ancla, final y premio), las reglas de bloque de §2.4 (aviso de ritmo, colección, fichas de reto, zonas de entrenamiento, duración) y los lugares (`mapNote`, `descNight`, rumores). Incluye la **tabla de la colección soñada**: qué iniciales, pseudolegendarios, fósiles, especiales, legendarios, singulares, ultraentes y paradojas se pueden conseguir ya. Úsala al planear cada bloque (ver §2.4).
+5. **Bot de recorrido** (`herramientas/recorrido.mjs`): juega todo el contenido sin interfaz, de día y de noche.
    - **Bloquea si:** hay `ERRORES`, o menos del 75 % de los recorridos llegan al final.
    - **Avisos de balance:** un rival con más de 2 derrotas de media es un muro. Más de 2/3 de recorridos sin perder ni una vez es demasiado fácil.
    - Corrige el contenido o el balance según `secreto/balance.md` y vuelve a ejecutar.
    - El bot juega peor que una persona; si un atasco es culpa del bot, mejora el bot (y anótalo), no el contenido.
-4. **Eventos por fecha:** el bot se ejecuta en la fecha de inicio de cada evento (`--fecha MM-DD`) y comprueba que sus guiones se disparan.
-5. **Registro automático** regenerado (`secreto/registro-auto.md`).
-6. **Prueba de humo** (`herramientas/humo.py`): Chromium real con pantalla de móvil (412×860). Crea partida, avanza diálogos y combate, y abre todos los menús. Bloquea si hay errores de JavaScript. **Mira las capturas** con la herramienta de lectura de imágenes: textos cortados, botones fuera de pantalla, contraste.
+6. **Eventos por fecha:** el bot se ejecuta en la fecha de inicio de cada evento (`--fecha MM-DD`) y comprueba que sus guiones se disparan.
+7. **Registro automático** regenerado (`secreto/registro-auto.md`).
+8. **Prueba de humo** (`herramientas/humo.py`): Chromium real con pantalla de móvil (412×860). Crea partida, avanza diálogos y combate, y abre todos los menús. Bloquea si hay errores de JavaScript. **Mira las capturas** con la herramienta de lectura de imágenes: textos cortados, botones fuera de pantalla, contraste.
 
 Si añadiste mecánicas nuevas al motor, añade también su prueba (por ejemplo, en `herramientas/test/battle-test.mjs`) y ejecútala.
 
@@ -202,6 +205,8 @@ El subagente **corrige directamente** lo que encuentre (cambios pequeños) o dev
 ```bash
 node herramientas/validar.mjs                          # validar contenido
 node herramientas/superfan.mjs                         # detalles de canon con ojos de fan
+node herramientas/tester.mjs                           # lógica de juego (combates sin curar, atascos…)
+node herramientas/disenador.mjs                        # hub de misiones, reglas de bloque y colección
 node herramientas/recorrido.mjs --semilla 3            # una partida del bot (día)
 node herramientas/recorrido.mjs --semilla 3 --hora 2   # de noche
 node herramientas/recorrido.mjs --fecha 12-24          # en una fecha concreta

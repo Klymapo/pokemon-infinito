@@ -43,7 +43,7 @@ export default {
 			cond: 'flag.b02_trigal_hecho',
 			info: [
 				{ text: 'Líder: **Morti**, tipo **Fantasma**. Dicen que ve cosas que nadie más ve.' },
-				{ cond: 'visited("iris")', text: '4 Pokémon, niveles 36 a 39.' },
+				{ cond: 'visited("iris")', text: '4 Pokémon, niveles 37 a 39.' },
 				{ cond: 'visited("gym_iris")', text: 'Los ataques de tipo **Lucha** y **Normal** no le hacen nada. **Siniestro** y **Fantasma** le hacen mucho daño. Un **Acero** aguanta bien todo lo que no sea Fantasma.' },
 				{ cond: 'beat("morti_g5")', text: '✔ Medalla Niebla conseguida.' },
 			],

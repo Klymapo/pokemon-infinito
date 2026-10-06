@@ -19,6 +19,9 @@
 
 ## Pedidos de Mario pendientes
 
+- **2026-10-06 · Colección completa.** Quiere tener todos los iniciales, pseudolegendarios, legendarios, singulares y Pokémon «particulares». Ver regla en `CLAUDE.md` §2.4 y la tabla del Game Designer (`secreto/auditorias/disenador-*.md`). Hoy: Iniciales 4/29, Pseudos 2/10, Fósiles 2/15, Eevee 8/8, Especiales 7/16, legendarios/singulares/ultraentes/paradojas 0.
+- **2026-10-06 · «Rhi me reta sin dejarme curar».** HECHO: todos los combates contra personajes con nombre ofrecen curar antes; el Game Tester lo vigila.
+
 - ~~**2026-10-05 · Retratos mucho más distintos**~~ **HECHO 2026-10-06 (madrugada de arte)**, ver «Hecho a petición de Mario». Quiere reconocer a cada personaje por su silueta y distinguir mucho una cara de otra. Rehacer `portraitCanvas` en `app/js/art.js` siguiendo `docs/ARTE.md` (o la skill `pixel-art`, si está disponible):
   - Plantillas ASCII por capas y contorno automático.
   - Más formas de cabeza, pelo, cejas, ojos, narices, vello facial, edades y accesorios.

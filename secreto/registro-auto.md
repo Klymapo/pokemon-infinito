@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-06T13:48:01.602Z · contenido 2026-10-06.4
+Generado: 2026-10-06T14:31:59.888Z · contenido 2026-10-06.4
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -559,11 +559,11 @@ Generado: 2026-10-06T13:48:01.602Z · contenido 2026-10-06.4
 - `rhi_1` (b01) Rhi: Scorbunny 9, Rookidee 8
 - `brock_g1` (b01) Brock: Roggenrola 12, Geodude 13, Onix 14
 - `bastien_1` (b01) Bastien: Froakie 12, Fletchling 11
-- `tobias_1` (b01) Tobías: Persian 17, Spoink 15
+- `tobias_1` (b01) Tobías: Meowth 17, Spoink 15
 - `recluta_flare_c1` (b01) Recluta: Houndour 17, Croagunk 18
 - `recluta_flare_c2` (b01) Recluta: Litleo 18, Scraggy 17
 - `bastien_2` (b01) Bastien: Frogadier 19, Fletchinder 18, Litleo 17
-- `tobias_cueva` (b01) Tobías: Spoink 18, Woobat 18, Persian 20
+- `tobias_cueva` (b01) Tobías: Spoink 18, Woobat 18, Meowth 20
 - `blanca_g2` (b01) Blanca: Clefairy 21, Furfrou 22, Miltank 23
 - `rhi_2` (b01) Rhi: Farfetch’d (Galar) 21, Corvisquire 21, Raboot 22
 - `hector_r10` (b01) Héctor: Machop 21, Hawlucha 23
@@ -571,34 +571,34 @@ Generado: 2026-10-06T13:48:01.602Z · contenido 2026-10-06.4
 - `corelia_g3` (b01) Corelia: Mienfoo 29, Machoke 30, Hawlucha 31, Lucario 32
 - `corelia_torre` (b01) Corelia: Lucario 34
 - `ysolde_duelo` (b01) Ysolde: Fletchinder 25, Honedge 26
-- `brock_r2` (b02) Brock: Boldore 35, Graveler 35, Kabutops 36, Steelix 37
+- `brock_r2` (b02) Brock: Boldore 35, Graveler 35, Kabuto 36, Steelix 37
 - `blanca_r2` (b02) Blanca: Clefable 35, Furfrou 35, Lopunny 36, Miltank 37
-- `corelia_r2` (b02) Corelia: Mienshao 36, Pangoro 36, Hawlucha 37, Lucario 38
+- `corelia_r2` (b02) Corelia: Mienfoo 36, Pangoro 36, Hawlucha 37, Lucario 38
 - `recluta_pozo_1` (b02) Recluta: Raticate 31, Golbat 32
-- `recluta_pozo_2` (b02) Recluta: Arbok 32, Koffing 32, Houndour 33
+- `recluta_pozo_2` (b02) Recluta: Arbok 32, Koffing 32, Houndoom 33
 - `recluta_pozo_3` (b02) Recluta: Grimer 32, Hypno 33
 - `recluta_pozo_4` (b02) Recluta: Murkrow 33, Arbok 34
-- `proton_1` (b02) Protón: Golbat 33, Muk 33, Skuntank 35, Weezing 36
+- `proton_1` (b02) Protón: Golbat 33, Grimer 33, Skuntank 35, Weezing 36
 - `anton_g4` (b02) Antón: Ariados 33, Heracross 34, Yanmega 35, Scizor 36
 - `recluta_trigal` (b02) Recluta: Golbat 35, Raticate 35
 - `rhi_3` (b02) Rhi: Sirfetch’d 34, Corvisquire 35, Toxtricity 34, Cinderace 37
 - `bastien_3` (b02) Bastien: Talonflame 35, Pyroar 35, Doublade 35, Greninja 38
-- `morti_g5` (b02) Morti: Dusclops 36, Drifblim 37, Mismagius 38, Gengar 39
+- `morti_g5` (b02) Morti: Dusclops 37, Drifblim 37, Mismagius 38, Gengar 39
 - `rocket_torre_1` (b02) Recluta: Weezing 36, Raticate 37
 - `rocket_torre_2` (b02) Recluta: Golbat 37, Arbok 37
-- `rocket_torre_3` (b02) Recluta: Muk 37, Houndoom 38
+- `rocket_torre_3` (b02) Recluta: Muk 38, Houndoom 38
 - `atenea_1` (b02) Atenea: Arbok 38, Vileplume 38, Houndoom 39, Honchkrow 41
 - `sabio_chao` (b03) Chao: Weepinbell 38, Noctowl 39
 - `sabio_jin` (b03) Jin: Haunter 39, Noctowl 40
 - `sabio_edmundo` (b03) Edmundo: Weepinbell 40, Victreebel 41
 - `sabio_li` (b03) Sabio Li: Weepinbell 40, Noctowl 41, Victreebel 42
 - `tobias_2` (b03) Tobías: Grumpig 39, Swoobat 39, Persian 41
-- `patio_bs_1` (b03) Wen: Weepinbell 38, Hoothoot 38
+- `patio_bs_1` (b03) Wen: Weepinbell 38, Noctowl 38
 - `patio_bs_2` (b03) Ruperta: Haunter 38, Noctowl 39
 - `patio_bs_3` (b03) Poncio: Weepinbell 39, Victreebel 40
 - `r32_casimiro` (b03) Casimiro: Sandslash 41, Claydol 42
 - `agente_ruinas` (b03) Jefe de seguridad: Porygon2 40, Magneton 41
-- `corelia_g6` (b03) Corelia: Mienshao 39, Hawlucha 40, Pangoro 40, Machamp 41, Lucario 43
+- `corelia_g6` (b03) Corelia: Mienfoo 39, Hawlucha 40, Pangoro 40, Machamp 41, Lucario 43
 - `r39_patricio` (b03) Patricio: Tentacruel 43, Poliwrath 44
 - `yasmina_g7` (b03) Yasmina: Magnezone 42, Skarmory 41, Bronzong 42, Scizor 42, Steelix 45
 - `olivo_muelle_3` (b03) Teófilo: Hariyama 43, Tentacruel 42

@@ -216,7 +216,7 @@ export default {
 			encounters: {
 				cave: [
 					{ sp: 'raticate', lv: [33, 36], w: 24 },
-					{ sp: 'weezing', lv: [34, 36], w: 16 },
+					{ sp: 'weezing', lv: [35, 36], w: 16 },
 					{ sp: 'golbat', lv: [33, 36], w: 14 },
 					{ sp: 'meditite', lv: [33, 35], w: 12 },
 					{ sp: 'spinda', lv: [34, 35], w: 8 },
@@ -358,7 +358,7 @@ export default {
 			intro: 'Llevo cuarenta años meditando en la Torre Campana. Desde que la cerraron, medito aquí. Medito peor. Hay mucho fantasma maleducado.', win: 'Morti te espera. Él ve cosas. No le preguntes cuáles: te las dirá igual.' },
 		morti_g5: { name: 'Morti', cls: 'Líder', npc: 'morti', ai: 4, iv: 29, reward: 2400, bg: 'gym',
 			team: [
-				{ sp: 'dusclops', lv: 36, moves: ['shadowpunch', 'confuseray', 'painsplit', 'icepunch'], ability: 'pressure', item: 'sitrusberry', nature: 'impish' },
+				{ sp: 'dusclops', lv: 37, moves: ['shadowpunch', 'confuseray', 'painsplit', 'icepunch'], ability: 'pressure', item: 'sitrusberry', nature: 'impish' },
 				{ sp: 'drifblim', lv: 37, moves: ['hex', 'airslash', 'thunderbolt', 'thunderwave'], ability: 'unburden', item: 'oranberry', nature: 'modest' },
 				{ sp: 'mismagius', lv: 38, moves: ['shadowball', 'dazzlinggleam', 'psybeam', 'nastyplot'], ability: 'levitate', item: 'spelltag', nature: 'calm' },
 				{ sp: 'gengar', lv: 39, moves: ['shadowball', 'sludgebomb', 'thunderbolt', 'hex'], ability: 'cursedbody', item: 'blacksludge', nature: 'timid' },
@@ -381,7 +381,7 @@ export default {
 			intro: '¡Eh, eh, eh! ¡Que esto es una cocina! ¿Tienes carné de manipulador de alimentos? Ya me parecía.', win: 'Vale, vale. Yo solo remuevo el azúcar. Remover azúcar no es delito. ¿O sí? Dímelo, que me interesa.' },
 		rocket_torre_2: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket_f', ai: 2, team: [{ sp: 'golbat', lv: 37 }, { sp: 'arbok', lv: 37 }],
 			intro: 'Tres mil caramelos más y pagamos la deuda de la abuela de Toni. ¿Sabes lo que es eso? Es una abuela que vuelve a dormir tranquila.', win: 'La familia primero. Siempre. Aunque la familia sea una pandilla de idiotas con uniforme.' },
-		rocket_torre_3: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'muk', lv: 37 }, { sp: 'houndoom', lv: 38 }],
+		rocket_torre_3: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'muk', lv: 38 }, { sp: 'houndoom', lv: 38 }],
 			intro: 'Cuando Giovanni se fue, nadie vino a buscarnos. Ni la Liga ni nadie. A mí me encontró Atenea en un muelle. No pienso dejar que pases.', win: 'Ve. Pero no le hagas daño. A ella no. Es lo único que tenemos.' },
 		atenea_1: { name: 'Atenea', cls: 'Admin Rocket', npc: 'atenea', ai: 5, iv: 29, reward: 3300,
 			team: [

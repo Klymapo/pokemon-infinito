@@ -6,7 +6,9 @@ export default {
 			bg: { type: 'city', landmark: 'prism' },
 			desc: 'La capital de Kalos: bulevares en círculo, cafés con toldos y la **Torre Prisma** en el centro, como una aguja de luz.\n\nDesde la inauguración, la plaza está vallada. La gente habla en voz baja de «la grieta».',
 			descs: [{ cond: '!flag.b01_handsome_recluta', text: 'La capital de Kalos. Hoy todo gira alrededor de la Torre Prisma.' }],
+			descNight: 'De noche, los bulevares se encienden en círculos, uno dentro de otro, como los anillos de un tronco. Los cafés apilan las sillas bajo los toldos y la **Torre Prisma** brilla sola en el centro, más blanca que nunca.\n\nEn la plaza vallada, los guardias cambian de turno sin hablar. Siempre hay alguien parado en la acera, mirando la punta de la torre.',
 			links: ['ruta4', 'ruta5'],
+			mapNote: 'Torre Prisma · Lab. del Prof. Ciprés · Bulevar Sur (Centro Pokémon, tiendas)',
 			spots: [
 				{ label: 'Plaza de la Torre Prisma', sub: 'La Puerta Lemnis', icon: '🗼', action: { go: 'luminalia_plaza' } },
 				{ label: 'Bulevar Sur', sub: 'Centro Pokémon, tiendas, Liga', icon: '🏙️', action: { go: 'luminalia_sur' } },

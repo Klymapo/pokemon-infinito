@@ -125,7 +125,7 @@ export default {
 						{ text: 'Una charca llena de Wooper que te miran con la boca abierta. No te miran por nada. Es que tienen así la boca.' },
 					],
 					3: [
-						{ trainer: 'r32_amapola', optional: true, label: 'Una criadora con un Flaaffy que no para de chispear' },
+						{ trainer: 'r32_amapola', optional: true, label: 'Una criadora con un Ampharos que no para de chispear' },
 						{ item: 'ultraball', hidden: true },
 					],
 					4: [
@@ -160,7 +160,6 @@ export default {
 						{ sp: 'flaaffy', lv: [36, 38], w: 12 },
 						{ sp: 'raticate', lv: [36, 38], w: 10 },
 						{ sp: 'loudred', lv: [37, 39], w: 8 },
-						{ sp: 'floatzel', lv: [37, 40], w: 8 },
 						{ sp: 'linoone', lv: [37, 39], w: 8 },
 						{ sp: 'bibarel', lv: [37, 39], w: 8 },
 						{ sp: 'skiploom', lv: [36, 38], w: 8, time: 'day' },
@@ -174,7 +173,7 @@ export default {
 						{ sp: 'tentacruel', lv: [37, 40], w: 40 },
 						{ sp: 'quagsire', lv: [37, 40], w: 30 },
 						{ sp: 'qwilfish', lv: [38, 41], w: 25 },
-						{ sp: 'floatzel', lv: [38, 40], w: 5 },
+						{ sp: 'floatzel', lv: [37, 40], w: 13 },
 					],
 				},
 			},
@@ -210,7 +209,7 @@ export default {
 					{ sp: 'natu', lv: [37, 39], w: 30 },
 					{ sp: 'xatu', lv: [40, 41], w: 8 },
 					{ sp: 'loudred', lv: [37, 39], w: 14 },
-					{ sp: 'floatzel', lv: [37, 39], w: 12 },
+					{ sp: 'quagsire', lv: [37, 39], w: 12 },
 					{ sp: 'linoone', lv: [37, 39], w: 12 },
 					{ sp: 'bibarel', lv: [37, 39], w: 12 },
 					{ sp: 'smeargle', lv: [38, 40], w: 4 },
@@ -274,7 +273,7 @@ export default {
 			team: [
 				{ sp: 'weepinbell', lv: 40, moves: ['gigadrain', 'sludgebomb', 'stunspore', 'knockoff'], ability: 'chlorophyll', item: 'eviolite', nature: 'bold' },
 				{ sp: 'noctowl', lv: 41, moves: ['airslash', 'extrasensory', 'hypnosis', 'roost'], ability: 'tintedlens', item: 'sitrusberry', nature: 'modest' },
-				{ sp: 'victreebel', lv: 42, moves: ['leafblade', 'poisonjab', 'suckerpunch', 'sleeppowder'], ability: 'chlorophyll', item: 'blacksludge', nature: 'adamant' },
+				{ sp: 'victreebel', lv: 42, moves: ['powerwhip', 'poisonjab', 'suckerpunch', 'sleeppowder'], ability: 'chlorophyll', item: 'blacksludge', nature: 'adamant' },
 			],
 			items: [{ id: 'hyperpotion', n: 1 }],
 			intro: 'Siéntate. No. Levántate. La torre no se sube sentado. ¿Ves cómo se mueve el pilar? No lucha contra el viento. Por eso lleva trescientos años de pie. Veamos si tu equipo sabe moverse.',
@@ -295,7 +294,7 @@ export default {
 		},
 
 		// ----- Patio de la Torre (entrenamiento, repetibles) -----
-		patio_bs_1: { name: 'Wen', cls: 'Aprendiz de sabio', npc: 'sabio', ai: 2, team: [{ sp: 'weepinbell', lv: 38 }, { sp: 'hoothoot', lv: 38 }],
+		patio_bs_1: { name: 'Wen', cls: 'Aprendiz de sabio', npc: 'sabio', ai: 2, team: [{ sp: 'weepinbell', lv: 38 }, { sp: 'noctowl', lv: 38 }],
 			intro: 'Llevo seis meses aprendiendo a balancearme. Hoy toca aprender a parar. Me cuesta.', win: 'Sigo balanceándome. Ya no sé si es la torre o soy yo.' },
 		patio_bs_2: { name: 'Ruperta', cls: 'Aprendiz de sabio', npc: 'sabio', ai: 2, team: [{ sp: 'haunter', lv: 38 }, { sp: 'noctowl', lv: 39 }],
 			intro: 'El maestro Li dice que el combate es una forma de meditación. Yo medito fatal. A ver si combato mejor.', win: 'Pues combato igual de fatal. Al menos soy coherente.' },
@@ -305,8 +304,8 @@ export default {
 		// ----- Ruta 32 -----
 		r32_lorenzo: { name: 'Lorenzo', cls: 'Montañero', ai: 2, team: [{ sp: 'graveler', lv: 39 }, { sp: 'sudowoodo', lv: 40 }],
 			intro: 'Los camiones de Lemnis bajan por aquí cada noche hacia las Ruinas. Vacíos, no van. Llenos, tampoco vuelven. ¿Entonces qué traen? Combate y lo pensamos.', win: 'Material de conservación, dicen. Yo conservo mis botas veinte años y no necesito un camión.' },
-		r32_amapola: { name: 'Leonor', cls: 'Criadora', ai: 2, team: [{ sp: 'flaaffy', lv: 39 }, { sp: 'jumpluff', lv: 40 }],
-			intro: 'Mi Flaaffy chispea más desde que pasan esos camiones. Como si oyera algo. Como si le picara la lana por dentro.', win: 'Le doy miel tibia y se calma. Una abuela de Azalea me dijo que miel, leche y paciencia. Funciona con todo.' },
+		r32_amapola: { name: 'Leonor', cls: 'Criadora', ai: 2, team: [{ sp: 'ampharos', lv: 39 }, { sp: 'jumpluff', lv: 40 }],
+			intro: 'Mi Ampharos chispea más desde que pasan esos camiones. Como si oyera algo. Como si le picara la piel por dentro, donde antes tenía la lana.', win: 'Le doy miel tibia y se calma. Una abuela de Azalea me dijo que miel, leche y paciencia. Funciona con todo.' },
 		r32_ulpiano: { name: 'Ulpiano', cls: 'Universitario', ai: 2, team: [{ sp: 'xatu', lv: 40 }, { sp: 'quagsire', lv: 40 }],
 			intro: 'Hice la tesis en las Ruinas Alfa. Me echaron la semana pasada. «Por tu seguridad.» Llevaba cinco años trabajando ahí con la misma seguridad que hoy.', win: 'La universidad tenía el permiso. Ahora lo tiene Lemnis. Nadie sabe cuándo cambió. El papel dice que siempre fue así.' },
 		r32_benigno: { name: 'Benigno', cls: 'Pescador', ai: 2, team: [{ sp: 'qwilfish', lv: 40 }, { sp: 'tentacruel', lv: 41 }],
