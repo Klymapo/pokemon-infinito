@@ -2,7 +2,7 @@
 // Uso: node herramientas/auditar.mjs [--semillas 12] [--rapido]
 //
 // Ejecuta, en este orden:
-//   1. Validador de contenido (bloquea si hay ERRORES).
+//   1. Validador de contenido (bloquea si hay ERRORES) y Superfan (detalles de canon; solo avisa).
 //   2. Bot de recorrido con N semillas de día (13 h) y N de noche (3 h).
 //   3. Bot en la fecha de inicio de cada evento por fechas.
 //   4. Registro automático de continuidad.
@@ -44,6 +44,13 @@ report.push(`# Auditoría automática · ${fecha}`, '');
 const val = await run('node', ['herramientas/validar.mjs']);
 report.push('## 1. Validador', '', '```', val.out.trim().slice(-3000), '```', '');
 if (val.code !== 0) blockers.push('El validador encontró ERRORES');
+
+// 1a. Superfan: detalles de canon que notaría un fan (no bloquea; los graves salen como aviso)
+const fan = await run('node', ['herramientas/superfan.mjs']);
+report.push('### Superfan (detalles de canon)', '', '```', fan.out.trim().slice(-1500), '```', '', 'Detalle completo en `secreto/auditorias/superfan-' + fecha + '.md`. Corrige los ✖ y revisa los ⚠; las · son opinables.', '');
+const fanGraves = +(fan.out.match(/Superfan: (\d+) graves/)?.[1] || 0);
+if (fan.code !== 0) warns.push('El Superfan no pudo terminar su revisión');
+else if (fanGraves) warns.push(`El Superfan encontró ${fanGraves} detalles graves de canon (ver su informe)`);
 
 // 1b. Pruebas del motor
 for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs']) {

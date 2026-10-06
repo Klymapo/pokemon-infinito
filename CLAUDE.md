@@ -141,14 +141,15 @@ node herramientas/auditar.mjs            # 12 semillas de día + 12 de noche + e
 Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea. Incluye:
 
 1. **Validador** (`herramientas/validar.mjs`): referencias rotas, condiciones inválidas, aprendizajes imposibles, flags que se leen pero nunca se activan, NPCs con pocas apariciones y **evoluciones imposibles** (un Pokémon conseguible que necesita un objeto que no se puede obtener). **0 errores.**
-2. **Bot de recorrido** (`herramientas/recorrido.mjs`): juega todo el contenido sin interfaz, de día y de noche.
+2. **Superfan** (`herramientas/superfan.mjs`): lee el contenido como un fan que se sabe la Pokédex de memoria y apunta lo que chirría: niveles imposibles para una evolución, básicos que ya deberían haber evolucionado, movimientos que aún no podrían saber, habilidades y géneros imposibles, Megapiedras o cristales Z que no sirven, líderes fuera de su tipo, formas regionales fuera de su región, hábitats y horarios raros, nombres en inglés en los textos y precios que no cuadran. Escribe `secreto/auditorias/superfan-AAAA-MM-DD.md`. **No bloquea**, pero los ✖ (graves) se corrigen esa misma noche si son de contenido nuevo; los de contenido publicado, cuando se toque esa zona. Las · son opinables: si algo es a propósito (un Pokémon de Fisura, un guiño), se deja.
+3. **Bot de recorrido** (`herramientas/recorrido.mjs`): juega todo el contenido sin interfaz, de día y de noche.
    - **Bloquea si:** hay `ERRORES`, o menos del 75 % de los recorridos llegan al final.
    - **Avisos de balance:** un rival con más de 2 derrotas de media es un muro. Más de 2/3 de recorridos sin perder ni una vez es demasiado fácil.
    - Corrige el contenido o el balance según `secreto/balance.md` y vuelve a ejecutar.
    - El bot juega peor que una persona; si un atasco es culpa del bot, mejora el bot (y anótalo), no el contenido.
-3. **Eventos por fecha:** el bot se ejecuta en la fecha de inicio de cada evento (`--fecha MM-DD`) y comprueba que sus guiones se disparan.
-4. **Registro automático** regenerado (`secreto/registro-auto.md`).
-5. **Prueba de humo** (`herramientas/humo.py`): Chromium real con pantalla de móvil (412×860). Crea partida, avanza diálogos y combate, y abre todos los menús. Bloquea si hay errores de JavaScript. **Mira las capturas** con la herramienta de lectura de imágenes: textos cortados, botones fuera de pantalla, contraste.
+4. **Eventos por fecha:** el bot se ejecuta en la fecha de inicio de cada evento (`--fecha MM-DD`) y comprueba que sus guiones se disparan.
+5. **Registro automático** regenerado (`secreto/registro-auto.md`).
+6. **Prueba de humo** (`herramientas/humo.py`): Chromium real con pantalla de móvil (412×860). Crea partida, avanza diálogos y combate, y abre todos los menús. Bloquea si hay errores de JavaScript. **Mira las capturas** con la herramienta de lectura de imágenes: textos cortados, botones fuera de pantalla, contraste.
 
 Si añadiste mecánicas nuevas al motor, añade también su prueba (por ejemplo, en `herramientas/test/battle-test.mjs`) y ejecútala.
 
@@ -200,6 +201,7 @@ El subagente **corrige directamente** lo que encuentre (cambios pequeños) o dev
 
 ```bash
 node herramientas/validar.mjs                          # validar contenido
+node herramientas/superfan.mjs                         # detalles de canon con ojos de fan
 node herramientas/recorrido.mjs --semilla 3            # una partida del bot (día)
 node herramientas/recorrido.mjs --semilla 3 --hora 2   # de noche
 node herramientas/recorrido.mjs --fecha 12-24          # en una fecha concreta
