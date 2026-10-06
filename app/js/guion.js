@@ -2,7 +2,7 @@
 // Formato de comandos: ver docs/CONTENIDO.md
 import { D, toID } from './data.js';
 import { C, npc } from './content.js';
-import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame } from './state.js';
+import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame, beginScene, endScene, commitScene } from './state.js';
 import { createPokemon, displayName, healFull, addHappy, maxHp } from './pokemon.js';
 import { uniqueKeyOf, uniqueResult } from './unicos.js';
 
@@ -43,11 +43,13 @@ export async function runScript(idOrCmds, ctx = {}) {
 	const cmds = typeof idOrCmds === 'string' ? C.scripts[idOrCmds] : idOrCmds;
 	if (typeof idOrCmds === 'string') UI.onScript?.(idOrCmds);
 	if (!cmds) { console.warn('Guion inexistente', idOrCmds); return; }
+	beginScene();
 	try {
 		await runList(cmds, ctx);
 	} catch (e) {
 		if (!(e instanceof Abort)) { console.error(e); UI.toast?.('Error en guion: ' + e.message); }
 	} finally {
+		endScene();
 		UI.refresh?.();
 	}
 }
@@ -186,7 +188,7 @@ async function runCmd(c, ctx) {
 	}
 	if (c.unlock) { G.flags['mec_' + c.unlock] = true; return; }
 	if (c.shop) { await UI.shop(c.shop); return; }
-	if (c.save) { await saveGame(); return; }
+	if (c.save) { commitScene(); await saveGame(); return; }
 	if (c.evolveCheck) { await UI.evolveCheck?.(); return; }
 	if (c.nickname) { const p = c.nickname === 'last' ? G.party[G.party.length - 1] : findMon(c.nickname); if (p) await UI.nickname(p); return; }
 	if (c.center) { await UI.center?.(); return; }

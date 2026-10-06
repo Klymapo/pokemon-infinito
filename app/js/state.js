@@ -67,10 +67,19 @@ async function idbGet(key) {
 	});
 }
 
+// Escenas atómicas: mientras corre un guion, lo que se guarda es la partida tal como estaba ANTES de empezarlo.
+// Así, si la app se cierra a mitad de una escena (o de su combate), al volver la escena sigue disponible y se ve
+// entera desde el principio, en vez de quedar marcada como vista. `{ save: true }` en un guion confirma lo hecho.
+// La intro de una partida nueva (todavía sin lugar) se guarda como antes.
+let sceneDepth = 0, sceneSnap = null;
+export function beginScene() { if (sceneDepth++ === 0) sceneSnap = G?.loc ? JSON.stringify(G) : null; }
+export function endScene() { if (sceneDepth > 0 && --sceneDepth === 0) sceneSnap = null; }
+export function commitScene() { if (sceneSnap && G) sceneSnap = JSON.stringify(G); }
+
 export async function saveGame() {
 	if (!G) return;
 	G.lastSave = Date.now();
-	const data = JSON.stringify(G);
+	const data = sceneSnap ?? JSON.stringify(G);
 	try { await idbSet('slot1', data); } catch (e) { /* ignore */ }
 	try { localStorage.setItem('pinf-slot1', data); } catch (e) { /* lleno o bloqueado */ }
 	try { navigator.storage?.persist?.(); } catch (e) { /* */ }

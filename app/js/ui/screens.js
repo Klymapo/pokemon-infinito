@@ -2,7 +2,7 @@
 import { D, toID, TYPE_COLORS, typeStyle, typeName, STAT_NAMES, STATS, abilityName, natureName, moveName, itemName } from '../data.js';
 import { C, topLoc } from '../content.js';
 import {
-	G, newGame, setG, saveGame, loadSaved, exportSave, importSave, deleteSave, evalCond, addItem, removeItem, count, markCaught,
+	G, newGame, setG, saveGame, beginScene, endScene, loadSaved, exportSave, importSave, deleteSave, evalCond, addItem, removeItem, count, markCaught,
 } from '../state.js';
 import {
 	createPokemon, displayName, maxHp, calcStats, healFull, expProgress, checkEvolution, addHappy, natureMod, canLearn,
@@ -741,8 +741,8 @@ async function arriveTramo(loc, n, dir) {
 			const key = n + ':' + it.script;
 			if (it.once !== false && pr.done[key]) continue;
 			if (it.dir !== undefined && it.dir !== dir) continue;
-			pr.done[key] = true;
-			await runScript(it.script);
+			beginScene(); // la marca de «ya pasó» solo se guarda si la escena termina
+			try { pr.done[key] = true; await runScript(it.script); } finally { endScene(); }
 			happened = true;
 		}
 		if (it.trainer && !it.optional && !G.beaten[it.trainer]) {
@@ -900,8 +900,8 @@ export async function enterLocation(id, { from, silent } = {}) {
 		const key = 'enter:' + id + ':' + (e.script || i);
 		if (e.once !== false && G.flags[key]) continue;
 		if (e.cond !== undefined && !evalCond(e.cond)) continue;
-		G.flags[key] = true;
-		await runScript(e.script);
+		beginScene(); // la marca de «ya pasó» solo se guarda si la escena termina
+		try { G.flags[key] = true; await runScript(e.script); } finally { endScene(); }
 		if (G.loc !== id) return;
 	}
 	await saveGame();
@@ -1244,7 +1244,7 @@ async function itemMenu(id, redraw) {
 
 async function useItemOutside(id) {
 	const it = D.items[id] || {};
-	if (it.use) { if (removeItem(id, it.consumable === false ? 0 : 1) || it.consumable === false) await runScript(it.use); return; }
+	if (it.use) { beginScene(); try { if (removeItem(id, it.consumable === false ? 0 : 1) || it.consumable === false) await runScript(it.use); } finally { endScene(); } return; }
 	if (REPELS[id]) {
 		if ((G.vars.repel || 0) > 0) { await say(null, 'Todavía tienes activo un repelente.'); return; }
 		removeItem(id); G.vars.repel = REPELS[id];
