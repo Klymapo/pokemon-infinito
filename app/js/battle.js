@@ -187,6 +187,14 @@ export class BattleCtl {
 		const { args, kwArgs } = BattleTextParser.parseBattleLine(line);
 		const cmd = args[0];
 		if (cmd === 'move' && toID(args[2]) === 'pasarturno') return;
+		// Si el rival ya cayó antes de que te tocara (retroceso, Explosión, Piel Tosca…), en los juegos tu Pokémon
+		// no llega a atacar. El simulador lo apunta como «[notarget]» + «-fail»: se omiten los dos, sin animación ni texto.
+		if (cmd === 'move' && kwArgs.notarget) { this.swallowFail = args[1]; return; }
+		if (this.swallowFail) {
+			const sw = this.swallowFail;
+			this.swallowFail = null;
+			if (cmd === '-fail' && args[1] === sw) return;
+		}
 		// Eventos de estado para la interfaz
 		switch (cmd) {
 		case 'switch': case 'drag': case 'replace': {

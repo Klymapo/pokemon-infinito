@@ -368,6 +368,8 @@ button.cmpmove:active { transform: scale(.98); }
 .pills { display: grid; grid-template-columns: 1fr 1fr; }
 .pill { padding: 9px 10px; font-size: 13.5px; border-radius: 14px; min-height: 46px; text-align: left; line-height: 1.15; }
 .tiles > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 0; }
+/* Filtro de la hoja de Recolección */
+.pill.on { background: var(--aura-fill); border-color: var(--aura); color: #fff; }
 
 /* Diario de misiones: grupos y ficha */
 .qgroup { display: flex; flex-direction: column; gap: 2px; margin: 12px 12px 2px; padding: 10px 12px; border-radius: 12px; background: rgba(242,179,61,.10); border: 1px solid rgba(242,179,61,.35); }

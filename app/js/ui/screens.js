@@ -502,6 +502,107 @@ async function gatherHere(gid, loc) {
 	render();
 }
 
+/** Todos los puntos de recolección que ya conoces (lugares visitados y tramos de ruta vistos). */
+function knownGatherPoints() {
+	const out = [];
+	for (const loc of Object.values(C.locations)) {
+		const top = topLoc(loc.id);
+		const place = top && top.id !== loc.id ? `${top.name} › ${loc.name}` : loc.name;
+		if (G.visited[loc.id]) for (const sp of spotsOf(loc)) {
+			const gid = sp.action?.gather;
+			if (gid && C.gather[gid]) out.push({ gid, loc, tramo: null, label: sp.label, icon: sp.icon, place });
+		}
+		if (loc.route) {
+			const pr = routeProg(loc.id);
+			for (let n = 0; n <= loc.route.length; n++) {
+				if (!pr.seen[n]) continue;
+				for (const it of tramoItems(loc, n)) {
+					const gid = it.spot?.action?.gather;
+					if (gid && C.gather[gid]) out.push({ gid, loc, tramo: n, label: it.label || it.spot.label, icon: it.icon || it.spot.icon, place: `${place} · tramo ${n}` });
+				}
+			}
+		}
+	}
+	// Un mismo punto puede salir en dos tramos: se queda uno
+	const seen = new Set();
+	return out.filter(p => { const k = p.loc.id + ':' + p.gid; if (seen.has(k)) return false; seen.add(k); return true; });
+}
+function gatherReadyCount() { return knownGatherPoints().filter(p => !gatherLeft(p.gid, p.loc)).length; }
+function isHere(p) { return G.loc === p.loc.id && (p.tramo === null || G.route?.pos === p.tramo); }
+
+/** Viaja a un punto de recolección por caminos conocidos (como el mapa). */
+async function goToGather(p) {
+	if (isHere(p)) return gatherHere(p.gid, p.loc);
+	const dest = topLoc(p.loc.id) || p.loc;
+	const here = topLoc(G.loc);
+	const start = G.route ? G.loc : here?.id;
+	const path = dest.id === start ? [start] : findPath(start, dest.id);
+	if (!path) { await say(null, `Aún no conoces un camino seguro hasta ${dest.name}. Ve a pie desde el mapa.`); return; }
+	const ce = canEnter(p.loc.id);
+	if (!ce.ok) { await say(null, tx(ce.msg)); return; }
+	const prev = path.length >= 2 ? path[path.length - 2] : start;
+	if (dest.id !== G.loc) await enterLocation(dest.id, { from: prev });
+	if (G.loc !== dest.id) return; // un guion al entrar nos movió
+	if (p.loc.id !== dest.id) await enterLocation(p.loc.id, { from: dest.id });
+	if (p.tramo !== null && G.loc === p.loc.id) {
+		if (G.cleared[p.loc.id]) { G.route = { id: p.loc.id, pos: p.tramo }; await saveGame(); }
+		else toast(`Está en el tramo ${p.tramo}: avanza por la ruta hasta llegar.`);
+	}
+	render();
+}
+
+function openGatherMenu() {
+	const sheet = openSheet('Recolección', null);
+	let tab = 'ready', berries = false;
+	const isBerry = id => { const it = D.items[toID(id)]; return !!(it && (it.berry || it.pocket === 'berries')); };
+	const draw = () => {
+		const here = topLoc(G.loc);
+		const start = G.route ? G.loc : here?.id;
+		const dist = p => { if (isHere(p)) return -1; const d = topLoc(p.loc.id) || p.loc; const path = d.id === start ? [start] : findPath(start, d.id); return path ? path.length : 999; };
+		let pts = knownGatherPoints().map(p => ({ ...p, left: gatherLeft(p.gid, p.loc) }));
+		if (!pts.length) {
+			sheet.set(h('div', { class: 'empty' }, 'Todavía no conoces ningún punto de recolección. Busca huertos, árboles con bayas, vetas y orillas en rutas y cuevas.'));
+			return;
+		}
+		if (berries) pts = pts.filter(p => (C.gather[p.gid].table || []).some(e => isBerry(e.id)));
+		pts.forEach(p => { p.d = dist(p); });
+		const ready = pts.filter(p => !p.left).sort((a, b) => a.d - b.d || a.place.localeCompare(b.place, 'es'));
+		const wait = pts.filter(p => p.left).sort((a, b) => a.left - b.left);
+		const yields = gid => {
+			const ids = [...new Set((C.gather[gid].table || []).map(e => toID(e.id)))];
+			const known = ids.filter(id => G.found?.[id]).map(id => itemName(id));
+			const unk = ids.length - known.length;
+			return known.length ? `Puede dar: ${known.join(', ')}${unk ? ` y ${unk} más por descubrir` : ''}` : `${ids.length} cosas por descubrir`;
+		};
+		const row = p => {
+			const def = C.gather[p.gid];
+			const hereP = isHere(p);
+			const st = p.left ? `⏳ ${gatherSub(p.gid, p.loc)}` : hereP ? '✨ Listo · estás aquí' : p.d >= 999 ? '✨ Listo · sin camino rápido' : '✨ Listo para recoger';
+			return h('button', { class: 'row' + (p.left ? ' done' : ' hl'), onclick: () => { closeAllSheets(); guarded(() => goToGather(p)); } },
+				h('div', { class: 'ico' }, p.icon || def.icon || '🧺'),
+				h('div', { class: 'lbl' },
+					h('div', { class: 't' }, tx(p.label || def.name || 'Recolección')),
+					h('div', { class: 's' }, `📍 ${p.place}`),
+					h('div', { class: 's' }, st),
+					h('div', { class: 's' }, yields(p.gid))),
+				h('b', {}, hereP ? (p.left ? 'Aquí' : 'Recoger') : 'Ir'));
+		};
+		const tabs = h('div', { class: 'tabs' }, ...[['ready', 'Listos', ready.length], ['wait', 'Creciendo', wait.length]]
+			.map(([k, n, c]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, h('span', { class: 'tabcount' }, String(c)))));
+		const filter = h('div', { class: 'pills' },
+			h('button', { class: 'pill' + (berries ? '' : ' on'), 'aria-pressed': String(!berries), onclick: () => { berries = false; draw(); } }, 'Todo'),
+			h('button', { class: 'pill' + (berries ? ' on' : ''), 'aria-pressed': String(berries), onclick: () => { berries = true; draw(); } }, h('span', { class: 'pi' }, '🍒'), 'Solo con bayas'));
+		const list = tab === 'ready' ? ready : wait;
+		sheet.set([
+			tabs, filter,
+			h('div', { class: 'note' }, tab === 'ready' ? 'Los más cercanos primero. Toca uno para viajar hasta allí por caminos que ya conoces.' : 'Cada punto vuelve a dar cosas pasadas unas horas reales. Los que están por volver salen primero.'),
+			list.length ? h('div', { class: 'list' }, ...list.map(row)) : h('div', { class: 'empty' }, tab === 'ready' ? 'Nada listo por ahora. Mira en «Creciendo» cuándo vuelve cada uno.' : 'Todo está listo para recoger.'),
+		]);
+	};
+	draw();
+	const timer = setInterval(() => { if (!sheet.el.isConnected) { clearInterval(timer); return; } draw(); }, 60e3);
+}
+
 async function pokemonCenter(a = {}) {
 	const nurse = { name: a.nurse || 'Enfermera Joy', look: { hair: 'long', hairColor: '#e98aa8', outfit: '#f3e6e8', outfit2: '#e85a6a', eyes: '#3a5fc4', skin: 0, acc: 'bow' } };
 	await say(nurse, '¡Hola! Bienvenid{o|a|e} al Centro Pokémon. Deja que tus Pokémon descansen un momento.');
@@ -1764,6 +1865,7 @@ function openMore() {
 	const caught = Object.keys(G.dex.caught).length, seen = Object.keys(G.dex.seen).length;
 	sheet.set(h('div', { class: 'list' },
 		row('📕', 'Pokédex', `Vistos ${seen} · Capturados ${caught}`, openDex),
+		(() => { const n = gatherReadyCount(), tot = knownGatherPoints().length; return row('🍒', 'Recolección', tot ? (n ? `✨ ${n} ${n === 1 ? 'punto listo' : 'puntos listos'} de ${tot}` : `${tot} ${tot === 1 ? 'punto' : 'puntos'} · nada listo aún`) : 'Bayas, huertos y vetas que conoces', openGatherMenu); })(),
 		row('🧺', 'Colección', `Postales ${Object.keys(G.album || {}).length} · Objetos ${Object.keys(G.found || {}).length}`, () => openCollection()),
 		row('📜', 'Conversaciones', 'Relee lo último que te dijeron', () => openDialogLog()),
 		row('📍', 'Guía de zona', 'Qué Pokémon hay por aquí', openZoneGuide),

@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-06T15:08:17.073Z · contenido 2026-10-06.4
+Generado: 2026-10-06T15:52:59.074Z · contenido 2026-10-06.4
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -603,7 +603,7 @@ Generado: 2026-10-06T15:08:17.073Z · contenido 2026-10-06.4
 - `yasmina_g7` (b03) Yasmina: Magnezone 42, Skarmory 41, Bronzong 42, Scizor 42, Steelix 45
 - `olivo_muelle_3` (b03) Teófilo: Hariyama 43, Tentacruel 42
 - `bastien_4` (b03) Bastien: Talonflame 42, Meowstic 41, Pyroar 42, Doublade 42, Greninja 44
-- `rhi_4` (b03) Rhi: Falinks 41, Sirfetch’d 42, Corviknight 42, Toxtricity 41, Cinderace 44
+- `rhi_4` (b03) Rhi: Falinks 41, Sirfetch’d 42, Corviknight 42, Toxtricity 41, Cinderace 43
 - `kiyo_mortero` (b03) Kiyo: Hitmonlee 45, Hitmonchan 45, Hitmontop 46, Machamp 46
 - `peaje_toni` (b03) Toni: Raticate 44, Golbat 45, Mightyena 45
 - `guarida_1` (b03) Recluta: Weezing 45, Hypno 45

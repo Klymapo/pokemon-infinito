@@ -228,6 +228,16 @@ with sync_playwright() as p:
                 avanzar_dialogos(pg, 8)
                 if len(pg.query_selector_all('.sheet')) > n0: cerrar(pg)
         cerrar(pg); cerrar(pg)
+    # Más → Recolección (hoja propia, no sale en el barrido de la barra)
+    try:
+        cerrar_todo(pg)
+        mas = pg.query_selector('.nav button:has-text("Más")')
+        if mas and tocar(pg, mas):
+            rec = pg.query_selector('.sheet .row:has-text("Recolección")')
+            if not rec: errores_js.append('no encuentro Recolección en el menú Más')
+            elif tocar(pg, rec): auditar(pg, 'recoleccion')
+        cerrar_todo(pg)
+    except Exception as e: errores_js.append(f'recolección: {e}')
     # Servicios del lugar: PC, tienda, centro (diálogo)
     for etiqueta, nombre in [('PC', 'pc'), ('Tienda', 'tienda'), ('Centro Pokémon', 'centro')]:
         el = pg.query_selector(f'.main button:has-text("{etiqueta}"), .main .row:has-text("{etiqueta}")')
