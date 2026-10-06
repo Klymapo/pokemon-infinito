@@ -509,6 +509,14 @@ async function pokemonCenter(a = {}) {
 	G.lastCenter = topLoc(G.loc)?.id || G.loc;
 	G.lastCenterSub = G.loc;
 	await say(nurse, '¡Listo! Tus Pokémon están en plena forma. ¡Esperamos volver a verte!');
+	// Regalo único del Cordón Unión: sustituye a las evoluciones por intercambio (no hay intercambios en el juego).
+	if (!G.flags.regalo_cordon && G.player.badges.length >= 2) {
+		await say(nurse, 'Ah, ¡espera! Como viajas sin nadie con quien intercambiar, la Liga nos pide darte esto. Con él evolucionan los Pokémon que normalmente lo harían al intercambiarse.');
+		addItem('linkingcord', 1);
+		G.flags.regalo_cordon = true;
+		await say(null, `¡${G.player.name} ha obtenido **${itemName('linkingcord')}**!`, { jingle: 'item' });
+		await say(nurse, 'Úsalo desde la mochila sobre el Pokémon. Si necesitas más, desde ahora las tiendas lo venden.');
+	}
 	await saveGame();
 }
 

@@ -42,6 +42,8 @@ export function registerBlock(b) {
 	C.milestones.push(...(b.milestones || []).map(m => ({ ...m, block: b.id })));
 	// Objetos propios del juego (clave, etc.)
 	for (const id in b.items || {}) D.items[toID(id)] = { pocket: 'key', cost: 0, ...b.items[id], custom: true };
+	// El Cordón Unión viene sin descripción en los datos: sustituye al intercambio para evolucionar.
+	if (D.items.linkingcord && !D.items.linkingcord.desc) D.items.linkingcord.desc = 'Un cordón misterioso. Hace evolucionar a los Pokémon que normalmente lo harían al intercambiarse, y a algunos con condiciones especiales.';
 	// Vínculos simétricos en el mapa
 	for (const id in b.locations || {}) {
 		const L = C.locations[id];

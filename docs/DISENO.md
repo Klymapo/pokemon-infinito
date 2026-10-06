@@ -52,6 +52,7 @@ Los datos salen de la base de datos de Pokémon Showdown, que es la más complet
 - **Captura** con la fórmula oficial y todas las Poké Balls.
 - **Shiny:** 1/4096, con formas de mejorar la probabilidad.
 - **Combates dobles** de vez en cuando, donde la historia lo pida.
+- **Evoluciones por intercambio:** como no hay intercambios, las sustituye el **Cordón Unión** (también sirve para las de condiciones raras). La Enfermera Joy regala uno al curar con 2 medallas o más; después se vende en las tiendas. **Cualquier mecánica de evolución nueva tiene que tener una forma de conseguirse dentro del juego.**
 
 ### Las cuatro mecánicas
 

@@ -24,6 +24,7 @@ export default {
 		tienda_iris: { name: 'Tienda de Iris', items: [
 			'pokeball', 'greatball', 'ultraball', 'hyperpotion', 'revive', 'fullheal', 'duskball', 'spelltag', 'cleansetag',
 			{ id: 'mt_bola_sombra', price: 10000, cond: 'badges >= 5' },
+			{ id: 'linkingcord', cond: 'flag.regalo_cordon' },
 		] },
 	},
 	challenges: {

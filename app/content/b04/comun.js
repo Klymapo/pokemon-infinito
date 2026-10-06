@@ -21,9 +21,9 @@ export default {
 		mt_onda_voltio: { name: 'MT Voltiocambio', pocket: 'machines', tm: 'voltswitch', desc: 'Ataca y vuelve a su Poké Ball para dar paso a otro Pokémon.' },
 	},
 	shops: {
-		tienda_azafran: { name: 'Tienda de Azafrán', items: ['pokeball', 'greatball', 'ultraball', 'timerball', 'quickball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'ether', { id: 'mt_onda_voltio', price: 10000 }] },
-		tienda_celeste: { name: 'Tienda de Celeste', items: ['pokeball', 'greatball', 'ultraball', 'diveball', 'netball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'freshwater', 'sodapop', 'lemonade'] },
-		tienda_lavanda: { name: 'Tienda de Lavanda', items: ['ultraball', 'duskball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'healball', { id: 'maxrevive', cond: 'flag.b04_atenea_vencida' }] },
+		tienda_azafran: { name: 'Tienda de Azafrán', items: ['pokeball', 'greatball', 'ultraball', 'timerball', 'quickball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'ether', { id: 'mt_onda_voltio', price: 10000 }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
+		tienda_celeste: { name: 'Tienda de Celeste', items: ['pokeball', 'greatball', 'ultraball', 'diveball', 'netball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'freshwater', 'sodapop', 'lemonade', { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
+		tienda_lavanda: { name: 'Tienda de Lavanda', items: ['ultraball', 'duskball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', 'healball', { id: 'maxrevive', cond: 'flag.b04_atenea_vencida' }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
 	},
 	challenges: {
 		gym_celeste: {
