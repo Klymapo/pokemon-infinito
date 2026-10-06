@@ -204,10 +204,58 @@ export function openSheet(title, body, { onClose, actions } = {}) {
 		title(t) { head.querySelector('h2').textContent = t; },
 	};
 	sheets.push(api);
+	// Deslizar de lado: cambia de pestaña; en la primera o la última, pasa al menú vecino (onEdgeSwipe)
+	onSwipe(el, dir => {
+		if (sheets[sheets.length - 1] !== api) return;
+		if (stepTabs(bodyEl, dir)) return;
+		api.onEdgeSwipe?.(dir);
+	});
 	if (body) api.set(typeof body === 'function' ? body(api) : body);
 	return api;
 }
 export function closeAllSheets() { while (sheets.length) sheets[sheets.length - 1].close(); }
+export function topSheet() { return sheets[sheets.length - 1] || null; }
+
+// ---------- Deslizar ----------
+// dir = 1: el dedo va hacia la izquierda (siguiente); dir = -1: hacia la derecha (anterior).
+const NO_SWIPE = '.tabs, input, textarea, select, .stepper, .dialog, .choices, [data-noswipe]';
+export function onSwipe(el, fn) {
+	let s = null;
+	el.addEventListener('touchstart', e => {
+		const t = e.touches[0];
+		s = e.touches.length === 1 && !e.target.closest?.(NO_SWIPE) ? { x: t.clientX, y: t.clientY, at: Date.now() } : null;
+	}, { passive: true });
+	el.addEventListener('touchend', e => {
+		if (!s) return;
+		const t = e.changedTouches[0], dx = t.clientX - s.x, dy = t.clientY - s.y, dt = Date.now() - s.at;
+		s = null;
+		if (dt < 700 && Math.abs(dx) > 60 && Math.abs(dx) > 1.8 * Math.abs(dy)) fn(dx < 0 ? 1 : -1);
+	}, { passive: true });
+}
+// Pasa a la pestaña vecina de la primera fila de pestañas visible. Devuelve false si no hay a dónde ir.
+export function stepTabs(root, dir) {
+	const bar = [...root.querySelectorAll('.tabs')].find(t => t.offsetParent !== null && t.querySelectorAll('button').length > 1);
+	if (!bar) return false;
+	const btns = [...bar.querySelectorAll('button')];
+	const i = btns.findIndex(b => b.classList.contains('on'));
+	if (i < 0) return false;
+	const next = btns[i + dir];
+	if (!next) return false;
+	next.click();
+	slideIn(root, dir);
+	return true;
+}
+export function lastTab(root) {
+	const bar = root.querySelector('.tabs');
+	const btns = bar ? [...bar.querySelectorAll('button')] : [];
+	if (btns.length > 1 && !btns[btns.length - 1].classList.contains('on')) btns[btns.length - 1].click();
+}
+export function slideIn(el, dir) {
+	el.classList.remove('slide-l', 'slide-r');
+	void el.offsetWidth;
+	el.classList.add(dir > 0 ? 'slide-l' : 'slide-r');
+	requestAnimationFrame(() => { const on = el.querySelector('.tabs button.on'); on?.scrollIntoView?.({ block: 'nearest', inline: 'center' }); });
+}
 
 export { esc, fmtText };
 

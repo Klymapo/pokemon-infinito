@@ -600,3 +600,16 @@ button.cmpmove:active { transform: scale(.98); }
 .tut-search { display: block; width: calc(100% - 24px); margin: 8px 12px; }
 .tut-info { align-items: flex-start; }
 .tut-info .tut-where { margin-top: 4px; color: var(--text); opacity: .9; line-height: 1.35; }
+
+/* Orden de objetos (mochila y tiendas) */
+.sortbar { display: flex; align-items: center; gap: 6px; padding: 2px 12px 8px; flex-wrap: wrap; }
+.sortbar > span { font-size: 13px; color: var(--text); opacity: .8; font-weight: 700; margin-right: 2px; }
+.sortbar button { min-height: 44px; padding: 6px 12px; border-radius: 12px; background: transparent; border: 1px solid var(--line); color: var(--text); font-size: 13px; font-weight: 700; }
+.sortbar button.on { background: var(--ink-3); border-color: var(--cream); }
+
+/* Deslizar entre pestañas y menús */
+@keyframes slideL { from { transform: translateX(28px); opacity: .35; } to { transform: none; opacity: 1; } }
+@keyframes slideR { from { transform: translateX(-28px); opacity: .35; } to { transform: none; opacity: 1; } }
+.slide-l { animation: slideL .18s ease-out; }
+.slide-r { animation: slideR .18s ease-out; }
+@media (prefers-reduced-motion: reduce) { .slide-l, .slide-r { animation: none; } }

@@ -13,7 +13,7 @@ import {
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
 import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS, ballIcon, pxItem } from '../art.js';
-import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor, logLine, logButton, openDialogLog } from './core.js';
+import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, topSheet, onSwipe, lastTab, slideIn, setTextSpeed, portraitFor, logLine, logButton, openDialogLog } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
 import { resolveLook } from '../retrato.js';
 import { announceUniques, announceRetro, uniqueEncounter, openUniques, uniquesDue } from './unicos-ui.js';
@@ -129,6 +129,7 @@ async function importBackup() {
 
 function continueGame(save) {
 	setG(save);
+	mainSwipe();
 	try { const added = retroUniques(); if (added.length) G.uniq.retroNews = added; } catch (e) { console.error(e); }
 	startClock();
 	render();
@@ -215,6 +216,7 @@ function creation() {
 		name = nameInput.value.trim();
 		if (!name) { toast('Escribe un nombre'); nameInput.focus(); return; }
 		newGame({ name, pron, look });
+		mainSwipe();
 		startClock();
 		const first = C.blocks[0];
 		const startScript = C.scripts[first?.start || 'inicio'] ? (first?.start || 'inicio') : null;
@@ -322,11 +324,34 @@ async function showEventNotice(c) {
 	render();
 }
 
+const NAV = () => [['🗺️', 'Mapa', openMap], [ballIcon(22), 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
 function navBar() {
 	const nav = h('div', { class: 'nav' });
-	const items = [['🗺️', 'Mapa', openMap], [ballIcon(22), 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
-	for (const [i, t, f] of items) nav.append(h('button', { onclick: f }, h('span', { class: 'i' }, i), t));
+	NAV().forEach(([i, t], k) => nav.append(h('button', { onclick: () => openNav(k) }, h('span', { class: 'i' }, i), t)));
 	return nav;
+}
+// Los cinco menús de abajo forman un carrusel: deslizando se pasa de uno a otro (y por sus pestañas).
+// Desde la pantalla principal, deslizar a la izquierda abre el Mapa y a la derecha, Más.
+function openNav(k, from = 0) {
+	const items = NAV();
+	if (k < 0 || k >= items.length) { closeAllSheets(); return; }
+	closeAllSheets();
+	items[k][2]();
+	const s = topSheet();
+	if (!s) return;
+	if (from < 0) lastTab(s.body);
+	if (from) slideIn(s.body, from);
+	s.onEdgeSwipe = dir => openNav(k + dir, dir);
+}
+let swipeReady = false;
+function mainSwipe() {
+	if (swipeReady) return;
+	swipeReady = true;
+	onSwipe(app(), dir => {
+		if (busy || topSheet() || !G || !document.querySelector('#app .nav')) return;
+		if (document.querySelector('.dialog, .choices, .battle, .field')) return;
+		openNav(dir > 0 ? 0 : NAV().length - 1, dir);
+	});
 }
 
 async function guarded(fn) {
@@ -1190,19 +1215,47 @@ const VITAMINS = { hpup: 0, protein: 1, iron: 2, calcium: 3, zinc: 4, carbos: 5 
 const EV_BERRIES = { pomegberry: 0, kelpsyberry: 1, qualotberry: 2, hondewberry: 3, grepaberry: 4, tamatoberry: 5 };
 const REPELS = { repel: 100, superrepel: 200, maxrepel: 250 };
 
+// =================== Orden de objetos (mochila y tiendas) ===================
+// «Tipo» sigue el orden de los juegos: por clase de objeto y, dentro de cada clase, de más barato a más caro
+// (Poción → Superpoción → Hiperpoción…). Las MT van por número.
+const CAT_ORDER = ['standard-balls', 'special-balls', 'apricorn-balls', 'healing', 'revival', 'status-cures', 'pp-recovery', 'vitamins', 'nature-mints',
+	'medicine', 'picky-healing', 'in-a-pinch', 'type-protection', 'effort-drop', 'catching-bonus', 'baking-only', 'other',
+	'stat-boosts', 'flutes', 'miracle-shooter', 'evolution', 'held-items', 'choice', 'type-enhancement', 'plates', 'mega-stones', 'z-crystals',
+	'training', 'effort-training', 'spelunking', 'collectibles', 'loot', 'all-machines', 'gameplay', 'plot-advancement', 'event-items'];
+const catRank = id => { const i = CAT_ORDER.indexOf(D.items[id]?.cat); return i < 0 ? CAT_ORDER.length : i; };
+const BAG_SORTS = [['tipo', 'Tipo'], ['az', 'A-Z'], ['nuevo', 'Recientes'], ['cantidad', 'Cantidad']];
+const SHOP_SORTS = [['tipo', 'Tipo'], ['precio', 'Precio'], ['az', 'A-Z']];
+function itemSort(mode, priceOf) {
+	const name = (a, b) => itemName(a).localeCompare(itemName(b), 'es', { numeric: true });
+	const cost = id => priceOf ? priceOf(id) : (D.items[id]?.cost ?? 0);
+	return (a, b) => {
+		if (mode === 'az') return name(a, b);
+		if (mode === 'nuevo') return (G.found?.[b] || 0) - (G.found?.[a] || 0) || name(a, b);
+		if (mode === 'cantidad') return (G.bag[b] || 0) - (G.bag[a] || 0) || name(a, b);
+		if (mode === 'precio') return cost(a) - cost(b) || name(a, b);
+		return catRank(a) - catRank(b) || (D.items[a]?.cat === 'all-machines' ? 0 : cost(a) - cost(b)) || name(a, b);
+	};
+}
+function sortBar(opts, mode, set) {
+	return h('div', { class: 'sortbar', 'data-noswipe': '' }, h('span', {}, 'Orden'),
+		...opts.map(([k, n]) => h('button', { class: mode === k ? 'on' : '', 'aria-pressed': String(mode === k), onclick: () => set(k) }, n)));
+}
+
 export function openBag(onPick) {
 	let pocket = 'medicine';
 	const sheet = openSheet('Mochila', null);
 	const draw = () => {
 		const tabs = h('div', { class: 'tabs' }, ...POCKETS.map(([k, n]) => h('button', { class: pocket === k ? 'on' : '', onclick: () => { pocket = k; draw(); } }, n)));
-		const ids = Object.keys(G.bag).filter(id => G.bag[id] > 0 && (D.items[id]?.pocket || 'misc') === pocket).sort((a, b) => itemName(a).localeCompare(itemName(b)));
+		const mode = G.settings.bagSort || 'tipo';
+		const ids = Object.keys(G.bag).filter(id => G.bag[id] > 0 && (D.items[id]?.pocket || 'misc') === pocket).sort(itemSort(mode));
+		const sortbar = sortBar(BAG_SORTS, mode, m => { G.settings.bagSort = m; draw(); });
 		const list = h('div', { class: 'list' });
 		for (const id of ids) {
 			const it = D.items[id] || {};
 			list.append(h('button', { class: 'row', onclick: () => itemMenu(id, draw) }, itemImg(id), h('div', { class: 'lbl' }, h('div', { class: 't' }, it.name || id), h('div', { class: 's' }, it.desc || '')), h('b', {}, pocket === 'key' ? '' : '×' + G.bag[id])));
 		}
 		if (!ids.length) list.append(h('div', { class: 'empty' }, 'No hay nada en este bolsillo.'));
-		sheet.set([tabs, list, h('div', { class: 'note' }, `Dinero: ${fmtMoney(G.player.money)}`)]);
+		sheet.set([tabs, ids.length > 1 ? sortbar : null, list, h('div', { class: 'note' }, `Dinero: ${fmtMoney(G.player.money)}`)]);
 	};
 	draw();
 }
@@ -1347,7 +1400,10 @@ async function openShop(id) {
 			const all = mode === 'buy' ? entries() : sellable();
 			const present = new Set(all.map(e => catOf(e.it)));
 			if (cat !== 'all' && !present.has(cat)) cat = 'all';
-			const shown = all.filter(e => cat === 'all' || catOf(e.it) === cat);
+			const smode = G.settings.shopSort || 'tipo';
+			const priceOf = Object.fromEntries(all.map(e => [e.id, e.price]));
+			const cmp = itemSort(smode, id => priceOf[id]);
+			const shown = all.filter(e => cat === 'all' || catOf(e.it) === cat).sort((a, b) => (b.ok - a.ok) || cmp(a.id, b.id));
 			if (sel && !all.some(e => e.id === sel && e.ok)) sel = null;
 
 			const head = h('div', { class: 'shop-head' },
@@ -1404,7 +1460,8 @@ async function openShop(id) {
 						} }, can ? `${mode === 'buy' ? 'Comprar' : 'Vender'} · ${fmtMoney(total)}` : 'No te alcanza')),
 					bonus ? h('div', { class: 'sf-bonus' }, '🎁 Por 10 Poké Balls te regalan una Honor Ball') : null);
 			}
-			sheet.set([head, chips, grid, foot].filter(Boolean));
+			const sortbar = shown.length > 1 ? sortBar(SHOP_SORTS, smode, m => { G.settings.shopSort = m; draw(); }) : null;
+			sheet.set([head, chips, sortbar, grid, foot].filter(Boolean));
 		};
 		draw();
 	});
