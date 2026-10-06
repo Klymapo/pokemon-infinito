@@ -102,6 +102,21 @@ b { font-weight: 800; }
 .textbox .more { position: absolute; right: 18px; bottom: 10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 9px solid #1b3a8a; animation: bob .9s ease-in-out infinite; }
 .dialog.narr .textbox { background: #e9edf8; color: #1d2540; }
 @keyframes bob { 50% { transform: translateY(3px); } }
+/* Historial de conversaciones */
+.dlg-log { position: absolute; right: 10px; bottom: calc(100% + 4px); width: 38px; height: 38px; border-radius: 12px; border: 2px solid var(--cream); background: var(--ink); color: var(--cream); font-size: 18px; line-height: 1; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0,0,0,.35); z-index: 2; }
+.dlg-log:active { background: var(--ink-3); }
+.cs-bar.top { position: relative; }
+.dlg-log.cs-log { bottom: auto; top: calc(6px + var(--safe-t, 0px)); right: 10px; opacity: .8; }
+.sheet.dlog-sheet { z-index: 70; }
+.dlog { display: flex; flex-direction: column; gap: 8px; padding: 6px 12px 24px; }
+.dlog-place { font-family: var(--pixel); font-size: 13px; color: var(--gold); margin-top: 10px; padding-bottom: 2px; border-bottom: 1px solid var(--line); }
+.dlog-line { font-size: 15px; line-height: 1.45; color: var(--cream); }
+.dlog-line b { color: #9fc3ff; }
+.dlog-line.narr { color: #c9cfdf; font-style: italic; }
+.dlog-line.pick { color: var(--gold); font-weight: 700; }
+.dlog-more { align-self: center; margin: 4px 0; }
+/* El aviso de actualización no tapa diálogos, combates ni cinemáticas */
+body:has(.overlay, .battle, .cutscene) .update-banner { display: none; }
 .choices { display: flex; flex-direction: column; gap: 8px; margin: 0 8px 10px; }
 .choices button { background: var(--ink); border: 2px solid var(--cream); color: var(--cream); padding: 13px 16px; border-radius: 14px; text-align: left; font-weight: 800; font-size: 16px; }
 .choices button:active { background: var(--ink-3); }

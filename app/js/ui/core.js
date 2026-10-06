@@ -2,6 +2,7 @@
 import { fmtText, esc } from '../util.js';
 import { portraitCanvas, trainerImg } from '../art.js';
 import { G } from '../state.js';
+import { C, topLoc } from '../content.js';
 
 export function h(tag, attrs = {}, ...kids) {
 	const el = document.createElement(tag);
@@ -38,12 +39,14 @@ export function portraitFor(n) {
 // ---------- Diálogo ----------
 /** Muestra un texto con retrato y nombre opcionales. Resuelve al tocar. */
 export function say(n, text, opts = {}) {
+	logLine({ k: n ? 'say' : 'narr', n: n?.name || null, t: text });
 	return new Promise(resolve => {
 		const ov = h('div', { class: 'overlay' + (opts.dim ? ' dim' : '') });
 		const portrait = n && n.portrait !== false ? portraitFor(n) : null;
 		const box = h('div', { class: 'dialog' + (portrait ? '' : ' noportrait') + (n ? '' : ' narr') });
 		if (portrait) box.append(h('div', { class: 'portrait' }, portrait));
 		if (n?.name) box.append(h('div', { class: 'nameplate' }, n.name));
+		box.append(logButton());
 		const tb = h('div', { class: 'textbox', role: 'status', 'aria-live': 'polite' });
 		box.append(tb);
 		ov.append(box);
@@ -51,10 +54,10 @@ export function say(n, text, opts = {}) {
 		// Escritura progresiva
 		const html = fmtText(text);
 		const plain = text.length;
-		let shown = false, timer = null;
+		let shown = false, timer = null, shownAt = 0;
 		// La boca del retrato se mueve mientras se escribe el texto (si el retrato es procedural)
 		const mouth = on => box.querySelector('.portrait canvas')?.talk?.(on);
-		const full = () => { shown = true; clearInterval(timer); mouth(false); tb.innerHTML = html + '<span class="more"></span>'; };
+		const full = () => { shown = true; shownAt = Date.now(); clearInterval(timer); mouth(false); tb.innerHTML = html + '<span class="more"></span>'; };
 		if (speed >= 3 || plain < 2) full();
 		else {
 			mouth(true);
@@ -77,6 +80,8 @@ export function say(n, text, opts = {}) {
 		}
 		const done = () => {
 			if (!shown) { full(); return; }
+			// Un toque doble (o un toque de más) no se salta la línea que acaba de aparecer
+			if (Date.now() - shownAt < 280) return;
 			ov.remove();
 			resolve();
 		};
@@ -94,7 +99,7 @@ export function choose(prompt, options, opts = {}) {
 		const box = h('div', { class: 'choices' });
 		if (prompt) box.append(h('div', { class: 'prompt' }, prompt));
 		options.forEach((o, i) => {
-			box.append(h('button', { onclick: () => { ov.remove(); resolve(i); } }, h('span', { html: fmtText(o) })));
+			box.append(h('button', { onclick: () => { if (opts.choice) logLine({ k: 'pick', t: o }); ov.remove(); resolve(i); } }, h('span', { html: fmtText(o) })));
 		});
 		ov.append(box);
 		if (opts.cancel !== undefined) ov.addEventListener('click', e => { if (e.target === ov) { ov.remove(); resolve(opts.cancel); } });
@@ -121,6 +126,57 @@ export function prompt(question, def = '', { max = 12 } = {}) {
 
 export async function confirm(question, yes = 'Sí', no = 'No') {
 	return (await choose(question, [yes, no])) === 0;
+}
+
+// ---------- Historial de conversaciones ----------
+// Guarda las últimas líneas de diálogo, narración, cinemáticas y elecciones de historia,
+// para poder releerlas si se pasaron sin querer. Va dentro de la partida (G.dlog).
+const LOG_MAX = 400;
+export function logLine(e) {
+	if (!G || !e?.t) return;
+	const L = (G.dlog ||= []);
+	const last = L[L.length - 1];
+	if (last && last.t === e.t && last.n === e.n && last.k === e.k) return;
+	L.push({ ...e, l: G.loc || null, at: Date.now() });
+	if (L.length > LOG_MAX) L.splice(0, L.length - LOG_MAX);
+}
+/** Botón pequeño para abrir el historial sin cerrar el diálogo. */
+export function logButton(cls = 'dlg-log') {
+	return h('button', { class: cls, 'aria-label': 'Releer la conversación', title: 'Releer', onclick: e => { e.stopPropagation(); openDialogLog(); } }, '📜');
+}
+function placeName(id) {
+	if (!id) return '';
+	const L = C.locations?.[id];
+	const top = topLoc(id);
+	return L?.name ? (top && top.id !== id && top.name ? `${L.name} · ${top.name}` : L.name) : '';
+}
+export function openDialogLog() {
+	const sheet = openSheet('Conversaciones', null);
+	sheet.el.classList.add('dlog-sheet');
+	const all = (G?.dlog || []).slice();
+	let limit = 150;
+	const draw = () => {
+		const items = all.slice(-limit);
+		if (!items.length) { sheet.set(h('div', { class: 'empty' }, 'Todavía no hay conversaciones guardadas. A partir de ahora, todo lo que te digan se queda aquí.')); return; }
+		const out = [];
+		if (all.length > items.length) out.push(h('button', { class: 'btn dlog-more', onclick: () => { limit += 150; draw(); } }, `Ver anteriores (${all.length - items.length})`));
+		let lastPlace = null, lastDay = null;
+		for (const e of items) {
+			const day = new Date(e.at).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+			const place = placeName(e.l);
+			if (place !== lastPlace || day !== lastDay) {
+				out.push(h('div', { class: 'dlog-place' }, (place || 'En camino') + ' · ' + day));
+				lastPlace = place; lastDay = day;
+			}
+			if (e.k === 'pick') out.push(h('div', { class: 'dlog-line pick', html: '➜ ' + fmtText(e.t) }));
+			else if (e.k === 'say') out.push(h('div', { class: 'dlog-line' }, h('b', {}, e.n), h('span', { html: ' ' + fmtText(e.t) })));
+			else out.push(h('div', { class: 'dlog-line narr', html: fmtText(e.t) }));
+		}
+		sheet.set(h('div', { class: 'dlog' }, ...out));
+		requestAnimationFrame(() => { sheet.body.scrollTop = limit > 150 ? 0 : sheet.body.scrollHeight; });
+	};
+	draw();
+	return sheet;
 }
 
 // ---------- Avisos ----------

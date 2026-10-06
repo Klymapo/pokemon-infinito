@@ -23,6 +23,7 @@ export function newGame(player) {
 		quests: {},
 		dex: { seen: {}, caught: {} },
 		diary: [],
+		dlog: [],
 		intel: {},
 		visited: {}, cleared: {}, routeProg: {},
 		beaten: {},
@@ -92,6 +93,7 @@ export function migrate(g) {
 	if (!g || typeof g !== 'object') return null;
 	g.settings ||= { expShare: true, textSpeed: 2, anim: true };
 	g.eventsDone ||= {};
+	g.dlog ||= [];
 	g.eventsSeen ||= {};
 	g.notices ||= {};
 	g.stats ||= { battles: 0, caught: 0, steps: 0 };

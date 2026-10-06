@@ -13,7 +13,7 @@ import {
 } from '../world.js';
 import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
 import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS, ballIcon, pxItem } from '../art.js';
-import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor } from './core.js';
+import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor, logLine, logButton, openDialogLog } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
 import { resolveLook } from '../retrato.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
@@ -64,7 +64,7 @@ async function playCutscene(spec = {}) {
 	const cap = h('div', { class: 'cs-cap' });
 	const hint = h('div', { class: 'cs-hint' }, 'Toca para seguir');
 	const stage = h('div', { class: 'cs-stage' }, bg, center, veil);
-	const root = h('div', { class: 'cutscene', role: 'dialog', 'aria-label': 'Escena' }, h('div', { class: 'cs-bar top' }), stage, h('div', { class: 'cs-bar bot' }, cap, hint));
+	const root = h('div', { class: 'cutscene', role: 'dialog', 'aria-label': 'Escena' }, h('div', { class: 'cs-bar top' }, logButton('dlg-log cs-log')), stage, h('div', { class: 'cs-bar bot' }, cap, hint));
 	document.body.append(root);
 	requestAnimationFrame(() => root.classList.add('in'));
 	const tap = () => new Promise(r => { const f = () => { root.removeEventListener('click', f); r(); }; setTimeout(() => root.addEventListener('click', f), 250); });
@@ -81,6 +81,7 @@ async function playCutscene(spec = {}) {
 		if (fr.fx === 'flash') { const f = h('div', { class: 'cs-flash' }); stage.append(f); setTimeout(() => f.remove(), 600); }
 		if (fr.fx && fr.fx !== 'dark' && fr.fx !== 'flash') { void stage.offsetWidth; stage.classList.add('fx-' + fr.fx); }
 		cap.innerHTML = fr.text ? fmtText(tx(fr.text)) : '';
+		if (fr.text) logLine({ k: 'narr', t: tx(fr.text) });
 		await tap();
 	}
 	root.classList.remove('in');
@@ -1756,6 +1757,7 @@ function openMore() {
 	sheet.set(h('div', { class: 'list' },
 		row('📕', 'Pokédex', `Vistos ${seen} · Capturados ${caught}`, openDex),
 		row('🧺', 'Colección', `Postales ${Object.keys(G.album || {}).length} · Objetos ${Object.keys(G.found || {}).length}`, () => openCollection()),
+		row('📜', 'Conversaciones', 'Relee lo último que te dijeron', () => openDialogLog()),
 		row('📍', 'Guía de zona', 'Qué Pokémon hay por aquí', openZoneGuide),
 		row('🏅', 'Retos', 'Líderes y combates importantes', openChallenges),
 		row('📁', 'Expediente', 'Rivales y enemigos que conoces', openIntel),
