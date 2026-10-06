@@ -7,6 +7,7 @@
 |---|---|---|
 | 2026-10-05 | Empieza el Bloque 1 | Publicación inicial |
 | 2026-10-05 15:21 | B1 · `b01_m7:cromlech` (antes de la decisión de Crómlech). 6 h 51 min, 2 medallas, 28/112 en la Pokédex. Le llegó el aviso de 3 h. Todas las secundarias disponibles hechas (falta `b01_s_espejo`, que está más adelante). Equipo nv27-28: Croagunk, Gallade, Tyrunt, Flaaffy «Candela», Budew + Honedge nv12 (capturado para leveleo). **Riolu ya evolucionó a Lucario** y está en la caja; Mario dice que lo vuelve a poner. Decisiones: `b01_prensa_lemnis`, `b01_agente_vencido`, `b01_fennekin_unido`, `b01_mareep_jaula` (6 Mareep), `b01_bastien_cubierto`. Afinidad: Rhi 14, Renata 6, Lila 4, Sera 1, Irene 1. Rep: Lemnis −5, policía 9, Kalos 10. | Exportar continuación |
+| 2026-10-06 10:24 | B2 · `b02_m2:santuario` (Santuario del Encinar). 22 h 19 min, 3 medallas (Roca, Encanto, Lucha), 37 capturados / 150 vistos. Equipo: Lucario 37, Ampharos «Candela» 37, Delphox 37, Gastly 10, Cetoddle 30, Lechonk 14. Ya cruzó la Puerta (no puede volver a Kalos). Fósil elegido: Tyrunt (Amaura quedó sin elegir). Afinidad: Lila 17, Rhi 14, Sera 11, Renata 6, Irene 3. Rep: Lemnis 2, policía 6, Kalos 11. Preguntó si ya tiene «todos los importantes capturables». | Exportar continuación |
 
 **Ritmo de Mario:** ~7 h de juego el primer día. Un bloque (~12 h) por noche le va por delante. Ofreció una **segunda sesión de madrugada** si hace falta; úsala para la cola de arte, interfaz y motor, no para adelantar más historia.
 
@@ -18,6 +19,8 @@
 **Bloques publicados:** B1, B2, B3 (B2 y B3 publicados el 2026-10-05/06 en sesión de día, a petición de Mario) y **B4 (Kanto)**, publicado la madrugada del 2026-10-06. Vamos **3 bloques por delante**: la próxima madrugada de historia **no** escribe el B5 (Alola) salvo que Mario avance; toca eventos por fecha (Navidad entra en la ventana de 60 días a partir del 21 de octubre) o profundidad.
 
 ## Pedidos de Mario pendientes
+
+- **2026-10-06 · Nada importante debe perderse para siempre.** Tras cruzar la Puerta ya no puede volver a Kalos, y ahí se quedaron capturas raras (Bagon, Larvitar, Eevee, Kecleon, Smeargle, Pikachu) y el fósil no elegido (Amaura). Propuesto a Mario: una vía para recuperarlos en Johto con historia. Pendiente de su respuesta.
 
 - **2026-10-06 · Designer de Canvas (UX/UI).** Quiere que todo lo visual (textos, recuadros, iconos, menús) quede lo mejor posible. Bot `herramientas/ux.py` en la auditoría. Primera pasada corregida (contraste de tipos y botones, letra ≥ 12, toques ≥ 44, nombres del PC completos, pestañas con pista de desplazamiento). **Pendiente:** los iconos con emoji → iconos pixelados propios (ya era la noche 2 del pedido de arte); la sesión de arte de las 0:47 lo hace con `ux.py` como comprobación.
 
