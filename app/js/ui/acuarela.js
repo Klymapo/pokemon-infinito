@@ -198,7 +198,7 @@ export function paintAcuarelaRiolu({ look = {}, shiny = false } = {}) {
 	const skin = typeof look.skin === 'number' ? SKINS[look.skin] || SKINS[1] : (look.skin || SKINS[1]);
 	const hair = look.hairColor || '#5a3a26', outfit = look.outfit || '#4c7cf0', outfit2 = look.outfit2 || '#f3e6c4';
 	const fx = 206, feet = deck - 2, head = feet - 112;
-	const longHair = ['long', 'ponytail', 'braids', 'tied', 'bob'].includes(look.hair);
+	const longHair = ['long', 'ponytail', 'braids', 'tied', 'bob', 'waves', 'hightail', 'twintails'].includes(look.hair);
 	if (longHair) wash(ctx, R, [[fx - 11, head + 2], [fx + 11, head + 2], [fx + 13, head + 34], [fx - 13, head + 34]], hair, { layers: 3, alpha: 0.45, amp: 3 });
 	wash(ctx, R, [[fx - 9, feet - 52], [fx - 1, feet - 52], [fx - 3, feet - 2], [fx - 11, feet - 2]], '#3d4762', { layers: 3, alpha: 0.48, amp: 2 }); // pierna izq
 	wash(ctx, R, [[fx + 1, feet - 52], [fx + 9, feet - 52], [fx + 11, feet - 2], [fx + 3, feet - 2]], '#3d4762', { layers: 3, alpha: 0.48, amp: 2 }); // pierna der
@@ -505,7 +505,7 @@ export function paintFotoGira({ look = {} } = {}) {
 	// --- tú, recortado y pegado: luz del lado contrario, cabeza grande, borde blanco de tijera
 	const skin = typeof look.skin === 'number' ? SKINS[look.skin] || SKINS[1] : (look.skin || SKINS[1]);
 	const hair = look.hairColor || '#5a3a26', outfit = look.outfit || '#4c7cf0', outfit2 = look.outfit2 || '#f3e6c4';
-	const longHair = ['long', 'ponytail', 'braids', 'tied', 'bob'].includes(look.hair);
+	const longHair = ['long', 'ponytail', 'braids', 'tied', 'bob', 'waves', 'hightail', 'twintails'].includes(look.hair);
 	const cut = document.createElement('canvas'); cut.width = 90; cut.height = 120;
 	const c = cut.getContext('2d');
 	const px = 45, foot = 112, hd = 30; // cabeza demasiado grande para el cuerpo

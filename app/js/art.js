@@ -1,6 +1,7 @@
 // Arte: sprites de Pokémon (PokeAPI, descargados por el teléfono) y arte original procedural en pixel art.
 import { D, toID, TYPE_COLORS } from './data.js';
 import { phase } from './time.js';
+import { retratoGrid, N as RN } from './retrato.js';
 
 const PK = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 const TR = 'https://play.pokemonshowdown.com/sprites/trainers/';
@@ -315,133 +316,58 @@ function drawFissure(g, W, H, R) {
 	g.stroke(); g.restore();
 }
 
-// ---------------- Retratos chibi (arte original) ----------------
-const SKINS = ['#ffe0c7', '#f5cba7', '#e0ac85', '#c68863', '#9a6646', '#6e4630'];
+// ---------------- Retratos (arte original; el dibujo está en retrato.js) ----------------
 export const HAIRS = ['#2b2b38', '#5a3a26', '#8a5a2f', '#d8a85a', '#e9dcc0', '#c4473a', '#e07a3a', '#3b5bb5', '#5aa36b', '#d06aa6', '#8c6cd0', '#cfd6e2'];
 export const LOOK_DEFAULTS = { skin: 1, hair: 'short', hairColor: '#5a3a26', eyes: '#3a5fc4', outfit: '#4c7cf0', outfit2: '#f3e6c4', acc: '' };
 
+// Las matrices se comparten entre canvas con el mismo look (listas con muchos retratos, editor de aspecto).
+const GRID_CACHE = new Map();
+const reduceMotion =() => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function paintGrid(g, grid, bg) {
+	g.fillStyle = bg; g.fillRect(0, 0, RN, RN);
+	g.fillStyle = shade(bg, 0.07); for (let y = 0; y < RN; y += 6) g.fillRect(0, y, RN, 3);
+	for (let y = 0; y < RN; y++) for (let x = 0; x < RN; x++) if (grid[y][x]) { g.fillStyle = grid[y][x]; g.fillRect(x, y, 1, 1); }
+}
+
 /**
- * Retrato de busto 32×32 pixeles. look: {skin(0-5|hex), hair: short|long|bob|ponytail|braids|spiky|curly|bun|tied|bald|cap,
- * hairColor, eyes, outfit, outfit2, acc: glasses|roundglasses|hat|goggles|scar|freckles|headphones|beard|mustache|bandana|flower|bow,
- * eyesStyle: normal|sleepy|sharp|happy, mouth: smile|flat|grin|open, streak (hex), seed}
+ * Retrato de busto 48×48 (ver retrato.js para todos los parámetros de look).
+ * El canvas devuelto parpadea solo mientras está en pantalla y tiene .talk(true|false) para mover la boca.
  */
-export function portraitCanvas(look = {}, size = 32) {
-	const L = { ...LOOK_DEFAULTS, ...look };
-	if (look.seed && !look.hairColor) {
-		const R = mulberry(look.seed);
-		L.hairColor = HAIRS[(R() * HAIRS.length) | 0];
-		L.skin = (R() * 5) | 0;
-		L.outfit = ['#c4473a', '#3b5bb5', '#5aa36b', '#8c6cd0', '#d8a85a', '#4a4f6a'][(R() * 6) | 0];
-		L.hair = ['short', 'long', 'bob', 'spiky', 'ponytail', 'curly'][(R() * 6) | 0];
-	}
-	const N = 32;
-	const grid = Array.from({ length: N }, () => Array(N).fill(null));
-	const set = (x, y, c) => { if (x >= 0 && y >= 0 && x < N && y < N) grid[y][x] = c; };
-	const rect = (x, y, w, h, c) => { for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) set(i, j, c); };
-	const ell = (cx, cy, rx, ry, c, cond) => { for (let y = Math.floor(cy - ry); y <= cy + ry; y++) for (let x = Math.floor(cx - rx); x <= cx + rx; x++) { const d = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2; if (d <= 1 && (!cond || cond(x, y))) set(x, y, c); } };
-	const skin = typeof L.skin === 'number' ? SKINS[L.skin] : L.skin;
-	const skinS = shade(skin, -0.14);
-	const hair = L.hairColor, hairS = shade(hair, -0.25), hairH = shade(hair, 0.22);
-	const out = L.outfit, outS = shade(out, -0.22);
-	// pelo largo detrás
-	if (['long', 'braids', 'tied'].includes(L.hair)) { rect(7, 12, 18, 16, hairS); ell(16, 22, 10, 9, hairS); }
-	if (L.hair === 'ponytail') { ell(25, 14, 3, 7, hairS); }
-	// cuerpo/hombros
-	ell(16, 33, 13, 8, out);
-	rect(5, 28, 22, 4, out);
-	for (let x = 4; x < 28; x++) set(x, 31, outS);
-	// cuello del traje
-	set(14, 26, L.outfit2); set(15, 27, L.outfit2); set(16, 27, L.outfit2); set(17, 26, L.outfit2);
-	rect(14, 23, 4, 3, skinS);
-	// cabeza grande (chibi)
-	ell(16, 14, 9.5, 9, skin);
-	for (let x = 8; x <= 24; x++) if (grid[22]?.[x] === skin) set(x, 22, skinS);
-	// orejas
-	set(6, 15, skin); set(6, 16, skinS); set(26, 15, skin); set(26, 16, skinS);
-	// pelo arriba
-	const top = (c) => ell(16, 10, 10.5, 7.5, c, (x, y) => y <= 11 || (x < 9 || x > 23) && y <= 15);
-	switch (L.hair) {
-	case 'bald': ell(16, 7, 8, 3, hairS); break;
-	case 'spiky':
-		top(hair);
-		for (let i = 0; i < 6; i++) { const x = 8 + i * 3; set(x, 2, hair); set(x + 1, 1, hair); set(x + 1, 3, hair); }
-		for (let x = 9; x < 24; x += 2) set(x, 12, hair);
-		break;
-	case 'curly':
-		top(hair);
-		for (let i = 0; i < 9; i++) ell(7 + i * 2.3, 6 + (i % 2) * 2, 2.2, 2.2, hair);
-		ell(7, 15, 2.5, 4, hair); ell(25, 15, 2.5, 4, hair);
-		break;
-	case 'bob':
-		top(hair); rect(6, 10, 3, 10, hair); rect(23, 10, 3, 10, hair);
-		for (let x = 9; x < 23; x++) set(x, 11, hair);
-		break;
-	case 'cap':
-		top(hair); rect(6, 5, 20, 5, L.outfit2 || '#c4473a'); rect(4, 9, 14, 2, shade(L.outfit2 || '#c4473a', -0.2));
-		break;
-	case 'bun': top(hair); ell(16, 3, 4, 3, hair); break;
-	default:
-		top(hair);
-		if (L.hair === 'long' || L.hair === 'tied' || L.hair === 'braids') { rect(6, 9, 3, 13, hair); rect(23, 9, 3, 13, hair); }
-		if (L.hair === 'braids') { for (let y = 20; y < 30; y += 2) { set(6, y, hairS); set(25, y, hairS); set(7, y + 1, hair); set(24, y + 1, hair); } }
-		// flequillo
-		for (let x = 9; x < 23; x++) if ((x + 1) % 4 !== 0) set(x, 11, hair);
-	}
-	if (L.streak) for (let y = 4; y < 12; y++) set(12, y, L.streak), set(13, y, L.streak);
-	// brillo del pelo
-	for (let x = 11; x < 17; x++) set(x, 5, hairH);
-	// ojos
-	const eye = L.eyes;
-	const eyeY = 15;
-	const drawEye = (x) => {
-		if (L.eyesStyle === 'sleepy') { rect(x, eyeY + 1, 3, 1, '#2a2235'); set(x, eyeY, '#2a2235'); return; }
-		if (L.eyesStyle === 'happy') { set(x, eyeY + 1, '#2a2235'); set(x + 1, eyeY, '#2a2235'); set(x + 2, eyeY + 1, '#2a2235'); return; }
-		rect(x, eyeY, 3, 3, eye); rect(x, eyeY, 3, 1, '#2a2235'); set(x + 1, eyeY + 1, '#ffffff'); set(x, eyeY + 2, shade(eye, -0.3));
-		if (L.eyesStyle === 'sharp') { set(x - 1, eyeY - 1, '#2a2235'); set(x + 3, eyeY, '#2a2235'); }
-	};
-	drawEye(10); drawEye(19);
-	// mejillas
-	set(9, 19, mix(skin, '#ff8a8a', 0.45)); set(23, 19, mix(skin, '#ff8a8a', 0.45));
-	// boca
-	const m = L.mouth || 'smile';
-	if (m === 'smile') { set(15, 20, '#7a3b3b'); set(16, 20, '#7a3b3b'); set(14, 19, '#7a3b3b'); set(17, 19, '#7a3b3b'); }
-	else if (m === 'grin') { rect(14, 19, 4, 2, '#7a3b3b'); rect(15, 19, 2, 1, '#ffffff'); }
-	else if (m === 'open') { rect(15, 19, 2, 2, '#7a3b3b'); }
-	else { rect(15, 20, 2, 1, '#7a3b3b'); }
-	// accesorios
-	const acc = (L.acc || '').split(' ');
-	if (acc.includes('glasses') || acc.includes('roundglasses')) {
-		const gc = '#30343f';
-		for (const x of [9, 18]) { rect(x, 14, 5, 1, gc); rect(x, 18, 5, 1, gc); set(x, 15, gc); set(x, 16, gc); set(x, 17, gc); set(x + 4, 15, gc); set(x + 4, 16, gc); set(x + 4, 17, gc); }
-		set(14, 15, gc); set(15, 15, gc); set(16, 15, gc); set(17, 15, gc);
-	}
-	if (acc.includes('goggles')) { rect(8, 6, 16, 3, '#6b4a2b'); rect(10, 5, 5, 4, '#9fd4ff'); rect(17, 5, 5, 4, '#9fd4ff'); }
-	if (acc.includes('hat')) { rect(5, 4, 22, 2, '#4a3a2a'); rect(9, 0, 14, 5, '#5a4a36'); rect(9, 3, 14, 1, L.outfit2 || '#c4473a'); }
-	if (acc.includes('scar')) { set(20, 12, '#b0604f'); set(21, 13, '#b0604f'); }
-	if (acc.includes('freckles')) { set(10, 19, '#b07a55'); set(12, 19, '#b07a55'); set(20, 19, '#b07a55'); set(22, 19, '#b07a55'); }
-	if (acc.includes('headphones')) { rect(4, 13, 3, 6, '#2b2b38'); rect(25, 13, 3, 6, '#2b2b38'); rect(5, 24, 22, 2, '#2b2b38'); }
-	if (acc.includes('beard')) { ell(16, 21, 6, 3, hair, (x, y) => y >= 20); }
-	if (acc.includes('mustache')) { rect(13, 18, 6, 1, hair); }
-	if (acc.includes('bandana')) { rect(7, 7, 18, 2, '#c4473a'); }
-	if (acc.includes('flower')) { set(22, 6, '#ff8ab3'); set(23, 5, '#ff8ab3'); set(24, 6, '#ff8ab3'); set(23, 7, '#ff8ab3'); set(23, 6, '#ffe08a'); }
-	if (acc.includes('bow')) { rect(20, 3, 3, 3, '#e05a7a'); rect(24, 3, 3, 3, '#e05a7a'); set(23, 4, '#b03a5a'); }
-	if (acc.includes('mask')) { rect(8, 13, 17, 5, L.outfit2 || '#2b2b38'); rect(10, 15, 3, 1, '#ffffff'); rect(19, 15, 3, 1, '#ffffff'); }
-	if (acc.includes('lemnis')) { set(14, 29, '#cfd6e2'); set(15, 28, '#cfd6e2'); set(16, 29, '#cfd6e2'); set(17, 28, '#cfd6e2'); set(18, 29, '#cfd6e2'); }
-	if (acc.includes('tie')) { rect(15, 27, 2, 5, L.tie || '#3b5bb5'); }
-	// contorno
-	const outline = '#1c1a2a';
-	const og = grid.map(r => r.slice());
-	for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-		if (og[y][x]) continue;
-		if ((og[y - 1]?.[x]) || (og[y + 1]?.[x]) || og[y][x - 1] || og[y][x + 1]) grid[y][x] = outline;
-	}
+export function portraitCanvas(look = {}, opts = {}) {
 	const cv = document.createElement('canvas');
-	cv.width = N; cv.height = N; cv.className = 'px';
+	cv.width = RN; cv.height = RN; cv.className = 'px portrait-px';
 	const g = cv.getContext('2d');
 	const bg = look.bg || '#2a3c66';
-	g.fillStyle = bg; g.fillRect(0, 0, N, N);
-	g.fillStyle = shade(bg, 0.08); for (let y = 0; y < N; y += 4) g.fillRect(0, y, N, 2);
-	for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (grid[y][x]) { g.fillStyle = grid[y][x]; g.fillRect(x, y, 1, 1); }
+	const lk = JSON.stringify(look);
+	const frame = (blink, talk) => {
+		const k = (blink ? 'b' : '') + (talk ? 't' : '') + '|' + lk;
+		let g = GRID_CACHE.get(k);
+		if (!g) { g = retratoGrid(look, { blink, talk }); if (GRID_CACHE.size > 240) GRID_CACHE.delete(GRID_CACHE.keys().next().value); GRID_CACHE.set(k, g); }
+		return g;
+	};
+	let blinking = false, talking = false, mouthOpen = false;
+	const draw = () => paintGrid(g, frame(blinking, talking && mouthOpen), bg);
+	draw();
+	if (opts.animate === false || reduceMotion()) { cv.talk = () => {}; return cv; }
+	// Parpadeo: 120 ms cada 3–6 s al azar, solo mientras el canvas siga en el documento
+	// (si nunca llega a montarse en ~20 s, se abandona para no dejar temporizadores huérfanos)
+	let seen = false, tries = 0;
+	const blinkLoop = () => {
+		if (!cv.isConnected) { if (seen || ++tries > 50) return; setTimeout(blinkLoop, 400); return; }
+		seen = true;
+		blinking = true; draw();
+		setTimeout(() => { blinking = false; draw(); setTimeout(blinkLoop, 3000 + Math.random() * 3000); }, 120);
+	};
+	setTimeout(blinkLoop, 1200 + Math.random() * 2500);
+	// Al hablar: alterna boca cerrada/abierta
+	let talkTimer = null;
+	cv.talk = (on) => {
+		talking = !!on;
+		clearInterval(talkTimer); talkTimer = null;
+		mouthOpen = false;
+		if (talking) talkTimer = setInterval(() => { if (!cv.isConnected) { clearInterval(talkTimer); return; } mouthOpen = !mouthOpen; draw(); }, 130);
+		draw();
+	};
 	return cv;
 }
 

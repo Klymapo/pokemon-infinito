@@ -18,5 +18,5 @@ export default {
 	atenea: { name: 'Atenea', title: 'Admin del Team Rocket', sprite: 'ariana', look: { hair: 'long', hairColor: '#c4473a', outfit: '#e9e8e0', outfit2: '#c4473a', skin: 0, eyesStyle: 'sharp', mouth: 'flat' } },
 
 	// ---------- Candidata nueva ----------
-	kaori: { name: 'Kaori', title: 'Boticaria del Teatro de Danza', look: { hair: 'bun', hairColor: '#1c1a2a', eyes: '#3f5a3a', outfit: '#e9e3d0', outfit2: '#5aa36b', skin: 0, acc: 'freckles', eyesStyle: 'sleepy', mouth: 'flat', bg: '#2f4a3a' } },
+	kaori: { name: 'Kaori', title: 'Boticaria del Teatro de Danza', look: { hair: 'bun', hairColor: '#1c1a2a', eyes: '#3f5a3a', outfit: '#e9e3d0', outfit2: '#5aa36b', skin: 0, acc: 'freckles hairstick', pinColor: '#5aa36b', eyesStyle: 'sleepy', mouth: 'flat', bg: '#2f4a3a', head: 'oval', brows: 'thin', nose: 'dot', collar: 'kimono', build: 'narrow' } },
 };

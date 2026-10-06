@@ -19,7 +19,7 @@
 
 ## Pedidos de Mario pendientes
 
-- **2026-10-05 · Retratos mucho más distintos** (prioridad alta en la próxima madrugada). Quiere reconocer a cada personaje por su silueta y distinguir mucho una cara de otra. Rehacer `portraitCanvas` en `app/js/art.js` siguiendo `docs/ARTE.md` (o la skill `pixel-art`, si está disponible):
+- ~~**2026-10-05 · Retratos mucho más distintos**~~ **HECHO 2026-10-06 (madrugada de arte)**, ver «Hecho a petición de Mario». Quiere reconocer a cada personaje por su silueta y distinguir mucho una cara de otra. Rehacer `portraitCanvas` en `app/js/art.js` siguiendo `docs/ARTE.md` (o la skill `pixel-art`, si está disponible):
   - Plantillas ASCII por capas y contorno automático.
   - Más formas de cabeza, pelo, cejas, ojos, narices, vello facial, edades y accesorios.
   - Un `look` diseñado a mano para cada NPC con nombre de `npcs.js`, con su brief de 3 rasgos.
@@ -27,7 +27,7 @@
   - Mantener los parámetros de `look` que ya existen (compatibilidad) y añadir los nuevos.
 
 - **2026-10-05 · Arte pixelado de la mejor calidad posible, con animaciones e iconos.** Repartirlo en varias madrugadas, sin dejar de avanzar la historia, siguiendo `docs/ARTE.md` (o la skill `pixel-art`) y con revisión por imágenes en cada paso:
-  1. **Noche 1:** retratos (punto anterior), con parpadeo y boca al hablar.
+  1. ~~**Noche 1:** retratos (punto anterior), con parpadeo y boca al hablar.~~ HECHO 2026-10-06.
   2. **Noche 2:** icono de la app (192/512, *maskable*) y un juego de iconos pixelados propios para la interfaz (barra inferior, lugares, objetos clave). Sustituyen a los emojis.
   3. **Noche 3:** escenas de fondo por tipo de lugar con animación ligera (nubes, agua, faroles de noche, hojas) y transiciones de entrada a combate.
   4. **Después:** efectos de movimientos por tipo en combate (partículas pixeladas) y pantalla de título animada.
@@ -84,3 +84,6 @@
 - **2026-10-05 · Más personajes y más recurrentes.** Hecho en B1 (`t4-encuentros.js`). Mantenerlo: cada bloque debe traer reencuentros con secundarios y al menos un personaje nuevo con 3+ apariciones.
 
 - **2026-10-05 · Hecho en interfaz:** entrenador rival visible en combate (entrada + ficha con su retrato) y Poké Balls de los equipos; tienda rediseñada (cuadrícula, filtros, cantidad y total); Poké Ball pixelada en el menú y animación de captura; tope de nivel visible en Equipo.
+
+- **2026-10-06 · Retratos nuevos (madrugada de arte, noche 1).** Motor nuevo `app/js/retrato.js` (48×48, plantillas por capas, sombreado con desplazamiento de tono, contorno selectivo): 7 formas de cara, 26 peinados, 11 miradas, 7 cejas, 5 narices, 8 bocas, 14 tipos de ropa, edades (niño/adulto/mayor) y ~40 accesorios (sombreros, capucha, antifaz, monóculo, linterna frontal, bufanda, auriculares al cuello…). **Parpadeo** cada 3–6 s y **boca que se mueve al hablar** mientras se escribe el texto. Look diseñado a mano para los 29 personajes originales con nombre (cada uno con un rasgo que sale del contorno); los genéricos salen variados solos. **Editor de aspecto** nuevo en Ajustes › Cambiar aspecto (y en la creación): cara, mirada, cejas, 18 peinados y ropa. Herramienta de revisión `herramientas/retratos.mjs` (contactos, siluetas, grises, tamaño real, animación, IoU). Revisión independiente hecha; Nate, Ulises y Héctor ajustados para no parecerse a personajes conocidos.
+  - **Siguiente noche de arte:** icono de la app (192/512, maskable) e iconos pixelados propios de la interfaz. Pendientes menores de retratos: tramado de barba de tres días (Simón) un poco ruidoso, la coleta baja de la jinete y añadir «Cambiar aspecto» a la prueba de humo.

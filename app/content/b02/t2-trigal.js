@@ -497,7 +497,7 @@ export default {
 		revisora: { name: 'Revisora', generic: true, look: { hair: 'bun', hairColor: '#2b2b38', outfit: '#1f2e4f', outfit2: '#e9e3d0', skin: 1, acc: 'hat', mouth: 'smile' } },
 		jubilado_radio: { name: 'Señor del transistor', generic: true, look: { hair: 'short', hairColor: '#e9e8e0', outfit: '#8a7a5a', outfit2: '#4a4f6a', skin: 2, acc: 'glasses', eyesStyle: 'sleepy', mouth: 'flat' } },
 		tecnico_lemnis: { name: 'Técnico de Lemnis', generic: true, look: { hair: 'short', hairColor: '#3a3a4a', outfit: '#1f2e4f', outfit2: '#cfd6e2', skin: 1, acc: 'lemnis glasses', mouth: 'smile' } },
-		damaso: { name: 'Dámaso Ferrán', title: 'Mecánico jefe del Tren Magnético', look: { hair: 'short', hairColor: '#cfd6e2', outfit: '#3b5bb5', outfit2: '#8a7a5a', skin: 2, acc: 'beard', eyesStyle: 'sleepy', mouth: 'flat', bg: '#4a4f6a' } },
+		damaso: { name: 'Dámaso Ferrán', title: 'Mecánico jefe del Tren Magnético', look: { hair: 'short', hairColor: '#cfd6e2', outfit: '#3b5bb5', outfit2: '#8a7a5a', skin: 2, acc: 'beard beanie', hatColor: '#c4733a', eyesStyle: 'tired', mouth: 'flat', bg: '#4a4f6a', head: 'square', age: 'old', brows: 'thick', nose: 'hook', collar: 'overalls', strap: '#5a6a8a', build: 'broad' } },
 	},
 
 	// =====================================================================

@@ -144,3 +144,11 @@ Itera hasta que la lista salga limpia. **Mínimo dos rondas.** La primera versi�
 - **Parpadeo:** el mismo retrato con los ojos en línea, durante 120 ms, cada 3 a 6 s al azar.
 - **Respiración:** el cuerpo baja 1 px cada 600 ms; la cabeza no se mueve.
 - **Al hablar:** alterna 2 bocas (cerrada/abierta) mientras se escribe el texto.
+
+## 8. En Pokémon Infinite
+
+- **Motor:** `app/js/retrato.js` (módulo puro, sin DOM). `retratoGrid(look, { blink, talk })` devuelve una matriz 48×48. `art.js` la pinta (`portraitCanvas`), hace parpadear el retrato y mueve la boca mientras se escribe el diálogo (`canvas.talk(true|false)`). Respeta `prefers-reduced-motion`.
+- **Parámetros de `look`:** la lista completa está al principio de `retrato.js` (cara, edad, complexión, mirada, cejas, nariz, boca, ropa, peinados y accesorios). Los parámetros antiguos siguen valiendo. Lo que falta se deduce de forma estable del propio `look`, así que los extras también salen variados.
+- **Personajes con nombre:** llevan un `look` diseñado a mano con, como mínimo, `head`, `brows`, `nose` y `collar` explícitos, y un rasgo que sale del contorno (peinado, sombrero, capucha, coleta…).
+- **Revisión:** `node herramientas/retratos.mjs --salida /tmp/retratos` genera `contactos.png`, `siluetas.png`, `grises.png`, `real.png`, `animacion.png` (normal / parpadeo / hablando) e `iou.txt`. Con `--todos` incluye genéricos y canon; con `--solo id1,id2`, solo esos.
+- **IoU en bustos:** la métrica se calcula sobre la cabeza y el cuello (filas < 40). Como todos los bustos comparten tamaño y posición, casi cualquier par supera 0,85. El umbral práctico es **0,93**: por encima, cambia uno de los dos. Por debajo, decide la hoja de siluetas a ojo.

@@ -15,6 +15,7 @@ import { runScript, runFirst, UI, tx, findRiolu } from '../guion.js';
 import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS, ballIcon, pxItem } from '../art.js';
 import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
+import { resolveLook } from '../retrato.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
 import { fmtMoney, fmtText, rng, pick, fmtDuration, clone } from '../util.js';
 
@@ -137,13 +138,10 @@ function startClock() {
 	document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && G) saveGame(); });
 }
 
-// =================== Creación de personaje ===================
-function creation() {
-	const root = app();
-	root.innerHTML = '';
-	const look = { ...LOOK_DEFAULTS, skin: 1 };
-	let name = '', pron = 'el';
-	const preview = h('div', { style: { width: '120px', height: '120px', borderRadius: '20px', overflow: 'hidden', border: '3px solid var(--cream)', margin: '0 auto' } });
+// =================== Aspecto del entrenador ===================
+/** Vista previa y controles para editar un look. Devuelve { preview, parts }. */
+function lookEditor(look, { size = 120 } = {}) {
+	const preview = h('div', { style: { width: size + 'px', height: size + 'px', borderRadius: '20px', overflow: 'hidden', border: '3px solid var(--cream)', margin: '0 auto' } });
 	const redraw = () => { preview.innerHTML = ''; const c = portraitCanvas(look); c.style.width = '100%'; c.style.height = '100%'; preview.append(c); };
 	const swatchRow = (colors, key) => {
 		const row = h('div', { class: 'swatches' });
@@ -155,13 +153,52 @@ function creation() {
 		});
 		return row;
 	};
-	const styles = [['short', 'Corto'], ['long', 'Largo'], ['bob', 'Melena'], ['ponytail', 'Coleta'], ['braids', 'Trenzas'], ['spiky', 'Puntas'], ['curly', 'Rizado'], ['bun', 'Moño'], ['cap', 'Gorra']];
-	const styleRow = h('div', { class: 'tabs', style: { flexWrap: 'wrap' } });
-	styles.forEach(([k, n]) => {
-		const b = h('button', { class: look.hair === k ? 'on' : '' }, n);
-		b.onclick = () => { look.hair = k; styleRow.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); redraw(); };
-		styleRow.append(b);
-	});
+	const optRow = (key, opts) => {
+		const row = h('div', { class: 'tabs', style: { flexWrap: 'wrap' } });
+		opts.forEach(([k, n]) => {
+			const b = h('button', { class: look[key] === k ? 'on' : '' }, n);
+			b.onclick = () => { look[key] = k; row.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); redraw(); };
+			row.append(b);
+		});
+		return row;
+	};
+	const T = t => h('div', { class: 'section-title' }, t);
+	redraw();
+	return {
+		preview,
+		parts: [
+			T('Piel'), swatchRow(['#ffe0c7', '#f5cba7', '#e0ac85', '#c68863', '#9a6646', '#6e4630'], 'skin'),
+			T('Cara'), optRow('head', [['round', 'Redonda'], ['oval', 'Ovalada'], ['square', 'Cuadrada'], ['heart', 'Corazón'], ['long', 'Alargada']]),
+			T('Mirada'), optRow('eyesStyle', [['normal', 'Normal'], ['big', 'Grandes'], ['almond', 'Almendrados'], ['sharp', 'Afilados'], ['sleepy', 'Tranquilos'], ['lashes', 'Pestañas']]),
+			T('Cejas'), optRow('brows', [['soft', 'Suaves'], ['straight', 'Rectas'], ['thick', 'Gruesas'], ['angry', 'Decididas'], ['thin', 'Finas']]),
+			T('Peinado'), optRow('hair', [['short', 'Corto'], ['sidepart', 'Raya'], ['fringe', 'Flequillo'], ['pixie', 'Muy corto'], ['long', 'Largo'], ['waves', 'Ondas'], ['bob', 'Melena'], ['ponytail', 'Coleta'], ['hightail', 'Coleta alta'], ['twintails', 'Dos coletas'], ['braids', 'Trenzas'], ['spiky', 'Puntas'], ['wild', 'Revuelto'], ['curly', 'Rizado'], ['afro', 'Afro'], ['bun', 'Moño'], ['buzz', 'Rapado'], ['cap', 'Gorra']]),
+			T('Color de pelo'), swatchRow(HAIRS, 'hairColor'),
+			T('Ojos'), swatchRow(['#3a5fc4', '#3f8a4f', '#6b4a2b', '#2b2b38', '#8c6cd0', '#c4473a'], 'eyes'),
+			T('Ropa'), optRow('collar', [['jacket', 'Chaqueta'], ['tshirt', 'Camiseta'], ['hoodie', 'Sudadera'], ['shirt', 'Camisa'], ['coat', 'Abrigo'], ['scarf', 'Bufanda']]),
+			swatchRow(['#4c7cf0', '#c4473a', '#3f9d58', '#d8a85a', '#8c6cd0', '#2b2b38', '#e9e3d0', '#e07a3a'], 'outfit'),
+		],
+	};
+}
+
+function openLookEditor() {
+	// Rasgos que una partida antigua no guardó: se fijan con los mismos valores deducidos que ya se ven en el juego
+	const cur = G.player.look || {}, R = resolveLook(cur);
+	const look = { ...LOOK_DEFAULTS, eyesStyle: 'normal', ...Object.fromEntries(['head', 'brows', 'nose', 'collar', 'build', 'eyeSep', 'age'].map(k => [k, R[k]])), ...cur };
+	const ed = lookEditor(look);
+	const sheet = openSheet('Tu aspecto', [
+		h('div', { class: 'pad' }, ed.preview),
+		...ed.parts,
+		h('div', { class: 'pad' }, h('button', { class: 'btn primary', style: { width: '100%' }, onclick: async () => { G.player.look = { ...look }; await saveGame(); sheet.close?.(); toast('Aspecto guardado'); } }, 'Guardar')),
+	]);
+}
+
+// =================== Creación de personaje ===================
+function creation() {
+	const root = app();
+	root.innerHTML = '';
+	const look = { ...LOOK_DEFAULTS, skin: 1, head: 'round', eyesStyle: 'normal', brows: 'soft', nose: 'dot', collar: 'jacket', build: 'normal', eyeSep: 3 };
+	let name = '', pron = 'el';
+	const ed = lookEditor(look);
 	const pronRow = h('div', { class: 'tabs' });
 	[['el', 'Él'], ['ella', 'Ella'], ['elle', 'Elle']].forEach(([k, n]) => {
 		const b = h('button', { class: pron === k ? 'on' : '' }, n);
@@ -186,19 +223,14 @@ function creation() {
 	};
 	const wrap = h('div', { class: 'main', style: { paddingTop: 'calc(16px + var(--safe-t))' } },
 		h('div', { class: 'section-title', style: { textAlign: 'center', fontSize: '22px' } }, 'Tu entrenador'),
-		preview,
+		ed.preview,
 		h('div', { class: 'section-title' }, 'Nombre'), h('div', { class: 'pad' }, nameInput),
 		h('div', { class: 'section-title' }, 'Pronombres'), pronRow,
-		h('div', { class: 'section-title' }, 'Piel'), swatchRow(['#ffe0c7', '#f5cba7', '#e0ac85', '#c68863', '#9a6646', '#6e4630'], 'skin'),
-		h('div', { class: 'section-title' }, 'Peinado'), styleRow,
-		h('div', { class: 'section-title' }, 'Color de pelo'), swatchRow(HAIRS, 'hairColor'),
-		h('div', { class: 'section-title' }, 'Ojos'), swatchRow(['#3a5fc4', '#3f8a4f', '#6b4a2b', '#2b2b38', '#8c6cd0', '#c4473a'], 'eyes'),
-		h('div', { class: 'section-title' }, 'Ropa'), swatchRow(['#4c7cf0', '#c4473a', '#3f9d58', '#d8a85a', '#8c6cd0', '#2b2b38', '#e9e3d0', '#e07a3a'], 'outfit'),
-		h('div', { class: 'note' }, 'Tu personaje es un adulto joven que acaba de inscribirse en el Circuito Infinito. Puedes cambiar estos detalles más adelante en Ajustes.'),
+		...ed.parts,
+		h('div', { class: 'note' }, 'Tu personaje es un adulto joven que acaba de inscribirse en el Circuito Infinito. Puedes cambiar tu aspecto más adelante en Ajustes.'),
 		h('div', { class: 'pad' }, h('button', { class: 'btn primary', style: { width: '100%' }, onclick: start }, 'Empezar la aventura')),
 	);
 	root.append(wrap);
-	redraw();
 }
 
 // =================== Render principal ===================
@@ -2011,6 +2043,8 @@ function openSettings() {
 				h('button', { class: 'row', onclick: () => { G.settings.battleStyle = (G.settings.battleStyle ?? 'shift') === 'shift' ? 'set' : 'shift'; draw(); } }, h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Estilo de combate'), h('div', { class: 's' }, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio: cuando cae un Pokémon rival, te pregunta si quieres cambiar el tuyo.' : 'Fijo: no te pregunta; sigues con el mismo Pokémon.')), h('b', {}, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio' : 'Fijo')),
 				G.vars.mount ? toggle('Usar montura', 'Avanzas dos tramos por paso en rutas.', 'useMount') : null,
 			),
+			h('div', { class: 'section-title' }, 'Tu entrenador'),
+			h('div', { class: 'list' }, h('button', { class: 'row', onclick: openLookEditor }, h('div', { class: 'ico' }, '🪞'), h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Cambiar aspecto'), h('div', { class: 's' }, 'Cara, mirada, peinado, colores y ropa')))),
 			h('div', { class: 'section-title' }, 'Sprites de Pokémon'),
 			h('div', { class: 'note' }, 'El juego descarga cada sprite la primera vez que ves a un Pokémon y lo guarda para jugar sin internet. Con WiFi puedes bajarlos todos de una vez.'),
 			h('div', { class: 'list' }, h('button', { class: 'row', onclick: downloadAllSprites }, h('div', { class: 'ico' }, '⬇️'), h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Descargar todos los sprites'), h('div', { class: 's', id: 'dlstatus' }, 'Unos 60 MB · usa WiFi')))),

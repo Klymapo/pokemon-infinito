@@ -7,7 +7,7 @@ export default {
 	li: { name: 'Sabio Li', title: 'Anciano de la Torre Bellsprout', sprite: 'sage', look: { hair: 'bald', hairColor: '#cfd6e2', outfit: '#4a4f6a', outfit2: '#8a7a5a', skin: 2, acc: 'beard', eyesStyle: 'sleepy', mouth: 'flat' } },
 
 	// ---------- Originales ----------
-	sobrina: { name: 'Adela', title: 'Veterinaria de pueblo (sobrina de Don Aurelio)', look: { hair: 'braids', hairColor: '#6b4a2b', outfit: '#5aa36b', outfit2: '#e9e3d0', skin: 3, eyes: '#6b4a2b', eyesStyle: 'sharp', mouth: 'flat', acc: 'freckles' } },
+	sobrina: { name: 'Adela', title: 'Veterinaria de pueblo (sobrina de Don Aurelio)', look: { hair: 'braids', hairColor: '#6b4a2b', outfit: '#5aa36b', outfit2: '#e9e3d0', skin: 3, eyes: '#6b4a2b', eyesStyle: 'almond', mouth: 'smirk', acc: 'freckles bandana', bandColor: '#3f8a4f', head: 'wide', brows: 'straight', nose: 'l', collar: 'shirt' } },
 
 	// ---------- Genéricos ----------
 	recluta_rocket_b3: { name: 'Recluta Rocket', generic: true, sprite: 'teamrocketgrunt', look: { hair: 'spiky', hairColor: '#2b2b38', outfit: '#2b2b38', outfit2: '#c4473a', skin: 2, eyesStyle: 'sharp', mouth: 'flat', acc: 'cap' } },

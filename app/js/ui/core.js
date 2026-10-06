@@ -32,7 +32,7 @@ export function portraitFor(n) {
 	if (!n) return null;
 	if (n.id === 'jugador' || n.portrait === 'jugador') return portraitCanvas({ ...(G.player.look || {}), bg: '#2a3c66' });
 	if (n.sprite) return trainerImg(n.sprite, n.look || { seed: n.name });
-	return portraitCanvas({ ...(n.look || { seed: n.name }), bg: n.bg || '#2a3c66' });
+	return portraitCanvas({ ...(n.look || { seed: n.name }), bg: n.bg || n.look?.bg || '#2a3c66' });
 }
 
 // ---------- Diálogo ----------
@@ -52,9 +52,12 @@ export function say(n, text, opts = {}) {
 		const html = fmtText(text);
 		const plain = text.length;
 		let shown = false, timer = null;
-		const full = () => { shown = true; clearInterval(timer); tb.innerHTML = html + '<span class="more"></span>'; };
+		// La boca del retrato se mueve mientras se escribe el texto (si el retrato es procedural)
+		const mouth = on => box.querySelector('.portrait canvas')?.talk?.(on);
+		const full = () => { shown = true; clearInterval(timer); mouth(false); tb.innerHTML = html + '<span class="more"></span>'; };
 		if (speed >= 3 || plain < 2) full();
 		else {
+			mouth(true);
 			const tmp = h('div', { html });
 			const textNodes = [];
 			const walk = el => { for (const c of el.childNodes) { if (c.nodeType === 3) { textNodes.push([c, c.textContent]); c.textContent = ''; } else walk(c); } };
