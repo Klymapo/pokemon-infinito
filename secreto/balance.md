@@ -30,7 +30,7 @@ Regla general: cada bloque de ~12 h sube el techo de **+8 a +10 niveles**. A par
 |---|---|---|---|---|
 | B2 | II · Kalos II y Johto | **5** (publicado) | Antón 36, Rhi 37, Bastien 38, Morti 39, Atenea 41 | 42 (37 al empezar; 40 con la medalla 4) |
 | B3 | II · Johto | **7** (publicado) | Li 42, Corelia 43 (Mega), Yasmina 45, Atlas 49 | 50 (46 y 48 con las medallas) |
-| B4 | III · Kanto | 7 | 48–54 | 56 |
+| B4 | III · Kanto | **8** (publicado: Misty, clasificación para la Copa) | Rhi 49 (opc.), Misty 53, Atenea 53, Magda 53 | 56 (52 Puente Pepita, 54 Misty, 55 Atenea) |
 | B5 | IV · Alola (pruebas en vez de medallas) | Z | 54–60 | 62 |
 | B6 | V · Teselia | 8 + Copa | 60–66 | 68 |
 | B7+ | VI–IX | — | +6 por bloque | 100 en el Acto IX |
@@ -115,3 +115,8 @@ Los niveles siguen **fijos por zona**: no hay escalado al nivel del equipo. Pero
 | 2026-10-06 | B3: Atlas 44–45 + Houndoom 49, una Hiper y una Super, revancha con curación | Muro en las primeras pruebas |
 
 **Referencia de la publicación 4** (24 recorridos B1+B2+B3): 23/24 llegan al final (semilla 8: atasco conocido del bot con Brock). Derrotas medias: Corelia (Trigal) 1.58, Blanca 1.29, Rhi opcional 1.21; Yasmina 0.42, Atlas 0.33.
+| 2026-10-06 | B4: Atenea 50–53 sin Maldición ni Divide Dolor, una Hiperpoción | El bot se encallaba en los archivos (desgaste) |
+| 2026-10-06 | B4: Magda 50–53, Magnezone con Robustez en vez de Cálculo, Porygon-Z con Descarga, una Hiperpoción | Muro en el nodo con equipos débiles al Acero/Eléctrico |
+| 2026-10-06 | B4: Rhi del tren 45–49 (Cinderace 49) y una Superpoción en vez de Hiperpoción | Rival opcional con 2.21 derrotas de media |
+| 2026-10-06 | Misty: as 53 con tope 52 a propósito (la «revancha»); si Mario se queja, bajar a 52 o quitar una Superpoción | Decisión de diseño |
+| 2026-10-06 | Bot: el «frente» solo cambia con lugares nuevos del bloque más reciente; fuera del frente vuelve por el camino más corto; y, como una persona, camina hacia el «!» más cercano o el sitio sin visitar (sin volver en bucle a rutas bloqueadas) | Se perdía en Johto/Kalos tras cruzar Puertas y vagaba por Kanto (el B4 tiene muchos sub-lugares) |

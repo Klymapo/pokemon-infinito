@@ -162,3 +162,42 @@ Mario aún no ha jugado el B2: el B3 cubre todas las ramas del B2 y del B1.
 
 - Una sola vez (B3): Atlas, Lance, Yasmina, Sabio Li, Kiyo, Lupe, **Adela Prado** (urgente: llamada + rancho).
 - Dos: Toni, Dámaso, Mauro, la Tercera, la Mayor.
+
+## Publicación 5 · 2026-10-06 (sesión nocturna) · Bloque 4 "Acto III · La señal" (Kanto: tren → Azafrán → Ruta 5 → Celeste → Rutas 24-25 → Azafrán/Silph → Ruta 8 y Lavanda → Cueva Celeste)
+
+Mario iba por el final del B1 (sin jugar B2 ni B3): el B4 cubre todas las ramas de B1–B3, incluido «ninguna».
+
+### Estado del mundo al terminar el B4 (`flag.b04_fin`)
+
+- **8 medallas** (`medalla_cascada`, Misty): el jugador está **clasificad{o|a|e} para la Copa Infinita** de la temporada (`b04_clasificado`). Tope final `vars.cap = 56` (52 tras el Puente Pepita, 54 con Misty, 55 tras Atenea).
+- Región nueva **`kanto`** (mapa 100×100). Viajes: Tren Magnético Trigal⇄Azafrán (`estacion_magnetica`⇄`estacion_azafran`) y **Puerta de Kanto** (`puerta_azafran`, flag `b04_puerta_azafran`) ⇄ Luminalia y Trigal.
+- **Nodo 03 = Cueva Celeste**, dañado al 4 % («se puede reparar en meses»; «ahora no tenemos fuente»). Su fuente era **Mewtwo** (F-03), que se fue de la cueva (`b04_mewtwo`, hilo nuevo `b04_t_cueva`).
+- El jugador termina en **Ciudad Celeste**. Siguiente destino anunciado: **Alola** (Acto IV).
+
+### Decisiones del B4 que el B5 DEBE leer
+
+| Decisión | Flags | Qué cambia |
+|---|---|---|
+| **Lebrun, el topo** (gran decisión) | `b04_lebrun_detenido` (rep.lemnis −10, policía +10; Handsome al mando provisional en Kalos; Lemnis sabe que lo sabes) / `b04_lebrun_cebo` (sigue en su puesto pasando lo que diga Handsome; doble juego) / `b04_lebrun_libre` (desaparece; dio el buzón: **Bulevar Sur 14, Luminalia, «Ómicron Envíos», martes y jueves**) | Lebrun no sabe quién es el Arquitecto: sobres con **Ω** y caramelo de menta. Su hija **Camille** (15) fue operada en una clínica de la **Fundación Æther (Alola)** pagada por «un amigo»: gancho para el Acto IV |
+| Vencejos | `b04_vencejo_pluma` (si no era Pluma, saltó en Celeste o en la azotea) | Pluma = `b03_vencejo_pluma \|\| b04_vencejo_pluma` |
+| Silph (según Rocket B3) | `b04_atlas_pagado` (quemar: Tarjeta Llave) / `b04_atlas_declaracion` (policía) / `b04_toni_plano` (libres) | `b04_handsome_calla`: Handsome no le contó a Lebrun lo de la declaración |
+| Renata / Olmedo | `expedienteolmedo` (espera o ninguna: «Trasladado a Proyecto Arco II · Teselia», sello ∞) / `fotoexpediente` (publica: carpeta vaciada «por patrimonio») | Acto V (Teselia) |
+| Atenea | `b04_atenea_aviso` (le advertiste que Lemnis los dejará tirados), `b04_atenea_perdio` | — |
+| Magda | `b04_magda_perdio`, `notasmagda`; pidió que le escribas si «tus cuentas salen distintas» | Posible aliada tardía |
+| Melia | `b04_melia_tarjeta` (la tarjeta negra de un uso ya se gastó) | — |
+| Otros | `b04_presidente_habla` (rep.policia +2), `b04_kaori_paso`, `b04_fuji_hecho`, `b04_gastly_casa`, `b04_kadabra`, `b04_xero_matiere`, `b04_kiyo_cinturon`, `b04_adela_lana` | — |
+
+### Pistas plantadas
+
+- **Diario (calendario B4):** (1) entrada del túnel junto a la subestación PL-K cortada por «…bzzt… sincronizando… …conexión restablecida. ¡Perdón! ¿Dónde estaba?»; (2) Rotom se queda en blanco 2 s en la Puerta de Kanto y no lo recuerda («¿Por qué me miras así?»). Omisiones: archivos de Silph («muchos papeles aburridos»), Magda («una señora muy ordenada que bebía té»), Lebrun y Mewtwo; «Rotom se quedó dormido un poquito».
+- **Eco de Ansel (mundo):** Sabrina: «Tu máquina tiene eco. Como una habitación con alguien más dentro» / «¡Es el altavoz!»; la Pokédex «se apaga por ahorro de energía» justo cuando Lebrun se delata; la foto `fotocueva` que Rotom no recuerda haber hecho, tomada «desde más arriba»; Magda midió +3 % de consumo de la Pokédex 40 s en el túnel; el técnico de la Puerta: «ya registrad{o|a|e}».
+- **Ansel** (1 escena, recepción de la Gira en la Torre Lemnis Kanto): «visita técnica»; caramelo de menta en papel azul = el de Lebrun; {riolu} no lo acepta.
+- **Ω:** el `informefuentel` va «copia a Dirección (Ω)»; Lebrun recibe sobres con Ω. Enlaza con Ω-0-0-0 (B2).
+- **Drenaje:** Mewtwo como fuente (Fuji: «le quitaron todo y le dieron demasiado»; «no es rabia, es cansancio»), Ponyta sin llama, Kadabra apagado, guardias que sueñan «un sitio blanco lleno de tubos», cláusula 14.3 de Bastien («estudios de vínculo, emplazamiento 03»).
+- **Pérdidas:** Noa («si un día no contesto, que alguien abra las jaulas»; «ascenso lateral» a inventario); **sueño de aura de Lucario** (isla de hierro, hombre con sombrero, un Lucario que se gira); Ulises a {riolu}: no «dar hasta que no le quede»; A.Z.: «la cuenta no se cierra: solo le cambia el nombre».
+
+### Personajes
+
+- **Nuevos (solo B4, necesitan 2+ bloques más):** Misty, Sabrina, Bill, Señor Fuji, Presidente de Silph (canon); **Magda Ivers** (OC, 3 escenas en el B4); Casimiro (cazatalentos de Lemnis del Puente Pepita); Camille (hija de Lebrun, mencionada).
+- **Vuelven:** Ansel (B1→B4), Lebrun (revelado), Sera, Xero (B1→B4), Alexia, Gadd (B1→B4), Kiyo, Atenea, Atlas (si quemar), Toni (carta), Adela (2.ª/3.ª aparición según rama), Rhi, Bastien, Noa, Kaori, Renata (llamada), Ysolde, Tobías y Duquesa, Ulises, Petra (mensaje), A.Z., Lila y Corelia (llamada), Melia/Sera (mensajes según rama), Simón (rumor).
+- **Pendientes de aparecer** (llevan tiempo): Cornelio, Ciprés, Brock (solo mencionado), Blanca, Matière, Lucien, Philippe, Rouxel, Héctor, Nate, Conde, Remedios, Lazare, Morti, Antón, Kurt, Protón, Lance, Yasmina, Li.

@@ -150,3 +150,10 @@
 - **Toni, Lupe, la Tercera y la Mayor:** reclutas de «la familia» Rocket (peaje de la Ruta 43 y guarida).
 - **Chispas:** el Pachirisu de Petra (el que se quedó dormido en el Encinar).
 - **Padre de Rhi:** ex entrenador que después cuidaba el césped de un estadio de Macro Cosmos; despedido en el B3.
+
+## Fichas nuevas del B4 (Publicación 5)
+
+- **Magda Ivers** (`magda`, 46): jefa de Infraestructura de Lemnis Kanto; firma «M.». Ingeniera de puentes reconvertida. Pelo gris acero rapado, abrigo largo gris de cuello alto, gafas cuadradas, termo de té y libreta milimetrada. Voz calmada y exacta, en cifras y unidades; nunca insulta; se crio con apagones («La eficiencia es una forma de bondad»). No pelea sin sus Pokémon (Magnezone, Klinklang, Porygon-Z, Electivire, Metagross). Mide y apunta todo, también al jugador. Le dio su libreta: «si sus cuentas le salen distintas, escríbame». Futuro: reparar el Nodo 03; puede dudar.
+- **Lebrun** (revelado en el B4): el topo. Motivo: la operación de su hija **Camille** (15) en una clínica de la Fundación Æther (Alola), pagada por «un amigo»; «la fruta cae del lado al que se inclina el árbol». Recibe sobres con **Ω** y un caramelo de menta; no sabe quién es el Arquitecto.
+- **Canon nuevos:** Misty (Celeste, Agua; orgullosa, simpática, competitiva), Sabrina (Azafrán; gimnasio en pausa por el Intercambio; nota el «eco» del Rotom), Bill (Ruta 25; inventor del PC; descifró la señal y dio el Sintonizador), Señor Fuji (Lavanda; culpa antigua por un Pokémon «al que le quitaron todo»), Presidente de Silph (avergonzado; habló con la prensa).
+- **Casimiro** (genérico con nombre): cazatalentos del Programa de Talentos de Lemnis en el Puente Pepita.

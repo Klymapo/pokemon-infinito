@@ -44,6 +44,12 @@
 | B2 | Rouxel | «Dónde están los cadáveres… contables», «no mires la boca, mira las manos» (Now You See Me) | sutil |
 | B2 | Iris | Médium Valentín: veinte natural y «¿cómo quieres hacerlo?» (Critical Role / D&D) | media |
 | B2 | Ysolde | Saltos de fe sobre un camión de sábanas y un carro de crisantemos | ya establecida |
+| B4 | Tren Magnético | Apodos de colores, maleta verde que no es de nadie, «la mala suerte es solo estadística mal leída» (*Bullet Train*) | sutil |
+| B4 | Misty | Revancha personal (Mario perdió con Misty en otro fangame): «Hay gente que tarda años en ganarme. Tú te lo has tomado con calma, ¿eh?» | evidente (una en esa misión) |
+| B4 | Operación Tejado | Puntos de observación, capucha, aura de Lucario como «visión de águila», salto de fe a un toldo de naranjas (*Assassin's Creed*) | evidente solo en el salto |
+| B4 | Archivo de Silph | Hoja de procedencia con una línea que miente (*Database Detective*) | media |
+| B4 | Sótano de la Torre Radio | Fantasmas que se quejan de los vivos; pósit «No aceptan las disculpas» (*Ghosts*) | sutil |
+| B4 | Propuestas de ChatGPT | «Los NPC importantes cambian fuera de cámara» y «el rival que estudia tus combates» (Magda mide al jugador y lo apunta todo) | sutil |
 
 ## Ideas de misiones que le gustan a Mario (semillas plantadas; misiones completas pendientes)
 
@@ -66,3 +72,11 @@ Aplícalo a las tres ideas:
 - **Ulises** → **Tarjeta del viajero** (ya en la mochila) → la cabina deja entrar al jugador (zona «más grande por dentro»).
 - **Ysolde** → **Pluma gris** (ya en la mochila) → los tejados: una capa de mapa nueva sobre una ciudad (rutas por arriba, sitios a los que no se llega por la calle).
 
+
+## Ideas recibidas de ChatGPT (rama `chatgpt/recomendaciones`, 2026-10-06), pendientes de usar
+
+- **El Pokémon que no quiere evolucionar:** cumple los requisitos y se niega por una razón emocional de su entrenador; evoluciona bloques después como cierre. Encaja con Lila o con un NPC nuevo de Alola.
+- **La misión que fracasa bien:** fallar abre una variante del hilo en vez de bloquear.
+- **El museo de tu propia partida:** un lugar que acumula postales, réplicas y titulares de las decisiones (podría ser la casa de Philippe o el rancho si `b03_rancho_jugador`).
+- **El Juego de los Doce / Torneo de los Villanos / La Casa de las Siete Puertas / El Último Campeón:** arcos largos para el posjuego o la Copa Infinita (rangos, expedientes, alianzas).
+- **Principios:** sorpresas que se puedan reconstruir; NPC que cambian fuera de cámara; alternar explicaciones humanas, sistémicas y Pokémon.

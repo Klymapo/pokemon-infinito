@@ -1,61 +1,67 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-06T07:15:01.175Z · contenido 2026-10-06.1
+Generado: 2026-10-06T11:22:43.170Z · contenido 2026-10-06.2
 
 ## Apariciones de NPCs (escenas por bloque)
 
-| NPC | b01 | b02 | b03 | Total |
-|---|---|---|---|---|
-| Alexia (`alexia`) | 7 | 2 | 0 | 9 ⚠ 2 bloque(s) |
-| Dr. Ansel Moreau (`ansel`) | 3 | 0 | 0 | 3 ⚠ 1 bloque(s) |
-| Antón (`anton`) | 0 | 6 | 0 | 6 ⚠ 1 bloque(s) |
-| Atenea (`atenea`) | 0 | 3 | 0 | 3 ⚠ 1 bloque(s) |
-| Atlas (`atlas`) | 0 | 0 | 6 | 6 ⚠ 1 bloque(s) |
-| Don Aurelio (`aurelio`) | 6 | 3 | 0 | 9 ⚠ 2 bloque(s) |
-| Hombre enorme (`az`) | 1 | 1 | 1 | 3 |
-| Bastien (`bastien`) | 5 | 5 | 5 | 15 |
-| Blanca (`blanca`) | 4 | 3 | 0 | 7 ⚠ 2 bloque(s) |
-| Brock (`brock`) | 6 | 3 | 0 | 9 ⚠ 2 bloque(s) |
-| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 0 | 4 ⚠ 1 bloque(s) |
-| Prof. Ciprés (`cipres`) | 7 | 2 | 0 | 9 ⚠ 2 bloque(s) |
-| Conde Vladimiro (`conde`) | 8 | 1 | 0 | 9 ⚠ 2 bloque(s) |
-| Corelia (`corelia`) | 8 | 3 | 5 | 16 |
-| Cornelio (`cornelio`) | 5 | 0 | 0 | 5 ⚠ 1 bloque(s) |
-| Dámaso Ferrán (`damaso`) | 0 | 2 | 5 | 7 ⚠ 2 bloque(s) |
-| Prof. Gadd (`gadd`) | 3 | 0 | 0 | 3 ⚠ 1 bloque(s) |
-| Gaspar (`gaspar`) | 8 | 6 | 4 | 18 |
-| Handsome (`handsome`) | 12 | 11 | 1 | 24 |
-| Héctor (`hector`) | 5 | 1 | 0 | 6 ⚠ 2 bloque(s) |
-| Dra. Irene Solberg (`irene`) | 3 | 1 | 9 | 13 |
-| Campeona retirada (`jinete_boceto`) | 4 | 0 | 0 | 4 ⚠ 1 bloque(s) |
-| Kaori (`kaori`) | 0 | 8 | 3 | 11 ⚠ 2 bloque(s) |
-| Kiyo (`kiyo`) | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
-| Kurt (`kurt`) | 0 | 7 | 0 | 7 ⚠ 1 bloque(s) |
-| Lance (`lance`) | 0 | 0 | 9 | 9 ⚠ 1 bloque(s) |
-| Inspector Lebrun (`lebrun`) | 3 | 2 | 0 | 5 ⚠ 2 bloque(s) |
-| Sabio Li (`li`) | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
-| Lila (`lila`) | 8 | 3 | 3 | 14 |
-| Lucien (`lucien`) | 5 | 3 | 0 | 8 ⚠ 2 bloque(s) |
-| Matière (`matiere`) | 5 | 6 | 0 | 11 ⚠ 2 bloque(s) |
-| Melia (`melia`) | 3 | 7 | 1 | 11 |
-| Morti (`morti`) | 0 | 4 | 0 | 4 ⚠ 1 bloque(s) |
-| Nate (`nate`) | 6 | 2 | 0 | 8 ⚠ 2 bloque(s) |
-| Noa Lambert (`noa`) | 4 | 2 | 2 | 8 |
-| Petra (`petra`) | 3 | 5 | 2 | 10 |
-| Philippe (`philippe`) | 4 | 1 | 0 | 5 ⚠ 2 bloque(s) |
-| Protón (`proton`) | 0 | 2 | 0 | 2 ⚠ 1 bloque(s) |
-| Abuela Remedios (`remedios`) | 4 | 1 | 0 | 5 ⚠ 2 bloque(s) |
-| Renata (`renata`) | 3 | 3 | 9 | 15 |
-| Rhi (`rhi`) | 13 | 5 | 6 | 24 |
-| Fabien Rouxel (`rouxel`) | 3 | 1 | 0 | 4 ⚠ 2 bloque(s) |
-| Serafina Lemnis (`sera`) | 4 | 8 | 0 | 12 ⚠ 2 bloque(s) |
-| Simón (`simon`) | 3 | 0 | 0 | 3 ⚠ 1 bloque(s) |
-| Adela (`sobrina`) | 0 | 0 | 5 | 5 ⚠ 1 bloque(s) |
-| Tobías (`tobias`) | 8 | 0 | 5 | 13 ⚠ 2 bloque(s) |
-| Ulises (`viajero`) | 3 | 2 | 1 | 6 |
-| Xero (`xero`) | 3 | 0 | 0 | 3 ⚠ 1 bloque(s) |
-| Yasmina (`yasmina`) | 0 | 0 | 10 | 10 ⚠ 1 bloque(s) |
-| Ysolde (`ysolde`) | 5 | 2 | 2 | 9 |
+| NPC | b01 | b02 | b03 | b04 | Total |
+|---|---|---|---|---|---|
+| Alexia (`alexia`) | 7 | 2 | 0 | 3 | 12 |
+| Dr. Ansel Moreau (`ansel`) | 3 | 0 | 0 | 1 | 4 ⚠ 2 bloque(s) |
+| Antón (`anton`) | 0 | 6 | 0 | 0 | 6 ⚠ 1 bloque(s) |
+| Atenea (`atenea`) | 0 | 3 | 0 | 5 | 8 ⚠ 2 bloque(s) |
+| Atlas (`atlas`) | 0 | 0 | 6 | 1 | 7 ⚠ 2 bloque(s) |
+| Don Aurelio (`aurelio`) | 6 | 3 | 0 | 0 | 9 ⚠ 2 bloque(s) |
+| Hombre enorme (`az`) | 1 | 1 | 1 | 1 | 4 |
+| Bastien (`bastien`) | 5 | 5 | 5 | 8 | 23 |
+| Bill (`bill`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
+| Blanca (`blanca`) | 4 | 3 | 0 | 0 | 7 ⚠ 2 bloque(s) |
+| Brock (`brock`) | 6 | 3 | 0 | 0 | 9 ⚠ 2 bloque(s) |
+| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 0 | 0 | 4 ⚠ 1 bloque(s) |
+| Prof. Ciprés (`cipres`) | 7 | 2 | 0 | 0 | 9 ⚠ 2 bloque(s) |
+| Conde Vladimiro (`conde`) | 8 | 1 | 0 | 0 | 9 ⚠ 2 bloque(s) |
+| Corelia (`corelia`) | 8 | 3 | 5 | 1 | 17 |
+| Cornelio (`cornelio`) | 5 | 0 | 0 | 0 | 5 ⚠ 1 bloque(s) |
+| Dámaso Ferrán (`damaso`) | 0 | 2 | 5 | 0 | 7 ⚠ 2 bloque(s) |
+| Señor Fuji (`fuji`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
+| Prof. Gadd (`gadd`) | 3 | 0 | 0 | 2 | 5 ⚠ 2 bloque(s) |
+| Gaspar (`gaspar`) | 8 | 6 | 4 | 0 | 18 |
+| Handsome (`handsome`) | 12 | 11 | 1 | 9 | 33 |
+| Héctor (`hector`) | 5 | 1 | 0 | 0 | 6 ⚠ 2 bloque(s) |
+| Dra. Irene Solberg (`irene`) | 3 | 1 | 9 | 0 | 13 |
+| Campeona retirada (`jinete_boceto`) | 4 | 0 | 0 | 0 | 4 ⚠ 1 bloque(s) |
+| Kaori (`kaori`) | 0 | 8 | 3 | 5 | 16 |
+| Kiyo (`kiyo`) | 0 | 0 | 3 | 2 | 5 ⚠ 2 bloque(s) |
+| Kurt (`kurt`) | 0 | 7 | 0 | 0 | 7 ⚠ 1 bloque(s) |
+| Lance (`lance`) | 0 | 0 | 9 | 0 | 9 ⚠ 1 bloque(s) |
+| Inspector Lebrun (`lebrun`) | 3 | 2 | 0 | 5 | 10 |
+| Sabio Li (`li`) | 0 | 0 | 3 | 0 | 3 ⚠ 1 bloque(s) |
+| Lila (`lila`) | 8 | 3 | 3 | 1 | 15 |
+| Lucien (`lucien`) | 5 | 3 | 0 | 0 | 8 ⚠ 2 bloque(s) |
+| Magda Ivers (`magda`) | 0 | 0 | 0 | 8 | 8 ⚠ 1 bloque(s) |
+| Matière (`matiere`) | 5 | 6 | 0 | 0 | 11 ⚠ 2 bloque(s) |
+| Melia (`melia`) | 3 | 7 | 1 | 1 | 12 |
+| Misty (`misty`) | 0 | 0 | 0 | 5 | 5 ⚠ 1 bloque(s) |
+| Morti (`morti`) | 0 | 4 | 0 | 0 | 4 ⚠ 1 bloque(s) |
+| Nate (`nate`) | 6 | 2 | 0 | 0 | 8 ⚠ 2 bloque(s) |
+| Noa Lambert (`noa`) | 4 | 2 | 2 | 1 | 9 |
+| Petra (`petra`) | 3 | 5 | 2 | 1 | 11 |
+| Philippe (`philippe`) | 4 | 1 | 0 | 0 | 5 ⚠ 2 bloque(s) |
+| Presidente de Silph (`presidente_silph`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
+| Protón (`proton`) | 0 | 2 | 0 | 0 | 2 ⚠ 1 bloque(s) |
+| Abuela Remedios (`remedios`) | 4 | 1 | 0 | 0 | 5 ⚠ 2 bloque(s) |
+| Renata (`renata`) | 3 | 3 | 9 | 1 | 16 |
+| Rhi (`rhi`) | 13 | 5 | 6 | 9 | 33 |
+| Fabien Rouxel (`rouxel`) | 3 | 1 | 0 | 0 | 4 ⚠ 2 bloque(s) |
+| Sabrina (`sabrina`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
+| Serafina Lemnis (`sera`) | 4 | 8 | 0 | 3 | 15 |
+| Simón (`simon`) | 3 | 0 | 0 | 0 | 3 ⚠ 1 bloque(s) |
+| Adela (`sobrina`) | 0 | 0 | 5 | 1 | 6 ⚠ 2 bloque(s) |
+| Tobías (`tobias`) | 8 | 0 | 5 | 6 | 19 |
+| Ulises (`viajero`) | 3 | 2 | 1 | 1 | 7 |
+| Xero (`xero`) | 3 | 0 | 0 | 2 | 5 ⚠ 2 bloque(s) |
+| Yasmina (`yasmina`) | 0 | 0 | 10 | 0 | 10 ⚠ 1 bloque(s) |
+| Ysolde (`ysolde`) | 5 | 2 | 2 | 15 | 24 |
 
 > ⚠ = aparece en menos de 3 bloques distintos. La regla de oro pide que reaparezca en bloques futuros.
 
@@ -363,6 +369,92 @@ Generado: 2026-10-06T07:15:01.175Z · contenido 2026-10-06.1
 - `b03_vencejo_pluma` — b03:b03_ysolde_sede, b03:b03_ysolde_despues
 - `b03_yasmina_faro` — b03:b03_yasmina_faro
 - `b03_ysolde_sede` — b03:b03_ysolde_sede
+- `b04_adela_lana` — b04:b04_adela_mensaje
+- `b04_adela_msg` — b04:b04_adela_mensaje
+- `b04_alexia_tren` — b04:b04_alexia_tren
+- `b04_archivo_llegada` — b04:b04_archivo_llegada
+- `b04_atenea_aviso` — b04:b04_atenea_despues
+- `b04_atenea_perdio` — b04:b04_atenea_combate
+- `b04_atenea_vencida` — b04:b04_atenea_despues
+- `b04_atenea_vista` — b04:b04_atenea
+- `b04_atlas_declaracion` — b04:b04_handsome_declaracion
+- `b04_atlas_pagado` — b04:b04_atlas_tarjeta
+- `b04_azafran_llegada` — b04:b04_azafran_llegada
+- `b04_azotea_llegada` — b04:b04_azotea_llegada
+- `b04_bastien_puente` — b04:b04_bastien_puente
+- `b04_bastien_tren` — b04:b04_bastien_tren
+- `b04_bill_hecho` — b04:b04_bill
+- `b04_celeste_llegada` — b04:b04_celeste_llegada
+- `b04_cementerio` — b04:b04_cementerio
+- `b04_clasificado` — b04:b04_misty_reto
+- `b04_copiona` — b04:b04_copiona
+- `b04_cueva_vista` — b04:b04_cueva_fuera
+- `b04_deduccion_primera` — b04:b04_deduccion
+- `b04_docs_todos` — b04:b04_archivo_check
+- `b04_entrada_lista` — b04:b04_azotea_llegada, b04:b04_atlas_tarjeta, b04:b04_handsome_declaracion, b04:b04_toni_conducto
+- `b04_expediente_visto` — b04:b04_expediente
+- `b04_fin` — b04:b04_salida
+- `b04_fuente_l` — b04:b04_deduccion_ok
+- `b04_fuji_1` — b04:b04_fuji_1
+- `b04_fuji_hecho` — b04:b04_kaori_antidoto
+- `b04_gadd_lavanda` — b04:b04_gadd_lavanda
+- `b04_gastly_casa` — b04:b04_gadd_lavanda
+- `b04_guarda_bebida` — b04:b04_guarda_k5
+- `b04_handsome_calla` — b04:b04_handsome_declaracion
+- `b04_inicio_hecho` — b04:b04_inicio
+- `b04_kadabra` — b04:b04_kadabra
+- `b04_kaori_encargo` — b04:b04_fuji_1
+- `b04_kaori_paso` — b04:b04_kaori_antidoto
+- `b04_kiyo_cinturon` — b04:b04_kiyo_dojo
+- `b04_kiyo_dojo` — b04:b04_kiyo_dojo
+- `b04_lavanda_llegada` — b04:b04_lavanda_llegada
+- `b04_lebrun_azafran` — b04:b04_lebrun_azafran
+- `b04_lebrun_cebo` — b04:b04_lebrun_cebo
+- `b04_lebrun_detenido` — b04:b04_lebrun_detenido
+- `b04_lebrun_libre` — b04:b04_lebrun_libre
+- `b04_lebrun_panel` — b04:b04_lebrun_azafran
+- `b04_lila_llamada` — b04:b04_lila_llamada
+- `b04_m_aviso` — b04:b04_cueva_llegada
+- `b04_magda_nombre` — b04:b04_calendario
+- `b04_magda_perdio` — b04:b04_magda_derrota
+- `b04_magda_tren` — b04:b04_magda_tren, b04:b04_tunel
+- `b04_magda_vista` — b04:b04_nucleo_llegada
+- `b04_maleta` — b04:b04_maleta
+- `b04_melia_tarjeta` — b04:b04_lebrun
+- `b04_mewtwo` — b04:b04_nodo
+- `b04_misty_cabo` — b04:b04_misty_cabo
+- `b04_noa_celeste` — b04:b04_noa_celeste
+- `b04_obs_antena` — b04:b04_obs_antena
+- `b04_obs_cornisa` — b04:b04_obs_cornisa
+- `b04_obs_deposito` — b04:b04_obs_deposito
+- `b04_obs_todas` — b04:b04_obs_check
+- `b04_panel_visto` — b04:b04_panel_azafran
+- `b04_presidente_habla` — b04:b04_presidente
+- `b04_puente_hecho` — b04:b04_pepita_5
+- `b04_puerta_azafran` — b04:b04_puerta_registro
+- `b04_puerta_eco` — b04:b04_puerta_eco
+- `b04_recepcion` — b04:b04_recepcion
+- `b04_rhi_tren` — b04:b04_rhi_tren
+- `b04_rueda_entregada` — b04:b04_bill
+- `b04_rueda_llevas` — b04:b04_rueda_encargo, b04:b04_bill
+- `b04_rueda_visto` — b04:b04_rueda_encargo
+- `b04_sabrina_eco` — b04:b04_sabrina
+- `b04_salto` — b04:b04_salto
+- `b04_silph_hecho` — b04:b04_silph_fin
+- `b04_sotano_hondo` — b04:b04_sotano_bajar
+- `b04_sotano_llegada` — b04:b04_sotano_llegada
+- `b04_t0_hecho` — b04:b04_t0_fin
+- `b04_t1_fin` — b04:b04_t1_fin
+- `b04_tejado_inicio` — b04:b04_tejado_inicio
+- `b04_tobias_1` — b04:b04_tobias_1
+- `b04_tobias_final` — b04:b04_tobias_final
+- `b04_toni_plano` — b04:b04_toni_conducto
+- `b04_tren_arranca` — b04:b04_tren_arranca
+- `b04_tren_hecho` — b04:b04_tunel
+- `b04_vencejo_pluma` — b04:b04_t1_fin, b04:b04_salto
+- `b04_xero_matiere` — b04:b04_xero_silph
+- `b04_xero_silph` — b04:b04_xero_silph
+- `b04_ysolde_plan` — b04:b04_t1_fin
 - `mount_rhyhorn` — b01:b01_campeona_carrera, b01:b01_jinetes_rhyhorn
 
 ## Misiones
@@ -441,6 +533,24 @@ Generado: 2026-10-06T07:15:01.175Z · contenido 2026-10-06.1
 - `b03_t_tobias` (thread) El show debe continuar (II): torre → hecha
 - `b03_t_ondas` (thread) Las ondas: senal → abierto
 - `b03_s_caramelo` (side) Un caramelo con furia: ingredientes → hecha
+- `b04_m1` (main) Billete a Kanto: tren → azafran → hecha
+- `b04_m2` (main) Rumbo al norte: ruta5 → celeste → bill → hecha
+- `b04_m3` (main) Octava medalla: reto → hecha
+- `b04_m4` (main) Operación Tejado: tejado → dentro → hecha
+- `b04_m5` (main) Lo que hay bajo Celeste: cueva → nodo → decision → hecha
+- `b04_t_noa` (thread) Las jaulas (IV): celeste → abierto
+- `b04_t_vencejos` (thread) Plumas en el tejado (IV): azafran → hecha
+- `b04_t_kaori` (thread) Dulce veneno (III): lavanda → abierto
+- `b04_t_renata` (thread) Casos Fríos: el traslado: archivo → abierto
+- `b04_t_bastien` (thread) Letra pequeña (IV): puente → hecha
+- `b04_t_show` (thread) El show debe continuar (III): lavanda → hecha
+- `b04_t_lebrun` (thread) Quien sabe a qué hora llegas: sospecha → prueba → hecha
+- `b04_t_cueva` (thread) Lo que vive en la cueva: abierto
+- `b04_q_azafran` (main) Primer día en Azafrán: recados → hecha
+- `b04_s_rueda` (side) La ruedecita: encargo → gracias → hecha
+- `b04_q_tejado` (main) Desde arriba: mirar → bajar → hecha
+- `b04_q_archivo` (main) Lo que hay en la planta 11: buscar → salir → hecha
+- `b04_q_ceniza` (side) Lo que se queda un poco más: bajar → hecha
 
 ## Entrenadores con nombre de NPC
 
@@ -501,7 +611,27 @@ Generado: 2026-10-06T07:15:01.175Z · contenido 2026-10-06.1
 - `guarida_3` (b03) La Mayor: Honchkrow 46, Raticate 45
 - `guarida_4` (b03) Recluta: Electrode 46, Magneton 46, Electrode 47
 - `atlas_1` (b03) Atlas: Weezing 44, Arbok 44, Crobat 45, Weavile 45, Houndoom 49
+- `rhi_5` (b04) Rhi: Falinks 45, Sirfetch’d 46, Toxtricity 46, Corviknight 47, Cinderace 49
+- `az_goro` (b04) Goro: Arbok 47, Tauros 47, Arcanine 49
+- `bastien_5` (b04) Bastien: Talonflame 49, Meowstic 48, Pyroar 49, Aegislash 50, Greninja 51
+- `misty_g8` (b04) Misty: Golduck 49, Quagsire 49, Lapras 49, Gyarados 49, Starmie 53
+- `tejado_vigilante` (b04) Gerardo: Skarmory 50, Magneton 51
+- `tejado_tecnica` (b04) Ofelia: Electrode 50, Magnezone 51, Jolteon 51
+- `silph_recluta_1` (b04) Recluta: Crobat 51, Houndoom 52, Raticate 51
+- `silph_recluta_2` (b04) Recluta: Arbok 52, Weezing 52, Mightyena 53
+- `atenea_2` (b04) Atenea: Arbok 50, Vileplume 51, Weezing 51, Muk 52, Honchkrow 53
+- `sotano_medium_1` (b04) Doña Amparo: Haunter 50, Mismagius 51
+- `sotano_medium_2` (b04) Lucio: Marowak 51, Gengar 52
+- `tobias_3` (b04) Tobías: Swoobat 49, Grumpig 50, Drifblim 50, Persian 52
+- `ccel_benigno` (b04) Benigno: Magneton 51, Golbat 51
+- `ccel_penalver` (b04) Dra. Peñalver: Porygon2 52, Klang 52, Electrode 52
+- `ccel_fermin` (b04) Fermín: Machamp 53, Skarmory 52, Hypno 52
+- `ccel_olegario` (b04) Olegario: Bronzong 54, Steelix 53
+- `ccel_turno_1` (b04) Remigio: Graveler 51, Magneton 52
+- `ccel_turno_2` (b04) Nieves: Primeape 52, Golbat 52
+- `ccel_turno_3` (b04) Teodoro: Electrode 53, Golduck 52
+- `magda_1` (b04) Magda Ivers: Magnezone 51, Klinklang 50, Porygon-Z 51, Electivire 52, Metagross 53
 
 ## Nombres de entrenadores usados (para no repetir)
 
-Adrián, Agathe, Aitana, Amalia, Amparo, Anatole, Annette, Apolline, Aquilino, Armand, Armel, Aubin, Aymeric, Baltasar, Basile, Begoña, Benigno, Benito, Bernard, Bruno, Bárbara, Bérénice, Camila, Capucine, Celia, Clarisse, Clemente, Clémence, Concha, Constanza, Corentin, Cyprien, Céleste, Dorian, Eloísa, Elsa, Engracia, Ernesto, Erwan, Estela, Eulalie, Eusebio, Ezequiel, Fabrice, Fanny, Fausto, Fermín, Fidel, Fiona, Fleur, Florian, Fulgencio, Félix, Gabin, Gaëtan, Gilles, Gregorio, Gérard, Higinio, Hilda, Hortensia, Hugues, Hélène, Ignacio, Inès, Isidro, Iván, Jacinto, Jaime, Joaquín, Josette, Leocadia, Leocadio, Leonor, Lidia, Lisandro, Lorena, Lorenzo, Lou, Loïc, Lucas, Maite, Marcelo, Margaux, Margot, Maribel, Marisol, Mathis, Mauro, Maxime, Maël, Maëlle, Mylène, Nadia, Nieves, Nils, Ninon, Noé, Odile, Ophélie, Paloma, Pancracio, Pascal, Quentin, Ramiro, Rocío, Rogelio, Roland, Romain, Rosalie, Rosana, Rosaura, Rubén, Rémi, Sacha, Salomé, Saturnino, Solange, Solène, Séverine, Tadeo, Teodoro, Thibault, Théo, Timéo, Toño, Ulpiano, Valentín, Valeria, Wenceslao, Yanis, Yves, Yvette, Zoé, Óscar
+Abel, Adrián, Agathe, Aitana, Amalia, Ambrosio, Amparo, Anatole, Annette, Apolline, Aquilino, Armand, Armel, Asami, Aubin, Aymeric, Baltasar, Basile, Begoña, Benigno, Benito, Benjamín, Bernard, Bruno, Bárbara, Bérénice, Camila, Capucine, Casimiro, Celia (×2), Clarisse, Clemente, Clémence, Concha, Constanza, Corentin, Cyprien, Céleste, Darío, Dorian, Eloísa, Elsa, Elvira, Engracia, Ernesto, Erwan, Estela, Eulalie, Eusebio, Ezequiel, Fabrice, Fanny, Fausto (×2), Fermín, Fidel, Fiona, Fleur, Florian, Fortunato, Fulgencio, Félix, Gabin, Gaizka, Gaëtan, Gilles, Gonzalo, Gregorio, Gérard, Hideki, Higinio, Hilda, Hortensia, Hugues, Hélène, Ignacio, Inès, Isidro, Itziar, Iván, Jacinto, Jaime, Joaquín, Josette, Kenta, Leandra, Leocadia, Leocadio, Leonor, Lidia, Lisandro, Lorena, Lorenzo, Lou, Loïc, Lucas, Lucía, Maite, Marcelo, Margaux, Margot, Maribel, Marisol (×2), Mathis, Mauro, Maxime, Maël, Maëlle, Mireille, Mylène, Nadia, Nerea, Nieves, Nils, Ninon, Noé, Odile, Ophélie, Paloma, Pancracio, Pascal, Pilar, Quentin, Ramiro, Ramón, Rigoberto, Rocío, Rogelio, Roland, Romain, Rosalie, Rosana, Rosaura, Rubén, Rufino, Rémi, Sacha, Salomé, Saturnino, Sayaka, Solange, Solène, Sonsoles, Séverine, Tadeo, Telmo, Teodoro, Thibault, Théo, Timéo, Toño, Ulpiano, Valentín, Valeria, Wenceslao, Yanis, Yumi, Yves, Yvette, Zoé, Óscar

@@ -48,6 +48,37 @@ const log = (...a) => { const s = a.join(' '); report.log.push(s); if (VERBOSE) 
 let step = 0;
 let curScript = '';
 let frontierRegion = null;
+let maxBlockSeen = 0;
+let lastTrainerLoss = -1e9; // tras perder con un entrenador, entrena hasta el tope antes de volver (como haría una persona)
+const blockedAt = {}; // ruta → paso en que la encontró bloqueada (para no volver en bucle)
+const blockOf = {};
+mod.BLOCKS.forEach((b, i) => { for (const lid in b.locations || {}) blockOf[lid] = i; });
+// Ruta más corta (por enlaces, salidas y lugar padre) hasta cualquier lugar de la región del frente: primer paso
+function stepToward(region) { return stepTo(id => topLoc(id)?.region === region); }
+// Lugar con algo «nuevo» (el «!» que ve una persona) o sin visitar, dentro de la región del frente
+function hasPending(id) {
+	const l = L(id); if (!l) return false;
+	if (!G.visited[id]) return true;
+	return spotsOf(l).some(s => s.new !== undefined && evalCond(s.new) && (spotRuns[spotKey(l, s)]?.n || 0) < 4 && !(s.action?.go && G.visited[s.action.go]));
+}
+function stepTo(goal) {
+	const start = G.loc, prev = { [start]: null }, q = [start];
+	const nexts = id => {
+		const l = L(id); if (!l) return [];
+		const out = [];
+		for (const s of spotsOf(l)) if (s.action?.go && canEnter(s.action.go).ok) out.push(s.action.go);
+		if (l.parent) out.push(l.parent);
+		for (const n of l.links || []) if (L(n) && canEnter(n).ok) out.push(n);
+		for (const cid in C.locations) if (C.locations[cid].parent === id && G.visited[cid]) out.push(cid);
+		return out;
+	};
+	while (q.length) {
+		const id = q.shift();
+		if (id !== start && goal(id)) { let x = id; while (prev[x] !== start) x = prev[x]; return x; }
+		for (const n of nexts(id)) if (!(n in prev)) { prev[n] = id; q.push(n); }
+	}
+	return null;
+}
 
 // ---------------- UI simulada ----------------
 Object.assign(UI, {
@@ -142,7 +173,7 @@ function battle(cfg) {
 	const sum = ctl.finish();
 	if (kind === 'wild') report.battles.wild++; else report.battles.trainer++;
 	if (sum.result === 'win' || sum.result === 'caught') report.battles.won++;
-	if (sum.result === 'lose') { report.battles.lost++; report.losses.push(`${cfg.trainer || cfg.wild?.sp} en ${G.loc} (equipo: ${G.party.map(p => p.sp + p.lv).join(',')})`); }
+	if (sum.result === 'lose') { report.battles.lost++; if (cfg.trainer) lastTrainerLoss = step; report.losses.push(`${cfg.trainer || cfg.wild?.sp} en ${G.loc} (equipo: ${G.party.map(p => p.sp + p.lv).join(',')})`); }
 	if (sum.result === 'win' && trainer) {
 		G.beaten[trainer.id] = (G.beaten[trainer.id] || 0) + 1;
 		if (trainer.cls === 'Líder' || trainer.npc && ['brock', 'blanca', 'corelia'].includes(trainer.npc)) report.gyms.push(`${trainer.id}: ganado en paso ${step} con ${G.party.map(p => p.sp + ' ' + p.lv).join(', ')}`);
@@ -160,7 +191,9 @@ async function enter(id, { from } = {}) {
 	const loc = L(id);
 	if (!loc) { report.errors.push('enter a lugar inexistente ' + id); return; }
 	// «frente»: la región del último lugar descubierto (el bot no se pierde por las Puertas en regiones viejas)
-	if (!G.visited[id] && topLoc(id)?.region) frontierRegion = topLoc(id).region;
+	// (2026-10-06) el frente solo lo cambia un lugar nuevo de un bloque igual o posterior al más reciente pisado:
+	// si vuelve a una región vieja y descubre un rincón que se saltó, no se queda vagando allí
+	if (!G.visited[id] && topLoc(id)?.region && (blockOf[id] ?? 0) >= maxBlockSeen) { frontierRegion = topLoc(id).region; maxBlockSeen = blockOf[id] ?? 0; }
 	G.visited[id] = true;
 	for (let p = L(id)?.parent; p && !G.visited[p]; p = L(p)?.parent) G.visited[p] = true;
 	G.loc = id;
@@ -252,7 +285,7 @@ async function routeWalk(loc) {
 		const cm = canMove(loc, pos, dir);
 		if (!cm.ok) {
 			if (cm.script) await run(cm.script);
-			if (!canMove(loc, pos, dir).ok) { dir = -dir; G.route.dir = dir; report.stuck.push(`bloqueo en ${loc.id} tramo ${pos}: ${cm.msg}`); if (guard > 30) return; continue; }
+			if (!canMove(loc, pos, dir).ok) { dir = -dir; G.route.dir = dir; blockedAt[loc.id] = step; report.stuck.push(`bloqueo en ${loc.id} tramo ${pos}: ${cm.msg}`); if (guard > 30) return; continue; }
 		}
 		const n = Math.max(0, Math.min(r.length, pos + dir));
 		G.route.pos = n;
@@ -375,6 +408,17 @@ for (step = 0; step < MAX; step++) {
 		if (!ce.ok) continue;
 		opts.push({ id: n, w: !G.visited[n] ? 30 : isRoute(l) && !G.cleared[n] ? 15 : 3 });
 	}
+	// fuera de la región del frente: volver por el camino más corto (antes vagaba cientos de pasos por regiones viejas)
+	if (frontierRegion && here && here !== frontierRegion && Math.random() < 0.85) {
+		const nx = stepToward(frontierRegion);
+		if (nx) { await enter(nx, { from: loc.id }); continue; }
+	}
+	// como una persona: ir hacia el «!» más cercano (o a un sitio sin visitar) de la región del frente
+	if (Math.random() < 0.6) {
+		const nx = stepTo(id => (!frontierRegion || topLoc(id)?.region === frontierRegion) && hasPending(id));
+		if (nx && canEnter(nx).ok) { await enter(nx, { from: loc.id }); continue; }
+	}
+	if (step - lastTrainerLoss < 200 && avg() < (G.vars.cap || 15) - 1 && Math.random() < 0.5) { await grind((G.vars.cap || 15) - 1); continue; }
 	// ¿hay que entrenar? (gimnasio pendiente y nivel bajo)
 	if (avg() < (G.vars.cap || 15) - 4 && Math.random() < 0.25) { await grind((G.vars.cap || 15) - 3); continue; }
 	if (!opts.length) { report.stuck.push('sin salidas en ' + loc.id); break; }

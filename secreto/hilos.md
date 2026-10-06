@@ -88,3 +88,24 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | Las ondas (nuevo) | «M.» | B4 |
 | Tobías | Torre Bellsprout hecha | B4 |
 | Irene | Lección Unown, DAR/TOMAR | Acto VII |
+
+## Estado tras el B4 (Publicación 5)
+
+| Hilo | Estado | Siguiente paso (B5, Alola · Acto IV) |
+|---|---|---|
+| Tronco | Nodo 03 (Cueva Celeste) dañado al 4 %, sin fuente; Lemnis lo reparará «en meses» | B5: el nodo de Alola (Altar del Sol/Luna); Æther; Necrozma. Interferencia del Diario ya plantada: la revelación sigue en el Acto V |
+| **El topo (Lebrun)** — cerrado | Revelado; detenido / cebo / libre | Según decisión: con `cebo`, Handsome usa a Lebrun para mandar información falsa; con `libre`, el buzón «Ómicron Envíos»; con `detenido`, Lemnis busca otro informante. **Camille** (hija, clínica de Æther en Alola) |
+| Las ondas — cerrado | «M.» = Magda Ivers | Magda reaparece en actos futuros (reparación del nodo; puede dudar si el jugador «le escribe con otras cuentas») |
+| **NUEVO: Lo que vive en la cueva** (`b04_t_cueva`) | Mewtwo se fue de la Cueva tras sentir el aura de Lucario («Tú no tomas. Das») | Reaparece en un acto alto, contra el Lazo. Nunca capturable antes del Acto IX |
+| Vencejos (Ysolde) | Operación Tejado hecha; «alas enteras» | Acto V: ascenso a **Ala** |
+| Las jaulas (Noa) | En inventario («ascenso lateral»), vigilada; «que alguien abra las jaulas» | B5–B6: más pistas; Acto VI su pérdida |
+| Dulce veneno (Kaori) | Fuji y la ceniza de la torre: el antídoto estabiliza | B5: Kaori y Æther (laboratorios); afinidad |
+| Casos Fríos (Renata) | Expediente de Olmedo: «Proyecto Arco II · Teselia» (o carpeta vaciada) | Acto V |
+| Letra pequeña (Bastien) | Cláusula 14.3: «emplazamiento 03» | B5: su contrato lo manda a Alola; decide si lo rompe |
+| Show (Tobías) y Gadd | Especial de fantasmas en Lavanda; el Gastly volvió a casa | B5/B6 |
+| Cabina (Ulises) | El pequeñito se calmó al dañarse el nodo; «ya falta poco para que me necesites» | **B5 o B6: misión de la cabina** (Dialga joven) |
+| Ámbar (Petra) | Mensaje: el ámbar late en Kanto; Isla Canela más adelante | Misión prehistórica (cruza con la cabina) |
+| Rancho (Adela) | Carta / foto / mensaje de los martes según rama | 3.ª aparición en el B5 o B6 |
+| A.Z. | Aparición del Acto III (salida de la Cueva, amanecer) | Una por acto |
+| Lucario | Sueño de aura (Isla Hierro sin nombre) | B5–B6: más sueños; reacción a Quinoa en el Acto VII |
+| Misty, Sabrina, Bill, Fuji | Presentados | 2+ apariciones más (Copa Infinita, llamadas, Bill con el PC) |

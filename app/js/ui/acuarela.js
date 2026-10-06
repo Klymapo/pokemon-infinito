@@ -847,6 +847,101 @@ export function paintLagoNoche() {
 	return { canvas: cv, done: Promise.resolve(true) };
 }
 
+/** Cuadro: foto del Puente Pepita al atardecer. Barandillas amarillas, río de cobre, tejados de Celeste a contraluz. */
+export function paintPuentePepita({ look = {} } = {}) {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela foto';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('puente-pepita');
+	const B = 14, IW = W - 2 * B, IH = H - 2 * B - 18;
+	ctx.fillStyle = '#f8f6f0'; ctx.fillRect(0, 0, W, H);
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	const hz = B + 128;
+	const sky = ctx.createLinearGradient(0, B, 0, hz);
+	sky.addColorStop(0, '#3a3a7a'); sky.addColorStop(0.45, '#d8708a'); sky.addColorStop(0.8, '#f6b064'); sky.addColorStop(1, '#ffd68a');
+	ctx.fillStyle = sky; ctx.fillRect(B, B, IW, hz - B);
+	// sol bajo, medio escondido tras los tejados
+	const sx = B + IW * 0.3, sy = hz - 14;
+	const sg = ctx.createRadialGradient(sx, sy, 0, sx, sy, 70); sg.addColorStop(0, 'rgba(255,240,190,.95)'); sg.addColorStop(0.25, 'rgba(255,200,120,.6)'); sg.addColorStop(1, 'rgba(255,170,100,0)');
+	ctx.fillStyle = sg; ctx.fillRect(sx - 70, sy - 70, 140, 140);
+	// nubes alargadas
+	ctx.fillStyle = 'rgba(255,190,170,.45)';
+	for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.ellipse(B + R() * IW, B + 20 + R() * 60, 30 + R() * 50, 3 + R() * 3, 0, 0, 7); ctx.fill(); }
+	// tejados de Celeste a contraluz en el horizonte
+	ctx.fillStyle = '#2a2a52';
+	let x = B; while (x < W - B) { const w = 16 + R() * 26, hh = 10 + R() * 22; ctx.beginPath(); ctx.moveTo(x, hz); ctx.lineTo(x, hz - hh); ctx.lineTo(x + w / 2, hz - hh - 8); ctx.lineTo(x + w, hz - hh); ctx.lineTo(x + w, hz); ctx.fill(); if (R() < 0.4) { ctx.fillStyle = '#ffd88a'; ctx.fillRect(x + w / 2 - 1.5, hz - hh + 4, 3, 3); ctx.fillStyle = '#2a2a52'; } x += w + 2; }
+	// río de cobre
+	const river = ctx.createLinearGradient(0, hz, 0, B + IH);
+	river.addColorStop(0, '#e89a5a'); river.addColorStop(0.5, '#a8583a'); river.addColorStop(1, '#4a2a3a');
+	ctx.fillStyle = river; ctx.fillRect(B, hz, IW, IH);
+	ctx.fillStyle = 'rgba(255,230,170,.5)'; for (let i = 0; i < 70; i++) { const yy = hz + 4 + R() * 120; ctx.fillRect(sx - 30 + (R() - 0.5) * (yy - hz) * 1.2, yy, 4 + R() * 12, 1.2); }
+	// el puente en perspectiva: tablero que entra desde abajo a la derecha hacia el horizonte
+	ctx.fillStyle = '#6a4a3a'; ctx.beginPath(); ctx.moveTo(W - B - 60, B + IH); ctx.lineTo(W - B + 40, B + IH); ctx.lineTo(B + IW * 0.62, hz + 6); ctx.lineTo(B + IW * 0.56, hz + 6); ctx.fill();
+	ctx.fillStyle = '#8a6448'; for (let k = 0; k < 14; k++) { const t = k / 14, y = hz + 6 + (B + IH - hz - 6) * t * t, xl = B + IW * 0.56 + (W - B - 60 - B - IW * 0.56) * t * t, xr = B + IW * 0.62 + (W - B + 40 - B - IW * 0.62) * t * t; ctx.fillRect(xl, y, xr - xl, 1 + t * 2); }
+	// barandillas amarillas
+	const rail = (x0, x1) => { ctx.strokeStyle = '#f2c43a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0, B + IH - 70); ctx.lineTo(x1, hz - 4); ctx.stroke(); for (let k = 0; k < 10; k++) { const t = k / 10, tt = t * t, xx = x1 + (x0 - x1) * (1 - tt) * 0 + x0 + (x1 - x0) * t, y = B + IH - 70 + (hz - 4 - (B + IH - 70)) * t; ctx.lineWidth = 2.6 - t * 2; ctx.beginPath(); ctx.moveTo(xx, y); ctx.lineTo(xx, y + 34 * (1 - t) + 4); ctx.stroke(); } };
+	rail(W - B - 70, B + IW * 0.555); rail(W - B + 30, B + IW * 0.625);
+	// farola encendida
+	const lx = W - B - 40, ly = B + 60; ctx.fillStyle = '#2a2232'; ctx.fillRect(lx - 1.5, ly, 3, B + IH - ly - 60);
+	const lg = ctx.createRadialGradient(lx, ly, 0, lx, ly, 20); lg.addColorStop(0, 'rgba(255,236,170,.95)'); lg.addColorStop(1, 'rgba(255,210,130,0)'); ctx.fillStyle = lg; ctx.fillRect(lx - 20, ly - 20, 40, 40);
+	// figurita a contraluz apoyada en la barandilla, con un brillo azul a su lado (informe: no se distingue qué es)
+	const fx = W - B - 120, fy = B + IH - 92;
+	ctx.fillStyle = '#1a1424'; ctx.beginPath(); ctx.ellipse(fx, fy, 6, 12, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(fx, fy - 16, 5, 0, 7); ctx.fill();
+	if (look.hairColor) { ctx.fillStyle = look.hairColor; ctx.globalAlpha = 0.5; ctx.beginPath(); ctx.arc(fx, fy - 18, 5, Math.PI, 0); ctx.fill(); ctx.globalAlpha = 1; }
+	ctx.save(); ctx.globalCompositeOperation = 'lighter'; const ag = ctx.createRadialGradient(fx + 16, fy + 2, 0, fx + 16, fy + 2, 16); ag.addColorStop(0, 'rgba(110,180,255,.7)'); ag.addColorStop(1, 'rgba(60,140,255,0)'); ctx.fillStyle = ag; ctx.fillRect(fx, fy - 14, 32, 32); ctx.restore();
+	ctx.fillStyle = '#1a1424'; ctx.beginPath(); ctx.ellipse(fx + 16, fy + 4, 4, 7, 0, 0, 7); ctx.fill();
+	ctx.restore();
+	photoFinish(ctx, B, B, IW, IH, 8, { grain: 18, warm: 10, vig: 0.4 });
+	ctx.save(); ctx.translate(W - B - 8, H - 11); ctx.rotate(-0.04); ctx.fillStyle = '#7a3a2a'; ctx.globalAlpha = 0.85; ctx.font = 'italic 600 14px Nunito, serif'; ctx.textAlign = 'right';
+	ctx.fillText('Ocho', 0, 0); ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
+/** Cuadro: la sala del nodo de la Cueva Celeste iluminada por un aura azul. Encuadre picado; cristales como un cielo al revés. */
+export function paintCuevaAura() {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela foto';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('cueva-celeste');
+	const B = 14, IW = W - 2 * B, IH = H - 2 * B - 18;
+	ctx.fillStyle = '#f8f6f0'; ctx.fillRect(0, 0, W, H);
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	const bg = ctx.createRadialGradient(W / 2, B + IH * 0.62, 10, W / 2, B + IH * 0.62, IW * 0.75);
+	bg.addColorStop(0, '#1a3a7a'); bg.addColorStop(0.5, '#0c1838'); bg.addColorStop(1, '#03060e');
+	ctx.fillStyle = bg; ctx.fillRect(B, B, IW, IH);
+	// suelo de la sala visto desde arriba: elipse de roca
+	ctx.fillStyle = '#16203a'; ctx.beginPath(); ctx.ellipse(W / 2, B + IH * 0.64, IW * 0.42, IH * 0.26, 0, 0, 7); ctx.fill();
+	// cristales encendidos por toda la sala
+	ctx.save(); ctx.globalCompositeOperation = 'lighter';
+	for (let i = 0; i < 90; i++) {
+		const a = R() * Math.PI * 2, d = 0.3 + R() * 0.75, x = W / 2 + Math.cos(a) * IW * 0.48 * d, y = B + IH * 0.6 + Math.sin(a) * IH * 0.42 * d, s = 2 + R() * 5;
+		const g = ctx.createRadialGradient(x, y, 0, x, y, s * 3); g.addColorStop(0, `rgba(170,220,255,${0.5 + R() * 0.4})`); g.addColorStop(1, 'rgba(80,150,255,0)');
+		ctx.fillStyle = g; ctx.fillRect(x - s * 3, y - s * 3, s * 6, s * 6);
+		ctx.fillStyle = 'rgba(220,240,255,.9)'; ctx.beginPath(); ctx.moveTo(x, y - s); ctx.lineTo(x + s * 0.4, y); ctx.lineTo(x, y + s * 0.5); ctx.lineTo(x - s * 0.4, y); ctx.fill();
+	}
+	// anillos de aura desde el centro
+	const cx = W / 2, cy = B + IH * 0.66;
+	for (let k = 0; k < 7; k++) { ctx.strokeStyle = `rgba(90,170,255,${0.55 - k * 0.07})`; ctx.lineWidth = 2 - k * 0.2; ctx.beginPath(); ctx.ellipse(cx, cy, 14 + k * 26, 6 + k * 13, 0, 0, 7); ctx.stroke(); }
+	const core = ctx.createRadialGradient(cx, cy - 6, 0, cx, cy - 6, 40); core.addColorStop(0, 'rgba(200,230,255,.95)'); core.addColorStop(0.4, 'rgba(110,180,255,.6)'); core.addColorStop(1, 'rgba(60,120,255,0)');
+	ctx.fillStyle = core; ctx.fillRect(cx - 40, cy - 46, 80, 80);
+	ctx.restore();
+	// bulto pequeño en el centro, oscuro e informe, con los brazos en alto (dos trazos)
+	ctx.fillStyle = '#04070f'; ctx.beginPath(); ctx.ellipse(cx, cy - 2, 5, 7, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(cx, cy - 12, 3.5, 0, 7); ctx.fill();
+	ctx.strokeStyle = '#04070f'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx - 4, cy - 6); ctx.lineTo(cx - 9, cy - 16); ctx.moveTo(cx + 4, cy - 6); ctx.lineTo(cx + 9, cy - 16); ctx.stroke();
+	// arriba a la izquierda, desenfocada: una mancha alta y pálida que mira hacia abajo (sin silueta)
+	ctx.save(); ctx.filter = 'blur(9px)'; ctx.fillStyle = 'rgba(220,214,236,.55)'; ctx.beginPath(); ctx.ellipse(B + 70, B + 50, 16, 40, 0.2, 0, 7); ctx.fill();
+	ctx.fillStyle = 'rgba(170,140,200,.35)'; ctx.beginPath(); ctx.ellipse(B + 92, B + 96, 8, 26, -0.6, 0, 7); ctx.fill(); ctx.restore();
+	ctx.restore();
+	photoFinish(ctx, B, B, IW, IH, 77, { grain: 24, warm: -6, vig: 0.55 });
+	ctx.save(); ctx.translate(W - B - 8, H - 11); ctx.rotate(-0.05); ctx.fillStyle = '#2a3a6a'; ctx.globalAlpha = 0.8; ctx.font = 'italic 600 14px Nunito, serif'; ctx.textAlign = 'right';
+	ctx.fillText('Aura', 0, 0); ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
 /** Visor a pantalla completa para un objeto clave con cuadro. */
 export async function viewArt(itemId) {
 	const it = D.items[toID(itemId)] || {};
@@ -858,6 +953,8 @@ export async function viewArt(itemId) {
 		: it.art === 'rancho_atardecer' ? paintRanchoAtardecer()
 		: it.art === 'faro_olivo_noche' ? paintFaroNoche()
 		: it.art === 'lago_furia_noche' ? paintLagoNoche()
+		: it.art === 'puente_pepita' ? paintPuentePepita({ look })
+		: it.art === 'cueva_celeste_aura' ? paintCuevaAura()
 		: null;
 	if (!painting) return;
 	const note = h('div', { class: 'art-note' }, it.desc || '');
