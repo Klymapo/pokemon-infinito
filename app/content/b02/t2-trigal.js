@@ -8,6 +8,9 @@
 const RL = '(inParty("riolu") || inParty("lucario"))';
 const LLEGADA = 'flag.b02_trigal_llegada';
 const GIRA = 'flag.b02_pabellon';
+// La escena de Lila y los Rocket cuenta como vista al terminarla. b02_lila_trigal se activa al empezar:
+// si la app se cerraba a mitad, la escena se perdía. Las partidas antiguas que la terminaron tienen la misión hecha.
+const LILA_R = '(flag.b02_lila_rocket_fin || done.b02_t_lila)';
 const SIN_CROMLECH = '!flag.b01_delatar && !flag.b01_handsome && !flag.b01_trato_sera';
 const HANDSOME_LISTO = 'flag.b02_rhi_combate_hecho && flag.b02_bastien_combate_hecho';
 const CIERRE_LISTO = 'flag.b02_pabellon && flag.b02_sera_trigal && flag.b02_rhi_carta && flag.b02_bastien_combate_hecho && flag.b02_noa_trigal && flag.b02_kaori_trigal && flag.b02_handsome_noche && flag.b02_regadera';
@@ -123,7 +126,7 @@ export default {
 				{ label: 'Torre Radio', sub: 'Antena roja, emisión 24 horas', icon: '📻', action: { go: 'torre_radio' } },
 				{ label: 'Floristería', sub: 'Macetas hasta en la acera', icon: '💐', action: { go: 'floristeria_trigal' }, new: GIRA + ' && !flag.b02_regadera' },
 				{ label: 'Estación del Tren Magnético', sub: 'Pita cada diez minutos', icon: '🚄', action: { go: 'estacion_magnetica' }, new: 'quest.b02_t_renata == "testigo"' },
-				{ label: 'Gimnasio de Trigal', sub: 'En obras', icon: '🚧', cond: '!flag.b03_ruinas_hecho', action: { go: 'gym_trigal' }, new: GIRA + ' && !flag.b02_lila_trigal' },
+				{ label: 'Gimnasio de Trigal', sub: 'En obras', icon: '🚧', cond: '!flag.b03_ruinas_hecho', action: { go: 'gym_trigal' }, new: GIRA + ' && !' + LILA_R },
 				{ label: 'Puerta Lemnis de Johto', sub: 'Detrás de las vallas azules', icon: '♾️', action: { go: 'puerta_trigal' } },
 
 				// --- Arco principal en la plaza ---
@@ -151,7 +154,7 @@ export default {
 				{ text: 'La Torre Radio emite toda la noche. A las 2:17, dicen, se cuela un pitido que no es de ninguna emisora.' },
 				{ text: 'En la Floristería regalan una regadera muy rara a quien les cae bien. Tiene forma de Squirtle. Aquí le llaman «ardilla», no preguntes.' },
 				{ cond: 'flag.b02_pabellon', text: 'En la bolsa de regalo de la Gira hay unos caramelos azules. A los Pokémon les encantan. A algunos, demasiado.' },
-				{ cond: 'flag.b02_lila_trigal', text: 'La chica del pelo blanco que prepara el gimnasio echó a un Rocket ella sola. Los obreros no hablan de otra cosa.' },
+				{ cond: LILA_R, text: 'La chica del pelo blanco que prepara el gimnasio echó a un Rocket ella sola. Los obreros no hablan de otra cosa.' },
 			],
 		},
 
@@ -236,11 +239,11 @@ export default {
 			name: 'Gimnasio de Trigal (en obras)', parent: 'trigal', kind: 'gym',
 			bg: { type: 'gym' },
 			desc: 'Andamios, sacos de cemento y un cartel enorme: «**Próximamente · Gimnasio de intercambio del Circuito Infinito**». El suelo de combate todavía no tiene líneas. Solo un círculo pintado con tiza y una cinta de la Torre Maestra atada a un andamio.\n\nAquí combatía Blanca. Ahora Blanca está en Kalos. Y quien venga, viene de Kalos.',
-			descs: [{ cond: 'flag.b02_lila_trigal && !flag.b03_ruinas_hecho', text: 'Los obreros ya han pintado las líneas del campo. En una esquina, sobre un saco de cemento, alguien ha dejado una flor blanca y una nota con letra redonda: «Para Corelia, de parte de su aprendiz. Todo listo (casi)».' }],
+			descs: [{ cond: LILA_R + ' && !flag.b03_ruinas_hecho', text: 'Los obreros ya han pintado las líneas del campo. En una esquina, sobre un saco de cemento, alguien ha dejado una flor blanca y una nota con letra redonda: «Para Corelia, de parte de su aprendiz. Todo listo (casi)».' }],
 			mapNote: 'Líder: aún no (en obras)',
 			spots: [
-				{ label: 'Lila', sub: 'Mide el campo con una cinta métrica', icon: '🌸', cond: GIRA + ' && !flag.b02_lila_trigal', new: 'true', talk: [{ script: 'b02_lila_trigal' }] },
-				{ label: 'Lila', sub: 'Pinta las líneas del campo', icon: '🌸', cond: 'flag.b02_lila_trigal && !flag.b03_ruinas_hecho', talk: [{ script: 'b02_lila_despues' }] },
+				{ label: 'Lila', sub: 'Mide el campo con una cinta métrica', icon: '🌸', cond: GIRA + ' && !' + LILA_R, new: 'true', talk: [{ script: 'b02_lila_trigal' }] },
+				{ label: 'Lila', sub: 'Pinta las líneas del campo', icon: '🌸', cond: LILA_R + ' && !flag.b03_ruinas_hecho', talk: [{ script: 'b02_lila_despues' }] },
 				{ label: 'Retar al líder', sub: 'No hay líder. Hay andamios', icon: '🚧', cond: '!flag.b03_ruinas_hecho', talk: [{ script: 'b02_gym_trigal_cerrado' }] },
 			],
 		},
@@ -1080,6 +1083,7 @@ export default {
 
 		// =================== LILA ===================
 		b02_lila_trigal: [
+			{ if: LILA_R, then: [{ end: true }] },
 			{ set: { 'flag.b02_lila_trigal': true } },
 			{ quest: 'b02_t_lila', stage: 'trigal' },
 			{ text: 'Entre los andamios, una chica de pelo blanco con un mechón verde mide el suelo de combate con una cinta métrica. Eevee sujeta el otro extremo con los dientes, muy serio.' },
@@ -1131,6 +1135,7 @@ export default {
 			{ rep: { johto: 2 } },
 			{ quest: 'b02_t_lila', stage: 'hecha', done: true },
 			{ intel: { npc: 'lila', text: 'Prepara el gimnasio de intercambio de Trigal para Corelia. Echó sola a un recluta Rocket que quería usarlo de almacén. Su Eevee brilló en rosa un instante y se apagó.' } },
+			{ set: { 'flag.b02_lila_rocket_fin': true } },
 		],
 		b02_lila_despues: [
 			{ say: 'lila', text: 'Estoy pintando las líneas. Rectas. Bueno, casi rectas. Eevee ha dejado huellas en la de la izquierda y no pienso borrarlas.' },
