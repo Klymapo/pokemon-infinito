@@ -205,6 +205,35 @@ for (const id of Object.keys(C.npcs)) {
 	else if (n < 3) lowNpc.push(`${id} (${n})`);
 }
 
+// Evoluciones imposibles: cada Pokémon que se puede conseguir (salvajes, regalos, guiones y sus
+// líneas evolutivas) debe poder evolucionar con lo que hay en el juego. Las evoluciones por
+// intercambio o por condiciones raras usan el Cordón Unión (ver checkEvolution en app/js/pokemon.js).
+// Nació del bug del Boldore de Mario (2026-10-06): el Cordón existía pero no se podía conseguir.
+function checkEvolutions() {
+	const items = new Set(), sps = new Set();
+	const scan = o => {
+		if (Array.isArray(o)) return o.forEach(scan);
+		if (!o || typeof o !== 'object') return;
+		for (const [k, v] of Object.entries(o)) {
+			if ((k === 'give' || k === 'item' || k === 'id') && typeof v === 'string') items.add(toID(v));
+			if (k === 'sp' && typeof v === 'string') sps.add(toID(v));
+			scan(v);
+		}
+	};
+	for (const k of ['scripts', 'locations', 'events', 'quests', 'shops', 'gather']) scan(C[k]); // sin entrenadores: sus equipos no se pueden conseguir
+	for (const [id, s] of Object.entries(C.shops)) for (const e of s.items) items.add(toID(typeof e === 'string' ? e : e.id));
+	const need = e => ['useItem', 'levelHold'].includes(e.evoType) ? toID(e.evoItem) : ['trade', 'levelExtra', 'other'].includes(e.evoType) ? 'linkingcord' : null;
+	const seen = new Set([...sps].filter(s => D.species[s])), q = [...seen];
+	while (q.length) for (const e of D.species[q.pop()].evos || []) if (D.species[e] && !seen.has(e)) { seen.add(e); q.push(e); }
+	for (const s of seen) {
+		const e = D.species[s];
+		if (!e.prevo || !seen.has(e.prevo)) continue;
+		const it = need(e);
+		if (it && !items.has(it)) E('evolución ' + e.prevo + ' → ' + s, `necesita «${D.items[it]?.name || it}» y no se consigue en ninguna tienda, recolección ni guion`);
+	}
+}
+checkEvolutions();
+
 checkGather();
 console.log(`Bloques: ${C.blocks.map(b => b.id).join(', ')} · Lugares: ${Object.keys(C.locations).length} · Entrenadores: ${Object.keys(C.trainers).length} · Guiones: ${Object.keys(C.scripts).length} · Misiones: ${Object.keys(C.quests).length} · NPCs: ${Object.keys(C.npcs).length}`);
 if (lowNpc.length) console.log('NPCs con menos de 3 escenas (deben reaparecer en bloques futuros): ' + lowNpc.join(', '));

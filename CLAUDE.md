@@ -140,7 +140,7 @@ node herramientas/auditar.mjs            # 12 semillas de día + 12 de noche + e
 
 Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea. Incluye:
 
-1. **Validador** (`herramientas/validar.mjs`): referencias rotas, condiciones inválidas, aprendizajes imposibles, flags que se leen pero nunca se activan y NPCs con pocas apariciones. **0 errores.**
+1. **Validador** (`herramientas/validar.mjs`): referencias rotas, condiciones inválidas, aprendizajes imposibles, flags que se leen pero nunca se activan, NPCs con pocas apariciones y **evoluciones imposibles** (un Pokémon conseguible que necesita un objeto que no se puede obtener). **0 errores.**
 2. **Bot de recorrido** (`herramientas/recorrido.mjs`): juega todo el contenido sin interfaz, de día y de noche.
    - **Bloquea si:** hay `ERRORES`, o menos del 75 % de los recorridos llegan al final.
    - **Avisos de balance:** un rival con más de 2 derrotas de media es un muro. Más de 2/3 de recorridos sin perder ni una vez es demasiado fácil.

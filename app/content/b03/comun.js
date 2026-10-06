@@ -16,7 +16,7 @@ export default {
 	},
 	shops: {
 		tienda_olivo: { name: 'Tienda de Olivo', items: ['pokeball', 'greatball', 'ultraball', 'diveball', 'netball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'maxrepel', { id: 'mt_cola_ferrea', price: 10000 }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
-		tienda_caoba: { name: 'Tienda de Caoba', items: ['ultraball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'ragecandybar', 'maxrepel', { id: 'mt_garra_umbria', price: 10000 }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
+		tienda_caoba: { name: 'Tienda de Caoba', items: ['ultraball', 'hyperpotion', 'maxpotion', 'revive', 'fullheal', 'ragecandybar', 'maxrepel', 'razorclaw', { id: 'mt_garra_umbria', price: 10000 }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
 	},
 	challenges: {
 		gym_trigal_b3: {
