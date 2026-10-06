@@ -291,11 +291,11 @@ export default {
 						{ block: { cond: 'has("farollana") || has("linternapi")', msg: 'Está demasiado oscuro. No ves tu mano, ni tus reflejos, ni el suelo. Necesitarás una luz… Don Aurelio hablaba de un farol. *(Junto a la entrada de la oscuridad hay alguien sentado.)*', dir: 1 } },
 						{ talk: [{ script: 'b01_guarda_reflejos' }], label: 'La guarda de la cueva', sub: 'Una señora haciendo punto junto a un farol', icon: '🏮', cond: '!has("farollana") && !has("linternapi")', new: 'true' },
 					],
-					4: [{ trainer: 'cr_2' }],
+					4: [{ text: 'En un rincón donde no llega ni tu reflejo, una piedra negra, casi morada, absorbe la luz en vez de devolverla. Al tocarla está fría, como si guardara un pedazo de noche.' }, { trainer: 'cr_2' }, { item: 'duskstone' }],
 					5: [{ text: 'Gotas de agua caen del techo. En cada una, por un instante, se refleja tu luz.' }, { item: 'rarecandy', hidden: true }],
 					6: [{ script: 'b01_espejo', mark: true }],
 					7: [{ trainer: 'cr_3', optional: true, label: 'Pica cristales con un martillito' }, { item: 'revive' }],
-					8: [{ text: 'Al fondo, una luz que no es de espejo: es el sol. Huele a sal. Se oyen gaviotas.' }],
+					8: [{ text: 'Al fondo, una luz que no es de espejo: es el sol. Huele a sal. Se oyen gaviotas. Justo donde entra el primer rayo, una piedra clara lo atrapa y brilla como si tuviera el día metido dentro.' }, { item: 'shinystone' }],
 				},
 				encounters: {
 					cave: [
