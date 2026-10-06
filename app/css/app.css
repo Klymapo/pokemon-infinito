@@ -608,8 +608,12 @@ button.cmpmove:active { transform: scale(.98); }
 .sortbar button.on { background: var(--ink-3); border-color: var(--cream); }
 
 /* Deslizar entre pestañas y menús */
-@keyframes slideL { from { transform: translateX(28px); opacity: .35; } to { transform: none; opacity: 1; } }
-@keyframes slideR { from { transform: translateX(-28px); opacity: .35; } to { transform: none; opacity: 1; } }
-.slide-l { animation: slideL .18s ease-out; }
-.slide-r { animation: slideR .18s ease-out; }
+@keyframes slideL { from { transform: translateX(70%); opacity: .2; } to { transform: none; opacity: 1; } }
+@keyframes slideR { from { transform: translateX(-70%); opacity: .2; } to { transform: none; opacity: 1; } }
+.slide-l { animation: slideL .2s cubic-bezier(.2,.8,.3,1); }
+.slide-r { animation: slideR .2s cubic-bezier(.2,.8,.3,1); }
+.sheet-body { will-change: transform; overflow-x: hidden; }
+.sheet { overflow-x: hidden; }
+.main { will-change: transform; }
+.nav.nav-sheet { flex: none; }
 @media (prefers-reduced-motion: reduce) { .slide-l, .slide-r { animation: none; } }

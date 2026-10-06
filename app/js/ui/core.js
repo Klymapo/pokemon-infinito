@@ -204,12 +204,11 @@ export function openSheet(title, body, { onClose, actions } = {}) {
 		title(t) { head.querySelector('h2').textContent = t; },
 	};
 	sheets.push(api);
-	// Deslizar de lado: cambia de pestaña; en la primera o la última, pasa al menú vecino (onEdgeSwipe)
+	// Deslizar de lado: el contenido sigue al dedo y cambia de pestaña; en la primera o la última, pasa al menú vecino (onEdgeSwipe)
 	onSwipe(el, dir => {
-		if (sheets[sheets.length - 1] !== api) return;
 		if (stepTabs(bodyEl, dir)) return;
 		api.onEdgeSwipe?.(dir);
-	});
+	}, { target: () => bodyEl, can: dir => sheets[sheets.length - 1] === api && (hasTab(bodyEl, dir) || !!api.onEdgeSwipe) });
 	if (body) api.set(typeof body === 'function' ? body(api) : body);
 	return api;
 }
@@ -218,30 +217,62 @@ export function topSheet() { return sheets[sheets.length - 1] || null; }
 
 // ---------- Deslizar ----------
 // dir = 1: el dedo va hacia la izquierda (siguiente); dir = -1: hacia la derecha (anterior).
+// Mientras arrastras, `target` sigue al dedo; al soltar, sale por el lado y lo nuevo entra por el otro.
+// Si no se llega al umbral (o no hay a dónde ir), vuelve a su sitio.
 const NO_SWIPE = '.tabs, input, textarea, select, .stepper, .dialog, .choices, [data-noswipe]';
-export function onSwipe(el, fn) {
+const reduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+export function onSwipe(el, go, { target = () => el, can = () => true, skip = NO_SWIPE } = {}) {
 	let s = null;
+	const reset = (tg, anim) => { if (!tg) return; tg.style.transition = anim ? 'transform .18s ease-out' : 'none'; tg.style.transform = ''; };
 	el.addEventListener('touchstart', e => {
 		const t = e.touches[0];
-		s = e.touches.length === 1 && !e.target.closest?.(NO_SWIPE) ? { x: t.clientX, y: t.clientY, at: Date.now() } : null;
+		s = e.touches.length === 1 && !e.target.closest?.(skip) ? { x: t.clientX, y: t.clientY, at: Date.now(), lock: null, tg: null, dx: 0 } : null;
 	}, { passive: true });
-	el.addEventListener('touchend', e => {
+	el.addEventListener('touchmove', e => {
+		if (!s || s.lock === 'v') return;
+		const t = e.touches[0], dx = t.clientX - s.x, dy = t.clientY - s.y;
+		if (!s.lock) {
+			if (Math.abs(dx) > 10 && Math.abs(dx) > 1.3 * Math.abs(dy)) { s.lock = 'h'; s.tg = target(); s.ok = { 1: can(1), '-1': can(-1) }; }
+			else if (Math.abs(dy) > 10) { s.lock = 'v'; return; }
+			else return;
+		}
+		e.preventDefault();
+		s.dx = dx;
+		if (!s.tg || reduced()) return;
+		const allowed = s.ok[dx < 0 ? 1 : -1];
+		s.tg.style.transition = 'none';
+		s.tg.style.transform = `translateX(${allowed ? dx : dx * 0.2}px)`;
+	}, { passive: false });
+	const end = e => {
 		if (!s) return;
-		const t = e.changedTouches[0], dx = t.clientX - s.x, dy = t.clientY - s.y, dt = Date.now() - s.at;
-		s = null;
-		if (dt < 700 && Math.abs(dx) > 60 && Math.abs(dx) > 1.8 * Math.abs(dy)) fn(dx < 0 ? 1 : -1);
-	}, { passive: true });
+		const st = s; s = null;
+		if (st.lock !== 'h') return;
+		const t = e.changedTouches?.[0], dx = t ? t.clientX - st.x : st.dx, dt = Math.max(1, Date.now() - st.at);
+		const dir = dx < 0 ? 1 : -1, w = (st.tg || el).clientWidth || 400;
+		const ok = st.ok[dir] && (Math.abs(dx) > w * 0.22 || (Math.abs(dx) > 40 && Math.abs(dx) / dt > 0.35));
+		if (!ok) { reset(st.tg, true); return; }
+		if (!st.tg || reduced()) { reset(st.tg); go(dir); return; }
+		st.tg.style.transition = 'transform .13s ease-in';
+		st.tg.style.transform = `translateX(${-dir * w}px)`;
+		setTimeout(() => { reset(st.tg); go(dir); }, 130);
+	};
+	el.addEventListener('touchend', end, { passive: true });
+	el.addEventListener('touchcancel', () => { if (s?.tg) reset(s.tg, true); s = null; }, { passive: true });
+}
+function tabBar(root) {
+	return [...root.querySelectorAll('.tabs')].find(t => t.offsetParent !== null && t.querySelectorAll('button').length > 1 && t.querySelector('button.on'));
+}
+export function hasTab(root, dir) {
+	const bar = tabBar(root);
+	if (!bar) return false;
+	const btns = [...bar.querySelectorAll('button')];
+	return !!btns[btns.findIndex(b => b.classList.contains('on')) + dir];
 }
 // Pasa a la pestaña vecina de la primera fila de pestañas visible. Devuelve false si no hay a dónde ir.
 export function stepTabs(root, dir) {
-	const bar = [...root.querySelectorAll('.tabs')].find(t => t.offsetParent !== null && t.querySelectorAll('button').length > 1);
-	if (!bar) return false;
-	const btns = [...bar.querySelectorAll('button')];
-	const i = btns.findIndex(b => b.classList.contains('on'));
-	if (i < 0) return false;
-	const next = btns[i + dir];
-	if (!next) return false;
-	next.click();
+	if (!hasTab(root, dir)) return false;
+	const btns = [...tabBar(root).querySelectorAll('button')];
+	btns[btns.findIndex(b => b.classList.contains('on')) + dir].click();
 	slideIn(root, dir);
 	return true;
 }
@@ -254,7 +285,7 @@ export function slideIn(el, dir) {
 	el.classList.remove('slide-l', 'slide-r');
 	void el.offsetWidth;
 	el.classList.add(dir > 0 ? 'slide-l' : 'slide-r');
-	requestAnimationFrame(() => { const on = el.querySelector('.tabs button.on'); on?.scrollIntoView?.({ block: 'nearest', inline: 'center' }); });
+	requestAnimationFrame(() => { const on = el.querySelector('.tabs button.on'); on?.scrollIntoView?.({ block: 'nearest', inline: 'center', behavior: 'smooth' }); });
 }
 
 export { esc, fmtText };

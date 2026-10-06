@@ -325,33 +325,42 @@ async function showEventNotice(c) {
 }
 
 const NAV = () => [['🗺️', 'Mapa', openMap], [ballIcon(22), 'Equipo', openParty], ['🎒', 'Mochila', () => openBag()], ['📔', 'Diario', () => openDiary()], ['☰', 'Más', openMore]];
-function navBar() {
+function navBar(active = -1) {
 	const nav = h('div', { class: 'nav' });
-	NAV().forEach(([i, t], k) => nav.append(h('button', { onclick: () => openNav(k) }, h('span', { class: 'i' }, i), t)));
+	NAV().forEach(([i, t], k) => nav.append(h('button', { class: k === active ? 'on' : '', 'aria-current': k === active ? 'page' : null, onclick: () => k === active ? null : openNav(k, k > active ? 1 : -1, true) }, h('span', { class: 'i' }, i), t)));
 	return nav;
 }
 // Los cinco menús de abajo forman un carrusel: deslizando se pasa de uno a otro (y por sus pestañas).
 // Desde la pantalla principal, deslizar a la izquierda abre el Mapa y a la derecha, Más.
-function openNav(k, from = 0) {
+// Dentro de cada menú se queda la barra de abajo (con el menú actual marcado): tocar salta directo a otro menú
+// y deslizar sobre la barra también cambia de menú sin pasar por las pestañas.
+function openNav(k, from = 0, tapped = false) {
 	const items = NAV();
-	if (k < 0 || k >= items.length) { closeAllSheets(); return; }
+	if (k < 0 || k >= items.length) {
+		closeAllSheets();
+		const m = app()?.querySelector('.main');
+		if (m && from) slideIn(m, from);
+		return;
+	}
 	closeAllSheets();
 	items[k][2]();
 	const s = topSheet();
 	if (!s) return;
-	if (from < 0) lastTab(s.body);
+	if (from < 0 && !tapped) lastTab(s.body);
 	if (from) slideIn(s.body, from);
 	s.onEdgeSwipe = dir => openNav(k + dir, dir);
+	const bar = navBar(k);
+	bar.classList.add('nav-sheet');
+	s.el.append(bar);
+	onSwipe(bar, dir => openNav(k + dir, dir, true), { target: () => s.body, skip: '[data-noswipe]' });
 }
 let swipeReady = false;
 function mainSwipe() {
 	if (swipeReady) return;
 	swipeReady = true;
-	onSwipe(app(), dir => {
-		if (busy || topSheet() || !G || !document.querySelector('#app .nav')) return;
-		if (document.querySelector('.dialog, .choices, .battle, .field')) return;
-		openNav(dir > 0 ? 0 : NAV().length - 1, dir);
-	});
+	const can = () => !busy && !topSheet() && G && document.querySelector('#app .nav') && !document.querySelector('.dialog, .choices, .battle, .field');
+	onSwipe(app(), dir => { if (can()) openNav(dir > 0 ? 0 : NAV().length - 1, dir); },
+		{ target: () => app().querySelector('.main'), can });
 }
 
 async function guarded(fn) {
