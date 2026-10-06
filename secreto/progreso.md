@@ -20,6 +20,8 @@
 
 ## Pedidos de Mario pendientes
 
+- **2026-10-06 (tarde) · Auditoría completa + mini historias, puzles y mecánicas nuevas.** Mario pidió auditar jugabilidad, historia, gráficos, lore, historias creativas/originales/geek, UX/UI y animaciones, y añadió: «si puedes mejorar el juego con mini historias, puzzles, otras mecánicas de juego, mejor». Todo está en `secreto/auditorias/2026-10-06-auditoria-mario.md`, con el orden recomendado en §13 para la sesión de motor/arte (0:47) y la de historia (3:00). Urgente: bug del PC «80/30», únicos ligados a medallas (B5 no tiene medallas) y la pasada de español neutro («coger» es vulgar en México). Ve tachando aquí lo que quede hecho.
+
 - **2026-10-06 · Iniciales: los tres tipos de cada región.** Preguntó si estaban considerados los iniciales de los tres tipos (planta, fuego y agua) para capturarlos. Le dije que sí, sin detalles. Hoy hay 4/29. **Prioridad:** los tres de Johto (Chikorita, Cyndaquil, Totodile) como profundidad en las zonas de Johto que ya pisa (B2/B3), cada uno con su escena o pequeña misión (regalo, huevo, encargo de un Profesor…), nunca en la hierba. Después, los de Kanto y el resto según la región de cada bloque. Recuerda que siempre elige fuego, pero quiere tener los tres.
 
 - **2026-10-06 · Idea de historia de Mario: la arrepentida.** Una colaboradora de una organización malvada **del pasado** (Rocket, Aqua, Magma, Galaxia, Plasma, Flare…) que se arrepiente y ayuda. La propuso él: tómala en serio y encájala con la biblia. Que tenga nombre, voz propia y al menos 3 apariciones, con pistas plantadas antes del giro (le encantan). Si ya existe un hilo parecido (remanentes y reclutas), úsalo para dársela, sin repetir personajes. No le cuentes cómo la encajas.
