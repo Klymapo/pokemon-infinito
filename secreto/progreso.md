@@ -19,6 +19,8 @@
 
 ## Pedidos de Mario pendientes
 
+- **2026-10-06 · Designer de Canvas (UX/UI).** Quiere que todo lo visual (textos, recuadros, iconos, menús) quede lo mejor posible. Bot `herramientas/ux.py` en la auditoría. Primera pasada corregida (contraste de tipos y botones, letra ≥ 12, toques ≥ 44, nombres del PC completos, pestañas con pista de desplazamiento). **Pendiente:** los iconos con emoji → iconos pixelados propios (ya era la noche 2 del pedido de arte); la sesión de arte de las 0:47 lo hace con `ux.py` como comprobación.
+
 - **2026-10-06 · Colección completa.** Quiere tener todos los iniciales, pseudolegendarios, legendarios, singulares y Pokémon «particulares». Ver regla en `CLAUDE.md` §2.4 y la tabla del Game Designer (`secreto/auditorias/disenador-*.md`). Hoy: Iniciales 4/29, Pseudos 2/10, Fósiles 2/15, Eevee 8/8, Especiales 7/16, legendarios/singulares/ultraentes/paradojas 0.
 - **2026-10-06 · «Rhi me reta sin dejarme curar».** HECHO: todos los combates contra personajes con nombre ofrecen curar antes; el Game Tester lo vigila.
 

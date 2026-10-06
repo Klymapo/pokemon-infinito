@@ -1,5 +1,5 @@
 // Pantallas principales: título, creación, lugar, ruta, mapa y menús.
-import { D, toID, TYPE_COLORS, typeName, STAT_NAMES, STATS, abilityName, natureName, moveName, itemName } from '../data.js';
+import { D, toID, TYPE_COLORS, typeStyle, typeName, STAT_NAMES, STATS, abilityName, natureName, moveName, itemName } from '../data.js';
 import { C, topLoc } from '../content.js';
 import {
 	G, newGame, setG, saveGame, loadSaved, exportSave, importSave, deleteSave, evalCond, addItem, removeItem, count, markCaught,
@@ -946,7 +946,7 @@ function monRow(p, onclick, { sel = false } = {}) {
 				p.status ? h('span', { class: 'status ' + p.status }, STATUS_ES[p.status]) : null, p.hp <= 0 ? h('span', { class: 'status fnt' }, 'DEB') : null,
 				p.item ? h('span', { title: itemName(p.item) }, '✦') : null),
 			h('div', { class: 'hpbar' }, h('i', { class: r > .5 ? '' : r > .2 ? 'mid' : 'low', style: { width: (r * 100) + '%' } })),
-			h('div', { class: 'hptext' }, h('span', { class: 'typechip-row' }, ...s.types.map(t => h('span', { class: 'type', style: { background: TYPE_COLORS[t] } }, typeName(t)))), h('span', {}, `${p.hp}/${mhp}`))));
+			h('div', { class: 'hptext' }, h('span', { class: 'typechip-row' }, ...s.types.map(t => h('span', { class: 'type', style: typeStyle(t) }, typeName(t)))), h('span', {}, `${p.hp}/${mhp}`))));
 }
 
 function openParty() {
@@ -998,7 +998,7 @@ export function openSummary(p, onChange, live = null) {
 			h('div', {},
 				h('div', { style: { fontWeight: 900, fontSize: '19px' } }, displayName(p), ' ', p.gender === 'M' ? '♂' : p.gender === 'F' ? '♀' : '', p.shiny ? ' ✨' : ''),
 				h('div', { style: { color: 'var(--muted)' } }, `${s.name} · Nv. ${p.lv}`),
-				h('div', { class: 'typechip-row', style: { marginTop: '6px' } }, ...s.types.map(t => h('span', { class: 'type', style: { background: TYPE_COLORS[t] } }, typeName(t)))),
+				h('div', { class: 'typechip-row', style: { marginTop: '6px' } }, ...s.types.map(t => h('span', { class: 'type', style: typeStyle(t) }, typeName(t)))),
 				h('div', { class: 'hpbar', style: { width: '160px' } }, h('i', { style: { width: ((live ? live.hp / live.maxhp : p.hp / st.hp) * 100) + '%' } })),
 				h('div', { style: { fontSize: '13px', color: 'var(--muted)' } }, live ? `${live.hp}/${live.maxhp} PS` : `${p.hp}/${st.hp} PS`)));
 		const tabs = h('div', { class: 'tabs' }, ...[['info', 'Datos'], ['stats', 'Stats'], ['moves', 'Movimientos'], live?.battle ? null : ['actions', 'Acciones']].filter(Boolean).map(([k, n]) => h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n)));
@@ -1927,7 +1927,7 @@ function dexEntry(id) {
 	const where = knownLocationsOf(id);
 	openSheet(`#${String(s.num).padStart(4, '0')} ${s.name}`, h('div', {},
 		h('div', { style: { display: 'grid', placeItems: 'center', height: '160px' } }, monImg(id)),
-		h('div', { class: 'pad' }, h('div', { class: 'typechip-row' }, ...s.types.map(t => h('span', { class: 'type', style: { background: TYPE_COLORS[t] } }, typeName(t)))), h('div', { style: { color: 'var(--muted)', marginTop: '6px' } }, s.genus || '')),
+		h('div', { class: 'pad' }, h('div', { class: 'typechip-row' }, ...s.types.map(t => h('span', { class: 'type', style: typeStyle(t) }, typeName(t)))), h('div', { style: { color: 'var(--muted)', marginTop: '6px' } }, s.genus || '')),
 		caught ? h('div', { class: 'diary-entry' }, s.dex || '') : h('div', { class: 'note' }, 'Captúralo para ver su entrada completa.'),
 		caught ? h('div', {}, ...STATS.map((k, i) => h('div', { class: 'statbar' }, h('span', {}, STAT_NAMES[k]), h('b', {}, s.bs[i]), h('div', { class: 'b' }, h('i', { style: { width: Math.min(100, s.bs[i] / 1.8) + '%' } }))))) : null,
 		h('dl', { class: 'kv' }, h('dt', {}, 'Altura'), h('dd', {}, (s.hw?.[0] || '?') + ' m'), h('dt', {}, 'Peso'), h('dd', {}, (s.hw?.[1] || '?') + ' kg'),
@@ -2003,7 +2003,7 @@ function openChallenges() {
 		list.append(h('div', { class: 'row', style: { alignItems: 'flex-start', margin: '0 12px 8px', width: 'auto' } },
 			p ? h('div', { style: { width: '56px', height: '56px', flex: 'none', borderRadius: '12px', overflow: 'hidden' } }, p) : h('div', { class: 'ico' }, '🏅'),
 			h('div', { class: 'lbl' }, h('div', { class: 't' }, c.name + (beaten ? ' ✔' : '')),
-				c.type ? h('div', { class: 'typechip-row', style: { margin: '4px 0' } }, h('span', { class: 'type', style: { background: TYPE_COLORS[c.type] } }, typeName(c.type))) : null,
+				c.type ? h('div', { class: 'typechip-row', style: { margin: '4px 0' } }, h('span', { class: 'type', style: typeStyle(c.type) }, typeName(c.type))) : null,
 				c.rec ? h('div', { class: 's' }, `Nivel recomendado: ${c.rec}`) : null,
 				...lines.map(l => h('div', { class: 's', html: '• ' + fmtText(tx(l.text)) })))));
 	}

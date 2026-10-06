@@ -1,5 +1,5 @@
 // Pantalla de combate.
-import { D, toID, TYPE_COLORS, typeName } from '../data.js';
+import { D, toID, TYPE_COLORS, typeStyle, typeName } from '../data.js';
 import { G, count, markCaught } from '../state.js';
 import { C } from '../content.js';
 import { BattleCtl, buildTrainerTeam, isBattleUsable, healInfo } from '../battle.js';
@@ -113,7 +113,7 @@ export async function runBattle(cfg, hooks) {
 		const tags = c.querySelector('.tags');
 		tags.innerHTML = '';
 		if (v.status) tags.append(h('span', { class: 'status ' + v.status }, STATUS_ES[v.status] || v.status));
-		if (v.tera) tags.append(h('span', { class: 'type', style: { background: TYPE_COLORS[v.tera] } }, 'Tera ' + typeName(v.tera)));
+		if (v.tera) tags.append(h('span', { class: 'type', style: typeStyle(v.tera) }, 'Tera ' + typeName(v.tera)));
 	}
 	function setSprite(side, sp, shiny) {
 		const s = spriteOf(side);
@@ -265,7 +265,7 @@ export async function runBattle(cfg, hooks) {
 				const label = zOn && m.z ? m.z.name : dOn && m.max ? m.max.name : m.name;
 				const dis = m.disabled || m.pp <= 0 || (zOn && !m.z);
 				const effTxt = m.eff === null || m.eff === undefined ? '' : m.eff === 0 ? 'No afecta' : m.eff >= 2 ? 'Eficaz' : m.eff < 1 ? 'Poco eficaz' : '';
-				const btn = h('button', { class: 'movebtn', disabled: dis, style: { background: TYPE_COLORS[m.type] || '#567' }, onclick: () => resolve({ type: 'move', i: m.i, gimmick }) },
+				const btn = h('button', { class: 'movebtn', disabled: dis, style: typeStyle(m.type), onclick: () => resolve({ type: 'move', i: m.i, gimmick }) },
 					h('span', { class: 'mn' }, label),
 					h('span', { class: 'mm' }, h('span', {}, typeName(m.type)), h('span', {}, `PP ${m.pp}/${m.maxpp}`), effTxt ? h('span', { class: 'se' }, effTxt) : null));
 				btn.addEventListener('contextmenu', ev => { ev.preventDefault(); toast(`**${m.name}** · ${m.cat === 'Physical' ? 'Físico' : m.cat === 'Special' ? 'Especial' : 'Estado'}${m.bp ? ' · Pot. ' + m.bp : ''}${m.acc ? ' · Prec. ' + m.acc : ''}\n${m.desc || ''}`); });
@@ -459,7 +459,7 @@ function compareMoves(p, newId) {
 			return h(extra.onclick ? 'button' : 'div', { class: 'cmpmove' + (extra.isNew ? ' new' : ''), onclick: extra.onclick, style: { borderLeftColor: TYPE_COLORS[md.type] || '#567', borderLeftWidth: '6px' } },
 				h('div', { class: 'cm-top' },
 					h('b', {}, md.name || id),
-					h('span', { class: 'type', style: { background: TYPE_COLORS[md.type] } }, typeName(md.type))),
+					h('span', { class: 'type', style: typeStyle(md.type) }, typeName(md.type))),
 				h('div', { class: 'cm-stats' },
 					h('span', {}, catName(md.cat)),
 					h('span', {}, 'Pot. ' + (md.bp || '—')),

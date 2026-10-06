@@ -31,6 +31,23 @@ export const TYPE_COLORS = {
 	Stellar: '#40b5a5', '???': '#68a090',
 };
 
+// ---------------- Legibilidad sobre colores de tipo ----------------
+const lumOf = hex => { const h = hex.replace('#', ''); const c = [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(x => x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+const ratio = (a, b) => { const x = lumOf(a), y = lumOf(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+const darken = (hex, k) => '#' + [0, 2, 4].map(i => Math.round(parseInt(hex.replace('#', '').slice(i, i + 2), 16) * (1 - k)).toString(16).padStart(2, '0')).join('');
+export const INK = '#16203a';
+const styleCache = {};
+/** Fondo y color de texto para una pastilla o botón de tipo, con contraste ≥ 4,5:1 (WCAG AA). */
+export function typeStyle(type, fallback = '#567') {
+	const bg0 = TYPE_COLORS[type] || fallback;
+	if (styleCache[bg0]) return { ...styleCache[bg0] };
+	let st;
+	if (ratio(bg0, INK) >= 4.5 && ratio(bg0, INK) > ratio(bg0, '#ffffff')) st = { background: bg0, color: INK, textShadow: 'none' };
+	else { let bg = bg0, k = 0; while (ratio(bg, '#ffffff') < 4.5 && k < 0.5) { k += 0.04; bg = darken(bg0, k); } st = { background: bg, color: '#ffffff' }; }
+	styleCache[bg0] = st;
+	return { ...st };
+}
+
 export const sp = id => D.species[toID(id)];
 export const mv = id => D.moves[toID(id)];
 export const it = id => D.items[toID(id)];

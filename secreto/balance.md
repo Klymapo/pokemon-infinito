@@ -120,3 +120,4 @@ Los niveles siguen **fijos por zona**: no hay escalado al nivel del equipo. Pero
 | 2026-10-06 | B4: Rhi del tren 45–49 (Cinderace 49) y una Superpoción en vez de Hiperpoción | Rival opcional con 2.21 derrotas de media |
 | 2026-10-06 | Misty: as 53 con tope 52 a propósito (la «revancha»); si Mario se queja, bajar a 52 o quitar una Superpoción | Decisión de diseño |
 | 2026-10-06 | Bot: el «frente» solo cambia con lugares nuevos del bloque más reciente; fuera del frente vuelve por el camino más corto; y, como una persona, camina hacia el «!» más cercano o el sitio sin visitar (sin volver en bucle a rutas bloqueadas) | Se perdía en Johto/Kalos tras cruzar Puertas y vagaba por Kanto (el B4 tiene muchos sub-lugares) |
+- 2026-10-06 (día): `rhi_4` suavizado (Cinderace 44→43, sin Superpoción): subió a 2,0–2,75 derrotas de media del bot tras los ajustes de canon; con el cambio, ~0,75 en 8 recorridos.

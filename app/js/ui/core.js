@@ -210,3 +210,18 @@ export function openSheet(title, body, { onClose, actions } = {}) {
 export function closeAllSheets() { while (sheets.length) sheets[sheets.length - 1].close(); }
 
 export { esc, fmtText };
+
+// Pestañas desplazables: marca si queda contenido a la izquierda o a la derecha (ver .tabs.more-l/.more-r en app.css)
+function markTabs() {
+	for (const t of document.querySelectorAll('.tabs')) {
+		const max = t.scrollWidth - t.clientWidth;
+		t.classList.toggle('more-r', max > 2 && t.scrollLeft < max - 2);
+		t.classList.toggle('more-l', max > 2 && t.scrollLeft > 2);
+		if (!t.dataset.mt) { t.dataset.mt = '1'; t.addEventListener('scroll', markTabs, { passive: true }); }
+	}
+}
+let mtPending = false;
+if (typeof MutationObserver !== 'undefined' && typeof document !== 'undefined') {
+	new MutationObserver(() => { if (mtPending) return; mtPending = true; requestAnimationFrame(() => { mtPending = false; markTabs(); }); }).observe(document.body, { childList: true, subtree: true });
+	addEventListener('resize', markTabs);
+}

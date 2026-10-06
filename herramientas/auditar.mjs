@@ -7,6 +7,7 @@
 //   3. Bot en la fecha de inicio de cada evento por fechas.
 //   4. Registro automático de continuidad.
 //   5. Prueba de humo en un navegador con pantalla de móvil.
+//   6. Designer de Canvas: UX/UI de todas las pantallas (solo avisa).
 // Escribe el informe en secreto/auditorias/AAAA-MM-DD.md y sale con código 1 si algo bloquea la publicación.
 import { spawn } from 'child_process';
 import fs from 'fs';
@@ -138,6 +139,14 @@ const shotDir = path.join(os.tmpdir(), 'humo-' + fecha);
 const humo = await run('python3', ['herramientas/humo.py', '--salida', shotDir], 10 * 60e3);
 report.push('## 5. Prueba de humo (móvil 412×860)', '', '```', humo.out.trim().split('\n').filter(l => !/404/.test(l)).slice(-15).join('\n'), '```', '', `Capturas en \`${shotDir}\`: míralas con la herramienta de lectura de imágenes.`, '');
 if (humo.code !== 0) blockers.push('La prueba de humo encontró errores de JavaScript');
+
+// 6. Designer de Canvas: UX/UI de todas las pantallas con una partida avanzada (no bloquea; los graves salen como aviso)
+const uxDir = path.join(os.tmpdir(), 'ux-' + fecha);
+const ux = await run('python3', ['herramientas/ux.py', '--salida', uxDir], 20 * 60e3);
+report.push('## 6. Designer de Canvas (UX/UI)', '', '```', ux.out.trim().split('\n').slice(-12).join('\n'), '```', '', `Detalle en \`secreto/auditorias/ux-${fecha}.md\`; capturas de cada pantalla en \`${uxDir}\`. **Míralas**: textos, recuadros, iconos y menús.`, '');
+const uxG = +(ux.out.match(/: (\d+) graves/)?.[1] || 0);
+if (ux.code !== 0) warns.push('El Designer de Canvas no pudo terminar su revisión');
+else if (uxG) warns.push(`El Designer de Canvas encontró ${uxG} problemas graves de interfaz (ver su informe)`);
 
 // Resumen
 report.splice(2, 0, '## Veredicto', '', blockers.length ? '**NO PUBLICAR.** Bloqueos:\n\n' + blockers.map(b => '- ' + b).join('\n') : '**Apto para publicar** (falta la revisión humana: lector independiente y capturas).', '', warns.length ? 'Avisos:\n\n' + warns.map(w => '- ' + w).join('\n') : 'Sin avisos.', '');

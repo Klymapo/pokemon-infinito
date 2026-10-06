@@ -154,6 +154,11 @@ Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea.
 7. **Registro automático** regenerado (`secreto/registro-auto.md`).
 8. **Prueba de humo** (`herramientas/humo.py`): Chromium real con pantalla de móvil (412×860). Crea partida, avanza diálogos y combate, y abre todos los menús. Bloquea si hay errores de JavaScript. **Mira las capturas** con la herramienta de lectura de imágenes: textos cortados, botones fuera de pantalla, contraste.
 
+9. **Designer de Canvas** (`herramientas/ux.py`): abre el juego en un móvil real (412×860) con una partida avanzada que genera el bot, recorre todas las pantallas (lugar, mapa, equipo y fichas, mochila y sus pestañas, diario, más, PC, tienda, diálogo y combate) y mide lo visual: textos cortados, cosas fuera de pantalla, scroll de lado, botones que se pisan, contraste (WCAG AA ≥ 4,5:1), letra ≥ 12 px, objetivos táctiles ≥ 44 px, fuentes de la identidad (Pixelify Sans + Nunito), emojis usados como iconos y lienzos borrosos. Escribe `secreto/auditorias/ux-AAAA-MM-DD.md` y guarda capturas: **míralas**. Los ✖ se corrigen esa noche. Reglas fijas de interfaz:
+   - Texto sobre colores de tipo: siempre con `typeStyle(tipo)` de `app/js/data.js`, que elige tinta y oscurece el fondo hasta llegar a AA. Nunca `background: TYPE_COLORS[t]` con texto blanco a mano.
+   - Superficies azules con texto blanco: `var(--aura-fill)`, no `var(--aura)`.
+   - Nada de letra < 12 px ni botones < 44 px de lado corto (en el mapa cuenta la zona de toque invisible).
+
 Si añadiste mecánicas nuevas al motor, añade también su prueba (por ejemplo, en `herramientas/test/battle-test.mjs`) y ejecútala.
 
 ### 3.2 Lector independiente (subagente)
@@ -213,6 +218,7 @@ node herramientas/recorrido.mjs --fecha 12-24          # en una fecha concreta
 node herramientas/recorrido.mjs --hasta b02_m3 --verbose
 node herramientas/registro.mjs                         # registro automático
 python3 herramientas/humo.py --salida /tmp/humo        # humo en móvil
+python3 herramientas/ux.py --salida /tmp/ux             # Designer de Canvas: UX/UI de todas las pantallas
 node herramientas/auditar.mjs                          # todo lo anterior + informe
 node herramientas/build-sw.mjs                         # antes de cada commit
 ```
