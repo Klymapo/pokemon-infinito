@@ -4,6 +4,7 @@ import { D, toID } from './data.js';
 import { C, npc } from './content.js';
 import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame } from './state.js';
 import { createPokemon, displayName, healFull, addHappy, maxHp } from './pokemon.js';
+import { uniqueKeyOf, uniqueResult } from './unicos.js';
 
 export const UI = {}; // lo rellena la interfaz: say, choose, battle, toast, prompt, refresh, goto, receivePokemon, learnMove, nickname
 
@@ -117,6 +118,7 @@ async function runCmd(c, ctx) {
 	if (c.wild) {
 		const res = await UI.battle({ wild: c.wild, canRun: c.canRun !== false, canLose: !!c.onLose || c.lose === 'continue' });
 		ctx.lastBattle = res;
+		{ const uk = uniqueKeyOf(c.wild); if (uk) uniqueResult(uk, res.result); }
 		if (res.result === 'caught' && c.onCatch) await runList(c.onCatch, ctx);
 		else if ((res.result === 'win' || res.result === 'caught') && c.onWin) await runList(c.onWin, ctx);
 		else if (res.result === 'run' && c.onRun) await runList(c.onRun, ctx);

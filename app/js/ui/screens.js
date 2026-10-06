@@ -16,6 +16,9 @@ import { monImg, itemImg, sceneCanvas, portraitCanvas, HAIRS, LOOK_DEFAULTS, bal
 import { h, $, app, say, choose, prompt, confirm, toast, openSheet, closeAllSheets, setTextSpeed, portraitFor, logLine, logButton, openDialogLog } from './core.js';
 import { runBattle, learnMoveUI, evolveUI } from './battle-ui.js';
 import { resolveLook } from '../retrato.js';
+import { announceUniques, announceRetro, uniqueEncounter, openUniques, uniquesDue } from './unicos-ui.js';
+import { retroUniques } from '../unicos.js';
+import { openTutor } from './tutor.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
 import { fmtMoney, fmtText, rng, pick, fmtDuration, clone } from '../util.js';
 
@@ -126,6 +129,7 @@ async function importBackup() {
 
 function continueGame(save) {
 	setG(save);
+	try { const added = retroUniques(); if (added.length) G.uniq.retroNews = added; } catch (e) { console.error(e); }
 	startClock();
 	render();
 }
@@ -259,8 +263,11 @@ export function render() {
 	else renderPlace(main, loc);
 	root.append(top, main, navBar());
 	// avisos de ritmo pendientes
+	const due = uniquesDue(); // asigna lugar a los únicos que ya vuelven aunque haya otro aviso delante
 	const notes = pendingNotices();
 	if (notes.length) setTimeout(() => showPaceNotice(notes[0]), 300);
+	else if (G.uniq?.retroNews?.length) setTimeout(() => showQueued(async () => { const k = G.uniq.retroNews; G.uniq.retroNews = null; await announceRetro(k); }), 300);
+	else if (due.length) setTimeout(() => showQueued(() => { const d = uniquesDue(); return d.length ? announceUniques(d) : null; }), 300);
 	else { const ev = eventCalendar().find(c => c.state === 'active' && !c.locked && !c.done && G.eventsSeen?.[c.e.id] !== new Date().getFullYear()); if (ev) setTimeout(() => showEventNotice(ev), 300); }
 }
 
@@ -371,7 +378,7 @@ function spotKind(s) {
 	const a = s.action || {};
 	if (a.center || a.shop || a.pc) return 'services';
 	if (a.go) return 'places';
-	if (a.trainer || a.training) return 'battle';
+	if (a.trainer || a.training || a.unique) return 'battle';
 	if (a.explore || a.gather) return 'nature';
 	return 'people';
 }
@@ -464,6 +471,7 @@ async function doSpot(s, loc) {
 		return battle({ trainer: a.trainer });
 	}
 	if (a.training) return training(a.training, s);
+	if (a.unique) return uniqueEncounter(a.unique);
 	if (a.explore) return exploreHere(loc, a.explore === true ? 'grass' : a.explore);
 	if (a.gather) return gatherHere(a.gather, loc);
 }
@@ -1137,6 +1145,7 @@ export function openSummary(p, onChange, live = null) {
 				h('button', { class: 'row', onclick: async () => { const n = await prompt('Nuevo mote (vacío para quitarlo):', p.nick || ''); p.nick = (n || '').slice(0, 12); sheet.title(displayName(p)); onChange?.(); draw(); } }, h('div', { class: 'ico' }, '✏️'), h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Cambiar mote'))),
 				h('button', { class: 'row', onclick: () => giveItemTo(p, draw) }, h('div', { class: 'ico' }, '✦'), h('div', { class: 'lbl' }, h('div', { class: 't' }, p.item ? `Objeto: ${itemName(p.item)}` : 'Darle un objeto'), h('div', { class: 's' }, p.item ? 'Toca para quitarlo o cambiarlo' : 'Objetos equipables de la mochila'))),
 				h('button', { class: 'row', onclick: () => moveOrder(p, draw) }, h('div', { class: 'ico' }, '↕️'), h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Ordenar movimientos'))),
+				h('button', { class: 'row', onclick: () => openTutor(p, () => { onChange?.(); draw(); }) }, h('div', { class: 'ico' }, '🎓'), h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Tutor de movimientos'), h('div', { class: 's' }, 'Recordar y olvidar movimientos'))),
 			);
 		}
 		sheet.set([head, tabs, body]);
@@ -1869,6 +1878,8 @@ function openMore() {
 		row('🧺', 'Colección', `Postales ${Object.keys(G.album || {}).length} · Objetos ${Object.keys(G.found || {}).length}`, () => openCollection()),
 		row('📜', 'Conversaciones', 'Relee lo último que te dijeron', () => openDialogLog()),
 		row('📍', 'Guía de zona', 'Qué Pokémon hay por aquí', openZoneGuide),
+		row('🎓', 'Tutor de movimientos', 'Recordar, olvidar y buscar movimientos', () => openTutor()),
+		(() => { const n = Object.keys(G.uniq?.missed || {}).length; return row('🐾', 'Segundas oportunidades', n ? `${n} ${n === 1 ? 'Pokémon único volverá' : 'Pokémon únicos volverán'}` : 'Pokémon únicos que se escaparon', openUniques); })(),
 		row('🏅', 'Retos', 'Líderes y combates importantes', openChallenges),
 		row('📁', 'Expediente', 'Rivales y enemigos que conoces', openIntel),
 		row('🎖️', 'Medallas', `${G.player.badges.length} medallas`, openBadges),
@@ -2226,6 +2237,14 @@ function exportContinuation() {
 }
 
 // =================== Aviso de ritmo ===================
+/** Avisos que salen solos al pintar el lugar (Rotom), sin pisar un guion en curso. */
+async function showQueued(fn) {
+	if (busy) return;
+	busy = true;
+	try { await fn(); } catch (e) { console.error(e); } finally { busy = false; }
+	render();
+}
+
 async function showPaceNotice(m) {
 	if (busy) return;
 	G.notices[m.flag] = Date.now();
@@ -2235,4 +2254,5 @@ async function showPaceNotice(m) {
 			tx(m.text || `¡Bzzt! Aviso de ritmo: te quedan unas **${m.hoursLeft} horas** de historia publicada. Ve pidiéndole a Claude que escriba el siguiente bloque mientras llegas al final de este. (Si tu juego se actualiza solo cada noche, puede que ya esté en camino.)`));
 	} finally { busy = false; }
 	await saveGame();
+	render(); // por si hay más avisos en cola (únicos que vuelven, eventos)
 }

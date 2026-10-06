@@ -238,7 +238,7 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 | `{ give: 'potion', n: 2 }` / `{ take: 'x', n: 1 }` / `{ money: 500 }` | `silent: true` para no mostrar mensaje |
 | `{ pokemon: { sp: 'riolu', lv: 5, nature: 'jolly', ivs: {...}, uidVar: 'riolu_uid', ... } }` | entrega un Pokémon (con pregunta de mote) |
 | `{ battle: 'trainerId', onWin: [...], onLose: [...], lose: 'continue' }` | sin `onLose` ni `lose:'continue'`, perder manda al Centro y corta el guion |
-| `{ wild: { sp, lv, gimmick, tera, noCatch }, canRun: false, onWin, onCatch, onRun, onLose }` | |
+| `{ wild: { sp, lv, gimmick, tera, noCatch }, canRun: false, onWin, onCatch, onRun, onLose }` | Encuentro único. Si se puede capturar y no se captura, **vuelve tras la siguiente medalla** (`app/js/unicos.js`): Rotom avisa y aparece como sitio en el pueblo o ciudad donde estés. Las `set` a `true` de `onCatch` se aplican al capturarlo en esa segunda oportunidad. Para que un `wild` capturable no cuente como único (concursos, combates repetibles), ponle `unique: false` dentro de `wild`. |
 | `{ heal: true }` | |
 | `{ go: 'locId' }` | mueve al jugador |
 | `{ quest: 'id', stage: 'x' }` / `{ quest: 'id', done: true }` | |

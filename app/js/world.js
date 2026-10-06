@@ -5,6 +5,7 @@ import { G, evalCond, count, removeItem, addItem } from './state.js';
 import { createPokemon, addHappy, healFull } from './pokemon.js';
 import { weightedPick, rint, rng } from './util.js';
 import { inDateRange, phase, now } from './time.js';
+import { uniqueSpotsAt } from './unicos.js';
 
 export const L = id => C.locations[id];
 export const isRoute = loc => !!loc?.route;
@@ -54,6 +55,7 @@ export function eventPlaces(e) {
 export function spotsOf(loc) {
 	let spots = (loc.spots || []).slice();
 	for (const e of activeEvents()) if (e.spots?.[loc.id]) spots = spots.concat(e.spots[loc.id].map(s => ({ ...s, event: e.id })));
+	spots = spots.concat(uniqueSpotsAt(loc.id));
 	return spots.filter(s => s.cond === undefined || evalCond(s.cond));
 }
 
