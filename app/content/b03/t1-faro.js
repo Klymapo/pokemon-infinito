@@ -6,7 +6,10 @@
 // ---------- Condiciones reutilizadas ----------
 const RL = '(inParty("riolu") || inParty("lucario"))';
 const INICIO = 'flag.b03_ruinas_hecho';
-const GYM_T = INICIO + ' && flag.b03_lila_hecho';
+// La escena de Lila cuenta como vista al terminarla (b03_lila_fin). Las partidas antiguas que ya la vieron
+// tienen b03_sylveon. b03_lila_hecho se activa al empezar: si la app se cerraba a mitad, la escena se perdía.
+const LILA_OK = '(flag.b03_lila_fin || flag.b03_sylveon)';
+const GYM_T = INICIO + ' && ' + LILA_OK;
 const FARO_AMIGO = 'flag.b02_ampharos && inParty("ampharos")';
 const SOTANO_PISTAS = 'flag.b03_pista_taza && flag.b03_pista_calendario && flag.b03_pista_cajon';
 const FIN_OK = 'beat("yasmina_g7") && flag.b03_noa_hecho && !flag.b03_llamada_sobrina';
@@ -269,7 +272,7 @@ export default {
 				{ cond: INICIO, text: 'Ya no hay andamios. El suelo es de parqué, con las líneas del campo pintadas a mano (la de la izquierda tiene huellas de Eevee). En las esquinas, rampas de patinaje. Del techo cuelga una bandera de la Torre Maestra y un cartel: «**Gimnasio de intercambio · Líder: Corelia (Kalos) · ¡A TOPE!**».' },
 			],
 			spots: [
-				{ label: 'Lila', sub: 'Alguien le grita en el centro del campo', icon: '🌸', cond: INICIO + ' && !flag.b03_lila_hecho', new: 'true', talk: [{ script: 'b03_lila_gym' }] },
+				{ label: 'Lila', sub: 'Alguien le grita en el centro del campo', icon: '🌸', cond: INICIO + ' && !' + LILA_OK, new: 'true', talk: [{ script: 'b03_lila_gym' }] },
 				{ label: 'Entrenadora: Patinadora Valeria', icon: '🛼', cond: GYM_T, action: { trainer: 'gym_trigal_1' } },
 				{ label: 'Entrenador: Cinturón Negro Marcelo', icon: '🥋', cond: GYM_T, action: { trainer: 'gym_trigal_2' } },
 				{ label: 'Corelia', sub: 'Líder de intercambio · tipo Lucha', icon: '🛼', cond: GYM_T + ' && beat("gym_trigal_1") && beat("gym_trigal_2")', new: '!beat("corelia_g6")', talk: [{ cond: 'beat("corelia_g6")', script: 'b03_corelia_despues' }, { script: 'b03_corelia_reto' }] },
@@ -544,7 +547,7 @@ export default {
 
 		// =================== LILA Y SYLVEON ===================
 		b03_lila_gym: [
-			{ if: 'flag.b03_lila_hecho', then: [{ end: true }] },
+			{ if: LILA_OK, then: [{ end: true }] },
 			{ set: { 'flag.b03_lila_hecho': true } },
 			{ text: 'Dentro del gimnasio, en el centro del campo, Lila está de pie con Eevee a sus pies. Delante de ella, un chico con chaqueta azul y plata y el pelo de punta le grita a dos palmos de la cara.' },
 			{ say: 'aspirante_trigal', text: '¡Que no quiero a la aprendiz! ¡Quiero a la líder! Tengo cinco medallas, un patrocinador y una sesión de fotos a las seis. No tengo tiempo para la chica de las flores.' },
@@ -623,7 +626,7 @@ export default {
 			{ diary: 'Hoy mi entrenador{|a|e} vio una evolución en directo. ¡La Eevee de Lila se convirtió en un Sylveon precioso, con cintas y todo! Las cintas brillaban rosas y se enrollaban en la muñeca de Lila como una pulsera.\n\nLila lloró un poquito. Corelia lloró mucho. Yo no puedo llorar, pero mi pantalla se puso rosa por solidaridad.\n\nTambién había un chico muy maleducado con un Scrafty muy nervioso. Se fue enseguida. ¡Mejor!', cond: 'flag.b01_diario' },
 			{ rep: { johto: 1 } },
 			{ intel: { npc: 'lila', text: 'Su Eevee evolucionó a Sylveon en el gimnasio de Trigal, defendiéndola de un aspirante cuyo Scrafty iba cargado de Caramelos Lazo. Lila combatió sola.' } },
-			{ intel: { npc: 'corelia', text: 'Líder de intercambio del Gimnasio de Trigal (Lucha). Lleva a Lila como aprendiz. Ya megaevoluciona contra ti.' } },
+			{ intel: { npc: 'corelia', text: 'Líder de intercambio del Gimnasio de Trigal (Lucha). Lleva a Lila como aprendiz. Ya megaevoluciona contra ti.' } },			{ set: { 'flag.b03_lila_fin': true } },
 		],
 		b03_corelia_antes: [
 			{ say: 'corelia', text: '¡Primero mis dos alumnos! Valeria y Marcelo. Ella frena fatal y él se cae con mucha dignidad. ¡Los dos pegan a tope!' },
