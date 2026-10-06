@@ -261,3 +261,12 @@ Plantar **una o dos por bloque**, sutiles. Anotar en `registro.md` cuáles ya sa
 | IX | **A.Z. y Floette** dan su energía eterna para cerrar el último nodo. Mueren juntos y en paz, después de 3000 años. | **B1:** su advertencia (ya publicada). Una aparición por acto. | Si las decisiones acumuladas no lo permiten, paga otro: Octavia, como redención, o el propio Ansel. Siempre paga alguien. |
 
 **Despedida elegida (desplazado del jugador):** el Pokémon pequeño que tiembla bajo la manta en las jaulas de Lemnis (B1, Ruta 5) puede unirse al equipo en el B2. Cuando se cierra el nodo de su región, decide el jugador: se queda o vuelve a casa (en ese caso deja un recuerdo y se le puede visitar).
+
+---
+
+## 10. Fijado en la Publicación 3 (B2)
+
+- **N-02** es el código interno del **Nodo 02 (Johto, Ruinas Alfa)**. «Destino: por asignar» = materia prima para el nodo: los desplazados recogidos se envían por la Puerta «apagada» de Luminalia de madrugada. El jugador aún no lo sabe; se revela en el B3 (Ruinas Alfa).
+- **El desvío del B2** lo autorizó el código **Ω-0-0-0** (operador vacío): es una puerta trasera de Ansel. Quería medir cómo reaccionan el aura de Lucario y el Eco del Rotom a una zona de tiempo plegado (Celebi). Revelación en el Acto V, junto con el Diario.
+- **Caramelos Lazo:** polvo de cristal de la Cueva Brillante cargado con energía drenada; «estrechan el vínculo» un instante y luego apagan al Pokémon. Kaori trabaja en el antídoto (Acto IV–VI).
+- **El ingeniero desaparecido** del caso de Renata: **Matías Olmedo**, trabajó hace 12 años en el prototipo de Puerta bajo la estación del Tren Magnético de Trigal (financiado por Silph «y patrocinadores»: Lemnis en su primer año).

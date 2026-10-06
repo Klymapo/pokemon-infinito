@@ -6,9 +6,12 @@
 | Fecha | Dónde va Mario | Fuente |
 |---|---|---|
 | 2026-10-05 | Empieza el Bloque 1 | Publicación inicial |
+| 2026-10-05 15:21 | B1 · `b01_m7:cromlech` (antes de la decisión de Crómlech). 6 h 51 min, 2 medallas, 28/112 en la Pokédex. Le llegó el aviso de 3 h. Todas las secundarias disponibles hechas (falta `b01_s_espejo`, que está más adelante). Equipo nv27-28: Croagunk, Gallade, Tyrunt, Flaaffy «Candela», Budew + Honedge nv12 (capturado para leveleo). **Riolu ya evolucionó a Lucario** y está en la caja; Mario dice que lo vuelve a poner. Decisiones: `b01_prensa_lemnis`, `b01_agente_vencido`, `b01_fennekin_unido`, `b01_mareep_jaula` (6 Mareep), `b01_bastien_cubierto`. Afinidad: Rhi 14, Renata 6, Lila 4, Sera 1, Irene 1. Rep: Lemnis −5, policía 9, Kalos 10. | Exportar continuación |
 
-**Último bloque terminado:** ninguno.
-**Bloques publicados:** B1.
+**Ritmo de Mario:** ~7 h de juego el primer día. Un bloque (~12 h) por noche le va por delante. Ofreció una **segunda sesión de madrugada** si hace falta; úsala para la cola de arte, interfaz y motor, no para adelantar más historia.
+
+**Último bloque terminado:** ninguno (B1 casi terminado).
+**Bloques publicados:** B1, B2 (B2 publicado el 2026-10-05 en sesión de día, a petición de Mario). La próxima madrugada toca el **B3** (Mario va a menos de 3 bloques).
 
 ## Pedidos de Mario pendientes
 

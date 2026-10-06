@@ -36,6 +36,14 @@
 | B1 (1b) | Ysolde y los Vencejos | Hermandad encapuchada que vigila desde los tejados, salto al vacío sobre un carro de flores, «hoja oculta» (Honedge en la manga), plumas como firma (*Assassin's Creed*) | evidente en su primera escena; luego sutil |
 | B1 (1b) | Petra y el ámbar | Ámbar con algo dentro que no coincide con ningún registro; capas de tierra «dobladas» (prehistoria / viaje a una era antigua) | sutil |
 | B1 (1b) | Ansel | Crucigrama: «unión que no se puede romper», ocho letras: *infinito* | sutil |
+| B2 | Encinar | Niño que jura que «ayer era mañana» (Tokyo Revengers) | sutil |
+| B2 | Pozo Slowpoke / Torre Quemada | Reclutas Rocket como familia de espías venida a menos: «la Tercera», «la Mayor», «el Primero» (Mission: Yozakura Family) | sutil |
+| B2 | Gimnasio de Azalea | Hebra, la Spinarak que empezó siendo la más pequeña y «va subiendo» (Kumo desu ga) | sutil |
+| B2 | Trigal, caso de la Agencia | «El Miltank que se fue en tren»: tablas con una contradicción (Database Detective) | evidente (una en esa misión) |
+| B2 | Trigal | Tren Magnético de las 23:05, siempre con retraso, cinco pasajeros y un maletín (Bullet Train) | sutil |
+| B2 | Rouxel | «Dónde están los cadáveres… contables», «no mires la boca, mira las manos» (Now You See Me) | sutil |
+| B2 | Iris | Médium Valentín: veinte natural y «¿cómo quieres hacerlo?» (Critical Role / D&D) | media |
+| B2 | Ysolde | Saltos de fe sobre un camión de sábanas y un carro de crisantemos | ya establecida |
 
 ## Ideas de misiones que le gustan a Mario (semillas plantadas; misiones completas pendientes)
 

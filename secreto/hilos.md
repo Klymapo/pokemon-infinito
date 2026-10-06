@@ -44,3 +44,28 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 - **Renata** (1 → 3): Relieve (título del caso: «El ingeniero que no volvió a casa», hace 12 años) y Yantra (marea, Torre Prisma y Crómlech «tienen algo en común»).
 - **Secundarios:** Lucien (la Puerta zumba a las 2:17), Don Aurelio (espera la Puerta a Johto; ve a Candela), Héctor (en Luminalia, no se atreve a entrar en la Agencia: prepara su encuentro con Matière del B2), Philippe (casa en Novarte: semilla del sistema de base), Gaspar (en Yantra, quiere conocer a Brock; próximo destino Iris), Tobías (episodio 49; encuesta: Torre Bellsprout), Nate (en la playa de Yantra con Rhi).
 
+
+## Estado tras el B2 (Publicación 3)
+
+| Hilo | Estado tras el B2 | Siguiente paso (B3) |
+|---|---|---|
+| Tronco | Desvío manual (Ω-0-0-0); N-02 = nodo de Johto; Caramelos Lazo | **B3:** Ruinas Alfa (Nodo 02). Irene en persona. El jugador ata N-02 |
+| Remanente Flare (Melia) | Traicionada: Lemnis paga a Flare y a Rocket | Según `b02_frag_*`: informante (melia), resentida o huida |
+| Team Rocket (Protón, Atenea) | Pozo y Torre Quemada desmantelados; «la familia» | **B3:** Atlas (Kanto/Johto); los reclutas que se quedan sin «familia» |
+| La primera llave (Lila) | En Trigal; se defendió sola | **B3:** Corelia llega a Trigal; Eevee → Sylveon |
+| La delantera (Rhi) | Carta de su padre («está orgulloso»: algo pasa) | **B3:** Rhi llama a casa; Nate sabe algo |
+| La heredera (Sera) | Según el fragmento; si trato roto, el Holomisor calla | **B3:** consecuencias |
+| Letra pequeña (Bastien) | Cubierto/rompe/silencio recogidos; insignia de Noa | **B3:** combate en Kanto; su libreta de deudas |
+| Las jaulas (Noa) | N-02 = una Puerta; muy asustada | **B3–B4:** filtra datos del Nodo 02 |
+| Lana perdida / rancho (Aurelio) | 4 pistas de despedida plantadas | **B3: su pérdida** (biblia §9.2) |
+| Recetario (Gaspar) | Menú de Johto | **B4:** duelo de cocina en Alola |
+| ¡Transformación! (Héctor) | Conoció a Matière | **Acto V** |
+| La flor eterna (A.Z.) | Advertencia en la Puerta | Una aparición por acto |
+| Agencia | Caso del Miltank del tren resuelto | **B3:** caso en Kanto |
+| Casos Fríos (Renata) | Testigo Dámaso Ferrán; Matías Olmedo | **B3:** Dámaso vuelve; Renata pide el sótano tapiado |
+| Ámbar (Petra) | Se quedó en el Encinar con el Pachirisu dormido | **B3:** Petra y el Pachirisu; el ámbar y Celebi |
+| Cabina (Ulises) | Primer indicio del Dialga joven (huellas) | **B3:** cruce con Celebi o misión de la cabina |
+| Vencejos (Ysolde) | Trigal e Iris; registro del incendio de la Torre | **B3:** sede de los Vencejos |
+| Irene | Runa «tomar» quemada (holomisor) | **B3:** en persona en Ruinas Alfa |
+| **Dulce veneno (Kaori)** — nuevo | Antídoto parcial; tiene la muestra | **B3:** el antídoto avanza; necesita algo de Kanto |
+| Lucien, Philippe, Remedios, Conde | Escenas del T0 | Lucien Acto VI; Philippe base; Remedios Día de Muertos 2027 |

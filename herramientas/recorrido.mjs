@@ -47,6 +47,7 @@ const report = { repeatGifts: [], errors: [], stuck: [], battles: { won: 0, lost
 const log = (...a) => { const s = a.join(' '); report.log.push(s); if (VERBOSE) console.log(s); };
 let step = 0;
 let curScript = '';
+let frontierRegion = null;
 
 // ---------------- UI simulada ----------------
 Object.assign(UI, {
@@ -158,6 +159,8 @@ function battle(cfg) {
 async function enter(id, { from } = {}) {
 	const loc = L(id);
 	if (!loc) { report.errors.push('enter a lugar inexistente ' + id); return; }
+	// «frente»: la región del último lugar descubierto (el bot no se pierde por las Puertas en regiones viejas)
+	if (!G.visited[id] && topLoc(id)?.region) frontierRegion = topLoc(id).region;
 	G.visited[id] = true;
 	for (let p = L(id)?.parent; p && !G.visited[p]; p = L(p)?.parent) G.visited[p] = true;
 	G.loc = id;
@@ -359,7 +362,12 @@ for (step = 0; step < MAX; step++) {
 	if (did) continue;
 	// moverse: preferir salidas/hijos no visitados o con algo nuevo
 	const opts = [];
-	for (const s of spotsOf(loc)) if (s.action?.go) opts.push({ id: s.action.go, w: G.visited[s.action.go] ? 1 : 20 });
+	const here = topLoc(loc.id)?.region;
+	for (const s of spotsOf(loc)) if (s.action?.go) {
+		const reg = topLoc(s.action.go)?.region;
+		const cross = reg && here && reg !== here;
+		opts.push({ id: s.action.go, w: cross ? (reg === frontierRegion ? 60 : 0.2) : G.visited[s.action.go] ? 1 : 20 });
+	}
 	if (loc.parent) opts.push({ id: loc.parent, w: 2 });
 	for (const n of loc.links || []) {
 		const l = L(n); if (!l) continue;

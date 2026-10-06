@@ -28,8 +28,8 @@ Regla general: cada bloque de ~12 h sube el techo de **+8 a +10 niveles**. A par
 
 | Bloque | Acto / región | Medallas | Jefes de la curva | Tope al final |
 |---|---|---|---|---|
-| B2 | II · Kalos II y Johto | 4 | 36–40 | 42 |
-| B3 | II/III · Johto y Kanto | 5–6 | 42–48 | 50 |
+| B2 | II · Kalos II y Johto | **5** (publicado) | Antón 36, Rhi 37, Bastien 38, Morti 39, Atenea 41 | 42 (37 al empezar; 40 con la medalla 4) |
+| B3 | II/III · Johto y Kanto | 6–7 | 42–48 | 50 |
 | B4 | III · Kanto | 7 | 48–54 | 56 |
 | B5 | IV · Alola (pruebas en vez de medallas) | Z | 54–60 | 62 |
 | B6 | V · Teselia | 8 + Copa | 60–66 | 68 |
@@ -104,3 +104,9 @@ Los niveles siguen **fijos por zona**: no hay escalado al nivel del equipo. Pero
 | 2026-10-04 | Miltank de Blanca 24 → 23, una sola Superpoción | Muro en 4 de 14 semillas |
 | 2026-10-04 | Hawlucha de Corelia sin Danza Espada, con una Superpoción | Muro en Corelia |
 | 2026-10-04 | Bot: hora fija (día/noche), reintenta gimnasios y mete en el equipo los Pokémon que pide un sitio (`inParty`) | Atascos del bot, no del contenido |
+| 2026-10-05 | B2: Protón sin Lanzallamas, 1 objeto, Golbat y Muk a 33 | Perdía 11 veces en una semilla |
+| 2026-10-05 | B2: Rhi as 37 (Cinderace), Corvisquire en vez de Corviknight; Bastien Greninja 38; una Superpoción cada uno | Muro en las primeras pruebas (7 y 6 derrotas) |
+| 2026-10-05 | B2: Atenea con 1 objeto, Honchkrow sin Ala de Acero, Vileplume 38; Morti con Infortunio en vez de Hipnosis y 1 objeto | Si Mario se queja, revisar primero el Honchkrow de Atenea |
+| 2026-10-05 | Bot: prefiere la región del último lugar nuevo (no vagar por Kalos tras cruzar la Puerta de Trigal) | Atasco del bot, no del contenido |
+
+**Referencia de la publicación 3** (24 recorridos B1+B2): 23/24 llegan al final (el atasco es el del bot contra Brock en la semilla 8, ya conocido). Derrotas medias: Blanca 1.29, revanchas de Brock 1.13 / Corelia 1.04 / Blanca 0.92 (opcionales), Morti 0.96, Antón 0.58, Atenea 0.42, Bastien 0.29. Ningún recorrido sin derrotas.

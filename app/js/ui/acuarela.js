@@ -259,11 +259,313 @@ export function paintAcuarelaRiolu({ look = {}, shiny = false } = {}) {
 	return { canvas: cv, done };
 }
 
+/** Trazo de lápiz: varias pasadas finas y temblorosas de grafito. */
+function pencil(ctx, R, pts, { w = 0.9, a = 0.55, passes = 2, jit = 0.8, color = '#4a4640', close = false } = {}) {
+	ctx.save();
+	ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = color;
+	for (let p = 0; p < passes; p++) {
+		ctx.globalAlpha = a * (0.6 + R() * 0.4); ctx.lineWidth = w * (0.7 + R() * 0.6);
+		ctx.beginPath();
+		pts.forEach(([x, y], i) => { const xx = x + (R() - 0.5) * jit, yy = y + (R() - 0.5) * jit; if (i) ctx.lineTo(xx, yy); else ctx.moveTo(xx, yy); });
+		if (close) ctx.closePath();
+		ctx.stroke();
+	}
+	ctx.restore();
+}
+/** Sombreado a lápiz: rayas paralelas dentro de un rectángulo inclinado. */
+function hatch(ctx, R, x, y, w, hgt, { gap = 4, a = 0.28, slope = 0.6 } = {}) {
+	ctx.save();
+	ctx.beginPath(); ctx.rect(x, y, w, hgt); ctx.clip();
+	for (let k = -hgt; k < w; k += gap) pencil(ctx, R, [[x + k, y + hgt], [x + k + hgt * slope, y]], { w: 0.7, a, passes: 1, jit: 0.6 });
+	ctx.restore();
+}
+
+/** Cuadro: el boceto de cuaderno de campo que Petra hizo del Santuario del Encinar (lápiz y acuarela verde). */
+export function paintSantuarioEncinar() {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('santuario-encinar');
+	const M = 16;
+	ctx.fillStyle = `rgb(${PAPER.join(',')})`;
+	ctx.fillRect(0, 0, W, H);
+	// renglones muy tenues de libreta y margen
+	ctx.save(); ctx.globalAlpha = 0.12; ctx.strokeStyle = '#6f8fb0'; ctx.lineWidth = 1;
+	for (let y = 34; y < H - 10; y += 18) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+	ctx.restore();
+
+	// --- bruma del claro: verde muy aguado, más claro en el centro
+	wash(ctx, R, [[M + 6, M + 10], [W - M - 6, M + 4], [W - M, H - 62], [M, H - 58]], '#cfe0bc', { layers: 4, alpha: 0.24, amp: 12, blur: 6, edge: 0 });
+	blooms(ctx, R, M, M, W - 2 * M, H - 90, '#a9c99a', 12, 40, 0.16);
+	// suelo del claro
+	const groundPts = [];
+	for (let x = M + 10; x <= W - M - 10; x += 24) groundPts.push([x, 244 + Math.sin(x / 37) * 6 + (R() - 0.5) * 6]);
+	groundPts.push([W - M - 24, H - 62], [W / 2, H - 70], [M + 24, H - 60]);
+	wash(ctx, R, groundPts, '#9cc283', { layers: 4, alpha: 0.24, amp: 6, edge: 0.12 });
+	for (let i = 0; i < 40; i++) { const x = M + 20 + R() * (W - 2 * M - 40), y = 248 + R() * 36; pencil(ctx, R, [[x, y], [x + 1 - R() * 2, y - 4 - R() * 3]], { w: 0.6, a: 0.35, passes: 1, jit: 0.2 }); } // hierba
+	blooms(ctx, R, M + 20, 250, W - 2 * M - 40, 40, '#6f9f5c', 6, 18, 0.18);
+	// encinas lejanas, difuminadas por la bruma
+	for (const [x, r] of [[150, 30], [330, 34], [250, 26]]) wash(ctx, R, ellipsePts(x, 170, r, r * 0.8, 14), '#b4cfa2', { layers: 3, alpha: 0.2, amp: 6, blur: 3, edge: 0 });
+
+	// --- dos encinas enormes: troncos a los lados, copas que se tocan arriba
+	const trunk = (x0, lean) => {
+		const pts = [[x0 - 34, H - 60], [x0 + 32, H - 62], [x0 + 18 + lean * 0.3, H - 96], [x0 + 16 + lean * 0.5, 150], [x0 + 12 + lean, 70], [x0 - 8 + lean, 70], [x0 - 14 + lean * 0.5, 150], [x0 - 18 + lean * 0.3, H - 96]];
+		wash(ctx, R, pts, '#8c7356', { layers: 3, alpha: 0.3, amp: 3, blur: 1.4 });
+		pencil(ctx, R, [pts[0], pts[7], pts[6], pts[5]], { w: 1.2, a: 0.6 });
+		pencil(ctx, R, [pts[1], pts[2], pts[3], pts[4]], { w: 1.2, a: 0.6 });
+		for (let i = 0; i < 7; i++) { const y = 100 + i * 30 + R() * 10, x = x0 + lean * (1 - (y - 70) / 230) * 0.8; pencil(ctx, R, [[x - 8, y], [x - 2 + R() * 4, y + 12], [x + 4, y + 22]], { w: 0.7, a: 0.35, passes: 1 }); }
+		// raíces
+		pencil(ctx, R, [[x0 - 26, H - 60], [x0 - 44, H - 54], [x0 - 58, H - 52]], { w: 1, a: 0.5 });
+		pencil(ctx, R, [[x0 + 26, H - 62], [x0 + 44, H - 56], [x0 + 56, H - 55]], { w: 1, a: 0.5 });
+	};
+	trunk(70, 26); trunk(W - 70, -26);
+	hatch(ctx, R, W - 92, 120, 40, 170, { gap: 4, a: 0.22 }); // lado en sombra (luz desde la izquierda)
+	// ramas que se cruzan por arriba
+	pencil(ctx, R, [[96, 84], [150, 54], [220, 40], [262, 44]], { w: 1.6, a: 0.55 });
+	pencil(ctx, R, [[W - 96, 84], [W - 150, 56], [W - 214, 44], [W - 250, 50]], { w: 1.6, a: 0.55 });
+	const branchY = 66; // rama del reloj
+	pencil(ctx, R, [[W - 120, 92], [W - 168, 76], [W - 196, branchY + 4]], { w: 1.2, a: 0.55 });
+	// copas
+	wash(ctx, R, [[M, M], [W - M, M], [W - M, 60], [M, 60]], '#6f9a58', { layers: 3, alpha: 0.22, amp: 8, blur: 3, edge: 0 });
+	const canopyY = x => 70 + 26 * Math.pow(Math.abs(x - W / 2) / (W / 2), 1.6); // más baja en los lados, arco en el centro
+	for (let x = M + 6; x < W - M; x += 30 + R() * 10) { // racimos de hojas
+		const cy = canopyY(x) - 12 + R() * 10, rx = 26 + R() * 12, ry = 18 + R() * 8;
+		wash(ctx, R, ellipsePts(x, cy, rx, ry, 14), R() < 0.5 ? '#6f9a58' : '#7fa860', { layers: 3, alpha: 0.24, amp: 6, blur: 1.6, edge: 0.18 });
+		pencil(ctx, R, ellipsePts(x, cy + 2, rx * 0.9, ry * 0.9, 9, Math.PI * 0.15, Math.PI * 0.85), { w: 0.7, a: 0.35, passes: 1, jit: 2 });
+	}
+	blooms(ctx, R, M, M, W - 2 * M, 90, '#3f6e38', 10, 22, 0.22);
+	blooms(ctx, R, M, M, W - 2 * M, 60, '#cfe39a', 5, 18, 0.18); // luz que se cuela
+	for (let i = 0; i < 46; i++) { // hojitas a lápiz en el borde de la copa
+		const x = M + R() * (W - 2 * M), y = canopyY(x) + 6 + R() * 16;
+		pencil(ctx, R, [[x - 3, y], [x, y - 2], [x + 3, y], [x, y + 2]], { w: 0.6, a: 0.4, passes: 1, close: true });
+	}
+
+	// --- altar: casita de madera sobre un poste, con tejado de musgo
+	const ax = W / 2 - 4, ay = 222; // base de la casita
+	wash(ctx, R, [[ax - 3, ay], [ax + 3, ay], [ax + 4, H - 66], [ax - 4, H - 66]], '#8a6a46', { layers: 2, alpha: 0.4, amp: 1 });
+	pencil(ctx, R, [[ax - 3, ay], [ax - 4, H - 66]], { w: 1, a: 0.6 }); pencil(ctx, R, [[ax + 3, ay], [ax + 4, H - 66]], { w: 1, a: 0.6 });
+	const box = [[ax - 22, ay - 30], [ax + 22, ay - 30], [ax + 22, ay], [ax - 22, ay]];
+	wash(ctx, R, box, '#b88a58', { layers: 3, alpha: 0.38, amp: 1.2 });
+	pencil(ctx, R, box, { w: 1.1, a: 0.7, close: true });
+	for (let y = ay - 24; y < ay; y += 7) pencil(ctx, R, [[ax - 21, y], [ax + 21, y + 0.5]], { w: 0.6, a: 0.3, passes: 1 }); // tablas
+	const door = [[ax - 7, ay - 2], [ax - 7, ay - 16], [ax, ay - 21], [ax + 7, ay - 16], [ax + 7, ay - 2]];
+	wash(ctx, R, door, '#4a3a2a', { layers: 2, alpha: 0.45, amp: 0.8, edge: 0 });
+	pencil(ctx, R, door, { w: 0.9, a: 0.7 });
+	const roof = [[ax - 30, ay - 28], [ax, ay - 52], [ax + 30, ay - 28]];
+	wash(ctx, R, [...roof, [ax + 26, ay - 24], [ax - 26, ay - 24]], '#5f9a4a', { layers: 4, alpha: 0.42, amp: 3 });
+	blooms(ctx, R, ax - 26, ay - 50, 52, 26, '#3f7a36', 4, 7, 0.3);
+	pencil(ctx, R, roof, { w: 1.2, a: 0.7 });
+	for (let i = 0; i < 9; i++) { const x = ax - 26 + i * 6.5; pencil(ctx, R, [[x, ay - 26], [x + 1, ay - 21 - R() * 3]], { w: 0.7, a: 0.45, passes: 1 }); } // musgo colgando
+	// ofrendas: dos piedrecitas y una bellota
+	for (const [x, r] of [[ax - 16, 4], [ax + 15, 3.4]]) { wash(ctx, R, ellipsePts(x, H - 66, r, r * 0.7, 8), '#9a9a90', { layers: 2, alpha: 0.4, amp: 0.6, edge: 0.2 }); }
+	// cota de tamaño: el bocetista apunta la altura
+	pencil(ctx, R, [[ax + 40, ay - 52], [ax + 40, ay]], { w: 0.6, a: 0.4, passes: 1 });
+	pencil(ctx, R, [[ax + 37, ay - 52], [ax + 43, ay - 52]], { w: 0.6, a: 0.4, passes: 1 }); pencil(ctx, R, [[ax + 37, ay], [ax + 43, ay]], { w: 0.6, a: 0.4, passes: 1 });
+	ctx.save(); ctx.globalAlpha = 0.5; ctx.fillStyle = '#4a4640'; ctx.font = 'italic 500 10px Nunito, serif'; ctx.fillText('≈ casita', ax + 46, ay - 22); ctx.fillText('de pájaros', ax + 46, ay - 11); ctx.restore();
+
+	// --- reloj de bolsillo colgando de una rama
+	const wx = W - 194, wy = 128;
+	pencil(ctx, R, [[W - 196, branchY + 4], [wx - 2, 92], [wx, wy - 12]], { w: 0.7, a: 0.6, passes: 2, jit: 0.4 }); // cadena
+	for (let y = branchY + 10; y < wy - 12; y += 5) pencil(ctx, R, [[wx - 2 + (y - branchY) * 0.02, y], [wx + (y - branchY) * 0.02, y + 2]], { w: 0.5, a: 0.35, passes: 1, jit: 0.2 });
+	wash(ctx, R, ellipsePts(wx, wy, 11, 11, 16), '#d8c27a', { layers: 3, alpha: 0.4, amp: 0.8, edge: 0.35 });
+	wash(ctx, R, ellipsePts(wx, wy, 7.5, 7.5, 14), '#fbf6e6', { layers: 2, alpha: 0.6, amp: 0.4, edge: 0 });
+	pencil(ctx, R, ellipsePts(wx, wy, 11, 11, 18), { w: 0.9, a: 0.7, close: true, jit: 0.3 });
+	pencil(ctx, R, [[wx, wy - 12], [wx, wy - 14]], { w: 2, a: 0.6, passes: 1 });
+	pencil(ctx, R, [[wx, wy], [wx, wy - 5]], { w: 0.8, a: 0.8, passes: 1, jit: 0.1 }); pencil(ctx, R, [[wx, wy], [wx + 4, wy + 1]], { w: 0.8, a: 0.8, passes: 1, jit: 0.1 });
+	ctx.save(); ctx.globalAlpha = 0.45; ctx.fillStyle = '#4a4640'; ctx.font = 'italic 500 10px Nunito, serif'; ctx.fillText('¿de quién?', wx + 16, wy + 4); ctx.restore();
+
+	// --- hojas que caen HACIA ARRIBA: cada hoja con su estela curva por debajo
+	const leaf = (x, y, s, rot, col) => {
+		ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+		const pts = [[0, -s], [s * 0.55, -s * 0.2], [s * 0.4, s * 0.5], [0, s], [-s * 0.4, s * 0.5], [-s * 0.55, -s * 0.2]];
+		wash(ctx, R, pts, col, { layers: 2, alpha: 0.55, amp: 0.6, blur: 0.4, edge: 0.4, seg: 2 });
+		pencil(ctx, R, [[0, -s], [0, s + 2]], { w: 0.5, a: 0.5, passes: 1, jit: 0.2 });
+		ctx.restore();
+	};
+	const leaves = [[120, 200], [176, 150], [300, 176], [372, 210], [214, 120], [404, 150], [140, 270], [330, 262], [260, 196]];
+	leaves.forEach(([x, y], i) => {
+		const s = 6 + R() * 2.5, col = ['#7fae5c', '#a8b84e', '#6f9a58', '#c2a24a'][i % 4];
+		const dx = (R() - 0.5) * 30;
+		ctx.save(); ctx.setLineDash([3, 3]);
+		pencil(ctx, R, [[x + dx, y + 52], [x + dx * 0.5 + 8, y + 36], [x + dx * 0.2 - 6, y + 22], [x, y + s + 3]], { w: 0.9, a: 0.6, passes: 1, jit: 0.2 });
+		ctx.restore();
+		pencil(ctx, R, [[x - 7, y + s + 4], [x - 6, y + s + 10]], { w: 0.6, a: 0.45, passes: 1, jit: 0.1 });
+		pencil(ctx, R, [[x + 7, y + s + 4], [x + 6, y + s + 10]], { w: 0.6, a: 0.45, passes: 1, jit: 0.1 });
+		pencil(ctx, R, [[x - 4, y - s - 5], [x, y - s - 9], [x + 4, y - s - 5]], { w: 0.6, a: 0.45, passes: 1, jit: 0.2 }); // flechita hacia arriba
+		leaf(x, y, s, (R() - 0.5) * 1.2, col);
+	});
+	ctx.save(); ctx.globalAlpha = 0.5; ctx.fillStyle = '#4a4640'; ctx.font = 'italic 500 10px Nunito, serif'; ctx.fillText('suben ↑ (!)', 418, 150); ctx.restore();
+
+	// --- nota manuscrita y marco
+	watercolorPass(ctx, W, H, 31);
+	ctx.save();
+	ctx.fillStyle = '#3e3a34'; ctx.globalAlpha = 0.8; ctx.font = 'italic 600 17px Nunito, serif';
+	ctx.textAlign = 'center';
+	ctx.translate(W / 2, H - 30); ctx.rotate(-0.012);
+	ctx.fillText('Para que no se te olvide que fue verdad', 0, 0);
+	ctx.globalAlpha = 0.5; ctx.lineWidth = 0.8; ctx.strokeStyle = '#3e3a34';
+	ctx.beginPath(); ctx.moveTo(-150, 6); ctx.quadraticCurveTo(0, 9, 150, 5); ctx.stroke();
+	ctx.restore();
+	ctx.save(); ctx.globalAlpha = 0.55; ctx.fillStyle = '#5b4a38'; ctx.font = 'italic 600 11px Nunito, serif'; ctx.fillText('— P.', W - M - 34, H - 14); ctx.restore();
+	ctx.save(); ctx.strokeStyle = `rgb(${PAPER.join(',')})`; ctx.lineWidth = M * 1.2; ctx.filter = 'blur(2px)'; ctx.strokeRect(0, 0, W, H); ctx.restore();
+	// pliegue en cuatro: la hoja estuvo doblada
+	ctx.save(); ctx.globalAlpha = 0.1; ctx.strokeStyle = '#5b4a38'; ctx.lineWidth = 1.4;
+	ctx.beginPath(); ctx.moveTo(W / 2, 0); ctx.lineTo(W / 2 + 2, H); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2 - 2); ctx.stroke();
+	ctx.globalAlpha = 0.18; ctx.strokeStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(W / 2 + 1.5, 0); ctx.lineTo(W / 2 + 3.5, H); ctx.moveTo(0, H / 2 + 1.5); ctx.lineTo(W, H / 2 - 0.5); ctx.stroke();
+	ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
+/** Lemniscata (∞) como lista de puntos. */
+const lemniscate = (cx, cy, a, n = 64) => Array.from({ length: n }, (_, i) => { const t = (i / n) * Math.PI * 2, s = Math.sin(t), d = 1 + s * s; return [cx + a * Math.cos(t) / d, cy + a * s * Math.cos(t) / d]; });
+
+/** Foto de grupo de la Gira (impresa): 23 novatos ante la Puerta de Trigal y tú, pegado después en una esquina. */
+export function paintFotoGira({ look = {} } = {}) {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela foto';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('foto-gira');
+	const B = 14, IW = W - 2 * B, IH = H - 2 * B - 18; // borde blanco, más ancho abajo como una copia impresa
+	ctx.fillStyle = '#f8f6f0'; ctx.fillRect(0, 0, W, H);
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	// --- cielo de atardecer (el sol a la izquierda, ya bajo)
+	const sky = ctx.createLinearGradient(0, B, 0, B + 220);
+	sky.addColorStop(0, '#3d3a78'); sky.addColorStop(0.35, '#8a4f8c'); sky.addColorStop(0.65, '#e9776a'); sky.addColorStop(1, '#ffc27a');
+	ctx.fillStyle = sky; ctx.fillRect(B, B, IW, 230);
+	const sun = ctx.createRadialGradient(70, 214, 4, 70, 214, 150);
+	sun.addColorStop(0, 'rgba(255,240,190,1)'); sun.addColorStop(0.12, 'rgba(255,214,140,.85)'); sun.addColorStop(1, 'rgba(255,170,110,0)');
+	ctx.fillStyle = sun; ctx.fillRect(B, B, IW, 240);
+	ctx.save(); ctx.globalAlpha = 0.35; ctx.fillStyle = '#ffd6c0';
+	for (const [x, y, w] of [[260, 70, 120], [360, 100, 90], [150, 110, 70]]) { ctx.beginPath(); ctx.ellipse(x, y, w, 7, -0.03, 0, 7); ctx.fill(); }
+	ctx.restore();
+	// campos de trigo lejanos y plaza
+	ctx.fillStyle = '#c98e4e'; ctx.beginPath(); ctx.moveTo(B, 222); for (let x = B; x <= W - B; x += 20) ctx.lineTo(x, 218 + Math.sin(x / 50) * 4); ctx.lineTo(W - B, 240); ctx.lineTo(B, 240); ctx.fill();
+	const ground = ctx.createLinearGradient(0, 230, 0, H);
+	ground.addColorStop(0, '#9a6a52'); ground.addColorStop(1, '#4e3446');
+	ctx.fillStyle = ground; ctx.fillRect(B, 232, IW, H);
+
+	// --- arco plateado en forma de ∞, encendido en azul
+	const acx = W / 2 + 10, acy = 150, aa = 110;
+	ctx.save();
+	ctx.fillStyle = '#7d8696'; ctx.fillRect(acx - aa - 4, acy, 10, 96); ctx.fillRect(acx + aa - 6, acy, 10, 96); // pilares
+	ctx.fillStyle = '#c3cad6'; ctx.fillRect(acx - aa - 4, acy, 3, 96); ctx.fillRect(acx + aa - 6, acy, 3, 96);
+	const inf = lemniscate(acx, acy, aa, 96);
+	const strokeInf = (w, col, blur) => { ctx.filter = blur ? `blur(${blur}px)` : 'none'; ctx.lineWidth = w; ctx.strokeStyle = col; ctx.beginPath(); inf.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.stroke(); };
+	ctx.lineJoin = 'round';
+	strokeInf(22, 'rgba(70,150,255,.55)', 10);
+	strokeInf(11, '#59657a', 0);
+	strokeInf(8, '#c8d0dc', 0);
+	strokeInf(3, '#8fd0ff', 0);
+	strokeInf(1.2, '#ffffff', 0);
+	ctx.restore();
+	// --- confeti
+	for (let i = 0; i < 90; i++) {
+		const x = B + R() * IW, y = B + 20 + R() * 220;
+		ctx.save(); ctx.translate(x, y); ctx.rotate(R() * 3);
+		ctx.fillStyle = ['#ffffff', '#cfd6e2', '#6fb4ff', '#ffd25a', '#9fc0ff'][i % 5]; ctx.globalAlpha = 0.85;
+		ctx.fillRect(-2, -1, 4 + R() * 2, 2); ctx.restore();
+	}
+
+	// --- 23 novatos en dos filas, a contraluz (el sol a su izquierda)
+	const person = (x, foot, s, col, hairCol, skin, k) => {
+		const head = foot - 44 * s;
+		ctx.fillStyle = shade(col, -0.25); ctx.beginPath(); ctx.roundRect(x - 9 * s, head + 10 * s, 18 * s, 22 * s, 6 * s); ctx.fill(); // torso
+		ctx.fillStyle = '#3a3048'; ctx.fillRect(x - 6 * s, head + 30 * s, 5 * s, 14 * s); ctx.fillRect(x + 1 * s, head + 30 * s, 5 * s, 14 * s); // piernas
+		ctx.fillStyle = shade(skin, -0.2); ctx.beginPath(); ctx.arc(x, head + 4 * s, 6.5 * s, 0, 7); ctx.fill(); // cabeza
+		ctx.fillStyle = hairCol; ctx.beginPath(); ctx.arc(x, head + 2 * s, 6.8 * s, Math.PI * 0.95, Math.PI * 2.05); ctx.fill();
+		if (k % 4 === 1) { ctx.fillRect(x - 7 * s, head + 2 * s, 3 * s, 9 * s); ctx.fillRect(x + 4 * s, head + 2 * s, 3 * s, 9 * s); } // melena
+		if (k % 5 === 2) { ctx.fillStyle = shade(col, 0.2); ctx.fillRect(x - 8 * s, head - 4 * s, 16 * s, 3 * s); ctx.fillRect(x - 6 * s, head - 7 * s, 12 * s, 4 * s); } // gorra
+		if (k % 3 === 0) { ctx.strokeStyle = shade(col, -0.25); ctx.lineWidth = 3 * s; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x + 8 * s, head + 14 * s); ctx.lineTo(x + 13 * s, head + 2 * s); ctx.stroke(); } // brazo en alto
+		// luz de contra en el lado izquierdo (de cara al sol)
+		ctx.fillStyle = 'rgba(255,200,130,.55)'; ctx.fillRect(x - 9 * s, head + 12 * s, 2 * s, 18 * s);
+		ctx.beginPath(); ctx.arc(x - 3 * s, head + 3 * s, 4 * s, Math.PI * 0.6, Math.PI * 1.4); ctx.lineWidth = 1.5 * s; ctx.strokeStyle = 'rgba(255,214,150,.7)'; ctx.stroke();
+	};
+	const cols = ['#d0573f', '#3f7ac8', '#e2b23f', '#4f9a64', '#8a5ab8', '#e07aa4', '#3fa8a8', '#c87a3f', '#5a6a8a', '#b84a5a', '#6aa83f', '#f0e0c0'];
+	const hairs = ['#2b2b38', '#5a3a26', '#8a5a2f', '#d8a85a', '#c4473a', '#3b2a20', '#e9dcc0'];
+	let k = 0;
+	for (let i = 0; i < 12; i++) person(98 + i * 26 + (R() - 0.5) * 4, 262, 0.9, cols[(i * 5) % 12], hairs[(i * 3) % 7], SKINS[i % 6], k++); // fila de atrás (de pie)
+	for (let i = 0; i < 11; i++) person(110 + i * 26 + (R() - 0.5) * 4, 290, 1.0, cols[(i * 7 + 3) % 12], hairs[(i * 2 + 1) % 7], SKINS[(i + 3) % 6], k++); // fila de delante
+	// pancarta
+	ctx.save(); ctx.translate(244, 300); ctx.rotate(-0.02);
+	ctx.fillStyle = '#1e2a5c'; ctx.fillRect(-58, -2, 116, 16); ctx.fillStyle = '#d8dee8'; ctx.font = '800 10px Nunito, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('GIRA LEMNIS · NOVATOS', 0, 10);
+	ctx.restore();
+
+	// --- el seto de la esquina inferior derecha
+	ctx.fillStyle = '#2f5a3a';
+	ctx.beginPath(); ctx.moveTo(W - B - 120, H); ctx.lineTo(W - B - 120, IH + B - 42);
+	for (let x = W - B - 120; x <= W - B; x += 12) ctx.arc(x + 6, IH + B - 44 + R() * 4, 9, Math.PI, 0);
+	ctx.lineTo(W - B, H); ctx.fill();
+	ctx.fillStyle = 'rgba(255,190,120,.35)'; for (let x = W - B - 116; x < W - B; x += 12) { ctx.beginPath(); ctx.arc(x + 4, IH + B - 48, 4, 0, 7); ctx.fill(); }
+	ctx.restore(); // fin del clip de la imagen
+
+	// --- tú, recortado y pegado: luz del lado contrario, cabeza grande, borde blanco de tijera
+	const skin = typeof look.skin === 'number' ? SKINS[look.skin] || SKINS[1] : (look.skin || SKINS[1]);
+	const hair = look.hairColor || '#5a3a26', outfit = look.outfit || '#4c7cf0', outfit2 = look.outfit2 || '#f3e6c4';
+	const longHair = ['long', 'ponytail', 'braids', 'tied', 'bob'].includes(look.hair);
+	const cut = document.createElement('canvas'); cut.width = 90; cut.height = 120;
+	const c = cut.getContext('2d');
+	const px = 45, foot = 112, hd = 30; // cabeza demasiado grande para el cuerpo
+	if (longHair) { c.fillStyle = shade(hair, -0.1); c.beginPath(); c.roundRect(px - 18, 26, 36, 40, 10); c.fill(); }
+	c.fillStyle = '#36405e'; c.fillRect(px - 10, foot - 30, 8, 30); c.fillRect(px + 2, foot - 30, 8, 30);
+	c.fillStyle = outfit; c.beginPath(); c.roundRect(px - 15, 58, 30, 34, 8); c.fill();
+	c.fillStyle = outfit2; c.beginPath(); c.moveTo(px - 7, 58); c.lineTo(px + 7, 58); c.lineTo(px, 68); c.fill();
+	c.fillStyle = skin; c.beginPath(); c.arc(px, 34, hd * 0.66, 0, 7); c.fill();
+	c.fillStyle = hair; c.beginPath(); c.arc(px, 30, hd * 0.7, Math.PI * 0.92, Math.PI * 2.08); c.fill();
+	c.beginPath(); c.moveTo(px - 20, 28); c.lineTo(px - 6, 24); c.lineTo(px + 4, 30); c.lineTo(px + 20, 26); c.lineTo(px + 20, 20); c.lineTo(px - 20, 20); c.fill();
+	c.fillStyle = '#2a2230'; c.fillRect(px - 8, 36, 3, 4); c.fillRect(px + 5, 36, 3, 4); // ojos
+	c.strokeStyle = '#7a3a3a'; c.lineWidth = 1.6; c.beginPath(); c.arc(px, 42, 5, 0.2, Math.PI - 0.2); c.stroke(); // sonrisa de compromiso
+	c.fillStyle = 'rgba(240,120,110,.35)'; c.beginPath(); c.arc(px - 11, 42, 3, 0, 7); c.arc(px + 11, 42, 3, 0, 7); c.fill();
+	// la luz le viene de la DERECHA (en la foto el sol está a la izquierda) y es dura, de flash de oficina
+	c.globalCompositeOperation = 'source-atop';
+	const lg = c.createLinearGradient(px - 30, 0, px + 30, 0);
+	lg.addColorStop(0, 'rgba(20,30,80,.35)'); lg.addColorStop(0.55, 'rgba(0,0,0,0)'); lg.addColorStop(1, 'rgba(255,255,240,.45)');
+	c.fillStyle = lg; c.fillRect(0, 0, 90, 120);
+	c.globalCompositeOperation = 'source-over';
+	// borde blanco de recorte: el contorno engordado en blanco, con tijeretazos irregulares
+	const out = document.createElement('canvas'); out.width = 104; out.height = 132;
+	const o = out.getContext('2d');
+	for (let a = 0; a < 16; a++) { const r = 4 + (a % 3 === 0 ? 1.5 : 0); o.drawImage(cut, 7 + Math.cos(a / 16 * Math.PI * 2) * r, 6 + Math.sin(a / 16 * Math.PI * 2) * r); }
+	o.globalCompositeOperation = 'source-in'; o.fillStyle = '#ffffff'; o.fillRect(0, 0, 104, 132);
+	o.globalCompositeOperation = 'source-over'; o.drawImage(cut, 7, 6);
+	ctx.save();
+	ctx.translate(W - B - 52, IH + B - 166); ctx.rotate(0.07);
+	ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 5; ctx.shadowOffsetX = -3; ctx.shadowOffsetY = 3; // sombra hacia la izquierda: luz desde la derecha
+	ctx.drawImage(out, -52, -6);
+	ctx.restore();
+	// un trocito de celo arriba
+	ctx.save(); ctx.translate(W - B - 44, IH + B - 168); ctx.rotate(-0.25); ctx.fillStyle = 'rgba(255,255,230,.5)'; ctx.fillRect(-14, -5, 28, 10); ctx.restore();
+
+	// --- acabado de copia impresa: grano, viñeteado, leve tono cálido
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	const vg = ctx.createRadialGradient(W / 2, B + IH / 2, IH * 0.4, W / 2, B + IH / 2, IW * 0.65);
+	vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(30,10,30,.35)');
+	ctx.fillStyle = vg; ctx.fillRect(B, B, IW, IH);
+	ctx.restore();
+	try {
+		const img = ctx.getImageData(B, B, IW, IH), d = img.data, RN = mulberry(9);
+		for (let i = 0; i < d.length; i += 4) { const n = (RN() - 0.5) * 18; d[i] += n + 4; d[i + 1] += n; d[i + 2] += n - 4; }
+		ctx.putImageData(img, B, B);
+	} catch (e) { /* sin acceso a píxeles: sin grano */ }
+	ctx.save(); ctx.fillStyle = '#8a8478'; ctx.globalAlpha = 0.8; ctx.font = '600 10px Nunito, sans-serif';
+	ctx.fillText('Puerta de Trigal · día 1', B + 4, H - 10);
+	ctx.textAlign = 'right'; ctx.fillText('LEMNIS', W - B - 4, H - 10);
+	ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
 /** Visor a pantalla completa para un objeto clave con cuadro. */
 export async function viewArt(itemId) {
 	const it = D.items[toID(itemId)] || {};
 	const p = G.party.concat(G.boxes.flat()).find(x => x.uid === G.vars?.riolu_uid);
-	const painting = it.art === 'acuarela_riolu' ? paintAcuarelaRiolu({ look: G.player.look || {}, shiny: !!p?.shiny }) : null;
+	const look = G.player.look || {};
+	const painting = it.art === 'acuarela_riolu' ? paintAcuarelaRiolu({ look, shiny: !!p?.shiny })
+		: it.art === 'santuario_encinar' ? paintSantuarioEncinar()
+		: it.art === 'foto_gira' ? paintFotoGira({ look })
+		: null;
 	if (!painting) return;
 	const note = h('div', { class: 'art-note' }, it.desc || '');
 	const ov = h('div', { class: 'overlay dim art-viewer', onclick: () => ov.remove() },
