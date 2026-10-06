@@ -10,6 +10,10 @@
 
 **Ritmo de Mario:** ~7 h de juego el primer día. Un bloque (~12 h) por noche le va por delante. Ofreció una **segunda sesión de madrugada** si hace falta; úsala para la cola de arte, interfaz y motor, no para adelantar más historia.
 
+
+> **⚠ 2026-10-05 20:50 · El Bloque 3 lo está escribiendo la sesión de día** (pedido de Mario). Si eres la sesión nocturna del 06-10 y el B3 **no** está todavía en `BLOCKS` ni en `app/content/b03/`, **no empieces el B3**: dedica la noche a revisar las ramas `chatgpt/*`, a eventos por fecha o a profundidad. Si encuentras `app/content/b03/` a medias, tampoco lo toques: es trabajo en curso.
+> Desde hoy hay **dos sesiones de madrugada**: 0:47 (arte, interfaz, sonido y motor) y 2:53 (historia). La de historia no toca `app/js/` salvo bugs; la de arte no toca la historia.
+
 **Último bloque terminado:** ninguno (B1 casi terminado).
 **Bloques publicados:** B1, B2 (B2 publicado el 2026-10-05 en sesión de día, a petición de Mario). La próxima madrugada toca el **B3** (Mario va a menos de 3 bloques).
 
