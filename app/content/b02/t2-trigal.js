@@ -123,7 +123,7 @@ export default {
 				{ label: 'Torre Radio', sub: 'Antena roja, emisión 24 horas', icon: '📻', action: { go: 'torre_radio' } },
 				{ label: 'Floristería', sub: 'Macetas hasta en la acera', icon: '💐', action: { go: 'floristeria_trigal' }, new: GIRA + ' && !flag.b02_regadera' },
 				{ label: 'Estación del Tren Magnético', sub: 'Pita cada diez minutos', icon: '🚄', action: { go: 'estacion_magnetica' }, new: 'quest.b02_t_renata == "testigo"' },
-				{ label: 'Gimnasio de Trigal', sub: 'En obras', icon: '🚧', action: { go: 'gym_trigal' }, new: GIRA + ' && !flag.b02_lila_trigal' },
+				{ label: 'Gimnasio de Trigal', sub: 'En obras', icon: '🚧', cond: '!flag.b03_ruinas_hecho', action: { go: 'gym_trigal' }, new: GIRA + ' && !flag.b02_lila_trigal' },
 				{ label: 'Puerta Lemnis de Johto', sub: 'Detrás de las vallas azules', icon: '♾️', action: { go: 'puerta_trigal' } },
 
 				// --- Arco principal en la plaza ---
@@ -236,12 +236,12 @@ export default {
 			name: 'Gimnasio de Trigal (en obras)', parent: 'trigal', kind: 'gym',
 			bg: { type: 'gym' },
 			desc: 'Andamios, sacos de cemento y un cartel enorme: «**Próximamente · Gimnasio de intercambio del Circuito Infinito**». El suelo de combate todavía no tiene líneas. Solo un círculo pintado con tiza y una cinta de la Torre Maestra atada a un andamio.\n\nAquí combatía Blanca. Ahora Blanca está en Kalos. Y quien venga, viene de Kalos.',
-			descs: [{ cond: 'flag.b02_lila_trigal', text: 'Los obreros ya han pintado las líneas del campo. En una esquina, sobre un saco de cemento, alguien ha dejado una flor blanca y una nota con letra redonda: «Para Corelia, de parte de su aprendiz. Todo listo (casi)».' }],
+			descs: [{ cond: 'flag.b02_lila_trigal && !flag.b03_ruinas_hecho', text: 'Los obreros ya han pintado las líneas del campo. En una esquina, sobre un saco de cemento, alguien ha dejado una flor blanca y una nota con letra redonda: «Para Corelia, de parte de su aprendiz. Todo listo (casi)».' }],
 			mapNote: 'Líder: aún no (en obras)',
 			spots: [
 				{ label: 'Lila', sub: 'Mide el campo con una cinta métrica', icon: '🌸', cond: GIRA + ' && !flag.b02_lila_trigal', new: 'true', talk: [{ script: 'b02_lila_trigal' }] },
-				{ label: 'Lila', sub: 'Pinta las líneas del campo', icon: '🌸', cond: 'flag.b02_lila_trigal', talk: [{ script: 'b02_lila_despues' }] },
-				{ label: 'Retar al líder', sub: 'No hay líder. Hay andamios', icon: '🚧', talk: [{ script: 'b02_gym_trigal_cerrado' }] },
+				{ label: 'Lila', sub: 'Pinta las líneas del campo', icon: '🌸', cond: 'flag.b02_lila_trigal && !flag.b03_ruinas_hecho', talk: [{ script: 'b02_lila_despues' }] },
+				{ label: 'Retar al líder', sub: 'No hay líder. Hay andamios', icon: '🚧', cond: '!flag.b03_ruinas_hecho', talk: [{ script: 'b02_gym_trigal_cerrado' }] },
 			],
 		},
 

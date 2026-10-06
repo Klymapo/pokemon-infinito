@@ -69,3 +69,22 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | Irene | Runa «tomar» quemada (holomisor) | **B3:** en persona en Ruinas Alfa |
 | **Dulce veneno (Kaori)** — nuevo | Antídoto parcial; tiene la muestra | **B3:** el antídoto avanza; necesita algo de Kanto |
 | Lucien, Philippe, Remedios, Conde | Escenas del T0 | Lucien Acto VI; Philippe base; Remedios Día de Muertos 2027 |
+
+## Estado tras el B3 (Publicación 4)
+
+| Hilo | Estado | Siguiente paso (B4, Kanto) |
+|---|---|---|
+| Tronco | Nodo 02 identificado; señal de arranque probada en Caoba; datos hacia Azafrán | **B4:** Azafrán / Silph; el ingeniero «M.»; Cueva Celeste (Nodo de Kanto) |
+| Team Rocket | Atlas preso, libre (quemar) o la familia dispersa | B4: consecuencias en Kanto (Giovanni nunca en persona) |
+| Lila | Sylveon | Acto VI: su madre |
+| Rhi | Padre despedido de Macro Cosmos | Acto VI |
+| Bastien | Libreta (tachó una línea) | B4 |
+| Noa | Le cambiaron la tarjeta: la vigilan | B4: más asustada; regalo a Bastien ya hecho |
+| Aurelio | **Pérdida hecha** | Adela (3+ apariciones); el rebaño según la decisión |
+| Renata | Prototipo de Trigal; publica o espera | Acto V |
+| Ámbar / Cabina | Ulises en el lago: el pequeño asustado por la señal | Misión de la cabina (B4–B5) |
+| Vencejos | Sede en Olivo; el jugador puede ser Pluma | B4: misión vertical en un edificio de Lemnis (Azafrán) |
+| Kaori | Antídoto mejora con la muestra del lago | B4 |
+| Las ondas (nuevo) | «M.» | B4 |
+| Tobías | Torre Bellsprout hecha | B4 |
+| Irene | Lección Unown, DAR/TOMAR | Acto VII |

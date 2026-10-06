@@ -142,3 +142,11 @@
 - **Hilo:** `b01_t_vencejos` («Plumas en el tejado»). Dejó la **Pluma gris** y la **Nota sin firma** (`notavencejo`, se puede leer). Sabe que «en toda empresa hay quien firma y hay quien decide»; **no sabe** quién es el Arquitecto.
 - **Límites:** no mata ni hiere a nadie; sus «saltos de fe» siempre caen sobre algo blando y cómico (carro de flores, toldo, mar).
 - **Plan de apariciones:** B2 Johto (al cruzar la Puerta, en un tejado de Iris o Trigal); B3 la sede de los Vencejos; misión Assassin's Creed (infiltración vertical en un edificio de Lemnis, con la Pluma gris como llave de su red).
+
+## Fichas nuevas del B3 (Publicación 4)
+
+- **Adela Prado** (`sobrina`, 34): sobrina de Don Aurelio, veterinaria de pueblo, práctica, ruda de cariño, trenzas y pecas. Habla corto y sin adornos; se le quiebra algo cuando nombra al tío. Se queda en el rancho según `b03_rancho_*`. Necesita 3+ apariciones (carta mensual si `sobrina`; los martes de la Fundación si `lemnis`).
+- **Kiyo** (`kiyo`), el Rey del Kárate del Monte Mortero (canon): «el movimiento secreto era perder». Regala Tyrogue.
+- **Toni, Lupe, la Tercera y la Mayor:** reclutas de «la familia» Rocket (peaje de la Ruta 43 y guarida).
+- **Chispas:** el Pachirisu de Petra (el que se quedó dormido en el Encinar).
+- **Padre de Rhi:** ex entrenador que después cuidaba el césped de un estadio de Macro Cosmos; despedido en el B3.

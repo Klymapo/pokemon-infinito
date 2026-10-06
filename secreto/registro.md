@@ -121,3 +121,44 @@ Mario iba por `b01_m7:cromlech` con el aviso de 3 h. **Aún no ha tomado la deci
 ### Pendiente de motor
 
 - El Diario fecha las entradas con la hora real; si Mario juega Trigal de un tirón, la entrada «sin novedades» comparte fecha con otras. Valorar un contador de «día de historia» en `diary`.
+
+## Publicación 4 · 2026-10-06 (sesión de día, a petición de Mario) · Bloque 3 "Acto II · Lo que el tiempo se llevó" (Johto: Malva → Ruinas Alfa → Trigal → Olivo → rancho → Caoba → Lago de la Furia)
+
+Mario aún no ha jugado el B2: el B3 cubre todas las ramas del B2 y del B1.
+
+### Estado del mundo al terminar el B3 (`flag.b03_fin`)
+
+- 7 medallas (`medalla_planicie` de Corelia en Trigal, `medalla_mineral` de Yasmina). Tope final `vars.cap = 50` (46 tras Corelia, 48 tras Yasmina).
+- El jugador está en el **Lago de la Furia** (Johto). Siguiente destino: **Kanto** (Azafrán) por el Tren Magnético de Trigal, adonde iban los datos de la señal.
+- **Don Aurelio ha muerto** (`b03_aurelio_muerto`). Adela Prado, su sobrina, en el rancho.
+- Lila tiene **Sylveon** (`b03_sylveon`). Amphy del Faro de Olivo, reanimado a medias por el antídoto de Kaori.
+
+### Decisiones del B3 que el B4 DEBE leer
+
+| Decisión | Flags | Qué cambia |
+|---|---|---|
+| **El rancho** | `b03_rancho_sobrina` / `b03_rancho_jugador` (+ `b03_copito_contigo`, `llaverancho`) / `b03_rancho_lemnis` | Con Lemnis, el rebaño «demasiado tranquilo» y pienso en bolsas azules (drenaje); con jugador, semilla del sistema de base |
+| **Los Rocket** | `b03_rocket_policia` / `b03_rocket_libres` / `b03_rocket_quemar` | Con quemar, Atlas libre y te debe una; Lemnis no sabe que lo descubriste |
+| Renata | `b03_renata_publica` / `b03_renata_espera` | Si publica, Lemnis sabe del prototipo de Trigal |
+| Vencejos | `b03_vencejo_pluma` | El jugador es **Pluma** |
+| Gyarados rojo | `b03_gyarados_atrapado` / `calmado` / `huido` | — |
+| Peaje | `b03_peaje_*` | — |
+| Lila | `b03_lila_sola` | — |
+| Otros | `b03_tyrogue`, `b03_atlas_visto`, `b03_muumuu_aurelio`, `b03_irene_leccion`, `vars.b03_unown_ok` | — |
+
+### Pistas plantadas
+
+- **Diario (calendario B3):** «nos encontramos con **la doctora Lambert**» (día de Noa en Olivo, `b03_noa_doctora`). Única vez.
+- **Nodo 02 = Ruinas Alfa** (`b03_nodo02`): caja «N-02 · Ruinas Alfa», atada a «NODO 01 · KALOS». Mural **DAR / TOMAR** (balanza; A.Z. sin nombrar, una figura tumbada con forma de Lucario).
+- **Matías Olmedo:** plano del Proyecto Arco (Silph, sello de ∞ a mano, «El arco no genera la energía. La TOMA»); calendario «Mañana NO firmar. Hablar con D.» (D. = Dámaso).
+- **Las ondas** (hilo nuevo `b03_t_ondas`): emisor Caoba-1, «frecuencia de arranque del nodo», firmado **«M.»** (no es Matías; Rotom duda a propósito). Los datos van por el tendido del Tren Magnético hacia **Azafrán**.
+- **Drenaje:** Miltank Canela (pienso de la Fundación), Amphy (suplemento), Magikarp «el gasto es de una sola vez», Chispas deja de chispear cerca de la carpa, la carta de Aurelio («como si me hubieran quitado unos años»).
+- **Topo:** con `b02_frag_handsome`, la pieza «se extravió» en la custodia de Lebrun (caramelo de menta).
+- **Rhi:** su padre perdió el trabajo (césped de un estadio de Macro Cosmos) tras entrar «dinero de un socio que no sale en ningún sitio» (Acto VI).
+- **Vencejos:** la pluma más alta lleva una flor de cinco pétalos (A.Z.).
+- **Marea Quieta**, muelle 3 de Olivo, martes y viernes (envíos N-02).
+
+### Personajes con pocas apariciones
+
+- Una sola vez (B3): Atlas, Lance, Yasmina, Sabio Li, Kiyo, Lupe, **Adela Prado** (urgente: llamada + rancho).
+- Dos: Toni, Dámaso, Mauro, la Tercera, la Mayor.

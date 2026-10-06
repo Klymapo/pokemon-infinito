@@ -557,6 +557,296 @@ export function paintFotoGira({ look = {} } = {}) {
 	return { canvas: cv, done: Promise.resolve(true) };
 }
 
+/** Trazo de lápiz de color: muchas pasadas finas, con huecos donde el papel asoma. */
+function crayon(ctx, R, pts, color, { w = 2.2, a = 0.75, passes = 3, jit = 1.6 } = {}) {
+	pencil(ctx, R, pts, { w, a, passes, jit, color });
+}
+/** Relleno de lápiz de color: rayas en zigzag de un niño que colorea deprisa (se sale un poco). */
+function crayonFill(ctx, R, pts, color, { gap = 3, a = 0.6, slope = 0.5, w = 2.4, over = 3 } = {}) {
+	const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+	const x0 = Math.min(...xs) - over, x1 = Math.max(...xs) + over, y0 = Math.min(...ys) - over, y1 = Math.max(...ys) + over;
+	ctx.save();
+	roughPath(ctx, R, pts, over * 1.4, 3); ctx.clip();
+	ctx.lineCap = 'round'; ctx.strokeStyle = color;
+	const hgt = y1 - y0;
+	for (let k = x0 - hgt; k < x1; k += gap * (0.7 + R() * 0.6)) {
+		ctx.globalAlpha = a * (0.6 + R() * 0.5); ctx.lineWidth = w * (0.6 + R() * 0.7);
+		ctx.beginPath(); ctx.moveTo(k + (R() - 0.5) * 2, y1); ctx.lineTo(k + hgt * slope + (R() - 0.5) * 2, y0); ctx.stroke();
+	}
+	ctx.restore();
+}
+/** Grano de lápiz de color: el papel blanco asoma entre el pigmento (dientes del papel). */
+function paperTooth(ctx, W, H, seed, k = 0.5) {
+	let img;
+	try { img = ctx.getImageData(0, 0, W, H); } catch (e) { return; }
+	const d = img.data, R = mulberry(seed);
+	for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+		const i = (y * W + x) * 4;
+		const tooth = ((x * 7 + y * 13) % 5 === 0 || R() < 0.12) ? k * R() : 0;
+		const n = 1 - (R() - 0.5) * 0.05;
+		d[i] = (d[i] + (252 - d[i]) * tooth) * n; d[i + 1] = (d[i + 1] + (250 - d[i + 1]) * tooth) * n; d[i + 2] = (d[i + 2] + (244 - d[i + 2]) * tooth) * n;
+	}
+	ctx.putImageData(img, 0, 0);
+}
+
+/** Cuadro: dibujo infantil a lápices de colores del rancho al atardecer. Torcido y tierno; sin figuras. */
+export function paintRanchoAtardecer() {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('rancho-atardecer');
+	ctx.fillStyle = '#fbfaf4'; ctx.fillRect(0, 0, W, H);
+	// cielo: naranja abajo, rosa arriba, coloreado a rayas que no llegan a los bordes
+	crayonFill(ctx, R, [[20, 18], [W - 22, 14], [W - 18, 96], [22, 100]], '#f59ab4', { gap: 3.2, a: 0.55 });
+	crayonFill(ctx, R, [[18, 92], [W - 20, 88], [W - 16, 196], [20, 200]], '#f6a24a', { gap: 3, a: 0.6 });
+	crayonFill(ctx, R, [[18, 150], [W - 20, 146], [W - 16, 200], [20, 204]], '#f7c84a', { gap: 4, a: 0.35 });
+	// sol medio escondido con rayos de niño
+	const sx = 300, sy = 188;
+	crayonFill(ctx, R, ellipsePts(sx, sy, 30, 30, 16, Math.PI, Math.PI * 2).concat([[sx + 30, sy], [sx - 30, sy]]), '#f6d23a', { gap: 2.2, a: 0.8 });
+	crayon(ctx, R, ellipsePts(sx, sy, 30, 30, 14, Math.PI, Math.PI * 2), '#e88a2a', { w: 1.8 });
+	for (let i = 0; i < 7; i++) { const a = Math.PI + (i + 0.5) * Math.PI / 7; crayon(ctx, R, [[sx + Math.cos(a) * 38, sy + Math.sin(a) * 38], [sx + Math.cos(a) * 54, sy + Math.sin(a) * 54]], '#e8a02a', { w: 2, passes: 2 }); }
+	// nubes en espiral
+	for (const [x, y] of [[90, 52], [390, 40]]) crayon(ctx, R, Array.from({ length: 20 }, (_, i) => [x + Math.cos(i * 0.9) * (14 + i * 0.6) + i * 2.4, y + Math.sin(i * 0.9) * 7]), '#ffffff', { w: 3.4, a: 0.9, passes: 2 });
+	// prado verde con lomita
+	const meadow = [[16, 200]];
+	for (let x = 16; x <= W - 16; x += 30) meadow.push([x, 198 - Math.sin((x - 16) / (W - 32) * Math.PI) * 14 + (R() - 0.5) * 5]);
+	meadow.push([W - 16, H - 18], [16, H - 16]);
+	crayonFill(ctx, R, meadow, '#5ab84a', { gap: 2.6, a: 0.62, slope: -0.4 });
+	crayonFill(ctx, R, [[16, 290], [W - 16, 286], [W - 16, H - 16], [16, H - 16]], '#3a8a3a', { gap: 3.4, a: 0.35, slope: -0.4 });
+	crayon(ctx, R, meadow.slice(0, -2), '#2e7a2e', { w: 2 });
+	for (let i = 0; i < 36; i++) { const x = 24 + R() * (W - 48), y = 214 + R() * 120; crayon(ctx, R, [[x - 3, y], [x, y - 7], [x + 3, y]], '#2e7a2e', { w: 1.4, passes: 1, jit: 0.8 }); } // hierba en V
+	for (let i = 0; i < 9; i++) { const x = 40 + R() * 220, y = 300 + R() * 34; crayonFill(ctx, R, ellipsePts(x, y, 3.5, 3.5, 6), ['#f05a8a', '#f6d23a', '#ffffff'][i % 3], { gap: 1.4, a: 0.9, over: 0.5 }); }
+
+	// establo rojo torcido (izquierda): el niño no midió
+	const bx = 34, by = 236; // esquina inferior izquierda
+	const barn = [[bx, by], [bx + 12, by - 90], [bx + 70, by - 136], [bx + 122, by - 78], [bx + 110, by + 6]];
+	crayonFill(ctx, R, barn, '#d83a3a', { gap: 2.4, a: 0.7 });
+	crayon(ctx, R, [...barn, barn[0]], '#9a2424', { w: 2.2 });
+	crayon(ctx, R, [[bx + 2, by - 84], [bx + 70, by - 144], [bx + 132, by - 74]], '#6a3a2a', { w: 3.4, passes: 3 }); // tejado
+	const door = [[bx + 38, by + 2], [bx + 40, by - 48], [bx + 82, by - 46], [bx + 80, by + 3]];
+	crayonFill(ctx, R, door, '#ffffff', { gap: 2, a: 0.7, over: 1 });
+	crayon(ctx, R, [...door], '#ffffff', { w: 2.4 }); crayon(ctx, R, [door[0], door[2]], '#ffffff', { w: 2.4 }); crayon(ctx, R, [door[1], door[3]], '#ffffff', { w: 2.4 }); // la X de las puertas
+	crayonFill(ctx, R, [[bx + 56, by - 92], [bx + 78, by - 90], [bx + 76, by - 70], [bx + 55, by - 72]], '#f6d23a', { gap: 1.6, a: 0.85, over: 0.5 }); // ventanita encendida
+	// pozo
+	const px0 = 168, py0 = 256;
+	crayonFill(ctx, R, [[px0, py0], [px0 + 34, py0 + 1], [px0 + 33, py0 - 22], [px0 + 1, py0 - 23]], '#9a9aa4', { gap: 2.2, a: 0.7, over: 1 });
+	for (let i = 0; i < 3; i++) crayon(ctx, R, [[px0, py0 - 7 - i * 7], [px0 + 34, py0 - 7 - i * 7 + 1]], '#5a5a66', { w: 1.2, passes: 1 });
+	crayon(ctx, R, [[px0 + 3, py0 - 22], [px0 + 4, py0 - 52]], '#7a4e2c', { w: 2.4 }); crayon(ctx, R, [[px0 + 31, py0 - 22], [px0 + 30, py0 - 52]], '#7a4e2c', { w: 2.4 });
+	crayon(ctx, R, [[px0 - 6, py0 - 50], [px0 + 17, py0 - 66], [px0 + 40, py0 - 50]], '#c83a2a', { w: 3.2 });
+	crayon(ctx, R, [[px0 + 17, py0 - 52], [px0 + 17, py0 - 34]], '#5a4a3a', { w: 1, passes: 1 }); // cuerda con cubo
+	crayonFill(ctx, R, [[px0 + 12, py0 - 34], [px0 + 22, py0 - 34], [px0 + 21, py0 - 26], [px0 + 13, py0 - 26]], '#7a7a88', { gap: 1.4, a: 0.9, over: 0.5 });
+
+	// porche de madera a la derecha con una mecedora vacía
+	const qx = 352, qy = 244;
+	crayonFill(ctx, R, [[qx, qy], [qx + 112, qy - 2], [qx + 110, qy - 106], [qx + 2, qy - 104]], '#c8945a', { gap: 2.6, a: 0.6 });
+	for (let i = 1; i < 6; i++) crayon(ctx, R, [[qx + 2, qy - i * 18], [qx + 110, qy - i * 18 - 1]], '#8a5a2e', { w: 1.2, passes: 1 }); // tablas
+	crayon(ctx, R, [[qx - 10, qy - 104], [qx + 60, qy - 132], [qx + 124, qy - 108]], '#7a4e2c', { w: 3.4, passes: 3 }); // alero
+	crayon(ctx, R, [[qx + 4, qy - 104], [qx + 4, qy + 2]], '#6a3e1e', { w: 3 }); crayon(ctx, R, [[qx + 108, qy - 106], [qx + 108, qy]], '#6a3e1e', { w: 3 }); // postes
+	crayonFill(ctx, R, [[qx - 6, qy], [qx + 120, qy - 2], [qx + 122, qy + 12], [qx - 8, qy + 14]], '#9a6a3a', { gap: 2.2, a: 0.75, over: 1 }); // suelo del porche
+	crayonFill(ctx, R, [[qx + 70, qy - 70], [qx + 92, qy - 71], [qx + 92, qy - 48], [qx + 70, qy - 47]], '#f6d23a', { gap: 1.6, a: 0.8, over: 0.5 }); // ventana con luz
+	// mecedora: respaldo alto, asiento, patas y balancín curvo; nadie sentado
+	const mx = qx + 38, my = qy - 4;
+	crayon(ctx, R, [[mx - 12, my - 22], [mx - 16, my - 58]], '#4a2a14', { w: 2.4 });
+	crayon(ctx, R, [[mx + 4, my - 22], [mx, my - 58]], '#4a2a14', { w: 2.4 });
+	crayon(ctx, R, [[mx - 16, my - 58], [mx, my - 58]], '#4a2a14', { w: 2.4 });
+	for (let i = 1; i < 4; i++) crayon(ctx, R, [[mx - 13 - i * 0.6, my - 22 - i * 9], [mx + 3 - i * 0.6, my - 22 - i * 9]], '#4a2a14', { w: 1.2, passes: 1 });
+	crayon(ctx, R, [[mx - 12, my - 22], [mx + 18, my - 22]], '#4a2a14', { w: 2.6 }); // asiento
+	crayon(ctx, R, [[mx - 10, my - 22], [mx - 12, my - 6]], '#4a2a14', { w: 2 }); crayon(ctx, R, [[mx + 16, my - 22], [mx + 14, my - 6]], '#4a2a14', { w: 2 });
+	crayon(ctx, R, [[mx - 22, my - 10], [mx - 8, my - 4], [mx + 10, my - 4], [mx + 24, my - 12]], '#4a2a14', { w: 2.4 }); // balancín
+	crayon(ctx, R, [[mx - 18, my - 30], [mx - 20, my - 34]], '#4a2a14', { w: 1.4, passes: 1 }); // (rayitas de movimiento: el niño la dibujó meciéndose)
+	crayon(ctx, R, [[mx - 22, my - 22], [mx - 25, my - 26]], '#4a2a14', { w: 1.4, passes: 1 });
+
+	// bolitas blancas de lana en el prado, cada una con una lucecita amarilla encima
+	const sheep = [[120, 262], [220, 236], [262, 282], [312, 248], [196, 306], [304, 312], [96, 316]];
+	sheep.forEach(([x, y], i) => {
+		const r = 13 + R() * 3;
+		for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2; crayonFill(ctx, R, ellipsePts(x + Math.cos(a) * r * 0.55, y + Math.sin(a) * r * 0.4, r * 0.55, r * 0.5, 8), '#ffffff', { gap: 1.2, a: 0.95, over: 0.6, w: 2.6 }); }
+		crayonFill(ctx, R, ellipsePts(x, y, r * 0.7, r * 0.55, 10), '#ffffff', { gap: 1.2, a: 0.95, over: 0.6, w: 2.6 });
+		crayon(ctx, R, ellipsePts(x, y, r, r * 0.78, 14), '#a8a8b4', { w: 1.1, passes: 1, jit: 2.2 });
+		crayon(ctx, R, [[x - 5, y + r * 0.7], [x - 6, y + r * 0.7 + 6]], '#3a3a44', { w: 2, passes: 2 }); crayon(ctx, R, [[x + 5, y + r * 0.7], [x + 6, y + r * 0.7 + 6]], '#3a3a44', { w: 2, passes: 2 });
+		// lucecita
+		const ly = y - r - 12 - R() * 4, lx = x + (R() - 0.5) * 4;
+		crayonFill(ctx, R, ellipsePts(lx, ly, 4, 4, 8), '#f6d23a', { gap: 1.2, a: 0.95, over: 0.4 });
+		for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2 + 0.4; crayon(ctx, R, [[lx + Math.cos(a) * 7, ly + Math.sin(a) * 7], [lx + Math.cos(a) * 11, ly + Math.sin(a) * 11]], '#f2b43a', { w: 1.4, passes: 1, jit: 0.6 }); }
+	});
+	paperTooth(ctx, W, H, 77, 0.55);
+	// firma infantil y un trozo de celo arriba
+	ctx.save(); ctx.translate(W - 70, H - 26); ctx.rotate(-0.08); ctx.fillStyle = '#4a6ad0'; ctx.globalAlpha = 0.75; ctx.font = '700 15px "Comic Sans MS", Nunito, sans-serif'; ctx.fillText('mi rancho', -18, 0); ctx.restore();
+	ctx.save(); ctx.translate(W / 2, 6); ctx.rotate(0.04); ctx.fillStyle = 'rgba(255,255,225,.55)'; ctx.fillRect(-34, -8, 68, 18); ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
+/** Grano y viñeteado de foto impresa sobre el área de la imagen. */
+function photoFinish(ctx, x, y, w, hgt, seed, { grain = 18, warm = 4, vig = 0.4 } = {}) {
+	ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, hgt); ctx.clip();
+	const vg = ctx.createRadialGradient(x + w / 2, y + hgt / 2, hgt * 0.35, x + w / 2, y + hgt / 2, w * 0.65);
+	vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, `rgba(0,0,10,${vig})`);
+	ctx.fillStyle = vg; ctx.fillRect(x, y, w, hgt);
+	ctx.restore();
+	try {
+		const img = ctx.getImageData(x, y, w, hgt), d = img.data, RN = mulberry(seed);
+		for (let i = 0; i < d.length; i += 4) { const n = (RN() - 0.5) * grain; d[i] += n + warm; d[i + 1] += n; d[i + 2] += n - warm * 0.5; }
+		ctx.putImageData(img, x, y);
+	} catch (e) { /* sin acceso a píxeles: sin grano */ }
+}
+
+/** Cuadro: foto desechable, algo movida, desde lo alto de un faro de noche. */
+export function paintFaroNoche() {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela foto';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('faro-olivo');
+	const B = 14, IW = W - 2 * B, IH = H - 2 * B - 18;
+	ctx.fillStyle = '#f8f6f0'; ctx.fillRect(0, 0, W, H);
+	// la escena se pinta en un lienzo aparte y se estampa dos veces desplazada: foto movida
+	const sc = document.createElement('canvas'); sc.width = IW; sc.height = IH;
+	const c = sc.getContext('2d');
+	const sky = c.createLinearGradient(0, 0, 0, IH);
+	sky.addColorStop(0, '#070b1c'); sky.addColorStop(0.45, '#121c3c'); sky.addColorStop(1, '#0a1022');
+	c.fillStyle = sky; c.fillRect(0, 0, IW, IH);
+	for (let i = 0; i < 40; i++) { c.fillStyle = `rgba(230,236,255,${0.2 + R() * 0.5})`; c.fillRect(R() * IW, R() * 90, 1.2, 1.2); }
+	// mar del puerto: horizonte alto, agua oscura con brillos sueltos
+	const hz = 92;
+	c.fillStyle = '#0d1834'; c.fillRect(0, hz, IW, IH);
+	c.fillStyle = 'rgba(140,160,220,.18)'; for (let i = 0; i < 60; i++) c.fillRect(IW * 0.35 + R() * IW * 0.65, hz + 6 + R() * (IH - hz), 3 + R() * 6, 1);
+	// espigón del puerto con farolas
+	c.fillStyle = '#1c2032'; c.beginPath(); c.moveTo(IW * 0.46, 200); c.lineTo(IW * 0.9, 150); c.lineTo(IW * 0.92, 156); c.lineTo(IW * 0.48, 208); c.fill();
+	for (let k = 0; k < 6; k++) { const x = IW * 0.5 + k * 30, y = 196 - k * 7.2; const lg = c.createRadialGradient(x, y - 4, 0, x, y - 4, 8); lg.addColorStop(0, 'rgba(255,214,140,.9)'); lg.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = lg; c.fillRect(x - 8, y - 12, 16, 16); }
+	// cuesta con casas blancas (izquierda): baja desde arriba a la izquierda hasta el agua
+	const slopeY = x => 84 + x * 0.78; // borde de la ladera
+	c.fillStyle = '#20222e'; c.beginPath(); c.moveTo(0, 84); c.lineTo(IW * 0.5, slopeY(IW * 0.5)); c.lineTo(IW * 0.5, IH); c.lineTo(0, IH); c.fill();
+	const houses = [];
+	for (let y = 92; y < IH - 40; y += 17 + R() * 6) for (let x = 2 + R() * 14; x < IW * 0.48; x += 22 + R() * 18) {
+		if (y < slopeY(x + 20) + 4 || R() < 0.22) continue;
+		houses.push([x, y + R() * 5, 13 + R() * 11, 9 + R() * 5]);
+	}
+	houses.forEach(([x, y, w, hh]) => {
+		c.fillStyle = '#b8bccb'; c.fillRect(x, y, w, hh);
+		c.fillStyle = '#7a7e96'; c.fillRect(x + w - 4, y, 4, hh); // lado en sombra
+		c.fillStyle = '#d8dbe6'; c.fillRect(x, y, w - 4, 1.5); // borde de azotea
+		c.fillStyle = '#2a2c3a'; c.fillRect(x + 2 + R() * 4, y + hh - 5, 2.5, 5); // puerta
+		if (R() < 0.5) { c.fillStyle = '#ffd88a'; c.fillRect(x + w - 9, y + 3, 3, 3); }
+	});
+	// calle en zigzag con farolas entre las casas
+	for (let k = 0; k < 8; k++) { const x = 20 + k * 22 + (k % 2) * 8, y = slopeY(x) + 30 + k * 6; const lg = c.createRadialGradient(x, y, 0, x, y, 6); lg.addColorStop(0, 'rgba(255,200,120,.8)'); lg.addColorStop(1, 'rgba(255,190,110,0)'); c.fillStyle = lg; c.fillRect(x - 6, y - 6, 12, 12); }
+	// barcas con lucecitas, en el agua del puerto
+	for (let i = 0; i < 9; i++) {
+		const x = IW * 0.6 + R() * IW * 0.36, y = 214 + R() * (IH - 290);
+		c.fillStyle = '#3a4058'; c.beginPath(); c.moveTo(x - 10, y); c.lineTo(x + 10, y); c.lineTo(x + 7, y + 4); c.lineTo(x - 7, y + 4); c.fill();
+		c.fillRect(x - 0.5, y - 12, 1, 12);
+		const lg = c.createRadialGradient(x, y - 12, 0, x, y - 12, 8); lg.addColorStop(0, 'rgba(255,224,150,.95)'); lg.addColorStop(1, 'rgba(255,200,120,0)');
+		c.fillStyle = lg; c.fillRect(x - 9, y - 21, 18, 18);
+		c.fillStyle = 'rgba(255,214,140,.3)'; c.fillRect(x - 1, y + 5, 2, 8 + R() * 10); // reflejo
+	}
+	// barandilla del faro en primer plano (abajo), oscura
+	c.fillStyle = '#07080e'; c.fillRect(0, IH - 14, IW, 14);
+	for (let x = 4; x < IW; x += 26) c.fillRect(x, IH - 40, 3, 26);
+	c.fillRect(0, IH - 42, IW, 4);
+	c.fillStyle = 'rgba(200,190,170,.35)'; c.fillRect(0, IH - 42, IW, 1.2);
+	// el haz: cono pálido en diagonal desde arriba a la izquierda hacia el puerto
+	c.save(); c.globalCompositeOperation = 'lighter'; c.filter = 'blur(7px)';
+	const ox = -30, oy = 6, ang = 0.42, len = IW * 1.4;
+	for (let k = 0; k < 3; k++) {
+		const spread = 0.05 + k * 0.05;
+		const gr = c.createLinearGradient(ox, oy, ox + Math.cos(ang) * len, oy + Math.sin(ang) * len);
+		gr.addColorStop(0, `rgba(255,248,210,${0.32 - k * 0.08})`); gr.addColorStop(0.6, `rgba(220,230,240,${0.14 - k * 0.03})`); gr.addColorStop(1, 'rgba(200,210,240,0)');
+		c.fillStyle = gr; c.beginPath(); c.moveTo(ox, oy);
+		c.lineTo(ox + Math.cos(ang - spread) * len, oy + Math.sin(ang - spread) * len);
+		c.lineTo(ox + Math.cos(ang + spread) * len, oy + Math.sin(ang + spread) * len); c.fill();
+	}
+	c.restore();
+	// estampado movido: copia fantasma desplazada + copia principal
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	ctx.drawImage(sc, B, B);
+	ctx.globalAlpha = 0.45; ctx.drawImage(sc, B + 4, B + 2);
+	ctx.globalAlpha = 0.25; ctx.drawImage(sc, B + 7, B + 3.5);
+	ctx.globalAlpha = 1;
+	// flash de la desechable reflejado en la barandilla
+	const fl = ctx.createRadialGradient(B + IW * 0.3, B + IH - 30, 0, B + IW * 0.3, B + IH - 30, 60);
+	fl.addColorStop(0, 'rgba(255,255,240,.35)'); fl.addColorStop(1, 'rgba(255,255,240,0)');
+	ctx.fillStyle = fl; ctx.fillRect(B, B, IW, IH);
+	ctx.restore();
+	photoFinish(ctx, B, B, IW, IH, 21, { grain: 26, warm: 6, vig: 0.5 });
+	ctx.save(); ctx.fillStyle = '#8a8478'; ctx.globalAlpha = 0.8; ctx.font = '600 10px Nunito, sans-serif'; ctx.fillText('desde arriba del faro', B + 4, H - 10); ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
+/** Cuadro: foto del lago de noche. Luna entera reflejada, halo azul en la orilla, ondulación roja bajo el agua. */
+export function paintLagoNoche() {
+	const W = 480, H = 360;
+	const cv = document.createElement('canvas');
+	cv.width = W; cv.height = H;
+	cv.className = 'acuarela foto';
+	const ctx = cv.getContext('2d');
+	const R = mulberry('lago-furia');
+	const B = 14, IW = W - 2 * B, IH = H - 2 * B - 18;
+	ctx.fillStyle = '#f8f6f0'; ctx.fillRect(0, 0, W, H);
+	ctx.save(); ctx.beginPath(); ctx.rect(B, B, IW, IH); ctx.clip();
+	const hz = B + 132; // horizonte
+	const sky = ctx.createLinearGradient(0, B, 0, hz);
+	sky.addColorStop(0, '#04070f'); sky.addColorStop(1, '#0e1a34');
+	ctx.fillStyle = sky; ctx.fillRect(B, B, IW, hz - B);
+	for (let i = 0; i < 70; i++) { ctx.fillStyle = `rgba(220,230,255,${0.15 + R() * 0.55})`; ctx.fillRect(B + R() * IW, B + R() * (hz - B - 20), 1.2, 1.2); }
+	// luna llena
+	const mx = W / 2 + 24, my = B + 52, mr = 22;
+	const halo = ctx.createRadialGradient(mx, my, mr, mx, my, mr * 4); halo.addColorStop(0, 'rgba(220,226,240,.28)'); halo.addColorStop(1, 'rgba(200,210,240,0)');
+	ctx.fillStyle = halo; ctx.fillRect(mx - mr * 4, my - mr * 4, mr * 8, mr * 8);
+	ctx.fillStyle = '#f2f0e2'; ctx.beginPath(); ctx.arc(mx, my, mr, 0, 7); ctx.fill();
+	ctx.fillStyle = 'rgba(180,180,170,.35)'; for (const [dx, dy, r] of [[-7, -5, 5], [6, 4, 4], [-2, 9, 3]]) { ctx.beginPath(); ctx.arc(mx + dx, my + dy, r, 0, 7); ctx.fill(); }
+	// lago: azul negro, quieto
+	const lake = ctx.createLinearGradient(0, hz, 0, B + IH);
+	lake.addColorStop(0, '#0c1630'); lake.addColorStop(1, '#050913');
+	ctx.fillStyle = lake; ctx.fillRect(B, hz, IW, IH);
+	// orilla lejana y pinos en silueta a los lados
+	ctx.fillStyle = '#060a10'; ctx.fillRect(B, hz - 6, IW, 7);
+	const pine = (x, base, hh, w) => { ctx.beginPath(); ctx.moveTo(x, base - hh); for (let k = 1; k <= 4; k++) { const yy = base - hh + hh * k / 4.4; ctx.lineTo(x + w * k / 4, yy); ctx.lineTo(x + w * k / 9, yy - 3); } ctx.lineTo(x + 2, base); ctx.lineTo(x - 2, base); for (let k = 4; k >= 1; k--) { const yy = base - hh + hh * k / 4.4; ctx.lineTo(x - w * k / 9, yy - 3); ctx.lineTo(x - w * k / 4, yy); } ctx.fill(); };
+	ctx.fillStyle = '#03060a';
+	for (let i = 0; i < 9; i++) pine(B + 6 + i * 13 + R() * 6, hz + 2 + i * 1.2, 80 - i * 6 + R() * 12, 18 - i);
+	for (let i = 0; i < 9; i++) pine(W - B - 6 - i * 13 - R() * 6, hz + 2 + i * 1.2, 84 - i * 6 + R() * 12, 18 - i);
+	// reflejo de la luna: un círculo entero, sin romperse (agua en calma total)
+	const ry = hz + (hz - my) * 0.62;
+	ctx.fillStyle = 'rgba(236,234,214,.82)'; ctx.beginPath(); ctx.ellipse(mx, ry, mr, mr * 0.96, 0, 0, 7); ctx.fill();
+	// hilo azul pálido bajo el agua que se pierde a la derecha
+	ctx.save(); ctx.strokeStyle = 'rgba(150,200,255,.5)'; ctx.lineWidth = 1; ctx.filter = 'blur(0.4px)';
+	ctx.beginPath(); const tx0 = B + 96, ty0 = B + IH - 52;
+	ctx.moveTo(tx0, ty0);
+	for (let t = 1; t <= 24; t++) { const x = tx0 + t * 15, y = ty0 - t * 2.2 + Math.sin(t * 0.8) * 3; ctx.lineTo(x, y); }
+	ctx.stroke(); ctx.globalAlpha = 0.25; ctx.lineWidth = 3; ctx.stroke(); ctx.restore();
+	// ondulación roja bajo la superficie en el centro del lago: forma difusa, sin silueta
+	const rx = W / 2 - 40, rcy = hz + 74;
+	ctx.save(); ctx.globalCompositeOperation = 'lighter';
+	const rg = ctx.createRadialGradient(rx, rcy + 4, 0, rx, rcy + 4, 26); rg.addColorStop(0, 'rgba(150,20,34,.35)'); rg.addColorStop(1, 'rgba(120,10,24,0)');
+	ctx.filter = 'blur(4px)'; ctx.fillStyle = rg; ctx.fillRect(rx - 30, rcy - 14, 60, 36);
+	ctx.filter = 'blur(1.6px)';
+	for (let k = 0; k < 4; k++) { ctx.strokeStyle = `rgba(225,60,70,${0.6 - k * 0.12})`; ctx.lineWidth = 2 - k * 0.3; ctx.beginPath(); ctx.ellipse(rx, rcy, 10 + k * 13, 2.6 + k * 3.2, 0, 0, 7); ctx.stroke(); }
+	ctx.restore();
+	// orilla de arena gris en primer plano
+	ctx.fillStyle = '#4a4c54'; ctx.beginPath(); ctx.moveTo(B, B + IH - 30);
+	for (let x = B; x <= W - B; x += 24) ctx.lineTo(x, B + IH - 34 + Math.sin(x / 40) * 4 + (x - B) * 0.04);
+	ctx.lineTo(W - B, B + IH); ctx.lineTo(B, B + IH); ctx.fill();
+	ctx.fillStyle = 'rgba(160,166,180,.12)'; for (let i = 0; i < 80; i++) ctx.fillRect(B + R() * IW, B + IH - 30 + R() * 30, 1.5, 1);
+	// figurita oscura en la orilla, con halo azul que se abre en anillos sobre el agua
+	const fx = B + 96, fy = B + IH - 38;
+	ctx.save(); ctx.globalCompositeOperation = 'lighter';
+	for (let k = 0; k < 5; k++) { ctx.strokeStyle = `rgba(90,170,255,${0.5 - k * 0.09})`; ctx.lineWidth = 1.6 - k * 0.2; ctx.beginPath(); ctx.ellipse(fx + 8, fy - 8 - k * 1.5, 16 + k * 18, 3.5 + k * 3.6, 0, Math.PI, Math.PI * 2); ctx.stroke(); }
+	const fh = ctx.createRadialGradient(fx, fy - 8, 0, fx, fy - 8, 22); fh.addColorStop(0, 'rgba(110,190,255,.75)'); fh.addColorStop(1, 'rgba(60,140,255,0)');
+	ctx.fillStyle = fh; ctx.fillRect(fx - 24, fy - 32, 48, 48);
+	ctx.restore();
+	ctx.fillStyle = '#05070c'; // bulto pequeño e informe: no se distingue qué es
+	ctx.beginPath(); ctx.ellipse(fx, fy - 4, 5, 6, 0, 0, 7); ctx.fill();
+	ctx.beginPath(); ctx.arc(fx + 1, fy - 12, 3.6, 0, 7); ctx.fill();
+	ctx.restore();
+	photoFinish(ctx, B, B, IW, IH, 44, { grain: 20, warm: -2, vig: 0.45 });
+	// título manuscrito en la esquina, sobre el borde blanco
+	ctx.save(); ctx.translate(W - B - 8, H - 11); ctx.rotate(-0.05); ctx.fillStyle = '#2a3a6a'; ctx.globalAlpha = 0.8; ctx.font = 'italic 600 14px Nunito, serif'; ctx.textAlign = 'right';
+	ctx.fillText('Silencio', 0, 0); ctx.restore();
+	return { canvas: cv, done: Promise.resolve(true) };
+}
+
 /** Visor a pantalla completa para un objeto clave con cuadro. */
 export async function viewArt(itemId) {
 	const it = D.items[toID(itemId)] || {};
@@ -565,6 +855,9 @@ export async function viewArt(itemId) {
 	const painting = it.art === 'acuarela_riolu' ? paintAcuarelaRiolu({ look, shiny: !!p?.shiny })
 		: it.art === 'santuario_encinar' ? paintSantuarioEncinar()
 		: it.art === 'foto_gira' ? paintFotoGira({ look })
+		: it.art === 'rancho_atardecer' ? paintRanchoAtardecer()
+		: it.art === 'faro_olivo_noche' ? paintFaroNoche()
+		: it.art === 'lago_furia_noche' ? paintLagoNoche()
 		: null;
 	if (!painting) return;
 	const note = h('div', { class: 'art-note' }, it.desc || '');

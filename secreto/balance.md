@@ -29,7 +29,7 @@ Regla general: cada bloque de ~12 h sube el techo de **+8 a +10 niveles**. A par
 | Bloque | Acto / región | Medallas | Jefes de la curva | Tope al final |
 |---|---|---|---|---|
 | B2 | II · Kalos II y Johto | **5** (publicado) | Antón 36, Rhi 37, Bastien 38, Morti 39, Atenea 41 | 42 (37 al empezar; 40 con la medalla 4) |
-| B3 | II/III · Johto y Kanto | 6–7 | 42–48 | 50 |
+| B3 | II · Johto | **7** (publicado) | Li 42, Corelia 43 (Mega), Yasmina 45, Atlas 49 | 50 (46 y 48 con las medallas) |
 | B4 | III · Kanto | 7 | 48–54 | 56 |
 | B5 | IV · Alola (pruebas en vez de medallas) | Z | 54–60 | 62 |
 | B6 | V · Teselia | 8 + Copa | 60–66 | 68 |
@@ -110,3 +110,8 @@ Los niveles siguen **fijos por zona**: no hay escalado al nivel del equipo. Pero
 | 2026-10-05 | Bot: prefiere la región del último lugar nuevo (no vagar por Kalos tras cruzar la Puerta de Trigal) | Atasco del bot, no del contenido |
 
 **Referencia de la publicación 3** (24 recorridos B1+B2): 23/24 llegan al final (el atasco es el del bot contra Brock en la semilla 8, ya conocido). Derrotas medias: Blanca 1.29, revanchas de Brock 1.13 / Corelia 1.04 / Blanca 0.92 (opcionales), Morti 0.96, Antón 0.58, Atenea 0.42, Bastien 0.29. Ningún recorrido sin derrotas.
+| 2026-10-06 | B3: Corelia de Trigal 39–43, sin objeto, Machamp con Agallas | Muro (3.08 derrotas de media) → 1.58 |
+| 2026-10-06 | B3: entrada a la guarida marcada como nueva mientras Atlas no esté vencido | El bot (y una persona) no sabía volver |
+| 2026-10-06 | B3: Atlas 44–45 + Houndoom 49, una Hiper y una Super, revancha con curación | Muro en las primeras pruebas |
+
+**Referencia de la publicación 4** (24 recorridos B1+B2+B3): 23/24 llegan al final (semilla 8: atasco conocido del bot con Brock). Derrotas medias: Corelia (Trigal) 1.58, Blanca 1.29, Rhi opcional 1.21; Yasmina 0.42, Atlas 0.33.
