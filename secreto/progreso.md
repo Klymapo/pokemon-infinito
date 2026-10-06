@@ -20,6 +20,8 @@
 
 ## Pedidos de Mario pendientes
 
+- **2026-10-06 · Megapiedras y monturas nuevas, cada una con su historia.** Hoy solo existen la Lucarita y la montura Rhyhorn (B1–B4 no tienen más). Mario lo pidió y recalcó que **le encantan las historias para conseguirlas**. Empezar por la **Ampharosita para Candela** (su Ampharos, nv37, ya en el equipo): una misión con escena propia y vínculo con Candela (idea: el Faro de Olivo y su Ampharos del faro, en el B3, como profundidad con un `cond` que no rompa partidas; respetar la biblia sobre dónde funciona la Megaevolución). Después, más Megapiedras para Pokémon que Mario use o capture, y monturas por región (nadar, volar, escalar…) que abran caminos o atajos. Nunca regaladas sin más: cada una es una pequeña historia con NPCs que reaparezcan.
+
 - **2026-10-06 · Nada importante debe perderse para siempre.** Le preocupaban solo Bagon y Larvitar; le confirmé (sin detalles) que podrá volver a Kalos más adelante en el B2 (`b02_puerta_trigal`), así que no hace falta nada. Regla para bloques futuros: ninguna captura importante ni elección de colección debe quedar imposible de recuperar para siempre (Amaura, por ejemplo, merece una segunda vía más adelante).
 
 - **2026-10-06 · Designer de Canvas (UX/UI).** Quiere que todo lo visual (textos, recuadros, iconos, menús) quede lo mejor posible. Bot `herramientas/ux.py` en la auditoría. Primera pasada corregida (contraste de tipos y botones, letra ≥ 12, toques ≥ 44, nombres del PC completos, pestañas con pista de desplazamiento). **Pendiente:** los iconos con emoji → iconos pixelados propios (ya era la noche 2 del pedido de arte); la sesión de arte de las 0:47 lo hace con `ux.py` como comprobación.

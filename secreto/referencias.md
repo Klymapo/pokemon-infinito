@@ -80,3 +80,4 @@ Aplícalo a las tres ideas:
 - **El museo de tu propia partida:** un lugar que acumula postales, réplicas y titulares de las decisiones (podría ser la casa de Philippe o el rancho si `b03_rancho_jugador`).
 - **El Juego de los Doce / Torneo de los Villanos / La Casa de las Siete Puertas / El Último Campeón:** arcos largos para el posjuego o la Copa Infinita (rangos, expedientes, alianzas).
 - **Principios:** sorpresas que se puedan reconstruir; NPC que cambian fuera de cámara; alternar explicaciones humanas, sistémicas y Pokémon.
+- **Gusto de Mario (2026-10-06):** le encantan las historias para conseguir Megapiedras y monturas. Cada una con su misión, escena y vínculo con el Pokémon (empezar por la Ampharosita de Candela).
