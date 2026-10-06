@@ -25,7 +25,7 @@ export default {
 		tienda_1: { name: 'Tienda Pokémon', items: ['pokeball', 'potion', 'antidote', 'paralyzeheal', 'awakening', 'burnheal', 'repel', 'escaperope', { id: 'greatball', cond: 'badges >= 1' }, { id: 'superpotion', cond: 'badges >= 1' }, { id: 'iceheal', cond: 'badges >= 1' }, { id: 'revive', cond: 'badges >= 2' }, { id: 'hyperpotion', cond: 'badges >= 3' }, { id: 'ultraball', cond: 'badges >= 3' }, { id: 'superrepel', cond: 'badges >= 2' }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
 		boutique_luminalia: { name: 'Boutique de Luminalia', items: ['xattack', 'xdefense', 'xspatk', 'xspdef', 'xspeed', 'xaccuracy', 'direhit', 'guardspec', 'lumiosegalette', 'pokedoll', { id: 'nestball', cond: 'badges >= 1' }, { id: 'netball', cond: 'badges >= 1' }, { id: 'timerball', cond: 'badges >= 2' }, { id: 'duskball', cond: 'badges >= 2' }, { id: 'quickball', cond: 'badges >= 2' }] },
 		herbolario: { name: 'Herbolario de Vánitas', items: ['healpowder', 'energypowder', 'energyroot', 'revivalherb', 'oranberry', 'pechaberry', 'cheriberry', 'rawstberry'] },
-		tienda_piedras: { name: 'Piedras y Fósiles de Relieve', items: ['firestone', 'waterstone', 'thunderstone', 'leafstone', 'moonstone', 'everstone', 'hardstone', 'softsand', { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
+		tienda_piedras: { name: 'Piedras y Fósiles de Relieve', items: ['firestone', 'waterstone', 'thunderstone', 'leafstone', 'moonstone', 'everstone', 'hardstone', 'softsand', { id: 'blackaugurite', price: 6000, cond: 'badges >= 2' }, { id: 'linkingcord', cond: 'flag.regalo_cordon' }] },
 	},
 	challenges: {
 		gym_novarte: {

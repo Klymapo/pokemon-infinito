@@ -44,6 +44,9 @@ export function registerBlock(b) {
 	for (const id in b.items || {}) D.items[toID(id)] = { pocket: 'key', cost: 0, ...b.items[id], custom: true };
 	// El Cordón Unión viene sin descripción en los datos: sustituye al intercambio para evolucionar.
 	if (D.items.linkingcord && !D.items.linkingcord.desc) D.items.linkingcord.desc = 'Un cordón misterioso. Hace evolucionar a los Pokémon que normalmente lo harían al intercambiarse, y a algunos con condiciones especiales.';
+	// Kleavor viene sin evoItem en los datos (solo «Black Augurite» como condición): sin esto no podía evolucionar nunca.
+	if (D.species.kleavor && !D.species.kleavor.evoItem) D.species.kleavor.evoItem = 'blackaugurite';
+	if (D.items.blackaugurite) { D.items.blackaugurite.cost ||= 6000; if (!D.items.blackaugurite.desc) D.items.blackaugurite.desc = 'Un mineral negro, brillante y quebradizo. Si se usa en cierto Pokémon de hojas afiladas, lo hace evolucionar.'; }
 	// Vínculos simétricos en el mapa
 	for (const id in b.locations || {}) {
 		const L = C.locations[id];

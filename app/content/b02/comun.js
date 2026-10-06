@@ -19,7 +19,7 @@ export default {
 		centro_comercial_trigal: { name: 'Centro Comercial de Trigal', items: [
 			'pokeball', 'greatball', 'ultraball', 'superpotion', 'hyperpotion', 'revive', 'fullheal', 'escaperope', 'superrepel', 'maxrepel',
 			'xattack', 'xdefense', 'xspatk', 'xspdef', 'xspeed', 'pokedoll', 'sweetheart',
-			{ id: 'mt_ida_vuelta', price: 10000 }, { id: 'luxuryball', cond: 'badges >= 4' }, { id: 'maxpotion', cond: 'badges >= 5' },
+			{ id: 'mt_ida_vuelta', price: 10000 }, { id: 'luxuryball', cond: 'badges >= 4' }, { id: 'maxpotion', cond: 'badges >= 5' }, { id: 'blackaugurite', price: 6000 },
 		] },
 		tienda_iris: { name: 'Tienda de Iris', items: [
 			'pokeball', 'greatball', 'ultraball', 'hyperpotion', 'revive', 'fullheal', 'duskball', 'spelltag', 'cleansetag',
