@@ -1,5 +1,5 @@
 // Generado por herramientas/build-sw.mjs — no editar a mano
-const VERSION = '0bfbed643fbd';
+const VERSION = 'c9b784b71125';
 const APP_CACHE = 'app-' + VERSION;
 const SPRITE_CACHE = 'sprites-v1';
 const FILES = ["./","content/b01/comun.js","content/b01/eventos.js","content/b01/index.js","content/b01/misiones.js","content/b01/npcs.js","content/b01/recoleccion.js","content/b01/t0-luminalia.js","content/b01/t1-novarte.js","content/b01/t2-costa.js","content/b01/t3-yantra.js","content/b01/t4-encuentros.js","content/b02/comun.js","content/b02/index.js","content/b02/misiones.js","content/b02/npcs.js","content/b02/t0-kalos.js","content/b02/t1-encinar.js","content/b02/t2-trigal.js","content/b02/t3-iris.js","content/index.js","css/app.css","data/abilities.json","data/growth.json","data/items.json","data/learnsets.json","data/moves.json","data/natures.json","data/species.json","data/types.json","fonts/nunito-italic.ttf","fonts/nunito.ttf","fonts/pixelify.ttf","icons/icon-192.png","icons/icon-512.png","index.html","js/ai.js","js/art.js","js/battle.js","js/content.js","js/data.js","js/guion.js","js/main.js","js/pokemon.js","js/state.js","js/time.js","js/ui/acuarela.js","js/ui/battle-ui.js","js/ui/core.js","js/ui/screens.js","js/util.js","js/world.js","lib/battle-text.js","lib/ps-sim.js","manifest.webmanifest"];

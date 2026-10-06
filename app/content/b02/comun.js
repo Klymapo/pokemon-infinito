@@ -87,12 +87,12 @@ export default {
 	patches: {
 		yantra: {
 			spots: [
-				{ label: '📣 La Gira Interregional', sub: 'Rotom no para de vibrar', icon: '📣', cond: 'flag.b01_fin && !flag.b02_inicio_hecho', new: 'flag.b01_fin && !flag.b02_inicio_hecho', script: 'b02_inicio' },
+				{ label: '📣 La Gira Interregional', sub: 'Rotom no para de vibrar', icon: '📣', cond: 'flag.b01_fin && !quest.b02_m1 && !done.b02_m1', new: 'flag.b01_fin && !quest.b02_m1 && !done.b02_m1', script: 'b02_inicio' },
 			],
-			onEnter: [{ script: 'b02_inicio', cond: 'flag.b01_fin && !flag.b02_inicio_hecho', once: true }],
+			onEnter: [{ script: 'b02_inicio', cond: 'flag.b01_fin && !quest.b02_m1 && !done.b02_m1', once: true }],
 		},
 		luminalia: {
-			onEnter: [{ script: 'b02_inicio', cond: 'flag.b01_fin && !flag.b02_inicio_hecho', once: true }],
+			onEnter: [{ script: 'b02_inicio', cond: 'flag.b01_fin && !quest.b02_m1 && !done.b02_m1', once: true }],
 		},
 	},
 	milestones: [{ flag: 'b02_m_aviso', hoursLeft: 3 }],

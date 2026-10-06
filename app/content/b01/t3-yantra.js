@@ -1729,7 +1729,6 @@ export default {
 			{ quest: 'b01_m8', done: true },
 			{ save: true },
 			{ text: '**Fin del Acto I.**' },
-			{ text: '*El Acto II se está escribiendo…*' },
 		],
 	},
 

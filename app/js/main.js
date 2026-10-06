@@ -46,7 +46,7 @@ function showUpdateBanner(worker) {
 	b.innerHTML = '✨ <b>Actualización lista</b> · toca para aplicarla';
 	b.onclick = async () => {
 		// Solo con el juego en reposo (sin diálogo ni combate abierto), para no guardar a medias
-		if (document.querySelector('.overlay, .battle')) {
+		if (document.querySelector('.overlay, .battle, .cutscene')) {
 			b.innerHTML = 'Termina el diálogo o combate y vuelve a tocar';
 			setTimeout(() => { b.innerHTML = '✨ <b>Actualización lista</b> · toca para aplicarla'; }, 2500);
 			return;
