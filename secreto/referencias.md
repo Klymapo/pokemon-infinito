@@ -81,3 +81,11 @@ Aplícalo a las tres ideas:
 - **El Juego de los Doce / Torneo de los Villanos / La Casa de las Siete Puertas / El Último Campeón:** arcos largos para el posjuego o la Copa Infinita (rangos, expedientes, alianzas).
 - **Principios:** sorpresas que se puedan reconstruir; NPC que cambian fuera de cámara; alternar explicaciones humanas, sistémicas y Pokémon.
 - **Gusto de Mario (2026-10-06):** le encantan las historias para conseguir Megapiedras y monturas. Cada una con su misión, escena y vínculo con el Pokémon (empezar por la Ampharosita de Candela).
+
+## Publicación 6 (2026-10-07, profundidad)
+
+- *Ted Lasso* (galletas con el jefe): Lola lleva el desayuno a los de la Torre Radio cada mañana. Sutil.
+- Zelda (acorde de cuatro notas que sube al abrir cada cámara de los paneles). Sutil.
+- Canon de Ruinas Alfa: inscripciones ESCAPA, LUZ y AGUA en las cámaras; hueco con forma de pluma en una 4.ª cámara (semilla para Ho-Oh, sin plan).
+- Jingle del farero (Ampharosita): señal «dos largos, uno corto».
+- Idea de Mario usada: **la arrepentida** (Lola Arriaga, ex recluta Rocket de la época de Giovanni). Ideas de ChatGPT aún sin usar: siguen arriba.

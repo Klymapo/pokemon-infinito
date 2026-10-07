@@ -171,6 +171,7 @@ export default {
 			bg: { type: 'tower' },
 			desc: 'Una escalera de caracol que sube y sube, con ventanucos que dan al mar. Arriba del todo, la sala de la linterna: una lente enorme de cristal tallado, quieta, y en el centro, sobre una manta, un **Ampharos** tumbado con la cola apagada.\n\nA su lado, sentada en el suelo, una chica de pelo largo le acaricia la cabeza.',
 			descs: [
+				{ cond: 'flag.b03_amphita_hecho', text: 'La sala de la linterna. La lente da la vuelta entera, sin tirones. En el centro, **Amphy** sigue con su luz pálida de vela detrás de un papel, pero ahora llega hasta la bocana del puerto.\n\nYasmina tiene una silla, una taza de té y un trapo para el cristal.' },
 				{ cond: 'flag.b03_faro_hecho', text: 'La sala de la linterna. La lente gira despacio. En el centro, **Amphy** está de pie, con la cola encendida: una luz pálida, como la de una vela detrás de un papel. Pero encendida.\n\nYasmina ya no está sentada en el suelo. Hay una silla. Y una taza de té a medio beber.' },
 			],
 			mapNote: 'Amphy · la sala de la linterna',
@@ -229,7 +230,7 @@ export default {
 				{ label: 'Muelle de entrenamiento', sub: 'Zona de entrenamiento (nivel recomendado 45)', icon: '🥋', action: { training: {
 					cap: 45, trainers: ['olivo_muelle_1', 'olivo_muelle_2', 'olivo_muelle_3'], coach: 'Contramaestre del muelle',
 					wild: [{ sp: 'tentacruel', lv: [41, 43] }, { sp: 'kingler', lv: [41, 43] }, { sp: 'pelipper', lv: [41, 43] }],
-					closed: 'El contramaestre te mira el equipo, se rasca la barba y señala el horizonte. «Aquí ya no vas a aprender nada, chaval. El mar te queda pequeño. Bueno, el muelle».',
+					closed: 'El contramaestre te mira el equipo, se rasca la barba y señala el horizonte. «Aquí ya no vas a aprender nada, muchacho. El mar te queda pequeño. Bueno, el muelle».',
 				} } },
 			],
 		},
@@ -417,7 +418,7 @@ export default {
 			],
 			items: [],
 			intro: '¡Silbatazo inicial! ¡No me hables, no me preguntes, juega! ¡Cinderace, a la delantera!',
-			win: 'Limpio. Otra vez limpio. …Vale. Vale. Siéntate. Te lo cuento.',
+			win: 'Limpio. Otra vez limpio. …Bueno. Bueno. Siéntate. Te lo cuento.',
 			lose: '¡Golazo! ¡Toma! Y no, no te lo cuento. Eso solo se lo cuento a quien me gana.' },
 	},
 
@@ -557,9 +558,9 @@ export default {
 			{ say: 'rotom', text: '¡Bzzt! Caramelos Lazo. Esos los he visto antes. Esos no me gustan.', cond: 'flag.b02_pabellon' },
 			{ text: 'Lila te ve en la puerta. Se le iluminan los ojos. Y enseguida se le apagan un poco, como quien recuerda algo.' },
 			{ if: 'flag.b02_lila_protegida', then: [
-				{ say: 'lila', text: '{jugador}. —Lo dice bajito—. Esta vez no. ¿Vale? Por favor. Esta vez no.' },
+				{ say: 'lila', text: '{jugador}. —Lo dice bajito—. Esta vez no. ¿Sí? Por favor. Esta vez no.' },
 				{ prompt: 'Lila te mira. El aspirante ya está sacando a su Scrafty.', choice: [
-					{ text: 'Quedarte en la puerta. «Vale. Esta vez no.»', then: [
+					{ text: 'Quedarte en la puerta. «Está bien. Esta vez no.»', then: [
 						{ af: { lila: 7 } },
 						{ set: { 'flag.b03_lila_sola': true } },
 						{ text: 'Te apoyas en el marco de la puerta y cruzas los brazos. Lila suelta el aire que no sabía que estaba aguantando.' },
@@ -574,9 +575,9 @@ export default {
 				] },
 			], else: [
 				{ if: 'flag.b02_lila_trigal', then: [
-					{ say: 'lila', text: '{jugador}. Hola. No… no hagas nada, ¿vale? Como la otra vez. Quédate ahí. Me ayuda que estés ahí.' },
+					{ say: 'lila', text: '{jugador}. Hola. No… no hagas nada, ¿sí? Como la otra vez. Quédate ahí. Me ayuda que estés ahí.' },
 				], else: [
-					{ say: 'lila', text: '¿{jugador}? ¡Hola! E-esto… perdona, ahora no puedo… Quédate ahí, ¿vale? Me ayuda que estés ahí. No sé por qué. Me ayuda.' },
+					{ say: 'lila', text: '¿{jugador}? ¡Hola! E-esto… perdona, ahora no puedo… Quédate ahí, ¿sí? Me ayuda que estés ahí. No sé por qué. Me ayuda.' },
 				] },
 				{ prompt: 'El aspirante ya está sacando a su Scrafty.', choice: [
 					{ text: 'Quedarte en la puerta, a la vista.', then: [
@@ -711,7 +712,7 @@ export default {
 			] },
 			{ say: 'renata', text: 'Episodio nueve. «El ingeniero que no volvió a casa». Hasta ahora tengo un testigo, una grabación de una fiesta de empresa y una pared. Hoy quiero lo que hay detrás de la pared.' },
 			{ say: 'damaso', text: 'El cuarto de contadores es mío. Tengo la llave. —La saca. Pesa—. Doce años bajando a leer contadores y mirando esa pared. Nunca la toqué. Hoy, si la tocan, que sea alguien que sepa lo que hace.' },
-			{ text: 'Bajáis por una escalerita de hierro. El cuarto de contadores es pequeño, con tuberías y relojes que giran. Al fondo, una pared de ladrillo más nueva que las demás. El yeso está mal alisado. Se nota que la hicieron con prisa.' },
+			{ text: 'Bajan por una escalerita de hierro. El cuarto de contadores es pequeño, con tuberías y relojes que giran. Al fondo, una pared de ladrillo más nueva que las demás. El yeso está mal alisado. Se nota que la hicieron con prisa.' },
 			{ if: RL, then: [
 				{ text: '{riolu} se acerca a la pared. Cierra los ojos. Las orejas se le quedan muy quietas, y el halo azul se le enciende alrededor de las manos.' },
 				{ text: 'Pone la palma sobre un ladrillo. Lo empuja. Uno solo, sin fuerza. El ladrillo cede hacia dentro y cae al otro lado con un ruido sordo. Por el hueco sale aire frío y olor a papel viejo.' },
@@ -720,10 +721,10 @@ export default {
 			], else: [
 				{ text: 'Dámaso golpea la pared con los nudillos, ladrillo a ladrillo, escuchando. Se para en uno. Su Magneton zumba en tres notas. Dámaso empuja, y el ladrillo cede hacia dentro.' },
 			] },
-			{ text: 'Entre los tres agrandáis el hueco. Detrás hay un pasillo estrecho y oscuro. Y al fondo, una puerta de chapa con una placa atornillada.' },
+			{ text: 'Entre los tres agrandan el hueco. Detrás hay un pasillo estrecho y oscuro. Y al fondo, una puerta de chapa con una placa atornillada.' },
 			{ text: '«**M. OLMEDO · DISEÑO**».' },
 			{ say: 'damaso', text: '…Su despacho. —La voz se le rompe un poco—. Yo pensaba que se lo habían llevado todo. Que no quedaba nada.' },
-			{ say: 'renata', text: 'Vale. Escuchen. Hay dos versiones. Una: a Matías Olmedo se lo llevaron, por sorpresa, un martes cualquiera. Dos: no fue por sorpresa. —Enciende una linterna—. Los despachos hablan. Mira todo. Luego me dices cuál es.' },
+			{ say: 'renata', text: 'Bien. Escuchen. Hay dos versiones. Una: a Matías Olmedo se lo llevaron, por sorpresa, un martes cualquiera. Dos: no fue por sorpresa. —Enciende una linterna—. Los despachos hablan. Mira todo. Luego me dices cuál es.' },
 			{ go: 'sotano_estacion' },
 		],
 		b03_renata_sotano_espera: [
@@ -770,7 +771,7 @@ export default {
 			{ text: 'El doble fondo del cajón, vacío. Un rectángulo más limpio en el cartón, donde estuvo el tubo durante doce años.' },
 		],
 		b03_renata_deduccion: [
-			{ say: 'renata', text: 'Vale. Ya lo has visto todo. Teoría. —Te apunta con el micrófono—. ¿Qué le pasó a Matías Olmedo?' },
+			{ say: 'renata', text: 'Bien. Ya lo has visto todo. Teoría. —Te apunta con el micrófono—. ¿Qué le pasó a Matías Olmedo?' },
 			{ prompt: '¿Qué dice el despacho?', choice: [
 				{ text: '«Se lo llevaron por sorpresa. Un martes cualquiera.»', then: [
 					{ set: { 'vars.b03_renata_fallos': '+1' } },
@@ -815,7 +816,7 @@ export default {
 				{ text: '«Espera. Si lo sueltas ahora, borrarán el resto.»', then: [
 					{ set: { 'flag.b03_renata_espera': true } },
 					{ af: { renata: 2 } },
-					{ say: 'renata', text: 'Uf. —Se tapa la cara con las manos—. Vale. Tienes razón. Odio que tengas razón. El mejor episodio de mi vida y me lo guardo en un cajón. Con doble fondo, eso sí.' },
+					{ say: 'renata', text: 'Uf. —Se tapa la cara con las manos—. Bueno. Tienes razón. Odio que tengas razón. El mejor episodio de mi vida y me lo guardo en un cajón. Con doble fondo, eso sí.' },
 					{ say: 'renata', text: 'Pero me lo guardo. Y seguimos tirando. Juntos. Bueno, tú tiras y yo narro. Es un reparto justo.' },
 					{ say: 'damaso', text: 'Doce años callado. Puedo callar un poco más. Ahora sé que no estaba solo callando.' },
 				] },
@@ -856,7 +857,7 @@ export default {
 			{ prompt: '¿Qué haces por Canela?', choice: [
 				{ text: 'Darle una Baya Aranja.', cond: 'has("oranberry")', then: [
 					{ take: 'oranberry' },
-					{ text: 'Le acercas la baya al hocico. Canela la huele mucho rato. Luego, muy despacio, la coge con los labios. Mastica. Una vez. Dos.' },
+					{ text: 'Le acercas la baya al hocico. Canela la huele mucho rato. Luego, muy despacio, la toma con los labios. Mastica. Una vez. Dos.' },
 				] },
 				{ text: 'Darle una botella de Leche Mu-mu.', cond: 'has("moomoomilk")', then: [
 					{ take: 'moomoomilk' },
@@ -1045,7 +1046,7 @@ export default {
 					{ say: 'kaori', text: 'Bien pensado. El miedo se cura mejor con alguien conocido. —Pausa—. Eso tampoco viene en ningún libro. Pero es verdad.' },
 				] },
 			] },
-			{ text: 'Kaori le da el frasco a gotas, entre los labios. Una. Dos. Diez. Cuenta en voz baja. Luego se sienta sobre los talones y espera. Todos esperáis.' },
+			{ text: 'Kaori le da el frasco a gotas, entre los labios. Una. Dos. Diez. Cuenta en voz baja. Luego se sienta sobre los talones y espera. Todos esperan.' },
 			{ text: 'No pasa nada.' },
 			{ text: 'Sigue sin pasar nada.' },
 			{ if: FARO_AMIGO, then: [
@@ -1285,7 +1286,7 @@ export default {
 			{ choice: [
 				{ text: '«Vamos.»', then: [{ call: 'b03_bastien_combate' }] },
 				{ text: '«Ahora no, Bastien.»', then: [
-					{ say: 'bastien', text: 'Vale. Lo apunto como «pendiente». Las cuentas pendientes son las que más pesan. Y las que mejor se pagan.' },
+					{ say: 'bastien', text: 'De acuerdo. Lo apunto como «pendiente». Las cuentas pendientes son las que más pesan. Y las que mejor se pagan.' },
 				] },
 			] },
 		],
@@ -1331,7 +1332,7 @@ export default {
 			{ text: 'No quieres escuchar. Pero la puerta no cierra bien.' },
 			{ say: 'rhi', text: '…No. No, papá. No me digas que estás bien. Lo dices como cuando perdíamos tres a cero y decías que el partido no había acabado.' },
 			{ say: 'rhi', text: '…¿Veinte años? ¿Y te lo dicen por carta? —Silencio largo—. ¿Y Nate lo sabía? …Claro que lo sabía. Nate lo sabe todo y no dice nada. Es su superpoder. Es un superpoder horrible.' },
-			{ say: 'rhi', text: '…Vale. Vale. Sí. Yo también. —Muy bajito—. Yo también, papá.' },
+			{ say: 'rhi', text: '…Ok. Ok. Sí. Yo también. —Muy bajito—. Yo también, papá.' },
 			{ text: 'Cuelga. Se queda quieta, con la mano en el auricular colgado, un rato. Luego empuja la puerta de la cabina con el hombro y sale. Te ve.' },
 			{ text: 'Durante un segundo, solo uno, tiene la cara de un portero que acaba de ver entrar el balón. Luego la recoloca. Como quien se ata las botas.' },
 			{ say: 'rhi', text: '¿Llevas mucho ahí? No contestes. No quiero saberlo.' },
@@ -1345,11 +1346,11 @@ export default {
 					{ say: 'rhi', text: 'No. —Te mira mal. Muy mal—. Quiero jugar. Si me ganas limpio, a lo mejor hablo. A lo mejor. Eso es lo que hay.' },
 					{ choice: [
 						{ text: '«Pues juguemos.»', then: [{ call: 'b03_rhi_combate' }] },
-						{ text: '«Otro día, Rhi.»', then: [{ say: 'rhi', text: 'Otro día. Vale. —Se sienta en un bolardo—. Aquí estaré. Dando toques. No pienso moverme. Bueno, me moveré para comer.' }] },
+						{ text: '«Otro día, Rhi.»', then: [{ say: 'rhi', text: 'Otro día. Va. —Se sienta en un bolardo—. Aquí estaré. Dando toques. No pienso moverme. Bueno, me moveré para comer.' }] },
 					] },
 				] },
 				{ text: '«Otro día, Rhi.»', then: [
-					{ say: 'rhi', text: 'Otro día. Vale. —Se sienta en un bolardo y saca una Poké Ball para dar toques—. Aquí estaré. No pienso moverme. Bueno, me moveré para comer.' },
+					{ say: 'rhi', text: 'Otro día. Va. —Se sienta en un bolardo y saca una Poké Ball para dar toques—. Aquí estaré. No pienso moverme. Bueno, me moveré para comer.' },
 				] },
 			] },
 		],
@@ -1378,7 +1379,7 @@ export default {
 				] },
 		],
 		b03_rhi_cuenta: [
-			{ say: 'rhi', text: 'Vale. Me has ganado limpio. Las reglas son las reglas.' },
+			{ say: 'rhi', text: 'Ok. Me has ganado limpio. Las reglas son las reglas.' },
 			{ say: 'rhi', text: 'Mi padre trabajaba en un estadio de Macro Cosmos. No de entrenador. Cuidaba el césped. Veinte años. Decía que un campo bien cuidado juega solo. Que él era el jugador número doce de todos los partidos.' },
 			{ say: 'rhi', text: 'Le han despedido. «Reestructuración». Han cambiado de dueños. Bueno, de dueños no. Ha entrado dinero nuevo, de un socio que no sale en ningún sitio, y lo primero que han hecho es cambiar el césped por uno de plástico. Ya no hace falta nadie que lo cuide.' },
 			{ say: 'rhi', text: 'La carta de «estoy orgulloso» la escribió el día que se lo dijeron. Antes de contármelo. —Se ríe, corto, sin ganas—. Me estaba diciendo adiós. A su campo. Y me lo dijo a mí porque era lo único que le quedaba por decir bien.' },

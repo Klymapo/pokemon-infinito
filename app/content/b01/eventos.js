@@ -68,7 +68,7 @@ export default {
 			{ prompt: '¿Quién tiene la Calabaza de Oro?', choice: [
 				{ text: 'El Prof. Gadd.', then: [
 					{ text: '«Dijo que estuvo toda la noche en el sótano con la aspiradora», dices. «Pero la aspiradora está fría. Lleva horas apagada.»' },
-					{ say: 'gadd', text: '…Vale, vale. Me pillaste en la mentira… pero no por la calabaza. Estuve en la cocina. Comiendo tarta. Once trozos. Diez y un sombrero.' },
+					{ say: 'gadd', text: '…Bueno, bueno. Me cachaste en la mentira… pero no por la calabaza. Estuve en la cocina. Comiendo tarta. Once trozos. Diez y un sombrero.' },
 					{ text: 'Gadd mintió, pero no es el ladrón. Hay que seguir pensando.' },
 					{ call: 'ev_hw_segunda' },
 				] },

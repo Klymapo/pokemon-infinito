@@ -2,7 +2,7 @@
 
 > Diseño del juego con ojos de diseñador. **✖ grave** · **⚠ detalle** · **· curiosidad** (opinable).
 
-**Total:** 0 graves · 0 detalles · 5 curiosidades. 92 misiones, 4 bloques y 109 lugares revisados.
+**Total:** 0 graves · 0 detalles · 6 curiosidades. 96 misiones, 4 bloques y 111 lugares revisados.
 
 ## Hub de misiones: fichas que no te guían (0)
 
@@ -12,11 +12,12 @@ Bien resuelto. ✅
 
 Bien resuelto. ✅
 
-## Misiones sin final o sin premio (5)
+## Misiones sin final o sin premio (6)
 
 - · **Casos de la Agencia (II) [b02_t_agencia]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Casos Fríos: el traslado [b04_t_renata]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Dulce veneno (III) [b04_t_kaori]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
+- · **Fiado no [b02_t_lola]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Las jaulas (IV) [b04_t_noa]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Lo que vive en la cueva [b04_t_cueva]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 
@@ -34,9 +35,9 @@ Cuenta como conseguible si se captura, se regala o sale en un evento la especie 
 
 | Grupo | Conseguibles | Faltan |
 |---|---|---|
-| Iniciales | 4/29 | Bulbasaur, Charmander, Squirtle, Chikorita, Cyndaquil, Totodile, Treecko, Torchic, Mudkip, Turtwig, Chimchar, Piplup, Snivy, Tepig, Oshawott, Chespin, Froakie, Rowlet, Litten, Popplio, Grookey, Scorbunny, Sobble, Sprigatito, Quaxly |
+| Iniciales | 7/29 | Bulbasaur, Charmander, Squirtle, Treecko, Torchic, Mudkip, Turtwig, Chimchar, Piplup, Snivy, Tepig, Oshawott, Chespin, Froakie, Rowlet, Litten, Popplio, Grookey, Scorbunny, Sobble, Sprigatito, Quaxly |
 | Pseudolegendarios | 2/10 | Dratini, Beldum, Gible, Deino, Goomy, Jangmo-o, Dreepy, Frigibax |
-| Fósiles | 2/15 | Omanyte, Kabuto, Aerodactyl, Lileep, Anorith, Cranidos, Shieldon, Tirtouga, Archen, Dracozolt, Arctozolt, Dracovish, Arctovish |
+| Fósiles | 5/15 | Lileep, Anorith, Cranidos, Shieldon, Tirtouga, Archen, Dracozolt, Arctozolt, Dracovish, Arctovish |
 | Evoluciones de Eevee | 8/8 | — |
 | Especiales | 7/16 | Porygon, Rotom, Spiritomb, Castform, Chansey, Zorua, Mimikyu, Larvesta, Código Cero |
 | Legendarios menores | 0/44 | Articuno, Zapdos, Moltres, Raikou, Entei, Suicune, Regirock, Regice, Registeel, Latias, Latios, Uxie, Mesprit, Azelf, Heatran, Regigigas, Cresselia, Cobalion, Terrakion, Virizion, Tornadus, Thundurus, Landorus, Código Cero, Silvally, Tapu Koko, Tapu Lele, Tapu Bulu, Tapu Fini, Kubfu, Urshifu, Regieleki, Regidrago, Glastrier, Spectrier, Enamorus, Wo-Chien, Chien-Pao, Ting-Lu, Chi-Yu, Okidogi, Munkidori, Fezandipiti, Ogerpon |

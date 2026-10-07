@@ -2,7 +2,7 @@
 export default {
 	// ⭐ Principales
 	b04_m1: { name: 'Billete a Kanto', type: 'main', est: 120, stages: {
-		tren: 'Coge el **Tren Magnético** de la estación de **Ciudad Trigal** hacia Kanto.',
+		tren: 'Toma el **Tren Magnético** de la estación de **Ciudad Trigal** hacia Kanto.',
 		azafran: 'Ya estás en **Ciudad Azafrán**. La Gira te espera en la **Torre Lemnis**.',
 		hecha: 'Llegaste a Kanto. Algo raro pasó en el túnel, pero llegaste.',
 	} },

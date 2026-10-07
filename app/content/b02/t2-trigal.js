@@ -339,7 +339,7 @@ export default {
 				{ label: 'Concurso de Captura de Bichos', sub: 'El juez, con su silbato', icon: '🐛', new: '!flag.b02_concurso_hecho', talk: [{ script: 'b02_concurso' }] },
 				{ label: 'Entrenador: Cazabichos Rubén', icon: '🦗', action: { trainer: 'pq_ruben' } },
 				{ label: 'Entrenadora: Chica Moderna Lorena', icon: '🌻', action: { trainer: 'pq_lorena' } },
-				{ label: 'Un chico guay junto a la fuente', sub: 'Hace flexiones. Su Heracross también', icon: '💪', action: { trainer: 'pq_adrian' } },
+				{ label: 'Un chico muy en forma junto a la fuente', sub: 'Hace flexiones. Su Heracross también', icon: '💪', action: { trainer: 'pq_adrian' } },
 				{ label: 'Banco junto a la fuente', sub: 'Alguien se ha dejado algo', icon: '🪑', talk: [{ cond: '!flag.b02_banco_parque', script: 'b02_banco_parque' }, { script: 'b02_banco_parque_vacio' }] },
 				{ label: 'Colmena en un roble', icon: '🍯', action: { gather: 'colmena_parque' } },
 			],
@@ -410,7 +410,7 @@ export default {
 		r35_jacinto: { name: 'Jacinto', cls: 'Cazabichos', ai: 2,
 			team: [{ sp: 'yanma', lv: 33, moves: ['aircutter', 'quickattack', 'ancientpower', 'uproar'] }, { sp: 'ledian', lv: 34 }],
 			intro: '¡Este año en el concurso del parque salen bichos que no vienen en ningún libro! ¡Yo los quiero todos! Empezando por los tuyos.',
-			win: 'Vale. Los tuyos no. Los del libro tampoco. Me quedan los raros.',
+			win: 'Bueno. Los tuyos no. Los del libro tampoco. Me quedan los raros.',
 			look: { hair: 'cap', hairColor: '#8a5a2f', outfit: '#5aa36b', outfit2: '#f2b33d', skin: 1, mouth: 'open' } },
 		r35_hilda: { name: 'Hilda', cls: 'Pokéfan', ai: 2,
 			team: [{ sp: 'girafarig', lv: 35, moves: ['psybeam', 'crunch', 'stomp', 'agility'] }, { sp: 'dunsparce', lv: 34, moves: ['drillrun', 'glare', 'ancientpower', 'roost'] }],
@@ -442,7 +442,7 @@ export default {
 		pq_adrian: { name: 'Adrián', cls: 'Entrenador Guay', ai: 2,
 			team: [{ sp: 'heracross', lv: 36, moves: ['hornattack', 'brickbreak', 'pinmissile', 'bulkup'] }, { sp: 'hitmontop', lv: 35, moves: ['triplekick', 'rapidspin', 'suckerpunch', 'quickattack'] }],
 			intro: 'Cien flexiones al día. Heracross hace doscientas. Hoy hacemos combate y luego flexiones. O al revés.',
-			win: 'Vale. Hoy flexiones dobles. Las tuyas también, si quieres.',
+			win: 'Va. Hoy flexiones dobles. Las tuyas también, si quieres.',
 			look: { hair: 'short', hairColor: '#d8a85a', outfit: '#c4473a', outfit2: '#2b2b38', skin: 4, acc: 'bandana', mouth: 'grin' } },
 
 		// ----- Azotea del Centro Comercial (entrenamiento) -----
@@ -463,7 +463,7 @@ export default {
 		recluta_trigal: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2,
 			team: [{ sp: 'golbat', lv: 35, moves: ['bite', 'supersonic', 'poisonfang', 'airslash'] }, { sp: 'raticate', lv: 35, moves: ['superfang', 'crunch', 'hyperfang', 'suckerpunch'] }],
 			intro: '¿Y tú quién eres? ¡El jefe dice que un gimnasio vacío es un almacén con buena ventilación! ¡Fuera!',
-			win: 'Vale, vale. No es buen almacén. Hay demasiada gente que pega fuerte.' },
+			win: 'Ya, ya. No es buen almacén. Hay demasiada gente que pega fuerte.' },
 
 		// ----- Rivales -----
 		rhi_3: { name: 'Rhi', cls: 'Rival', npc: 'rhi', ai: 3, iv: 25, reward: 2400,
@@ -627,7 +627,7 @@ export default {
 					{ say: 'empleado_gira', text: '¡Claro que sí! Teníamos una incidencia abierta. Prioridad media. Bueno, baja. Pero abierta.' },
 					{ say: 'empleado_gira', text: 'Y luego, esta mañana, el sistema nos ha dicho «Encinar», y aquí está usted. ¿Ve? Todo funciona.' },
 				] },
-				{ text: 'No decir nada. Coger la acreditación.', then: [
+				{ text: 'No decir nada. Tomar la acreditación.', then: [
 					{ say: 'empleado_gira', text: 'Muy bien. Eficiente. Me gusta. —Te guiña un ojo—. No como el de Galar, que ha pedido cuatro acreditaciones porque las pierde jugando al fútbol.' },
 				] },
 			] },
@@ -847,7 +847,7 @@ export default {
 		b02_bastien_trigal: [
 			{ if: 'flag.b01_bastien_cubierto', then: [
 				{ text: 'Bastien está sentado en el borde de la fuente, con su chaqueta de Lemnis impecable y una libreta pequeña de tapas de cuero. Al verte, se levanta tan rápido que casi se cae al agua.' },
-				{ say: 'bastien', text: '¡{jugador}! ¡Estás viv{o|a|e}! Estás… vale. Vale. —Respira—. Me dijeron «incidencia de trayecto». Yo creí que eso era una forma educada de decir «se lo comió la Puerta».' },
+				{ say: 'bastien', text: '¡{jugador}! ¡Estás viv{o|a|e}! Estás… bien. Bien. —Respira—. Me dijeron «incidencia de trayecto». Yo creí que eso era una forma educada de decir «se lo comió la Puerta».' },
 				{ say: 'bastien', text: '¿Te ha llegado la carta? ¿La de los abogados? —Haces un gesto—. Ya. A mí me llegó una igual, pero en mi carta salías tú. En la tuya salgo yo, ¿no? No, espera. No salgo. Me cubriste tan bien que no salgo ni en la carta.' },
 				{ text: 'Abre la libreta. En la primera página, con letra de colegio caro, pone: «**Le debo a {jugador}:**». Y debajo, una sola raya. Un 1.' },
 				{ say: 'bastien', text: 'Te debo: 1. Una grande. Dije que lo apuntaría y lo he apuntado. Es lo único que he hecho bien este mes, aparte de evolucionar a Greninja. Bueno, eso lo hizo él.' },
@@ -912,7 +912,7 @@ export default {
 			{ quest: 'b02_t_bastien', done: true },
 		],
 		b02_bastien_revancha: [
-			{ say: 'bastien', text: '¿Otra? Vale. Pero esta vez cura a los tuyos tú, que yo ya tengo bastante con lo mío.' },
+			{ say: 'bastien', text: '¿Otra? De acuerdo. Pero esta vez cura a los tuyos tú, que yo ya tengo bastante con lo mío.' },
 			{ heal: true },
 			{ battle: 'bastien_3', lose: 'continue',
 				onWin: [{ say: 'bastien', text: 'Lo apunto. En la libreta. En la columna de cosas que no me pesan.' }],
@@ -928,7 +928,7 @@ export default {
 			{ say: 'noa', text: 'Me alegro de que estés bien. De verdad. Cuando dijeron «incidencia», pensé… da igual lo que pensé.' },
 			{ say: 'noa', text: 'Tengo que contarte una cosa. Antes de que me arrepienta.' },
 			{ text: 'Saca un papel doblado muchas veces. Una impresión de pantalla, en blanco y negro, con columnas de horas y matrículas.' },
-			{ say: 'noa', text: 'Lo de las etiquetas ya lo viste en Luminalia. N-02, N-02, N-02. Pensé: vale, será un almacén. Un centro en otra región. Algo aburrido con un nombre feo.' },
+			{ say: 'noa', text: 'Lo de las etiquetas ya lo viste en Luminalia. N-02, N-02, N-02. Pensé: bueno, será un almacén. Un centro en otra región. Algo aburrido con un nombre feo.' },
 			{ say: 'noa', text: 'Así que miré el registro de transportes. Las furgonetas que salen del centro de procesamiento. Adónde van. Lo saqué del sistema antes de venir. No debería tenerlo. No deberías verlo.' },
 			{ text: 'Recorres la columna de destinos con el dedo. Ni puertos, ni aeropuertos, ni ninguna región. Todas las filas dicen lo mismo.' },
 			{ text: '«**Puerta Lemnis · Luminalia · acceso de servicio**.»' },
@@ -1107,7 +1107,7 @@ export default {
 				] },
 				{ text: 'Quedarte a su lado. «Tú puedes. Yo me encargo del otro.»', then: [
 					{ af: { lila: 6 } },
-					{ say: 'lila', text: '…Vale. Vale. —Respira—. Tú el grande. Yo el de la cinta métrica. Es justo: me ha insultado la cinta métrica.' },
+					{ say: 'lila', text: '…Bueno. Bueno. —Respira—. Tú el grande. Yo el de la cinta métrica. Es justo: me ha insultado la cinta métrica.' },
 				] },
 				{ text: 'Cruzarte de brazos y apoyarte en un andamio.', then: [
 					{ af: { lila: 3 } },
@@ -1128,7 +1128,7 @@ export default {
 			{ say: 'lila', text: '…' },
 			{ say: 'lila', text: '¿Lo has visto? ¿Lo de Eevee? ¿Ese brillo? —Se arrodilla y lo abraza—. ¿Qué ha sido eso? ¿Estás bien? ¿Estás bien tú? ¿Estoy bien yo?' },
 			{ if: 'flag.b02_lila_protegida', then: [
-				{ say: 'lila', text: 'Y tú… Ya sé que querías ayudar. Lo sé. Pero no me quites estas, ¿vale? Las pocas que tengo. —Te sonríe, un poco triste—. Las necesito para creérmelo.' },
+				{ say: 'lila', text: 'Y tú… Ya sé que querías ayudar. Lo sé. Pero no me quites estas, ¿sí? Las pocas que tengo. —Te sonríe, un poco triste—. Las necesito para creérmelo.' },
 			], else: [
 				{ say: 'lila', text: 'Lo he hecho yo. Sola. Bueno, con Eevee. Bueno, contigo ahí. —Se ríe, temblando—. Corelia no se lo va a creer. Yo no me lo creo.' },
 			] },
@@ -1154,7 +1154,7 @@ export default {
 			{ say: 'renata', as: 'Renata (llamada)', text: 'Necesito un testigo. Alguien que trabajara con él. Tengo una grabación vieja, de una fiesta de empresa: mi ingeniero brindando con un compañero. No se le ve la cara al compañero. Pero se oyen cosas.' },
 			{ say: 'renata', as: 'Renata (llamada)', text: 'Pistas, toma nota: uno, el compañero tendrá ahora unos sesenta años. Dos, trabajaba con trenes: brinda «por las vías que flotan». Tres, de fondo se oye un zumbido metálico en tres notas. Siempre tres. *Bzz, bzz, bzz*. Como si fueran tres cosas zumbando a la vez.' },
 			{ say: 'renata', as: 'Renata (llamada)', text: 'Nota para el episodio: el testigo sigue en Trigal. Lo sé. Lo sé con el estómago. Mi estómago acierta un sesenta por ciento de las veces, que para un estómago es muchísimo.' },
-			{ say: 'renata', as: 'Renata (llamada)', text: 'Búscalo en la **estación del Tren Magnético**. Cuando lo tengas, llámame. ¡No cuelgues tú primero! …Vale, cuelgo yo.' },
+			{ say: 'renata', as: 'Renata (llamada)', text: 'Búscalo en la **estación del Tren Magnético**. Cuando lo tengas, llámame. ¡No cuelgues tú primero! …Bueno, cuelgo yo.' },
 			{ quest: 'b02_t_renata', stage: 'testigo' },
 		],
 		b02_renata_revisora: [
@@ -1190,7 +1190,7 @@ export default {
 					{ say: 'renata', as: 'Renata (llamada)', text: '¿Un panadero? A ver, los panaderos son gente maravillosa, pero no brindan «por las vías que flotan». Brindan por la masa madre. Otra vez.' },
 				] },
 				{ text: '«Todavía no lo sé.»', then: [
-					{ say: 'renata', as: 'Renata (llamada)', text: 'Vale. Habla con la gente de la estación. Escucha los zumbidos. Los zumbidos no mienten. La gente sí.' },
+					{ say: 'renata', as: 'Renata (llamada)', text: 'Bien. Habla con la gente de la estación. Escucha los zumbidos. Los zumbidos no mienten. La gente sí.' },
 				] },
 			] },
 		],
@@ -1234,7 +1234,7 @@ export default {
 			{ say: 'matiere', as: 'Matière (llamada)', text: '¡{jugador}! Handsome me ha dicho que estabas bien. Bueno, me ha dicho «Handsome confirma la integridad del colaborador». Lo traduzco: estabas bien.' },
 			{ say: 'matiere', as: 'Matière (llamada)', text: 'Tengo un caso para ti. Pequeño. Ridículo, si te soy sincera. Nos lo ha mandado el Centro Comercial de Trigal, que tiene contrato con la Agencia desde que alguien les robó un ascensor. Sí, entero. Otra historia.' },
 			{ say: 'matiere', as: 'Matière (llamada)', text: 'Anoche desapareció del escaparate de la sexta planta el **Poké Muñeco gigante de Miltank**, edición limitada de la Gira. Metro y medio de peluche. Tres sospechosos. Y una montaña de datos.' },
-			{ say: 'matiere', as: 'Matière (llamada)', text: 'Te paso las tablas al Rotom. Busca la que no cuadra. Los datos no se equivocan, ¿vale? Solo hay que leerlos con calma.' },
+			{ say: 'matiere', as: 'Matière (llamada)', text: 'Te paso las tablas al Rotom. Busca la que no cuadra. Los datos no se equivocan, ¿eh? Solo hay que leerlos con calma.' },
 			{ call: 'b02_agencia_caso' },
 		],
 		b02_agencia_caso: [

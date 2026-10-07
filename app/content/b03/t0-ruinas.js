@@ -195,7 +195,7 @@ export default {
 					{ script: 'b03_irene_generico' },
 				] },
 				{ label: 'La cámara sellada', sub: 'Una pared de piedra sin puerta', icon: '🚪', cond: CAMARA_OK, new: 'true', script: 'b03_camara_abrir' },
-				{ label: 'La cámara sellada', sub: 'Todavía no podéis abrirla', icon: '🔒', cond: 'flag.b03_irene_ruinas && !flag.b03_ruinas_hecho && !(' + CAMARA_OK + ')', talk: [{ script: 'b03_camara_falta' }] },
+				{ label: 'La cámara sellada', sub: 'Todavía no pueden abrirla', icon: '🔒', cond: 'flag.b03_irene_ruinas && !flag.b03_ruinas_hecho && !(' + CAMARA_OK + ')', talk: [{ script: 'b03_camara_falta' }] },
 				{ label: 'La cámara sellada', sub: 'Abierta. Ahora es de Lemnis', icon: '🚧', cond: 'flag.b03_ruinas_hecho', talk: [{ script: 'b03_camara_despues' }] },
 				{ label: 'Vallas de Lemnis', sub: 'Un agente muy amable vigila la entrada', icon: '🚧', new: '!flag.b03_agente_ruinas', talk: [{ cond: 'flag.b03_agente_ruinas', script: 'b03_agente_generico' }, { script: 'b03_agente_ruinas' }] },
 				{ label: 'Carpa de material', sub: 'Cajas apiladas hasta el techo', icon: '📦', cond: 'flag.b03_irene_ruinas', new: '!flag.b03_nodo02', talk: [{ cond: 'flag.b03_nodo02', script: 'b03_carpa_despues' }, { script: 'b03_caja_n02' }] },
@@ -312,8 +312,8 @@ export default {
 			intro: '¿Dormido? Jamás. Estaba meditando. Con los ojos cerrados. Y roncando. Es una técnica muy avanzada.', win: 'Hace una semana pesqué un Unown. Una «R». Lo devolví. Me miró como diciendo «¿y ahora qué hago yo en el mar?».' },
 		r32_aitana: { name: 'Aitana', cls: 'Novata de la Gira', ai: 2, team: [{ sp: 'liepard', lv: 40 }, { sp: 'stoutland', lv: 41 }],
 			intro: '¡Vengo de Teselia por la Puerta! Bueno, por la de Trigal. Tardé un segundo. Mi Liepard, tres días. Salió por otro sitio. Lemnis dice que es normal.', win: 'Lo encontré en la Ruta 32 lamiéndose una pata. No sé dónde ha estado. Él tampoco lo cuenta.' },
-		r32_casimiro: { name: 'Casimiro', cls: 'Arqueólogo', npc: 'arqueologo', ai: 2, team: [{ sp: 'sandslash', lv: 41 }, { sp: 'claydol', lv: 42 }],
-			intro: 'Treinta años excavando las Ruinas Alfa con un pico y una brocha. Llegan ellos con una excavadora y un folleto. ¿Patrimonio? ¡Patrimonio es la paciencia!', win: 'Vale. Ya me he desahogado. Si ves a la doctora del sombrero, dile que tiene razón. En todo. Que no se lo diga a nadie.' },
+		r32_casimiro: { name: 'Macario', cls: 'Arqueólogo', npc: 'arqueologo', ai: 2, team: [{ sp: 'sandslash', lv: 41 }, { sp: 'claydol', lv: 42 }],
+			intro: 'Treinta años excavando las Ruinas Alfa con un pico y una brocha. Llegan ellos con una excavadora y un folleto. ¿Patrimonio? ¡Patrimonio es la paciencia!', win: 'Bueno. Ya me he desahogado. Si ves a la doctora del sombrero, dile que tiene razón. En todo. Que no se lo diga a nadie.' },
 
 		// ----- Ruinas Alfa (opcional) -----
 		agente_ruinas: { name: 'Jefe de seguridad', cls: 'Agente de Lemnis', npc: 'agente_lemnis', ai: 3, iv: 22, reward: 1600,
@@ -375,8 +375,8 @@ export default {
 			{ if: 'flag.b02_frag_melia', then: [
 				{ say: 'irene', text: 'Rotom me dice que llevas en la mochila un metal partido con algo grabado. ¿Puedo…? —Rotom le manda la foto antes de que contestes—. Una lemniscata y «N-02». Mmm. Esa N no es Unown. Es solo una N. Qué decepción. Qué decepción tan sospechosa.' },
 			] },
-			{ say: 'irene', text: 'Cojo un vuelo esta noche. Llego a Malva mañana. Bueno, hoy. Para ti, hoy. Los husos horarios son un invento cruel. Te dejo un mensaje en el Centro de Malva.' },
-			{ say: 'irene', text: 'Desde Iris, vuelve a las Rutas 36 y 37: en el cruce hay un desvío al este. —Pausa—. Y {jugador}… gracias por cogerlo. Mucha gente no me coge el teléfono. Hablo mucho. Ya lo sé. Ya cuelgo.' },
+			{ say: 'irene', text: 'Tomo un vuelo esta noche. Llego a Malva mañana. Bueno, hoy. Para ti, hoy. Los husos horarios son un invento cruel. Te dejo un mensaje en el Centro de Malva.' },
+			{ say: 'irene', text: 'Desde Iris, vuelve a las Rutas 36 y 37: en el cruce hay un desvío al este. —Pausa—. Y {jugador}… gracias por contestar. Mucha gente no me contesta el teléfono. Hablo mucho. Ya lo sé. Ya cuelgo.' },
 			{ text: 'Cuelga. Rotom tarda un momento en quitar su cara de la pantalla.' },
 			{ say: 'rotom', text: '¡Bzzt! Ruta apuntada: Ciudad Malva, por el cruce de las Rutas 36 y 37. Por cierto, el Unown de antes no está en mi registro de capturas, ni de avistamientos, ni de nada. Es como si no hubiera pasado. Pero ha pasado. Lo he visto yo. Con mi pantalla.' },
 			{ quest: 'b03_m1', stage: 'malva' },
@@ -521,7 +521,7 @@ export default {
 							{ say: 'tobias', text: '¡Le caes mejor! ¡El golpe ha sido un treinta por ciento más flojo! Tengo los datos. Bueno, tengo la sensación. Es lo mismo.', cond: '(' + LUC + ') && (done.b01_t_tobias || flag.b01_enc_tobias_1)' },
 							{ text: 'Duquesa se acerca a {riolu}, lo mira muy de cerca… y le da un golpecito con la cola. Luego vuelve con Tobías sin mirar atrás. Tobías jura que eso es un saludo.', cond: '(' + LUC + ') && !(done.b01_t_tobias || flag.b01_enc_tobias_1)' },
 						],
-						onLose: [{ say: 'tobias', text: '¡GANAMOS! ¡Duquesa, mira! …Duquesa ya está dormida. Vale. Se lo cuento con gráficos. —A ti, en voz baja—: Vuelve cuando quieras. El jefe de piso no se mueve de aquí.' }] },
+						onLose: [{ say: 'tobias', text: '¡GANAMOS! ¡Duquesa, mira! …Duquesa ya está dormida. Bueno. Se lo cuento con gráficos. —A ti, en voz baja—: Vuelve cuando quieras. El jefe de piso no se mueve de aquí.' }] },
 				] },
 				{ text: '«Hoy no, Tobías. Me espera alguien.»', then: [
 					{ say: 'tobias', text: '¡Suspense! ¡Cliffhanger! ¡Me encanta! ¡El jefe de piso esperará aquí! Literalmente. La torre se mueve tanto que no encuentro la salida.' },
@@ -589,7 +589,7 @@ export default {
 		b03_li_despues: [
 			{ say: 'li', text: 'La torre sigue en pie. Tú sigues en pie. El viento sigue pasando. —No abre los ojos—. Todo en orden.' },
 			{ if: 'flag.b03_ruinas_hecho', then: [
-				{ say: 'li', text: 'Habéis abierto la puerta. Lo noto en el pilar: se mueve un poco más deprisa desde ayer. —Pausa larga—. No es un reproche. Es un dato. La señora del sombrero te explicará la diferencia.' },
+				{ say: 'li', text: 'Han abierto la puerta. Lo noto en el pilar: se mueve un poco más deprisa desde ayer. —Pausa larga—. No es un reproche. Es un dato. La señora del sombrero te explicará la diferencia.' },
 			] },
 		],
 
@@ -609,7 +609,7 @@ export default {
 					{ af: { irene: -2 } },
 					{ say: 'irene', text: '…' },
 					{ say: 'irene', text: 'La cámara del holomisor me encuadra desde abajo. Es un problema técnico. De Rotom. —Se cala el sombrero—. Y el sombrero tiene veinte centímetros de copa, que se cuentan. Se cuentan a efectos legales.' },
-					{ say: 'rotom', text: '¡Bzzt! Mi cámara encuadra perfectamente. —Pausa—. Vale, me callo.' },
+					{ say: 'rotom', text: '¡Bzzt! Mi cámara encuadra perfectamente. —Pausa—. Bueno, me callo.' },
 				] },
 				{ text: '«¿Qué has encontrado?»', then: [
 					{ af: { irene: 2 } },
@@ -623,7 +623,7 @@ export default {
 			{ say: 'irene', text: 'Mira allí. —Señala la cámara más grande, en el centro de las vallas—. La cámara sellada. Ni puerta, ni rendija. Solo una pared con una inscripción a medio borrar. La universidad lleva cuarenta años intentando leerla.' },
 			{ say: 'irene', text: 'Y Lemnis lleva un mes poniendo vallas a su alrededor. «Por patrimonio.» Pasado mañana traen la excavadora. —Aprieta la libreta—. Antes de eso, quiero que tu compañero la lea. Y quiero leerla yo. Delante. En voz alta. Para que conste.' },
 			{ if: 'has("calcoli")', then: [
-				{ say: 'irene', text: '¿Traes el calco de Li? —Se le iluminan los ojos al ver el rollo—. ¡Lo traes! Te lo ha dado. A mí me tuvo una tarde entera hablando de juncos y no me lo dio. Dijo que yo «subía demasiado deprisa». Subí andando. Andando deprisa, vale.' },
+				{ say: 'irene', text: '¿Traes el calco de Li? —Se le iluminan los ojos al ver el rollo—. ¡Lo traes! Te lo ha dado. A mí me tuvo una tarde entera hablando de juncos y no me lo dio. Dijo que yo «subía demasiado deprisa». Subí andando. Andando deprisa, bueno.' },
 			], else: [
 				{ say: 'irene', text: '¿Pasaste por la Torre Bellsprout? ¿No? Necesitamos el calco de Li. Sin él, a la inscripción le falta la mitad. Li no me lo quiso dar a mí. Dijo que yo «subía demasiado deprisa». Sube tú. Despacio. Con cara de junco.' },
 			] },
@@ -687,7 +687,7 @@ export default {
 		],
 		b03_camara_falta: [
 			{ text: 'La pared de la cámara grande: piedra lisa, sin puerta, con una inscripción en círculo alrededor de una flor tallada. Media inscripción está borrada por la lluvia. Hay una valla de Lemnis a dos metros y un foco apuntando.' },
-			{ text: 'Os falta el calco del Sabio Li, en la Torre Bellsprout de Malva.', cond: '!has("calcoli")' },
+			{ text: 'Les falta el calco del Sabio Li, en la Torre Bellsprout de Malva.', cond: '!has("calcoli")' },
 			{ text: 'Irene quiere saber antes qué guarda Lemnis en la carpa de material.', cond: '!flag.b03_nodo02' },
 			{ text: 'Sin {riolu} en el equipo, la pared es solo una pared.', cond: '!(' + LUC + ')' },
 		],
@@ -728,7 +728,7 @@ export default {
 			{ text: 'El Unown del folleto sonríe. Los Unown no tienen boca.' },
 		],
 		b03_agente_generico: [
-			{ say: 'agente_lemnis', as: 'Agente de Lemnis', text: 'Sigue sin poderse pasar, lo siento muchísimo. —Te sonríe—. ¿Otro folleto? Me sobran. Nadie los coge. No entiendo por qué. El Unown sonríe.', cond: '!flag.b03_ruinas_hecho' },
+			{ say: 'agente_lemnis', as: 'Agente de Lemnis', text: 'Sigue sin poderse pasar, lo siento muchísimo. —Te sonríe—. ¿Otro folleto? Me sobran. Nadie los agarra. No entiendo por qué. El Unown sonríe.', cond: '!flag.b03_ruinas_hecho' },
 			{ say: 'agente_lemnis', as: 'Agente de Lemnis', text: 'Gracias otra vez por abrirnos la puerta. —Lo dice de verdad. Eso es lo peor—. Le hemos puesto un foco. Ha quedado preciosa.', cond: 'flag.b03_ruinas_hecho' },
 		],
 		b03_caja_n02: [
@@ -829,9 +829,9 @@ export default {
 		// =================== LA CÁMARA ===================
 		b03_camara_abrir: [
 			{ quest: 'b03_m1', stage: 'camara' },
-			{ text: 'Esperáis al cambio de turno. A las seis y diez, el agente de la valla se va a por un café a la carpa dos, y los focos se quedan mirando a la nada.' },
+			{ text: 'Esperan al cambio de turno. A las seis y diez, el agente de la valla se va a por un café a la carpa dos, y los focos se quedan mirando a la nada.' },
 			{ say: 'irene', text: 'Ahora. Despacio. Con cara de junco.' },
-			{ text: 'Os coláis por debajo de la valla. Irene se engancha el sombrero. Lo desengancha. Se engancha una trenza. La desenganchas tú. Llegáis.' },
+			{ text: 'Se cuelan por debajo de la valla. Irene se engancha el sombrero. Lo desengancha. Se engancha una trenza. La desenganchas tú. Llegan.' },
 			{ text: 'La pared de la cámara grande: una flor de muchos pétalos tallada en el centro y, alrededor, un círculo de letras Unown. Media inscripción está borrada por la lluvia de tres mil años.' },
 			{ text: 'Irene desenrolla el calco de Li sobre la hierba y lo sujeta con piedras. Mira la pared. Mira el calco. Vuelve a mirar la pared.' },
 			{ say: 'irene', text: 'Aquí está lo que falta. Lo que la lluvia se llevó, lo copiaron los maestros de Li antes. —Pasa el dedo por el papel, sin tocar el carboncillo—. Y aquí… aquí no hay nada. Ni en la piedra ni en el calco. Un hueco. Justo en el círculo.' },
@@ -878,7 +878,7 @@ export default {
 				] },
 				{ text: 'Quedarte en silencio, mirando el mural.', then: [
 					{ af: { irene: 2 } },
-					{ text: 'Irene y tú os quedáis en silencio. Un minuto. Dos. Irene no saca la libreta. Por una vez, solo mira.' },
+					{ text: 'Irene y tú se quedan en silencio. Un minuto. Dos. Irene no saca la libreta. Por una vez, solo mira.' },
 					{ say: 'irene', text: 'Gracias. —No dice por qué. No hace falta.' },
 				] },
 			] },
@@ -900,7 +900,7 @@ export default {
 		],
 		b03_lemnis_llega: [
 			{ text: 'Salís de la cámara a gatas. Fuera ya es de día. Y los focos están encendidos. Todos. Apuntándoos.' },
-			{ text: 'Delante de la puerta abierta, una mujer con traje gris y casco blanco, con la lemniscata en el pecho, mira la cámara. Mira la puerta. Os mira. Detrás de ella, el agente de la valla, con un café en la mano y cara de lo siento.' },
+			{ text: 'Delante de la puerta abierta, una mujer con traje gris y casco blanco, con la lemniscata en el pecho, mira la cámara. Mira la puerta. Los mira. Detrás de ella, el agente de la valla, con un café en la mano y cara de lo siento.' },
 			{ say: 'agente_lemnis', as: 'Jefa de excavación', text: 'Vaya. Llegamos justo a tiempo. —Sonríe—. Bueno. Justo tarde. Ustedes han llegado justo a tiempo.' },
 			{ say: 'agente_lemnis', as: 'Jefa de excavación', text: '{jugador}, ¿verdad? —Mira una tableta. Te enseña la pantalla: tu foto de inscripción, y debajo, en letras grandes, «RUINAS ALFA»—. Lo pone aquí. Nos dijeron que estaría por aquí.' },
 			{ if: 'flag.b02_furgoneta_presentado', then: [{ say: 'agente_lemnis', as: 'Jefa de excavación', text: '{El|La|Le} de Azalea. Usted se pierde mucho, pero siempre aparece donde hace falta. Es un don.' }] },
@@ -931,12 +931,12 @@ export default {
 				{ text: '«Es todo suyo.» Y llevarte a Irene de allí.', then: [
 					{ rep: { lemnis: 2 } },
 					{ af: { irene: -2 } },
-					{ say: 'irene', text: '{jugador}, no he terminado de… —La coges del brazo. Se deja llevar. Mira atrás todo el camino—. No he terminado.' },
-					{ say: 'agente_lemnis', as: 'Jefa de excavación', text: '¡Muchas gracias! ¡Muy amables! —Os dice adiós con la mano—. ¡Habrá visitas guiadas en primavera! ¡Con descuento para la Gira!' },
+					{ say: 'irene', text: '{jugador}, no he terminado de… —La tomas del brazo. Se deja llevar. Mira atrás todo el camino—. No he terminado.' },
+					{ say: 'agente_lemnis', as: 'Jefa de excavación', text: '¡Muchas gracias! ¡Muy amables! —Les dice adiós con la mano—. ¡Habrá visitas guiadas en primavera! ¡Con descuento para la Gira!' },
 				] },
 			] },
 			{ text: 'Los técnicos ya están desenrollando cable hacia la puerta abierta. Desde la carpa de material sale un carro con la caja larga, precintada, empujado por cuatro personas.' },
-			{ text: '{riolu} se gira a mirarla mientras os alejáis. No aparta la vista hasta que la tapa una colina.', cond: LUC },
+			{ text: '{riolu} se gira a mirarla mientras se alejan. No aparta la vista hasta que la tapa una colina.', cond: LUC },
 			{ call: 'b03_ruinas_cierre' },
 		],
 		b03_ruinas_cierre: [

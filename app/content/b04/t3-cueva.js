@@ -393,7 +393,7 @@ export default {
 			{ text: 'Handsome aparece en la boca de la sala, con la gabardina empapada hasta las rodillas y un casco de minero mal abrochado. Te ve. Se le cae el aire de los pulmones de alivio.' },
 			{ say: 'handsome', text: '¡{jugador}! Estás bien. Estás entero. —Se apoya en una columna caída para recuperar el aliento—. Handsome ha bajado corriendo. Handsome no está hecho para bajar corriendo.' },
 			{ if: 'flag.b03_vencejo_pluma || flag.b04_vencejo_pluma', then: [
-				{ say: 'handsome', text: 'Una pluma gris en el parabrisas de mi coche, en Celeste. Con una flecha dibujada hacia la montaña. Tu amiga la de la capucha tiene una manera muy suya de avisar.' },
+				{ say: 'handsome', text: 'Una pluma gris en el parabrisas de mi auto, en Celeste. Con una flecha dibujada hacia la montaña. Tu amiga la de la capucha tiene una manera muy suya de avisar.' },
 			], else: [
 				{ say: 'handsome', text: 'Los guardias del «estudio geológico» han pasado por Celeste en desbandada, hacia Azafrán. Handsome ha pensado: si los guardias se van de un sitio, es que alguien tiene que entrar. Y ya habías entrado tú.' },
 			] },
@@ -413,7 +413,7 @@ export default {
 			{ text: 'En tu bolsillo, la pantalla de la Pokédex se ha apagado sola. «Ahorro de energía», pone, en letras pequeñas. Rotom no dice nada.' },
 			{ choice: [
 				{ text: 'Sacar el informe «Fuente: L.».', cond: 'has("informefuentel")', then: [
-					{ text: 'Sacas las hojas grapadas del archivo de Silph. Se las das a Handsome. Él las coge sin entender. Lee la primera línea. Luego la segunda.' },
+					{ text: 'Sacas las hojas grapadas del archivo de Silph. Se las das a Handsome. Él las toma sin entender. Lee la primera línea. Luego la segunda.' },
 				] },
 				{ text: 'No decir nada. Mirar a Handsome.', then: [
 					{ if: 'has("informefuentel")', then: [
@@ -482,7 +482,7 @@ export default {
 				{ text: 'Detenerlo.', then: [{ call: 'b04_lebrun_detenido' }] },
 				{ text: 'Usarlo de cebo: que siga en su puesto.', then: [{ call: 'b04_lebrun_cebo' }] },
 				{ text: 'Dejarlo ir a cambio del canal de órdenes.', then: [{ call: 'b04_lebrun_libre' }] },
-			], prompt: '¿Qué hacéis con Lebrun?' },
+			], prompt: '¿Qué hacen con Lebrun?' },
 			{ call: 'b04_lebrun_cierre' },
 		],
 		b04_lebrun_detenido: [
@@ -541,11 +541,11 @@ export default {
 		b04_salida: [
 			{ if: 'flag.b04_fin', then: [{ end: true }] },
 			{ text: 'Subes por la galería. Sin la columna de luz, la cueva está oscura de verdad, y los cristales de las paredes brillan solos: un azul suave, quieto, que ya no late. Como debieron de brillar siempre.' },
-			{ text: 'En la encrucijada de las doce galerías, donde el Sintonizador te guiaba, oyes un ruido que no es de la cueva. Un acordeón cogiendo aire, muy hondo, y soltándolo en un resoplido.' },
+			{ text: 'En la encrucijada de las doce galerías, donde el Sintonizador te guiaba, oyes un ruido que no es de la cueva. Un acordeón tomando aire, muy hondo, y soltándolo en un resoplido.' },
 			{ text: 'Entre dos columnas de cristal hay una cabina de madera azul, con su farolillo y sus ventanitas. La puerta se abre de golpe. Sale un hombre de rizos castaños y abrigo granate. Y detrás, la bufanda. Y sigue saliendo.' },
 			{ say: 'viajero', text: '¡{jugador}! ¡Debajo de una montaña! ¡Me encanta debajo de una montaña! ¿Qué día es? Martes. No me lo digas. —Se para en seco, con la cabeza ladeada—. Escucha. ¿Lo oyes?' },
 			{ say: 'viajero', text: 'No, claro que no lo oyes. Es que no se oye nada. ¡Eso es lo que hay que oír! —Da una palmada—. El pequeñito. Desde lo del lago estaba temblando, todo el rato, como un vaso encima de una mesa cuando pasa un tren por debajo. Y hace una hora… ¡zas! Quieto. Dormido. Respirando a su ritmo. Bueno, a destiempo, que es su ritmo.' },
-			{ say: 'viajero', text: 'Lo que habéis roto ahí abajo le hacía daño desde muy lejos. Gracias. De su parte. Él no sabe dar las gracias todavía. Aprenderá. Aprendió.' },
+			{ say: 'viajero', text: 'Lo que rompieron ahí abajo le hacía daño desde muy lejos. Gracias. De su parte. Él no sabe dar las gracias todavía. Aprenderá. Aprendió.' },
 			{ if: 'has("ambarsinregistro")', then: [
 				{ text: 'En tu mochila, el **Ámbar sin registro** está tibio. El brillo azul de dentro late despacio, tranquilo, como un corazón pequeño que por fin se ha dormido.' },
 				{ say: 'viajero', text: '¿Ves? Él también. Los dos duermen a la vez. Eso es buena señal. O muy mala. Pero hoy es buena.' },

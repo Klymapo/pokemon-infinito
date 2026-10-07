@@ -242,7 +242,7 @@ export default {
 			intro: 'Los Sigilyph han vuelto a volar en círculo. Pero no alrededor de los menhires: alrededor de algo que está al sur. En Luminalia.', win: 'Yo me quedo aquí, con mis piedras. Las piedras no cruzan puertas. Es lo que más me gusta de ellas.' },
 		nt_r10_florian: { name: 'Florian', cls: 'Chico Moderno', ai: 2, sprite: 'youngster',
 			team: [{ sp: 'granbull', lv: 34 }, { sp: 'manectric', lv: 33 }],
-			intro: 'Tengo dos medallas y media: a la de Relieve se le cayó un trozo. No me dejan ir a la Gira. Alguien tiene que quedarse en Kalos a ganar combates.', win: 'Vale, alguien que no sea yo. Saluda a Johto de mi parte. Dile que la temporada que viene voy.' },
+			intro: 'Tengo dos medallas y media: a la de Relieve se le cayó un trozo. No me dejan ir a la Gira. Alguien tiene que quedarse en Kalos a ganar combates.', win: 'Bueno, alguien que no sea yo. Saluda a Johto de mi parte. Dile que la temporada que viene voy.' },
 	},
 
 	// =====================================================================
@@ -425,8 +425,8 @@ export default {
 					{ happy: { who: 'riolu', n: 5 } },
 				] },
 				{ text: '«No puedo. Pero tú tampoco lo dejes aquí.»', then: [
-					{ say: 'noa', text: '…No. Tienes razón. No lo voy a dejar aquí. —Coge al Cetoddle en brazos, con manta y todo—. Mi piso tiene una nevera grande. Y un balcón que da al norte. Algo es algo.' },
-					{ say: 'noa', text: 'Si me pillan, diré que es un peluche. Un peluche que estornuda nieve. Los hay, ¿no? Seguro que los hay.' },
+					{ say: 'noa', text: '…No. Tienes razón. No lo voy a dejar aquí. —Carga al Cetoddle en brazos, con manta y todo—. Mi piso tiene una nevera grande. Y un balcón que da al norte. Algo es algo.' },
+					{ say: 'noa', text: 'Si me descubren, diré que es un peluche. Un peluche que estornuda nieve. Los hay, ¿no? Seguro que los hay.' },
 					{ set: { 'flag.b02_cetoddle_noa': true } },
 					{ rep: { lemnis: -1 } },
 				] },
@@ -453,7 +453,7 @@ export default {
 			{ say: 'hector', text: '¡{jugador}! ¡Qué casualidad! Yo no estaba aquí. Bueno, sí estaba. Llevo aquí… —mira el reloj— …cuarenta minutos. He pedido otro día de vacaciones. Me han dado medio.' },
 			{ say: 'hector', text: 'Esta es la séptima vez que vengo. La sexta llegué a tocar el timbre. Luego me escondí detrás de Hawlucha. Hawlucha no es muy ancho.' },
 			{ choice: [
-				{ text: 'Abrir la puerta por él.', then: [{ say: 'hector', text: '¡Espera, espera, que no he ensayado la entrada! —Ya es tarde. La puerta está abierta—. …Vale. Vale. Entrada improvisada. Como los héroes de verdad.' }] },
+				{ text: 'Abrir la puerta por él.', then: [{ say: 'hector', text: '¡Espera, espera, que no he ensayado la entrada! —Ya es tarde. La puerta está abierta—. …Bueno. Bueno. Entrada improvisada. Como los héroes de verdad.' }] },
 				{ text: '«Ser héroe no es el traje. Y entrar en una oficina, tampoco.»', then: [{ say: 'hector', text: 'Eso es. Eso es. —Respira hondo—. Lo tengo apuntado en la otra mano. Esta vez entero.' }] },
 				{ text: 'Empujarlo dentro con cariño.', then: [{ text: 'Héctor entra en la Agencia dando un traspié. Hawlucha entra detrás haciendo una voltereta, por si había que hacer una voltereta.' }] },
 			] },
@@ -570,7 +570,7 @@ export default {
 			{ choice: [
 				{ text: '«Hola, Lucien.»', then: [{ say: 'lucien', text: '¡¿CÓMO LO HAS SABIDO?! ¡Llevo gorra! ¡Llevo dorsal! ¡He practicado la voz grave toda la mañana!' }] },
 				{ text: '«¿Y cuáles son tus tres medallas?»', then: [{ say: 'lucien', as: 'Novato #101', text: 'La Roca, la… la otra, y… la de Chocolate. —Pausa—. No existe la de Chocolate, ¿verdad? …Soy Lucien. No se lo digas a nadie.' }] },
-				{ text: 'Levantarle la visera de la gorra.', then: [{ text: 'Debajo de la gorra, un par de ojos enormes y una cara de doce años que sabe perfectamente que la han pillado.' }, { say: 'lucien', text: '…Hola. Soy Lucien. Pero de incógnito.' }] },
+				{ text: 'Levantarle la visera de la gorra.', then: [{ text: 'Debajo de la gorra, un par de ojos enormes y una cara de doce años que sabe perfectamente que la han descubierto.' }, { say: 'lucien', text: '…Hola. Soy Lucien. Pero de incógnito.' }] },
 			] },
 			{ say: 'lucien', text: '¡Tienes que entenderlo! Llevo desde la inauguración apuntando cada vez que zumba la Puerta. ¡Cada vez! Las dos y diecisiete. ¡Nadie ha mirado esa Puerta más que yo! ¡Me lo merezco más que nadie!' },
 			{ say: 'lucien', text: 'Y Chespin quiere ir. Me lo ha dicho. Bueno, no habla. Pero ha mordido el folleto de Johto y no el de Kalos. Eso es una señal.', cond: 'flag.b01_lucien_chespin' },
@@ -591,7 +591,7 @@ export default {
 					{ quest: 'b02_s_lucien', stage: 'devolver' },
 				] },
 				{ text: '«Es conmigo. Lo llevo al laboratorio del profesor Ciprés.»', then: [
-					{ say: 'lucien', text: '¿Al profesor? …Vale. El profesor tiene un telescopio. Y no grita. Bueno, grita, pero de alegría.' },
+					{ say: 'lucien', text: '¿Al profesor? …Bueno. El profesor tiene un telescopio. Y no grita. Bueno, grita, pero de alegría.' },
 					{ set: { 'flag.b02_lucien_rumbo_cipres': true } },
 					{ quest: 'b02_s_lucien', stage: 'devolver' },
 				] },
@@ -821,7 +821,7 @@ export default {
 						],
 						onLose: [{ say: 'corelia', text: '¡Así se hace, Lucario! ¡Pero tú tampoco te has rendido ni un segundo! Vuelve cuando quieras.' }, { heal: 'Corelia cura a tu equipo. Lo hace patinando.' }] },
 				] },
-				{ text: 'Otro día.', then: [{ say: 'corelia', text: '¡Vale! ¡Pero que sea pronto, que me oxido! ¡Bueno, las ruedas se oxidan! ¡Yo no!' }] },
+				{ text: 'Otro día.', then: [{ say: 'corelia', text: '¡Va! ¡Pero que sea pronto, que me oxido! ¡Bueno, las ruedas se oxidan! ¡Yo no!' }] },
 			] },
 		],
 		b02_corelia_r2_despues: [
@@ -877,7 +877,7 @@ export default {
 			] },
 			{ say: 'lila', text: 'Te quería contar una cosa. Corelia va a ir a Johto con el programa de intercambio, más adelante. Y yo me adelanto. ¡Como ayudante! Para prepararle el gimnasio. Cruzo hoy, con los delegados, detrás del último grupo. Así que… nos vemos allí. Si quieres.' },
 			{ choice: [
-				{ text: '«Claro que quiero. Te guardo un sitio.»', then: [{ af: { lila: 2 } }, { say: 'lila', text: '¿S-sí? —Se le ponen las orejas rojas—. Vale. Bien. Guárdamelo. Que sea uno sin vasos de agua cerca.' }] },
+				{ text: '«Claro que quiero. Te guardo un sitio.»', then: [{ af: { lila: 2 } }, { say: 'lila', text: '¿S-sí? —Se le ponen las orejas rojas—. Ok. Bien. Guárdamelo. Que sea uno sin vasos de agua cerca.' }] },
 				{ text: '«Vas a hacerlo genial. Tú sola.»', then: [{ af: { lila: 2 } }, { say: 'lila', text: '«Tú sola». —Lo repite bajito, como si lo probara—. Me gusta cómo suena. Me da miedo, pero me gusta.' }] },
 				{ text: '«¿Corelia sabe que vas a tirar cosas allí también?»', then: [{ af: { lila: 1 } }, { say: 'lila', text: '¡Ja! P-perdón, me he reído por la nariz otra vez. Delante de las cámaras. —Se tapa la cara—. Corelia dice que mientras no tire la Torre, todo bien.' }] },
 			] },

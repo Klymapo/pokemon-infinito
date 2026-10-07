@@ -109,3 +109,13 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | A.Z. | Aparición del Acto III (salida de la Cueva, amanecer) | Una por acto |
 | Lucario | Sueño de aura (Isla Hierro sin nombre) | B5–B6: más sueños; reacción a Quinoa en el Acto VII |
 | Misty, Sabrina, Bill, Fuji | Presentados | 2+ apariciones más (Copa Infinita, llamadas, Bill con el PC) |
+
+## Publicación 6 (profundidad, 2026-10-07)
+
+| Hilo | Estado | Siguiente paso |
+|---|---|---|
+| **NUEVO: La arrepentida** (`b02_t_lola`, Lola Arriaga) | Tres apariciones con pistas (Trigal, Caoba, Lavanda); etapa `espera` | Confesión y ayuda en el Acto V o en la vuelta a Johto/Kanto antes del VI (propuesta en `registro.md`, Publicación 6). Leer `b03_rocket_*` y `b04_atenea_*` |
+| Los tres de Primavera (Ramiro y Elm) | Misión cerrable en B2–B3 | Llamada de Elm o Ramiro en el B5+ (3.ª aparición en bloque distinto); los iniciales de Kanto, siguiente según el pedido de Mario |
+| Rancho / Amphy (Faro) | La lente gira entera con la Ampharosita; Amphy sigue drenado | Kaori: antídoto completo más adelante |
+| Ámbar (Petra) | «−3 años» en la máquina de Lazare; Petra rumbo a Canela | Misión prehistórica (cruza con la cabina) |
+| Ruinas Alfa | 4.ª cámara con hueco de pluma | Ho-Oh o un guiño, cuando toque legendario con historia |

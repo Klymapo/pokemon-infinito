@@ -123,7 +123,7 @@ export default {
 			{ choice: [
 				{ text: '«¿Y tú tienes pinta de qué? ¿De árbitro?»', then: [{ af: { rhi: 3 } }, { say: 'rhi', as: 'Chica pelirroja', text: '¡Ja! Bueno. Al menos tienes boca. Rhi. De Galar. Acuérdate del nombre, porque lo vas a ver arriba de la tabla.' }] },
 				{ text: '«Perdón por existir.»', then: [{ af: { rhi: -1 } }, { say: 'rhi', as: 'Chica pelirroja', text: 'Eso. Pide perdón. —Se da la vuelta, y luego, por encima del hombro—: Rhi. De Galar. Apréndetelo, que lo vas a oír mucho.' }] },
-				{ text: 'No decir nada y sostenerle la mirada.', then: [{ af: { rhi: 2 } }, { say: 'rhi', as: 'Chica pelirroja', text: '…Vale. Rhi. De Galar. Ya nos veremos en el campo.' }] },
+				{ text: 'No decir nada y sostenerle la mirada.', then: [{ af: { rhi: 2 } }, { say: 'rhi', as: 'Chica pelirroja', text: '…Va. Rhi. De Galar. Ya nos veremos en el campo.' }] },
 			] },
 			{ set: { 'flag.b01_rhi_conocida': true } },
 			{ quest: 'b01_t_rhi', stage: 'conocida', silent: true },
@@ -145,14 +145,14 @@ export default {
 			{ say: 'lila', text: '¿Q-qué es eso? ¿Es parte del espectáculo? Dime que es parte del espectáculo.' },
 			{ text: 'De la grieta cae un **Rookidee** que no es de Kalos. Luego un **Lechonk**. Luego un **Shinx**, que sale disparado entre las piernas de la gente. La plaza grita.' },
 			{ text: 'Y luego cae algo pequeño y azul, justo delante de ti. Golpea el suelo y no se mueve. Un **Riolu**. Tiene una herida en el hombro y el pelo chamuscado.' },
-			{ text: 'Un Houndour salido de la grieta, con los ojos en blanco por el miedo, os ve. Gruñe. Se lanza contra ti.' },
+			{ text: 'Un Houndour salido de la grieta, con los ojos en blanco por el miedo, los ve. Gruñe. Se lanza contra ti.' },
 			{ text: 'Riolu se levanta. No sabes cómo: no debería poder. Se planta entre el Houndour y tú, con los brazos en alto.' },
 			{ text: 'Un brillo azul le recorre los brazos. Te mira un segundo por encima del hombro. Es como si te conociera.' },
 			{ pokemon: { sp: 'riolu', lv: 5, nature: 'jolly', ability: 'innerfocus', ivs: { hp: 31, atk: 31, def: 20, spa: 20, spd: 25, spe: 31 }, moves: ['quickattack', 'endure', 'feint'], happy: 90, uidVar: 'riolu_uid', metAt: 'luminalia_plaza' }, silent: true },
 			{ text: '**Riolu está luchando a tu lado.**' },
 			{ wild: { sp: 'houndour', lv: 4, noCatch: true }, canRun: false, lose: 'continue',
 				onWin: [{ text: 'El Houndour retrocede, gime y se pierde corriendo entre la multitud.' }],
-				onLose: [{ text: 'Riolu cae. El Houndour duda un instante… y algo lo asusta más que vosotros: se pierde corriendo entre la multitud.' }] },
+				onLose: [{ text: 'Riolu cae. El Houndour duda un instante… y algo lo asusta más que ustedes: se pierde corriendo entre la multitud.' }] },
 			{ heal: true, silent: true },
 			{ text: 'Riolu se tambalea. Tiene la respiración agitada y no te quita los ojos de encima.' },
 			{ say: 'lila', text: '¡E-espera, no lo muevas! Tengo… tengo una Baya Aranja. Siempre llevo una. Sujétalo, que no muerda.' },
@@ -302,7 +302,7 @@ export default {
 		b01_cipres_fennekin: [
 			{ if: 'flag.b01_fennekin_unido', then: [
 				{ say: 'cipres', text: '¡Fennekin! ¡Está bien! Y… se queda contigo, ¿eh? Lo veo en cómo te mira.' },
-				{ say: 'cipres', text: 'Es suyo, entrenador{|a|e}. Fennekin eligió, y yo no le llevo la contraria a un zorro de fuego. Toma, para que os vaya bien.' },
+				{ say: 'cipres', text: 'Es suyo, entrenador{|a|e}. Fennekin eligió, y yo no le llevo la contraria a un zorro de fuego. Toma, para que les vaya bien.' },
 			], else: [
 				{ say: 'cipres', text: '¿Lo dejaste ir libre? Hmm. Hiciste lo que te pareció mejor para él, y eso dice mucho de ti.' },
 				{ say: 'cipres', text: 'Los guardabosques lo trajeron hace un rato. Está aquí, en el laboratorio, mucho más tranquilo. Si algún día quieres llevártelo, pídemelo.' },
@@ -394,7 +394,7 @@ export default {
 		b01_macaron_hugo: [
 			{ text: '«Hugo», dices. «Dijo que no le gustan los dulces dos veces, aunque nadie se lo preguntó. Y huele a rosas: el macaron era de rosa. Las migas están en la puerta de atrás… por donde dejó las cajas.»' },
 			{ text: 'Hugo se pone pálido. Luego rojo. Luego rosa, curiosamente a juego con el macaron.' },
-			{ say: null, text: '«¡Vale! ¡Vale! ¡Me lo comí! ¡Es que olía tan bien! ¡Llevo seis años repartiendo leche aquí y nunca me han dado ni uno! ¡Ni UNO!»' },
+			{ say: null, text: '«¡Ya! ¡Ya! ¡Me lo comí! ¡Es que olía tan bien! ¡Llevo seis años repartiendo leche aquí y nunca me han dado ni uno! ¡Ni UNO!»' },
 			{ text: 'Madame Colette se lo piensa un momento. Luego le da un macaron. Uno normal. Hugo llora un poco.' },
 			{ text: 'Mireille te guiña un ojo. Pierre aplaude despacio desde la terraza.' },
 			{ set: { 'flag.b01_macaron_resuelto': true } },
@@ -432,7 +432,7 @@ export default {
 		b01_philippe_1: [
 			{ say: 'philippe', text: '¡Hola, hola! ¿Te gustan los pisos con vistas? ¿Y la magia? ¡Mira! Elige una carta. Cualquiera. No me la enseñes.' },
 			{ text: 'Eliges una carta. El tres de Poké Balls. Philippe cierra los ojos, se concentra… y se le cae otra carta de la manga.' },
-			{ say: 'philippe', text: '¡El as de Corazones! ¿No? Vale. Esa no era. Un clásico. La magia es así: a veces la magia eres tú.' },
+			{ say: 'philippe', text: '¡El as de Corazones! ¿No? Bueno. Esa no era. Un clásico. La magia es así: a veces la magia eres tú.' },
 			{ say: 'philippe', text: 'Philippe Dumont, agente inmobiliario. Lo de la magia es un hobby. El problema es que mi **baraja de la suerte**, la buena, me la robó un Pancham en la **Ruta 5** mientras enseñaba un chalet. ¡En pleno cierre de venta! Si la encuentras, te deberé una. O un piso. Un piso pequeño. Una plaza de garaje.' },
 			{ set: { 'flag.b01_philippe_1': true } },
 			{ quest: 'b01_s_philippe', stage: 'buscar' },
@@ -458,7 +458,7 @@ export default {
 			{ if: 'flag.b01_prensa_verdad', then: [{ say: 'rouxel', text: 'Leí tus declaraciones en el *Diario de Luminalia*. Muy… sinceras. Nos encanta la sinceridad. Hablemos de cómo canalizarla.' }] },
 			{ if: 'flag.b01_prensa_lemnis', then: [{ say: 'rouxel', text: 'Y gracias por tus palabras a la prensa. «Lemnis lo tiene controlado». Lo hemos enmarcado. Literalmente: está en mi despacho.' }] },
 			{ say: 'rouxel', text: 'Pasemos a la sala de reuniones. Ah, una formalidad: dentro **no se permiten dispositivos de grabación**. Tu Pokédex se queda aquí, en recepción. Política de la empresa.' },
-			{ say: 'rotom', text: '¡Bzzt! ¿Me dejan solo? ¡Qué aburrido! Vale. Te espero. Contaré las baldosas.' },
+			{ say: 'rotom', text: '¡Bzzt! ¿Me dejan solo? ¡Qué aburrido! Bueno. Te espero. Contaré las baldosas.' },
 			{ text: 'La sala de reuniones tiene una mesa de cristal y una vista enorme de la Torre Prisma. Hay un hombre mayor esperando: cárdigan, gafas de media luna y una corbata azul con un nudo un poco torcido. Te ofrece un caramelo de menta.' },
 			{ say: 'ansel', text: 'Ansel Moreau. Dirijo el departamento de Investigación. No te asustes por el título: la mitad del tiempo dirijo hojas de cálculo.' },
 			{ say: 'ansel', text: 'Tu Riolu me fascina. Un Riolu de Isla Hierro que cruzó una Fisura y eligió a un humano en menos de un minuto. Si fuera un dato, sería el dato más interesante del año.' },
@@ -466,7 +466,7 @@ export default {
 			{ choice: [
 				{ text: '«Me lo pensaré.»', then: [{ say: 'rouxel', text: '¡Claro, claro! Las mejores decisiones se piensan. Y luego se firman.' }] },
 				{ text: '«No me interesa ser la cara de nadie.»', then: [{ rep: { lemnis: -2 } }, { say: 'rouxel', text: '…Por supuesto. —La sonrisa no se mueve, pero algo detrás de ella sí.' }] },
-				{ text: '«¿Adónde lleváis a los Pokémon desplazados?»', then: [
+				{ text: '«¿Adónde llevan a los Pokémon desplazados?»', then: [
 					{ rep: { lemnis: -2, policia: 2 } },
 					{ say: 'rouxel', text: 'A casa, por supuesto. A sus regiones. Es un proceso delicado.' },
 					{ say: 'ansel', text: 'Muy delicado. Cruzar una Puerta tiene un coste energético que todavía estamos aprendiendo a calcular. Pero llegaremos. Los datos no mienten; se equivocan los que los leen.' },

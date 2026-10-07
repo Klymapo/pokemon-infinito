@@ -527,7 +527,7 @@ export default {
 			{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
 				{ fx: 'light', item: 'tarjetallave', text: 'Una tarjeta magnética gris, con el logo rojo de Silph S.A. en una esquina. Gastada en los bordes, de tanto pasar por lectores que no la querían dejar entrar.' },
 				{ text: 'Por detrás, una banda negra y, escrito a rotulador con letra pequeña, un número que alguien ha tachado. Debajo, otro número. Tachado también. Debajo: «11».' },
-				{ fx: 'glow', text: 'La luz de la lemniscata pasa por encima de vosotros. La tarjeta brilla un instante, gris y roja. Luego, otra vez, oscuridad.' },
+				{ fx: 'glow', text: 'La luz de la lemniscata pasa por encima de ustedes. La tarjeta brilla un instante, gris y roja. Luego, otra vez, oscuridad.' },
 			] } },
 			{ give: 'tarjetallave' },
 			{ set: { 'flag.b04_entrada_lista': true, 'flag.b04_atlas_pagado': true } },
@@ -712,7 +712,7 @@ export default {
 			{ say: 'rotom', text: '…Bzzt. «Fuente: L.» —Pausa larga. La pantalla parpadea—. Hay muchísima gente que empieza por L. Muchísima. Lila. Lino. Lucien. Lucario. —Pausa—. Lucario no. Lucario está aquí.' },
 			{ text: 'No dices nada. Guardas las hojas en el bolsillo de dentro de la chaqueta, donde se guardan las cosas que pesan más de lo que pesan.' },
 			{ if: LUC, then: [
-				{ text: '{riolu} coge uno de los caramelos del cajón. Lo huele, despacio, como olió el de Ansel en la recepción. Y lo deja caer otra vez en el fondo del cajón, con cuidado, como quien devuelve algo que no es suyo.' },
+				{ text: '{riolu} agarra uno de los caramelos del cajón. Lo huele, despacio, como olió el de Ansel en la recepción. Y lo deja caer otra vez en el fondo del cajón, con cuidado, como quien devuelve algo que no es suyo.' },
 			] },
 			{ say: 'ysolde', text: 'En toda empresa hay quien firma y hay quien decide. —Muy bajito—. Y luego está el que lo cuenta todo. A ese no lo ve nunca nadie, porque está siempre en la habitación.' },
 			{ intel: { npc: 'ysolde', text: 'En la planta 11 de Silph te ayudó a encontrar la línea que mentía en la hoja de procedencia: «Fuente: L.» decía haber sacado del panel de la estación datos que el panel no daba.' } },
@@ -783,7 +783,7 @@ export default {
 				{ choice: [
 					{ text: '«Tú no lo sabías. Y queda la foto.»', then: [
 						{ af: { renata: 2 } },
-						{ say: 'renata', text: 'Queda la foto. —Se le oye respirar—. «Para D., por si preguntan». Vale. Vale. Una foto es una cara. Una cara es una persona. Una persona no se archiva en una nota amarilla. Gracias. Eso lo pongo en el episodio. Sin decir que lo dijiste tú.' },
+						{ say: 'renata', text: 'Queda la foto. —Se le oye respirar—. «Para D., por si preguntan». Ya. Ya. Una foto es una cara. Una cara es una persona. Una persona no se archiva en una nota amarilla. Gracias. Eso lo pongo en el episodio. Sin decir que lo dijiste tú.' },
 					] },
 					{ text: '«Lemnis siempre llega antes. La próxima vez, no.»', then: [
 						{ af: { renata: 1 } },
@@ -861,7 +861,7 @@ export default {
 			{ set: { 'flag.b04_atenea_vista': true } },
 			{ text: 'La salida de servicio está al final del pasillo, detrás de la última fila de archivadores. Una puerta metálica con una barra antipánico y un cartel verde de «Salida».' },
 			{ text: 'Delante de la puerta hay una silla de oficina. Y en la silla, con las piernas cruzadas, limándose las uñas con una lima de color rojo, una mujer de melena roja y uniforme blanco. Sin R. Con un parche gris.' },
-			{ say: 'atenea', text: 'Hola, pajarito. —No levanta la vista de las uñas—. Llevas cuarenta minutos dando vueltas por mi planta. Te he dejado. Quería ver qué cogías. Así sé qué decirle a mi cliente que has cogido.' },
+			{ say: 'atenea', text: 'Hola, pajarito. —No levanta la vista de las uñas—. Llevas cuarenta minutos dando vueltas por mi planta. Te he dejado. Quería ver qué tomabas. Así sé qué decirle a mi cliente que has tomado.' },
 			{ text: 'Miras a tu alrededor. Ysolde no está. Hace un segundo estaba en la esquina. Ahora en la esquina solo hay una pluma gris en el suelo.' },
 			{ say: 'rotom', text: '¡Bzzt! —Muy bajito—. Se ha ido. Típico. Los Vencejos no dejan huella. Dejan plumas. Y te dejan a ti.' },
 			{ if: 'beat("atenea_1")', then: [
@@ -930,7 +930,7 @@ export default {
 			{ say: 'atenea', text: 'Toma. Venía con el contrato. «Material de Silph para el personal de seguridad». —Te tira un disco de MT, gris y brillante—. A los míos no les sirve. Mis niños no brillan. El tuyo, sí.' },
 			{ give: 'mt_foco_resplandor' },
 			{ choice: [
-				{ text: '«Lemnis os dejará tirados. Como a Atlas.»', then: [
+				{ text: '«Lemnis los dejará tirados. Como a Atlas.»', then: [
 					{ set: { 'flag.b04_atenea_aviso': true } },
 					{ say: 'atenea', text: 'Ya lo sé, pajarito. —Se levanta—. Todo el mundo deja tirada a la familia. Por eso hay que cobrar por adelantado. —Pausa—. Pero gracias por decirlo. Casi nadie lo dice en voz alta.' },
 				] },
@@ -942,7 +942,7 @@ export default {
 				] },
 			] },
 			{ text: 'Silba. Sus dos reclutas aparecen de detrás de los archivadores, uno con el botiquín y otra con una fotocopia de su propia cara en la mano. Atenea abre la salida de servicio con la cadera.' },
-			{ say: 'atenea', text: 'Chicos, nos vamos. Dejad la planta. Coged solo lo vuestro. La familia primero. —Desde la puerta, sin girarse—: Y tú, pajarito: vuela alto. Los que vuelan bajo acaban limpiando oficinas de noche.' },
+			{ say: 'atenea', text: 'Chicos, nos vamos. Dejen la planta. Tomen solo lo suyo. La familia primero. —Desde la puerta, sin girarse—: Y tú, pajarito: vuela alto. Los que vuelan bajo acaban limpiando oficinas de noche.' },
 			{ text: 'La puerta se cierra detrás de ellos. Silencio. Los fluorescentes zumban.' },
 			{ intel: { npc: 'atenea', text: 'El Team Rocket trabaja ahora como «seguridad privada» de Lemnis, con contrato y un parche gris en lugar de la R: después de Caoba nadie más pagaba los alquileres de los suyos. Vigilaba la planta 11 de Silph. La venciste y se fue con sus reclutas. Te dio la MT Cañón Resplandor.' } },
 			{ call: 'b04_presidente' },
@@ -993,13 +993,13 @@ export default {
 			{ text: 'La azotea de Silph S.A. Un helipuerto pintado que nadie usa, la caseta del ascensor y el viento de la madrugada. Abajo, la avenida es un río de luces azules y rojas.' },
 			{ text: 'Sentada en el borde del helipuerto, con las piernas colgando sobre el vacío, como si no se hubiera movido de ahí en toda la noche, está Ysolde.' },
 			{ say: 'rotom', text: '¡Bzzt! ¡Tú! ¡Te fuiste! ¡Nos dejaste solos con Atenea! ¡Con su lima!' },
-			{ say: 'ysolde', text: 'Os dejé con quien teníais que estar. —Ni se gira—. Si me quedo, Atenea me reconoce. Si me reconoce, sabe que hay Vencejos en Azafrán. Y entonces los tejados se acaban. Para mí y para ti.' },
+			{ say: 'ysolde', text: 'Los dejé con quien tenían que estar. —Ni se gira—. Si me quedo, Atenea me reconoce. Si me reconoce, sabe que hay Vencejos en Azafrán. Y entonces los tejados se acaban. Para mí y para ti.' },
 			{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e', '#c4a43a'], far: '#1f2e4f' }, start: 'dark', frames: [
-				{ text: 'Os sentáis los dos en el borde del helipuerto. Abajo, la policía de Kanto entra en Silph con cajas vacías. Sale con cajas llenas.' },
+				{ text: 'Se sientan los dos en el borde del helipuerto. Abajo, la policía de Kanto entra en Silph con cajas vacías. Sale con cajas llenas.' },
 				{ fx: 'glow', text: 'Las furgonetas de Lemnis siguen llegando. De todas las calles. Hasta de la carretera del norte, la que viene de Celeste, con las luces de emergencia puestas y sin frenar en los cruces.' },
 				{ text: 'Enfrente, en la Torre Lemnis, la planta veinticuatro está a oscuras. La persiana, bajada hasta abajo.' },
 			] } },
-			{ text: '{riolu} se sienta en el borde a tu lado, con las piernas colgando como las vuestras. El aura le brilla muy tenue, al ritmo de la respiración. Mira hacia el norte. No hacia las furgonetas. Más allá.', cond: LUC },
+			{ text: '{riolu} se sienta en el borde a tu lado, con las piernas colgando como las de ustedes. El aura le brilla muy tenue, al ritmo de la respiración. Mira hacia el norte. No hacia las furgonetas. Más allá.', cond: LUC },
 			{ say: 'ysolde', text: 'Mira las furgonetas. Vienen todas. Hasta las del norte. —Señala con la barbilla—. Esta noche, en esta ciudad, nadie vigila nada que no sea este edificio.' },
 			{ say: 'ysolde', text: 'Y la letra del calendario decía «Celeste». Tu amigo el del Cabo decía «la Cueva». —Por fin te mira—. Yo no te digo nada. Yo solo miro desde arriba. Pero desde arriba, ahora mismo, la valla de la Cueva Celeste está muy sola.' },
 			{ if: 'flag.b03_vencejo_pluma', then: [
@@ -1020,7 +1020,7 @@ export default {
 					{ say: 'ysolde', text: 'Si te aviso, no es desaparecer. Es irse. —Se sube la capucha—. Irse lo hace cualquiera.' },
 				] },
 			] },
-			{ text: 'Se da la vuelta, da dos pasos por el borde del helipuerto y salta. No hacia la calle: hacia la Torre Lemnis, al andamio de limpieza, tres metros más allá. Lo coge con una mano. Se balancea una vez. Y desaparece por encima, hacia la lemniscata que gira.' },
+			{ text: 'Se da la vuelta, da dos pasos por el borde del helipuerto y salta. No hacia la calle: hacia la Torre Lemnis, al andamio de limpieza, tres metros más allá. Lo agarra con una mano. Se balancea una vez. Y desaparece por encima, hacia la lemniscata que gira.' },
 			{ text: 'En el borde del helipuerto, donde estaba sentada, ha dejado una pluma gris. Con tu inicial dibujada a lápiz en el cañón.' },
 			{ set: { 'flag.b04_silph_hecho': true } },
 			{ quest: 'b04_q_archivo', done: true },
@@ -1061,7 +1061,7 @@ export default {
 			{ text: 'Un cementerio pequeño, al final de la calle, con lápidas diminutas de piedra blanca. Nombres de Pokémon tallados con cariño: «Bigotes, que cazaba moscas». «Pompón, el más tragón». «Señora Peluche, que nunca mordió a nadie (salvo al cartero)».' },
 			{ text: 'Hay flores frescas en casi todas. Y velas encendidas, aunque no hay nadie.' },
 			{ if: LUC, then: [
-				{ text: '{riolu} se detiene delante de una lápida sin nombre, con una sola flor seca. La mira mucho rato. Luego coge una flor de lavanda del borde del camino y la deja al lado de la seca.' },
+				{ text: '{riolu} se detiene delante de una lápida sin nombre, con una sola flor seca. La mira mucho rato. Luego toma una flor de lavanda del borde del camino y la deja al lado de la seca.' },
 			] },
 			{ if: '!flag.b04_cementerio', then: [
 				{ set: { 'flag.b04_cementerio': true } },
@@ -1157,7 +1157,7 @@ export default {
 			{ choice: [
 				{ text: 'No felicitarla. Quedarte a su lado mirando la llamita.', then: [
 					{ af: { kaori: 2 } },
-					{ text: 'Os quedáis los dos sentados en el suelo, mirando la llamita de la Ponyta. Kaori no dice nada en un buen rato. Luego, sin mirarte, te empuja un vaso de té con la punta de los dedos.' },
+					{ text: 'Se quedan los dos sentados en el suelo, mirando la llamita de la Ponyta. Kaori no dice nada en un buen rato. Luego, sin mirarte, te empuja un vaso de té con la punta de los dedos.' },
 					{ say: 'kaori', text: 'Es de lavanda. No lleva nada raro. Lo he comprobado. —Pausa—. Dos veces.' },
 				] },
 				{ text: '«Felicidades.»', then: [
@@ -1171,7 +1171,7 @@ export default {
 			] },
 			{ say: 'fuji', text: 'Toma. —El Señor Fuji te pone en la mano una hoja vieja, amarilla, blanda de tanto doblarla—. La escribí hace muchos años y nunca se la he enseñado a nadie. Me parece que tú tienes que leerla. No sé por qué. Los viejos sabemos cosas sin saber por qué.' },
 			{ give: 'diariofuji' },
-			{ say: 'fuji', text: 'Si un día encuentras a alguien muy cansado, muy fuerte y muy enfadado… —Se calla. Vuelve a coger la taza—. No le tengas miedo. Lo que tiene no es rabia. Es cansancio. Desde fuera se parecen mucho.' },
+			{ say: 'fuji', text: 'Si un día encuentras a alguien muy cansado, muy fuerte y muy enfadado… —Se calla. Vuelve a tomar la taza—. No le tengas miedo. Lo que tiene no es rabia. Es cansancio. Desde fuera se parecen mucho.' },
 			{ quest: 'b04_q_ceniza', done: true },
 			{ quest: 'b04_t_kaori', stage: 'abierto' },
 			{ intel: { npc: 'kaori', text: 'Con la ceniza del incensario de la vieja torre (resina de tejo), su antídoto da un paso: la Ponyta de la Casa Pokémon recuperó una llamita. Estable, no curada. «El cansancio no desaparece. Va a alguna parte. Alguien se lo está quedando».' } },
@@ -1207,7 +1207,7 @@ export default {
 		b04_locutora: [
 			{ text: 'La locutora de guardia tiene los cascos puestos y una infusión humeante. Cuando te ve, se quita un auricular.' },
 			{ say: 'vecino_kanto', as: 'Locutora', text: 'Bienvenid{o|a|e} a Radio Lavanda, la voz del este. Esta noche tengo el programa de las doce: «Lo que se oye cuando no suena nada». Pongo las frecuencias vacías y la gente llama para contar qué oye.' },
-			{ say: 'vecino_kanto', as: 'Locutora', text: 'Normalmente oyen quejas. «Bajad la música». «Dejad de pisar». «Qué pesados con la antena». —Sonríe—. Desde hace un mes oyen otra cosa: un zumbido grave, que viene del oeste. De Azafrán. Y los de las quejas se quejan del zumbido. Hasta los muertos tienen vecinos molestos.' },
+			{ say: 'vecino_kanto', as: 'Locutora', text: 'Normalmente oyen quejas. «Bájenle a la música». «Dejen de pisar». «Qué pesados con la antena». —Sonríe—. Desde hace un mes oyen otra cosa: un zumbido grave, que viene del oeste. De Azafrán. Y los de las quejas se quejan del zumbido. Hasta los muertos tienen vecinos molestos.' },
 		],
 		b04_placa_torre: [
 			{ text: 'Una placa de bronce, pulida de tanto tocarla:' },
@@ -1283,12 +1283,12 @@ export default {
 			{ say: 'tobias', text: '…y aquí, audiencia, en la sala más honda de la torre, donde nadie se atreve a… —Un Haunter le asoma por detrás del hombro y le sopla en la nuca—. ¡AAAAAAH! —Se da la vuelta—. ¡No hay nadie! ¡No hay nadie! Seguimos.' },
 			{ text: 'El Haunter se acerca a Duquesa. Le pone una cara horrible: lengua fuera, ojos enormes, manos de garra. Duquesa lo mira. Bosteza. Le da un zarpazo distraído que lo atraviesa sin tocarlo, y se vuelve a lamer la pata.' },
 			{ text: 'El Haunter se queda muy quieto. Luego se va flotando hacia un nicho, despacio, con la dignidad de quien ha perdido.' },
-			{ say: 'tobias', text: '¡HA ASUSTADO A UN FANTASMA! ¡Audiencia, lo habéis visto! ¡Duquesa ha asustado a un fantasma! —Se le saltan las lágrimas—. Esta es la mejor temporada de la historia del programa.' },
+			{ say: 'tobias', text: '¡HA ASUSTADO A UN FANTASMA! ¡Audiencia, lo han visto! ¡Duquesa ha asustado a un fantasma! —Se le saltan las lágrimas—. Esta es la mejor temporada de la historia del programa.' },
 			{ if: LUC, then: [
 				{ text: 'Duquesa baja de la lápida, se acerca a {riolu} y se frota contra su pierna. Una vez. Sin mirarlo. Luego vuelve a su lápida como si no hubiera pasado nada.' },
 				{ say: 'tobias', text: '…¿Qué ha sido eso? Duquesa no hace eso. Duquesa no hace eso ni conmigo. —Te mira, muy serio—. Tu Lucario tiene algo. No sé qué es. Pero lo quiero para el programa.' },
 			] },
-			{ say: 'tobias', text: 'Y ahora… ¡el gran final! —Se gira a la cámara—. Ya lo conocéis. Es la tradición. Resulta que el VERDADERO jefe final del especial de fantasmas… ¡SOY YO! Tercera temporada seguida. Eso ya no es una tradición, es una franquicia.' },
+			{ say: 'tobias', text: 'Y ahora… ¡el gran final! —Se gira a la cámara—. Ya lo conocen. Es la tradición. Resulta que el VERDADERO jefe final del especial de fantasmas… ¡SOY YO! Tercera temporada seguida. Eso ya no es una tradición, es una franquicia.' },
 			{ quest: 'b04_t_show', stage: 'hecha', done: true },
 			{ call: 'b04_tobias_reto' },
 		],
@@ -1306,7 +1306,7 @@ export default {
 							{ text: 'Saca una caja de cartón con una pegatina dibujada a mano: «BOTÍN DE ORO». Debajo, más pequeño: «(de verdad esta vez)».' },
 							{ give: 'maxrevive' }, { give: 'hyperpotion', n: 2 },
 							{ text: 'Desde los nichos, muy bajito, alguien aplaude. Varias manos que no se ven. Tobías se queda blanco.' },
-							{ say: 'tobias', text: '…¿Eso ha sido el público? ¿Tengo público aquí abajo? —Traga saliva—. Gracias. Gracias por venir. Por favor, no me sigáis a casa.' },
+							{ say: 'tobias', text: '…¿Eso ha sido el público? ¿Tengo público aquí abajo? —Traga saliva—. Gracias. Gracias por venir. Por favor, no me sigan a casa.' },
 						],
 						onLose: [
 							{ say: 'tobias', text: '¡GANAMOS! ¡En una cripta! ¡Duquesa, mira! …Duquesa ya está dormida encima de una lápida. Se lo cuento luego. Con gráficos. —A ti, bajito—: Vuelve cuando quieras. El jefe de piso no se mueve de aquí. No puede: le da miedo subir solo.' },
@@ -1314,7 +1314,7 @@ export default {
 					},
 				] },
 				{ text: '«Hoy no. Termina el episodio sin mí.»', then: [
-					{ say: 'tobias', text: 'Sin combate final. —Se lo piensa—. Vale. Lo vendo como «final abierto». Los finales abiertos están de moda. Pero si cambias de idea, estaré aquí. Editando. Con miedo.' },
+					{ say: 'tobias', text: 'Sin combate final. —Se lo piensa—. Bueno. Lo vendo como «final abierto». Los finales abiertos están de moda. Pero si cambias de idea, estaré aquí. Editando. Con miedo.' },
 				] },
 			] },
 		],

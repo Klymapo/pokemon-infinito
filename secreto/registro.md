@@ -201,3 +201,41 @@ Mario iba por el final del B1 (sin jugar B2 ni B3): el B4 cubre todas las ramas 
 - **Nuevos (solo B4, necesitan 2+ bloques más):** Misty, Sabrina, Bill, Señor Fuji, Presidente de Silph (canon); **Magda Ivers** (OC, 3 escenas en el B4); Casimiro (cazatalentos de Lemnis del Puente Pepita); Camille (hija de Lebrun, mencionada).
 - **Vuelven:** Ansel (B1→B4), Lebrun (revelado), Sera, Xero (B1→B4), Alexia, Gadd (B1→B4), Kiyo, Atenea, Atlas (si quemar), Toni (carta), Adela (2.ª/3.ª aparición según rama), Rhi, Bastien, Noa, Kaori, Renata (llamada), Ysolde, Tobías y Duquesa, Ulises, Petra (mensaje), A.Z., Lila y Corelia (llamada), Melia/Sera (mensajes según rama), Simón (rumor).
 - **Pendientes de aparecer** (llevan tiempo): Cornelio, Ciprés, Brock (solo mencionado), Blanca, Matière, Lucien, Philippe, Rouxel, Héctor, Nate, Conde, Remedios, Lazare, Morti, Antón, Kurt, Protón, Lance, Yasmina, Li.
+
+## Publicación 6 · 2026-10-07 (madrugada de historia) · Profundidad en Johto y Kanto (sin bloque nuevo)
+
+Mario va por el B2 (`b02_m2`); B3 y B4 ya publicados: no se escribe el B5. Plan en `bloques/p6-profundidad-plan.md`. Partes nuevas registradas en los `index.js`: `b02/t5-iniciales.js`, `b02/t6-lola.js`, `b03/t5-iniciales.js`, `b03/t6-ampharosita.js`, `b03/t7-paneles.js`, `b03/t8-lola.js`, `b04/t4-lola.js`.
+
+### Qué hay
+
+| Pieza | Dónde y cuándo | Ids clave |
+|---|---|---|
+| **Los tres de Primavera** (`b02_s_iniciales`, 3 partes, cualquier orden) | Chikorita en Azalea (tras `b02_pozo_hecho`; se cree Slowpoke), Cyndaquil en Iris/Torre Quemada (tras `b02_torre_hecha`; puzle `b02_ini_vigas`), Totodile en el Puerto de Olivo (tras `b03_faro_hecho`). Cierre con llamada a Elm: carta (`b03_ini_cartaelm`), Huevo Suerte, rep.johto +2. Amistoso opcional con Ramiro (`b03_ini_ramiro`) | `b02_ini_*`, `b03_ini_*`; NPCs `elm` (canon, holomisor) y `becario_elm` (Ramiro Alcalde, OC) |
+| **Una luz que enciende otra** (`b03_s_ampharosita`) | Faro de Olivo tras `beat("yasmina_g7")`: sub-área `faro_maquinas`, puzles `b03_amphita_contrapesos` (11) y `b03_amphita_engranajes` (22); el Pokémon de lana del jugador junta la cola con Amphy → **Ampharosita** con cinemática. Amphy **no** se cura (la lente gira entera, la luz llega más lejos). Amistoso opcional con Yasmina | `b03_amphita_*` (`_candela` / `_faro` según quién enciende), `paginafaro` (read), recolección `b03_amphita_cajon` |
+| **Las cámaras de la ladera** (`b03_s_paneles`, 3 partes) | Ruinas Alfa tras `b03_ruinas_hecho`: sub-área `b03_panel_ladera`, puzles domo (10), espiral (17), ala (28) → Fósil Domo, Fósil Hélix, Ámbar Viejo. Se reviven en el Lab. de Fósiles de Petroglifo (Lazare, `patches` del B1), nv 25. **Segunda vía del fósil de Kalos** (`b03_panel_kalos`): Mario tiene Tyrunt → Lazare le da el Fósil Aleta (Amaura) | `b03_panel_*`, `b03_panel_cuaderno` (read), recolección `b03_panel_escombros` |
+| **«Fiado no»** (`b02_t_lola`, hilo nuevo **La arrepentida**) | Trigal (tras `b02_pabellon`): pedido a la Torre Radio, donde ella no entra. Caoba (`flag.lola_1`; dos versiones, antes y después de la guarida). Lavanda (`flag.lola_2 && b04_lavanda_llegada`): flores en la lápida sin nombre, Fuji. Etapa final `espera` | `lola_conocida`, `lola_entrega`, `lola_1/2/3`, `lola_caoba_despues`; objetos `lola_bollo` (cura al equipo), `lola_receta`, `lola_servilleta`, `lola_postal` (read), `lola_mt_triturar` |
+
+### Pistas plantadas (Lola; nunca confiesa)
+
+- Trigal: carrito de espaldas a la Torre Radio; conoce la escalera «detrás del cuarto de los fusibles» y el «estudio de las puertas dobles» (desaparecidos hace 20+ años, «antes de lo del asalto»); su Raticate **Tacho** se aterra con la señal horaria.
+- Caoba: Tacho tiembla «tres y pausa» como la máquina de la guarida; sabe la escalera detrás del mostrador; **R** descosida y raspada en el forro; «la fam…»; gorras nuevas de costura doble y billetes nuevos: «alguien con mucha lana les estaba pagando» (**Lemnis financia, sin nombrarla**).
+- Lavanda: Fuji «¿Otra vez este año?» / «Todos los años»; pregunta por «el del hueso» (Marowak); postal sin enviar («Es de uniforme, imagínese… Somos como una ~~familia~~»); con `b04_atenea_vencida`: la pelirroja «de joven ya daba miedo… en las fotos, digo».
+- **Giro propuesto (Acto V o vuelta a Johto/Kanto antes del VI):** Lola fue recluta de Giovanni con ~18 años; estuvo en la toma de la Torre Pokémon (la madre Marowak) y en la de la Torre Radio, donde se fue y tapió la escalera de los fusibles. Cumplió condena. Atlas o Atenea le piden «un último favor»; ella elige al jugador y le da los planos de los túneles Rocket por donde pasan los envíos N-02. Giro dentro del giro: la «fundación generosa» que pagó fianzas hace 20 años es la misma firma de las transferencias de hoy (Lemnis ya compraba gente en su primer año). Cierre posible: abre las jaulas de Noa por un túnel. Frase: «Fiado no. Esto lo pago yo».
+
+### Otras pistas y semillas
+
+- Ámbar de Petra en la máquina de Lazare: «ANTIGÜEDAD ESTIMADA: −3 AÑOS» (`b03_panel_ambar_menos3`; Petra se va a Canela, encaja con su mensaje del B4).
+- 4.ª cámara sin losas con un hueco con forma de pluma (Ho-Oh, sin plan).
+- La noche del desvío: los relojes de Ramiro y de Rotom se quedaron en blanco; los huevos de Elm se giraron hacia el Encinar; la nidada nació antes de tiempo.
+- Diario: 1 entrada por pieza, sin pistas de calendario (omiten las de Lola).
+
+### Personajes
+
+- **Nuevos:** Ramiro Alcalde (`becario_elm`) y Prof. Elm (`elm`): B2+B3, **necesitan una aparición en el B5+**. Lola Arriaga (`lola`): B2, B3, B4 (cumple). 
+- **Vuelven:** Yasmina (4 escenas en el Faro), Dr. Lazare (pendiente desde el B1), Petra (laboratorio, solo entre el fin de las Ruinas y el inicio del B4), Fuji (Lavanda), arqueólogo de la Ruta 32.
+- **Nombres visibles cambiados (ids intactos):** `encinar_ramiro` → «Leandro»; `r32_casimiro` → «Macario».
+
+### Otros cambios
+
+- Pasada de español para CDMX en todo lo publicado (~214 textos: coger, vosotros, vale, chaval, mola, guay, ordenador…). El Superfan avisa si vuelven.
+- Colección: Iniciales 4 → 7/29; Fósiles 2 → 6/15 (Kabuto, Omanyte, Aerodactyl, Amaura); Megapiedras: + Ampharosita.

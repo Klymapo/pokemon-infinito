@@ -113,7 +113,7 @@ export default {
 		b01_t_cabina: { name: 'La cabina azul', type: 'thread', stages: {
 			vista: 'Una cabina azul de madera aparece y desaparece por Kalos. Su dueño, un hombre con una bufanda larguísima, siempre pregunta qué día es.',
 			tarjeta: 'El viajero de la bufanda te dejó una tarjeta. No explica nada. Nunca explica nada.',
-			abierto: 'El viajero dice que «ya os habéis visto». Para él, al menos.',
+			abierto: 'El viajero dice que «ya se han visto». Para él, al menos.',
 		} },
 		b01_t_vencejos: { name: 'Plumas en el tejado', type: 'thread', stages: {
 			pluma: 'Alguien con capucha vigila la Puerta Lemnis desde los tejados de Luminalia. Te dejó una pluma gris.',
@@ -172,7 +172,7 @@ export default {
 			{ say: 'ysolde', text: 'Ysolde. Los míos nos llamamos **Vencejos**. Nunca bajamos al suelo si podemos evitarlo. Desde arriba se ve quién mueve los hilos.' },
 			{ say: 'ysolde', text: 'Vigilamos a Lemnis desde antes de que tuvieran logotipo. Y a otros, antes que a ellos. Siempre hay alguien que quiere una energía que no se acaba. Siempre hay alguien que paga la cuenta.' },
 			{ choice: [
-				{ text: '«¿Por qué me vigiláis a mí?»', then: [{ say: 'ysolde', text: 'No te vigilamos a ti. Vigilamos a quien te vigila. Es distinto. Aunque, desde el tejado, se parece bastante.' }] },
+				{ text: '«¿Por qué me vigilan a mí?»', then: [{ say: 'ysolde', text: 'No te vigilamos a ti. Vigilamos a quien te vigila. Es distinto. Aunque, desde el tejado, se parece bastante.' }] },
 				{ text: '«¿Sabes quién está detrás de Lemnis?»', then: [{ say: 'ysolde', text: 'En toda empresa hay quien firma y hay quien decide. Casi nunca es la misma persona. Más no te puedo decir. Más no sé. Todavía.' }] },
 				{ text: '«¿Cómo saltaste del tejado sin matarte?»', then: [{ say: 'ysolde', text: 'Fe. Y un carro de flores que pasa por la plaza todos los días a las once y cuarto. Sobre todo, el carro.' }] },
 			] },
@@ -207,7 +207,7 @@ export default {
 		b01_enc_petra_1: [
 			{ set: { 'flag.b01_enc_petra_1': true } },
 			{ text: 'Por las rocas talladas de la playa baja resbalando una mujer con un sombrero de explorador, unas gafas de protección torcidas y un cubo en cada mano. Detrás, un Diggersby baja tranquilamente, con las orejas cruzadas de brazos.' },
-			{ say: 'petra', as: 'Mujer del cubo', text: '¡Cuidado, cuidado, CUIDADO! —Aterriza de culo en la arena. Los cubos, milagrosamente, siguen en pie—. …Vale. Está todo bien. Ningún fósil ha sufrido daños. Yo sí, pero yo me regenero.' },
+			{ say: 'petra', as: 'Mujer del cubo', text: '¡Cuidado, cuidado, CUIDADO! —Aterriza de culo en la arena. Los cubos, milagrosamente, siguen en pie—. …Bueno. Está todo bien. Ningún fósil ha sufrido daños. Yo sí, pero yo me regenero.' },
 			{ say: 'petra', text: 'Petra Brossard, paleontóloga de campo. «De campo» quiere decir que me paso el día en el suelo. A veces a propósito.' },
 			{ say: 'petra', text: 'Y este es Pala. Mi Diggersby. Él cava, yo me caigo. Es un buen sistema. Llevamos seis años así y solo me he roto la misma muñeca dos veces.' },
 			{ text: 'Petra mete la mano en uno de los cubos y saca algo envuelto en un pañuelo. Lo destapa con un cuidado que no ha tenido con nada más en toda la mañana.' },
@@ -263,7 +263,7 @@ export default {
 			], else: [
 				{ say: 'viajero', as: 'Hombre de la bufanda', text: '¡Hola! ¿Qué año es? No, no me lo digas. ¿Hay Puertas ya? ¿Las grandes, plateadas, con forma de ocho tumbado?' },
 				{ choice: [
-					{ text: '«Sí. Hace poco inauguraron la primera.»', then: [{ say: 'viajero', as: 'Hombre de la bufanda', text: '¡Ah! Ya hay Puertas. Vale. Vale, vale, vale. Entonces llego a tiempo. O tarde. Depende de por dónde lo mires, y yo lo miro por todos lados.' }] },
+					{ text: '«Sí. Hace poco inauguraron la primera.»', then: [{ say: 'viajero', as: 'Hombre de la bufanda', text: '¡Ah! Ya hay Puertas. Bien. Bien, bien, bien. Entonces llego a tiempo. O tarde. Depende de por dónde lo mires, y yo lo miro por todos lados.' }] },
 					{ text: '«¿Quién pregunta qué año es?»', then: [{ say: 'viajero', as: 'Hombre de la bufanda', text: 'Alguien que tiene muchos y los confunde. Es como tener demasiados calcetines: al final te pones uno de cada.' }] },
 				] },
 			] },
@@ -413,7 +413,7 @@ export default {
 			{ text: 'Te ve. La sonrisa se le enciende como un cartel de neón.' },
 			{ say: 'rouxel', text: '¡{jugador}! ¡La cara de la inauguración! Estamos grabando el anuncio de la campaña «Volver a casa». ¿Quieres salir? Dos segundos. Una sonrisa, un pulgar arriba. Nada que tengas que firmar. Hoy.' },
 			{ choice: [
-				{ text: '«¿Qué Pokémon habéis traído de vuelta, exactamente?»', then: [
+				{ text: '«¿Qué Pokémon han traído de vuelta, exactamente?»', then: [
 					{ rep: { lemnis: -1 } },
 					{ say: 'rouxel', text: 'Este Fletchling, por ejemplo. —Baja la voz—. Bueno, este Fletchling es de Kalos y es de la niña desde siempre. Pero *representa* a los que volverán. La publicidad es así: va un poco por delante de la realidad.' },
 				] },
@@ -480,14 +480,14 @@ export default {
 		b01_enc_noa_1: [
 			{ set: { 'flag.b01_enc_noa_1': true } },
 			{ text: 'Noa está en la puerta del Centro Pokémon, con el móvil en la oreja y una carpeta llena de etiquetas debajo del brazo. Te saluda con la mano libre y sigue hablando.' },
-			{ say: 'noa', text: '…Envío KAL-0031. Un Wooloo. Destino Galar. Salió de Luminalia hace nueve días. …¿No consta? ¿Cómo que no consta? Lleva un pañuelo con su nombre: Merengue. …Vale. Vale. Gracias.' },
+			{ say: 'noa', text: '…Envío KAL-0031. Un Wooloo. Destino Galar. Salió de Luminalia hace nueve días. …¿No consta? ¿Cómo que no consta? Lleva un pañuelo con su nombre: Merengue. …Ya. Ya. Gracias.' },
 			{ text: 'Cuelga. Se queda mirando el móvil un momento, como si fuera a volver a sonar con otra respuesta.' },
 			{ say: 'noa', text: '¡Hola! Perdona. Burocracia interregional. Es como la normal, pero en nueve idiomas. —Se ríe. Le sale un poco corta.' },
 			{ if: 'flag.b01_mareep_noche', then: [{ say: 'noa', text: 'Ah, ¿sabes qué? Se nos escapó un Mareep del campamento. De noche. El guardia dice que vio una sombra con un Riolu. —Te mira. Luego mira a otro lado—. Seguro que fue un sueño. Él sueña mucho.' }] },
 			{ if: 'flag.b01_noa_favor', then: [{ say: 'noa', text: 'Lo del Mareep de la marca sigue «extraviado durante el transporte». —Baja la voz—. Es el único envío del que sé seguro dónde está.' }] },
 			{ say: 'noa', text: 'Seguro que es un retraso. Los envíos tardan. Galar está lejísimos. Bueno, ya no, con las Puertas. Pero los papeles sí.' },
 			{ choice: [
-				{ text: '«Si quieres, pregunto yo por ahí.»', then: [{ say: 'noa', text: '¿Tú? No, no, no. No hace falta. De verdad. —Pausa—. …Si te enteras de algo, me lo dices, ¿vale? Solo a mí.' }] },
+				{ text: '«Si quieres, pregunto yo por ahí.»', then: [{ say: 'noa', text: '¿Tú? No, no, no. No hace falta. De verdad. —Pausa—. …Si te enteras de algo, me lo dices, ¿sí? Solo a mí.' }] },
 				{ text: '«Seguro que llega.»', then: [{ say: 'noa', text: 'Eso. Seguro. Lemnis cuida de los suyos. —Lo dice como quien repite una contraseña.' }] },
 			] },
 			{ intel: { npc: 'noa', text: 'Un Wooloo llamado Merengue salió de Luminalia hacia Galar «hace nueve días». En Galar no consta. Noa empieza a preguntar.' } },
@@ -571,7 +571,7 @@ export default {
 			{ prompt: 'Renata te apunta con el micrófono.', choice: [
 				{ text: '«Si es un ingeniero desaparecido, el título se queda corto. Ponle "La Puerta de atrás".»', then: [
 					{ af: { renata: 3 } },
-					{ say: 'renata', text: '…«La Puerta de atrás». —Se queda quieta por primera vez—. Vale. Eso es mejor que mi título. Odio cuando pasa eso. Me encanta cuando pasa eso.' },
+					{ say: 'renata', text: '…«La Puerta de atrás». —Se queda quieta por primera vez—. Bueno. Eso es mejor que mi título. Odio cuando pasa eso. Me encanta cuando pasa eso.' },
 				] },
 				{ text: '«¿Y qué tiene que ver con Lemnis?»', then: [
 					{ af: { renata: 1 } },
@@ -614,7 +614,7 @@ export default {
 		],
 		b01_enc_hector_1: [
 			{ set: { 'flag.b01_enc_hector_1': true } },
-			{ say: 'hector', text: '…¿Y una figura de Esprit? ¿Un póster? ¿Una taza? ¿Nada? ¿Ni una pegatina? —El quiosquero niega con la cabeza—. Vale. Gracias. Seguiré buscando.' },
+			{ say: 'hector', text: '…¿Y una figura de Esprit? ¿Un póster? ¿Una taza? ¿Nada? ¿Ni una pegatina? —El quiosquero niega con la cabeza—. Bueno. Gracias. Seguiré buscando.' },
 			{ say: 'hector', text: '¡{jugador}! ¡Estoy en Luminalia! ¡La ciudad de Esprit! He pedido tres días de vacaciones en la aseguradora. Me han dado dos. Y medio, si hago horas extra.' },
 			{ say: 'hector', text: 'La Agencia de Detectives está ahí al lado. Dicen que allí saben cosas. He pasado por delante seis veces. No he entrado ninguna. ¿Y si me dicen que Esprit no existe? ¿Y si me dicen que sí?' },
 			{ choice: [
@@ -657,7 +657,7 @@ export default {
 			{ say: 'nate', text: 'Ella entrena. Yo la miro. Es casi lo mismo.' },
 			{ choice: [
 				{ text: '«¿Y cuándo entrenas tú?»', then: [{ say: 'nate', text: 'Ahora. Estoy entrenando la paciencia. Es la más difícil. Rhi no la ha desbloqueado.' }] },
-				{ text: 'Tumbarte a su lado un rato.', then: [{ text: 'Os quedáis los dos mirando el cielo. Pasa una gaviota. Pasa otra. Nate no dice nada. Es un silencio sorprendentemente cómodo.' }, { say: 'nate', text: 'Tú lo entiendes.' }] },
+				{ text: 'Tumbarte a su lado un rato.', then: [{ text: 'Se quedan los dos mirando el cielo. Pasa una gaviota. Pasa otra. Nate no dice nada. Es un silencio sorprendentemente cómodo.' }, { say: 'nate', text: 'Tú lo entiendes.' }] },
 			] },
 			{ say: 'rhi', text: '¡NATE! ¡Que te estoy viendo! ¡Diez sprints! ¡AHORA!' },
 			{ say: 'nate', text: 'Qué flojera. —No se mueve—. Dice que la próxima vez te gana. Lo ha dicho cuarenta veces. A mí, ninguna.' },

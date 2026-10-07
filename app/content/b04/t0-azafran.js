@@ -166,7 +166,7 @@ export default {
 			mapNote: 'Kiyo · entrenamiento (nivel recomendado 51)',
 			spots: [
 				{ label: 'Kiyo', sub: 'Delante de una pila de tablas', icon: '🥋', new: '!flag.b04_kiyo_dojo', talk: [{ cond: 'flag.b04_kiyo_dojo', script: 'b04_kiyo_despues' }, { script: 'b04_kiyo_dojo' }] },
-				{ label: 'Entrenar en el tatami', sub: 'Entrenamiento (nivel recomendado 51)', icon: '🥋', action: { training: { cap: 51, trainers: ['dojo_az_1', 'dojo_az_2', 'dojo_az_3', 'dojo_az_4'], wild: [{ sp: 'machoke', lv: [47, 50] }, { sp: 'primeape', lv: [47, 50] }, { sp: 'hitmontop', lv: [48, 50] }], npc: 'kiyo', closed: 'Kiyo mira a tu equipo de arriba abajo y deja de contar. «Ya está. Ya no necesitáis pegarle a mis tablas. Ahora tenéis que pegarle a algo que os devuelva el golpe. Al norte hay una líder que lo hace muy bien».' } } },
+				{ label: 'Entrenar en el tatami', sub: 'Entrenamiento (nivel recomendado 51)', icon: '🥋', action: { training: { cap: 51, trainers: ['dojo_az_1', 'dojo_az_2', 'dojo_az_3', 'dojo_az_4'], wild: [{ sp: 'machoke', lv: [47, 50] }, { sp: 'primeape', lv: [47, 50] }, { sp: 'hitmontop', lv: [48, 50] }], npc: 'kiyo', closed: 'Kiyo mira a tu equipo de arriba abajo y deja de contar. «Ya está. Ya no necesitan pegarle a mis tablas. Ahora tienen que pegarle a algo que les devuelva el golpe. Al norte hay una líder que lo hace muy bien».' } } },
 				{ label: 'Cinturón negro: Hideki', sub: 'Hace flexiones con un dedo. Con el otro te saluda', icon: '⚔️', action: { trainer: 'dojo_az_1' } },
 				{ label: 'Cinturón negro: Asami', sub: 'Lleva vendas en las manos y una sonrisa peligrosa', icon: '⚔️', action: { trainer: 'dojo_az_2' } },
 				{ label: 'El cartel de la puerta', icon: '🪵', talk: [{ script: 'b04_dojo_cartel' }] },
@@ -202,15 +202,15 @@ export default {
 		// ----- Rival opcional -----
 		rhi_5: { name: 'Rhi', cls: 'Rival', npc: 'rhi', ai: 3, iv: 27, reward: 3000,
 			team: [
-				{ sp: 'falinks', lv: 45, moves: ['closecombat', 'megahorn', 'rockslide', 'ironhead'], ability: 'battlearmor', nature: 'adamant', iv: 26 },
-				{ sp: 'sirfetchd', lv: 46, moves: ['leafblade', 'brutalswing', 'closecombat', 'knockoff'], ability: 'steadfast', item: 'leek', nature: 'adamant', iv: 27 },
-				{ sp: 'toxtricity', lv: 46, moves: ['overdrive', 'sludgebomb', 'hypervoice', 'voltswitch'], ability: 'punkrock', nature: 'modest', iv: 27 },
-				{ sp: 'corviknight', lv: 47, moves: ['bravebird', 'ironhead', 'bodypress', 'payback'], ability: 'mirrorarmor', nature: 'impish', iv: 27 },
-				{ sp: 'cinderace', lv: 49, moves: ['pyroball', 'bounce', 'uturn', 'zenheadbutt'], ability: 'blaze', item: 'sitrusberry', nature: 'jolly', iv: 29 },
+				{ sp: 'falinks', lv: 44, moves: ['closecombat', 'megahorn', 'rockslide', 'ironhead'], ability: 'battlearmor', nature: 'adamant', iv: 26 },
+				{ sp: 'sirfetchd', lv: 45, moves: ['leafblade', 'brutalswing', 'closecombat', 'knockoff'], ability: 'steadfast', item: 'leek', nature: 'adamant', iv: 27 },
+				{ sp: 'toxtricity', lv: 45, moves: ['overdrive', 'sludgebomb', 'hypervoice', 'voltswitch'], ability: 'punkrock', nature: 'modest', iv: 27 },
+				{ sp: 'corviknight', lv: 46, moves: ['bravebird', 'ironhead', 'bodypress', 'payback'], ability: 'mirrorarmor', nature: 'impish', iv: 27 },
+				{ sp: 'cinderace', lv: 48, moves: ['pyroball', 'bounce', 'uturn', 'zenheadbutt'], ability: 'blaze', item: 'oranberry', nature: 'jolly', iv: 29 },
 			],
 			items: [{ id: 'superpotion', n: 1 }],
 			intro: '¡Partido amistoso en el pasillo! El que pierda paga los sándwiches. ¡Cinderace sale al final, como las estrellas!',
-			win: '…Vale. Vale. Tres puntos para ti. Pero que conste que había un bache.',
+			win: '…Bueno. Bueno. Tres puntos para ti. Pero que conste que había un bache.',
 			lose: '¡GOLAZO! ¡A doscientos cuarenta por hora! ¡Eso no lo ha hecho nadie nunca! …Creo.' },
 
 		// ----- Aspirantes de la Gira en el tren -----
@@ -267,7 +267,7 @@ export default {
 				{ sp: 'primeape', lv: 49, moves: ['crosschop', 'uturn', 'stoneedge', 'stompingtantrum'] },
 			],
 			intro: 'Aquí le pegamos a las tablas. Tú pareces una tabla con buena actitud. Vamos allá.',
-			win: 'Vale, no eres una tabla. Las tablas no ganan.',
+			win: 'Bueno, no eres una tabla. Las tablas no ganan.',
 			look: { hair: 'ponytail', hairColor: '#4a2a1a', outfit: '#e9e8e0', outfit2: '#2b2b38', skin: 3, acc: 'bandana', eyesStyle: 'sharp', mouth: 'smile' } },
 		dojo_az_3: { name: 'Kenta', cls: 'Karateka', ai: 2, reward: 1960,
 			team: [
@@ -307,7 +307,7 @@ export default {
 			{ choice: [
 				{ text: 'Subir al tren', then: [{ go: 'tren_magnetico' }] },
 				{ text: 'Todavía no (preparar el equipo en Trigal)', then: [
-					{ say: 'rotom', text: '¡Vale! El tren sale cuando subamos nosotros. Bueno, no. Pero la Gira ha reservado el vagón 3 entero, así que nos esperan. Dicen. Más o menos.' },
+					{ say: 'rotom', text: '¡Va! El tren sale cuando subamos nosotros. Bueno, no. Pero la Gira ha reservado el vagón 3 entero, así que nos esperan. Dicen. Más o menos.' },
 				] },
 			] },
 		],
@@ -353,7 +353,7 @@ export default {
 					] },
 				] },
 				{ text: '«Ahora no.»', then: [
-					{ say: 'rhi', text: 'Vale. Pero que sepas que el balón sigue aquí. Y yo también. No me voy a ninguna parte. Bueno, a Kanto. Pero tú también.' },
+					{ say: 'rhi', text: 'Ok. Pero que sepas que el balón sigue aquí. Y yo también. No me voy a ninguna parte. Bueno, a Kanto. Pero tú también.' },
 				] },
 			] },
 		],
@@ -361,7 +361,7 @@ export default {
 			{ battle: 'rhi_5', lose: 'continue',
 				onWin: [
 					{ af: { rhi: 5 } },
-					{ say: 'rhi', text: '…Uf. —Se deja caer en un asiento, despeinada—. Vale. Limpio. Sin trampas. Me has ganado limpio a doscientos cuarenta por hora. Eso no me lo había hecho nadie.' },
+					{ say: 'rhi', text: '…Uf. —Se deja caer en un asiento, despeinada—. Ok. Limpio. Sin trampas. Me has ganado limpio a doscientos cuarenta por hora. Eso no me lo había hecho nadie.' },
 					{ say: 'rhi', text: '¿Sabes qué? Mi padre va a ver la Copa por la tele. Me lo dijo ayer. Dice que se ha comprado una tele nueva para verla. Con el dinero del finiquito. —Se queda callada un segundo—. Así que más vale que lleguemos los dos. Que, si llego yo sola, no tiene gracia ganar.' },
 					{ text: 'Te tira un sándwich triangular del vagón restaurante. Es de atún. Ha perdido, así que paga. Las reglas son las reglas.' },
 					{ give: 'sitrusberry', n: 2 },
@@ -481,7 +481,7 @@ export default {
 		],
 		b04_ventanilla: [
 			{ if: '!flag.b04_tren_hecho', then: [
-				{ text: 'Por la ventanilla pasa Johto a oscuras: luces sueltas de granjas, un río plateado, el perfil negro de las montañas del este. Luego, de golpe, solo roca. Estáis entrando en las montañas que separan Johto de Kanto.' },
+				{ text: 'Por la ventanilla pasa Johto a oscuras: luces sueltas de granjas, un río plateado, el perfil negro de las montañas del este. Luego, de golpe, solo roca. Están entrando en las montañas que separan Johto de Kanto.' },
 				{ text: 'En el cristal ves tu reflejo, el de {riolu} y, detrás, los de los aspirantes de la Gira, todos con la misma cara: siete medallas y ganas de que sea mañana.', cond: LUC },
 			] },
 		],
@@ -502,7 +502,7 @@ export default {
 				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#7fb0e0' }, start: 'dark', frames: [
 					{ text: 'Oscuridad total. Alguien grita. Un bebé empieza a llorar dos filas más allá. Un Pokémon gruñe en su Poké Ball.' },
 					{ fx: 'glow', text: 'Y entonces se enciende una luz azul. {riolu} está de pie en el pasillo, con los ojos cerrados y las palmas abiertas. El aura le sale del pecho, tranquila, como el agua de una fuente.' },
-					{ fx: 'light', text: 'Llena el vagón entero. Las caras de los pasajeros se vuelven azules, asombradas. El bebé deja de llorar y alarga la mano hacia la luz, como si se pudiera coger.' },
+					{ fx: 'light', text: 'Llena el vagón entero. Las caras de los pasajeros se vuelven azules, asombradas. El bebé deja de llorar y alarga la mano hacia la luz, como si se pudiera agarrar.' },
 					{ text: '—¡Un Lucario linterna! —grita un niño. Su madre le manda callar. Luego se queda mirando también.' },
 				] } },
 				{ happy: { who: 'riolu', n: 10 } },
@@ -520,9 +520,9 @@ export default {
 			{ say: 'magda', as: 'Pasajera', text: 'Cuatro minutos. —Para sí misma, casi con cariño—. Mejor de lo previsto.' },
 			{ text: 'Se levanta, cierra el termo, se abrocha el último botón del abrigo y se va hacia el fondo del tren, hacia los vagones de cola, sin prisa. Como quien conoce el camino.' },
 			{ say: 'rotom', text: '¡Bzzt! Ya que estamos parados, aprovecho para escribir el Diario. ¡Un tren parado en un túnel es el sitio perfecto! Hay ambiente. Hay misterio. Hay sándwiches.' },
-			{ diary: 'Hoy mi entrenador{|a|e} y yo cogimos el Tren Magnético a Kanto. ¡Flota! De verdad flota, como un balón que nunca toca el suelo (eso es mío, pero a Rhi le gustaría). Hay un vagón restaurante con sándwiches triangulares y una maleta verde que no es de nadie.\n\nAhora mismo estamos parados en un túnel larguísimo. Por la ventanilla se ve un edificio con muchas lucecitas y un zumbido que se nota en los dientes. Es la subestación de la …bzzt… sincronizando… sincronizando… …sincronizando… …conexión restablecida.\n\n¡Perdón! ¿Dónde estaba? ¡Ah, sí! ¡El tren! Se apagaron las luces y {riolu} iluminó el vagón entero, y un niño lo llamó «Lucario linterna». ¡Mañana, Kanto!', cond: 'flag.b01_diario && (' + LUC + ')' },
-			{ diary: 'Hoy mi entrenador{|a|e} y yo cogimos el Tren Magnético a Kanto. ¡Flota! De verdad flota, como un balón que nunca toca el suelo (eso es mío, pero a Rhi le gustaría). Hay un vagón restaurante con sándwiches triangulares y una maleta verde que no es de nadie.\n\nAhora mismo estamos parados en un túnel larguísimo. Por la ventanilla se ve un edificio con muchas lucecitas y un zumbido que se nota en los dientes. Es la subestación de la …bzzt… sincronizando… sincronizando… …sincronizando… …conexión restablecida.\n\n¡Perdón! ¿Dónde estaba? ¡Ah, sí! ¡El tren! Se apagaron las luces y la gente se rio un poco, como en los ascensores. ¡Mañana, Kanto!', cond: 'flag.b01_diario && !(' + LUC + ')' },
-			{ text: 'Las luces vuelven de golpe, blancas, y todo el vagón parpadea a la vez. El zumbido del tren sube de nota. Un empujón suavísimo en la espalda: estáis otra vez en marcha.' },
+			{ diary: 'Hoy mi entrenador{|a|e} y yo tomamos el Tren Magnético a Kanto. ¡Flota! De verdad flota, como un balón que nunca toca el suelo (eso es mío, pero a Rhi le gustaría). Hay un vagón restaurante con sándwiches triangulares y una maleta verde que no es de nadie.\n\nAhora mismo estamos parados en un túnel larguísimo. Por la ventanilla se ve un edificio con muchas lucecitas y un zumbido que se nota en los dientes. Es la subestación de la …bzzt… sincronizando… sincronizando… …sincronizando… …conexión restablecida.\n\n¡Perdón! ¿Dónde estaba? ¡Ah, sí! ¡El tren! Se apagaron las luces y {riolu} iluminó el vagón entero, y un niño lo llamó «Lucario linterna». ¡Mañana, Kanto!', cond: 'flag.b01_diario && (' + LUC + ')' },
+			{ diary: 'Hoy mi entrenador{|a|e} y yo tomamos el Tren Magnético a Kanto. ¡Flota! De verdad flota, como un balón que nunca toca el suelo (eso es mío, pero a Rhi le gustaría). Hay un vagón restaurante con sándwiches triangulares y una maleta verde que no es de nadie.\n\nAhora mismo estamos parados en un túnel larguísimo. Por la ventanilla se ve un edificio con muchas lucecitas y un zumbido que se nota en los dientes. Es la subestación de la …bzzt… sincronizando… sincronizando… …sincronizando… …conexión restablecida.\n\n¡Perdón! ¿Dónde estaba? ¡Ah, sí! ¡El tren! Se apagaron las luces y la gente se rio un poco, como en los ascensores. ¡Mañana, Kanto!', cond: 'flag.b01_diario && !(' + LUC + ')' },
+			{ text: 'Las luces vuelven de golpe, blancas, y todo el vagón parpadea a la vez. El zumbido del tren sube de nota. Un empujón suavísimo en la espalda: están otra vez en marcha.' },
 			{ text: '{riolu} abre los ojos y se sienta, como si no hubiera pasado nada. Un señor de la fila de atrás le ofrece medio sándwich. {riolu} lo acepta. Ha trabajado.', cond: LUC },
 			{ text: 'El asiento de la mujer del termo sigue vacío. Sobre la mesita plegable se ha quedado la servilleta de papel.' },
 			{ cutscene: { bg: { type: 'indoor', wall: '#e9e8e0', floor: '#3b4a6a' }, start: 'dark', frames: [
@@ -537,7 +537,7 @@ export default {
 			{ go: 'azafran' },
 		],
 		b04_tren_salto: [
-			{ text: 'Antes de bajar a Azafrán, alguien tiene que coger el tren.' },
+			{ text: 'Antes de bajar a Azafrán, alguien tiene que tomar el tren.' },
 			{ say: 'rotom', text: '¡Bzzt! Nuestro billete es del de las 23:05, el de la Gira. ¡Está a punto de salir de Trigal! Vamos, vamos, que nos guardan sitio.' },
 			{ go: 'tren_magnetico' },
 		],
@@ -571,7 +571,7 @@ export default {
 				{ say: 'directivo_lemnis', text: 'Siete medallas. ¡Siete! Les falta una para clasificarse para la Copa Infinita, y la octava les espera en el **Gimnasio de Ciudad Celeste**, al norte, por la Ruta 5. Su líder es **Misty**. ¡Agua! Que no se les olvide el paraguas. —Pausa para risas. No hay risas—. Bien.' },
 				{ say: 'directivo_lemnis', text: 'La **Puerta Lemnis de Kanto** está a su disposición: regístrense en el parque y crucen a Kalos o a Johto cuando quieran. **Silph S.A.**, nuestra querida vecina, está cerrada por una auditoría rutinaria: les rogamos que no lo intenten. Y el gimnasio de Azafrán está, ejem, en pausa. Respetamos todas las decisiones. Todas.' },
 				{ text: 'Levantas la vista. En el entresuelo, apoyada en la barandilla de cristal, hay una figura con traje azul medianoche y guantes blancos. **Serafina Lemnis**. No ha bajado al escenario. No va a bajar.' },
-				{ text: 'Os miráis un segundo. Ella inclina la cabeza, exactamente un centímetro. «Buenas tardes», dicen sus labios, sin sonido. Y se va hacia los ascensores sin volverse.' },
+				{ text: 'Se miran un segundo. Ella inclina la cabeza, exactamente un centímetro. «Buenas tardes», dicen sus labios, sin sonido. Y se va hacia los ascensores sin volverse.' },
 				{ text: 'Por costumbre, tocas el Holomisor de Serafina en tu bolsillo. Sigue en gris: «Canal cerrado por el titular».', cond: 'has("holomisorsera")' },
 			], else: [
 				{ text: 'Sube al pequeño escenario una mujer joven con traje azul medianoche, melena negra recta, guantes blancos y un broche de lemniscata plateada. No toca el micrófono. No le hace falta: el vestíbulo se calla solo.' },
@@ -619,7 +619,7 @@ export default {
 			{ say: 'ansel', text: 'Siete medallas. ¡Siete! Cuando te conocí en Luminalia no sabías ni dónde estaba el Centro Pokémon. Mírate ahora.', cond: '!(' + LUC + ')' },
 			{ say: 'ansel', text: 'Me han dicho que el tren llegó tarde. Los trenes y yo tenemos eso en común: siempre llegamos, pero a nuestra hora. —Se ríe, bajito—. Toma. Para el viaje que te queda.' },
 			{ text: 'Te pone en la mano un caramelo de menta envuelto en papel azul, retorcido por las dos puntas.' },
-			{ text: 'Le ofrece otro a {riolu}. {riolu} lo huele, despacio, y no lo coge. Ansel se encoge de hombros, divertido, y se lo guarda.', cond: LUC },
+			{ text: 'Le ofrece otro a {riolu}. {riolu} lo huele, despacio, y no lo agarra. Ansel se encoge de hombros, divertido, y se lo guarda.', cond: LUC },
 			{ say: 'ansel', text: 'Hay a quien no le gusta la menta. No pasa nada. —Te da una palmadita en el brazo—. Cuídate mucho, ¿eh? Kanto es grande. Y muy viejo. Las cosas viejas guardan sorpresas.' },
 			{ text: 'Y se pierde entre la gente, saludando a unos y a otros, con su vaso de agua, hacia los ascensores.' },
 			{ quest: 'b04_m1', done: true },
@@ -747,7 +747,7 @@ export default {
 			] },
 			{ say: 'lebrun', text: 'Me esperan. —Mira el reloj—. Handsome, a las doce en el hotel. Con corbata. Sin bigote.' },
 			{ text: 'Se va calle abajo, hacia el centro, hacia las torres de cristal, con la carpeta bajo el brazo y el paso de quien cobra por horas. En la barandilla de la Puerta, donde ha apoyado la carpeta, se ha quedado un caramelo de menta envuelto en papel azul.' },
-			{ text: 'Handsome lo coge. Lo mira. Se lo guarda en el mismo bolsillo que el bigote.' },
+			{ text: 'Handsome lo toma. Lo mira. Se lo guarda en el mismo bolsillo que el bigote.' },
 			{ say: 'handsome', text: 'Lebrun es así. Lo sabe todo porque lo lee todo. Cuando Handsome era un novato, él le enseñó a leer un expediente al revés, de la última hoja a la primera. «Lo importante siempre está al final, Handsome. Pero se entiende desde el principio».' },
 			{ say: 'handsome', text: 'Handsome le debe su carrera. —Se queda callado—. Y una corbata. Una vez me prestó una corbata.' },
 			{ quest: 'b04_t_lebrun', stage: 'sospecha' },
@@ -891,7 +891,7 @@ export default {
 				{ text: 'Al pasar por delante del Centro Pokémon, la enfermera Joy te llama desde la puerta: hay correo a tu nombre. Un sobre de papel de estraza, con sellos de Johto pegados torcidos y un remite con letra grande: «A. Prado · Ruta 42».' },
 				{ text: 'Dentro, una carta. Corta. Y, pegado con celo al dorso, un mechón de lana de Mareep amarilla.' },
 				{ give: 'cartaadela' },
-				{ say: 'rotom', text: '¡Bzzt! «La primera sigue en la lata». ¿Qué lata? —Pausa—. Ah. Ya. Vale. No pregunto.' },
+				{ say: 'rotom', text: '¡Bzzt! «La primera sigue en la lata». ¿Qué lata? —Pausa—. Ah. Ya. Bueno. No pregunto.' },
 			] },
 			{ if: 'flag.b03_rancho_jugador', then: [
 				{ text: 'Rotom vibra. Una foto, desde un número de Johto, sin texto. Luego, otra vez: la misma foto, con texto. Adela no sabe muy bien cómo funcionan los mensajes.' },
@@ -907,10 +907,10 @@ export default {
 				{ choice: [
 					{ text: 'Contestar: «Guarda un poco de lana. Por si acaso.»', then: [
 						{ set: { 'flag.b04_adela_lana': true } },
-						{ text: 'La respuesta llega enseguida: «Vale. En la lata de las galletas. Ahí no mira nadie».' },
+						{ text: 'La respuesta llega enseguida: «Ok. En la lata de las galletas. Ahí no mira nadie».' },
 					] },
 					{ text: 'Contestar: «Seguro que es normal.»', then: [
-						{ text: 'La respuesta tarda mucho. «Vale». Solo eso. Una palabra. Con punto.' },
+						{ text: 'La respuesta tarda mucho. «Ok». Solo eso. Una palabra. Con punto.' },
 					] },
 					{ text: 'No contestar', then: [
 						{ text: 'Guardas la Pokédex. El mensaje se queda ahí, con la marca de «leído».' },

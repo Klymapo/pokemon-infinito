@@ -437,7 +437,7 @@ export default {
 			name: 'Lou', cls: 'Patinadora', ai: 2,
 			team: [{ sp: 'furfrou', lv: 12 }, { sp: 'bunnelby', lv: 11 }],
 			intro: '¡Desde lo de la Puerta, la pista se llena de turistas de Galar que no saben frenar! ¡Tú tampoco tienes pinta de saber!',
-			win: 'Vale, frenas mejor de lo que pensaba.',
+			win: 'Bueno, frenas mejor de lo que pensaba.',
 			look: { hair: 'ponytail', hairColor: '#e98aa8', outfit: '#f2b33d', outfit2: '#2b2b38', skin: 1, acc: 'headphones', mouth: 'grin' },
 		},
 		r5_patinador_lucas: {
@@ -458,7 +458,7 @@ export default {
 			name: 'Rémi', cls: 'Patinador', ai: 2,
 			team: [{ sp: 'scraggy', lv: 13 }, { sp: 'pancham', lv: 14 }],
 			intro: 'Llevo un mes con un truco que se llama «el Infinito». Le puse el nombre antes de lo de la Puerta. Ahora suena a anuncio. ¿Te lo enseño? En combate luce más.',
-			win: 'Vale. Al Infinito le falta un final. Lo estoy trabajando.',
+			win: 'Bueno. Al Infinito le falta un final. Lo estoy trabajando.',
 			look: { hair: 'spiky', hairColor: '#d8a85a', outfit: '#c4473a', outfit2: '#2b2b38', skin: 1, acc: 'bandana', mouth: 'grin' },
 		},
 		bastien_1: {
@@ -469,7 +469,7 @@ export default {
 			],
 			items: [{ id: 'potion', n: 1 }],
 			intro: 'Cláusula 14. Lo siento. Bueno, no lo siento: me apetecía.',
-			win: 'Vale. Vale. Lo apunto en el informe como «derrota estratégica».',
+			win: 'Bueno, bueno. Lo apunto en el informe como «derrota estratégica».',
 			lose: 'Gané. Qué raro se siente ganar con este uniforme puesto.',
 		},
 
@@ -538,7 +538,7 @@ export default {
 			name: 'Clémence', cls: 'Arqueóloga', ai: 2,
 			team: [{ sp: 'meditite', lv: 16 }, { sp: 'zubat', lv: 15 }],
 			intro: 'Unos tipos con trajes rojos me preguntaron si aquí había «cristales energéticos». ¿Cristales? Aquí hay murciélagos y humedad. ¿Tú también buscas cristales?',
-			win: 'Vale, vale. Tú no buscas cristales. Tú buscas pelea.',
+			win: 'Ya, ya. Tú no buscas cristales. Tú buscas pelea.',
 			look: { hair: 'tied', hairColor: '#d8a85a', outfit: '#8a7a5a', outfit2: '#e9e3d0', skin: 2, acc: 'glasses hat', mouth: 'flat' },
 		},
 
@@ -571,7 +571,7 @@ export default {
 				{ sp: 'spoink', lv: 15, moves: ['psybeam', 'confusion', 'growl', 'splash'], ability: 'thickfat', nature: 'modest', iv: 20 },
 			],
 			items: [{ id: 'potion', n: 1 }],
-			intro: '¡Patrocinadores, atentos! ¡Combate en directo! ¡Duquesa, haz lo tuyo! …¿No? ¿Hoy no sales? Vale. ¡Que salga la doble de acción!',
+			intro: '¡Patrocinadores, atentos! ¡Combate en directo! ¡Duquesa, haz lo tuyo! …¿No? ¿Hoy no sales? Bueno. ¡Que salga la doble de acción!',
 			win: '¡Derrota épica! ¡Eso engancha! ¡Los números van a subir! …¿Verdad, Duquesa? …Duquesa no me habla.',
 			lose: '¡VICTORIA! ¡Patrocinadores, eso ha sido por ustedes! ¡Y por Duquesa! Sobre todo por Duquesa.',
 		},
@@ -617,7 +617,7 @@ export default {
 					{ heal: 'Bastien abre una caja de Superpociones con la lemniscata en la tapa y te pasa unas cuantas. Noa lo apunta en su libreta: «gasto de cortesía».' },
 				] },
 				{ text: '«Así como estoy. Vamos.»', then: [
-					{ say: 'bastien', text: 'Vale. Si luego pierdes, no vale decir que fue por eso. Bueno, sí vale. Yo lo diría.' },
+					{ say: 'bastien', text: 'De acuerdo. Si luego pierdes, no se vale decir que fue por eso. Bueno, sí se vale. Yo lo diría.' },
 				] },
 			] },
 			{ battle: 'bastien_1', lose: 'continue',
@@ -645,7 +645,7 @@ export default {
 			{ prompt: 'El Mareep de la marca te sigue mirando.', choice: [
 				{ cond: 'rep.policia >= 5', text: 'Enseñar la Tarjeta de Colaborador: «Ese Mareep es una prueba».', then: [
 					{ say: 'noa', text: '«Colaborador Especial de la Policía Internacional»… firmado por Handsome. Con una falta de ortografía en «Especial». —Suspira—. Es auténtica. Nadie falsificaría algo tan mal escrito.' },
-					{ say: 'noa', text: 'Vale. Lo registro como «cedido a la autoridad competente». A Rouxel no le va a gustar. Pero es el procedimiento.' },
+					{ say: 'noa', text: 'De acuerdo. Lo registro como «cedido a la autoridad competente». A Rouxel no le va a gustar. Pero es el procedimiento.' },
 					{ text: 'Noa abre la jaula. El Mareep sale de un salto y se esconde detrás de tus piernas. Su cencerro dice: **CHISPITA**.' },
 					{ rep: { lemnis: -3, policia: 2 } },
 					{ set: { 'flag.b01_mareep_jaula': true, 'flag.b01_noa_tarjeta': true, 'vars.mareep': '+1' } },
@@ -821,13 +821,13 @@ export default {
 			{ cutscene: { bg: { type: 'ranch' }, start: 'dark', frames: [
 				{ item: 'farollana', text: 'Mete los mechones de lana en un farol de hojalata, lo cierra y lo frota contra la manga, una, dos, tres veces…' },
 				{ fx: 'flash', text: '*Chss.* La lana se carga de estática. Una chispa diminuta salta dentro del farol.' },
-				{ fx: 'light', text: 'Y el farol se enciende. Una luz amarilla, cálida, que no tiembla. La penumbra bajo el árbol se abre en círculo a vuestro alrededor.' },
+				{ fx: 'light', text: 'Y el farol se enciende. Una luz amarilla, cálida, que no tiembla. La penumbra bajo el árbol se abre en círculo a su alrededor.' },
 				{ fx: 'glow', text: 'Los Mareep levantan la cabeza a la vez. Conocen esa luz.' },
 			] } },
 			{ give: 'farollana' },
 			{ say: 'aurelio', text: 'El **Farol de Lana**. Alumbra lo que haga falta: cuevas, galerías, sótanos. En mi rancho lo usábamos para buscar a las que se perdían de noche. Ahora le toca a usted.' },
 			{ quest: 'b01_t_mareep', done: true },
-			{ text: 'Mientras habláis, una de las Mareep no ha vuelto al corral. **Candela** se ha sentado al lado de {riolu}, muy pegada, y no hay quien la mueva.' },
+			{ text: 'Mientras hablan, una de las Mareep no ha vuelto al corral. **Candela** se ha sentado al lado de {riolu}, muy pegada, y no hay quien la mueva.' },
 			{ say: 'aurelio', text: 'Mírela. Candela le tenía miedo a la oscuridad. Desde que la encontró usted, ya no brilla de miedo: brilla porque sí. —Se aclara la garganta—. ¿Se la quiere llevar? Ella ya ha elegido. Yo solo firmo.' },
 			{ choice: [
 				{ text: 'Llevarte a Candela.', then: [
@@ -1203,7 +1203,8 @@ export default {
 			{ quest: 'b01_m5', stage: 'paso', silent: true, cond: '!quest.b01_m5' },
 		],
 		b01_lazare_generico: [
-			{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¿Algún fósil? ¿No? Paciencia. Los fósiles llevan millones de años esperando. Pueden esperar a que termines tu Circuito.' },
+			{ cond: 'has("domefossil") || has("helixfossil") || has("oldamber") || has("jawfossil") || has("sailfossil")', say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¡Huelo a fósil desde aquí! Pase, pase: el Restaurador está encendido. Hablemos ahí.' },
+			{ cond: '!(has("domefossil") || has("helixfossil") || has("oldamber") || has("jawfossil") || has("sailfossil"))', say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '¿Algún fósil? ¿No? Paciencia. Los fósiles llevan millones de años esperando. Pueden esperar a que termines tu Circuito.' },
 			{ if: 'flag.b01_gruta_dibujos', then: [
 				{ text: 'Le describes los dibujos de la Galería Honda: el hombre altísimo, la flor diminuta, la máquina.' },
 				{ say: 'cientifico_fosiles', as: 'Dr. Lazare', text: '…¿En la Gruta Tierraunida? ¿El mismo dibujo que me enseñaron los trajes rojos? —Se quita las gafas, las limpia, se las vuelve a poner—. No me gusta. No me gusta nada. Y a mí me gustan los huesos.' },

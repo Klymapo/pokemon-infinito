@@ -378,7 +378,7 @@ export default {
 
 		// ----- Sótano de la Torre Quemada -----
 		rocket_torre_1: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'weezing', lv: 36 }, { sp: 'raticate', lv: 37 }],
-			intro: '¡Eh, eh, eh! ¡Que esto es una cocina! ¿Tienes carné de manipulador de alimentos? Ya me parecía.', win: 'Vale, vale. Yo solo remuevo el azúcar. Remover azúcar no es delito. ¿O sí? Dímelo, que me interesa.' },
+			intro: '¡Eh, eh, eh! ¡Que esto es una cocina! ¿Tienes carné de manipulador de alimentos? Ya me parecía.', win: 'Ya, ya. Yo solo remuevo el azúcar. Remover azúcar no es delito. ¿O sí? Dímelo, que me interesa.' },
 		rocket_torre_2: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket_f', ai: 2, team: [{ sp: 'golbat', lv: 37 }, { sp: 'arbok', lv: 37 }],
 			intro: 'Tres mil caramelos más y pagamos la deuda de la abuela de Toni. ¿Sabes lo que es eso? Es una abuela que vuelve a dormir tranquila.', win: 'La familia primero. Siempre. Aunque la familia sea una pandilla de idiotas con uniforme.' },
 		rocket_torre_3: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'muk', lv: 38 }, { sp: 'houndoom', lv: 38 }],
@@ -738,7 +738,7 @@ export default {
 		],
 		b02_programa: [
 			{ give: 'programateatro' },
-			{ text: 'Coges un programa de mano. Lo lees por encima: la Danza de Otoño, las cinco bailarinas, las cinco Eevee. Y, abajo del todo, un logotipo azul y plata.' },
+			{ text: 'Tomas un programa de mano. Lo lees por encima: la Danza de Otoño, las cinco bailarinas, las cinco Eevee. Y, abajo del todo, un logotipo azul y plata.' },
 		],
 
 		// =================== GIMNASIO DE IRIS · MORTI ===================
@@ -992,7 +992,7 @@ export default {
 			{ say: 'melia', text: 'Lo saqué de la Central. Para él. Iba a ser mi regalo. Mi prueba de que el Team Flare seguía siendo útil. —Lo mira como quien mira una carta de amor que nunca debió escribir—. Y él tenía a otro comprador esperando. Para lo mismo. Al mismo precio, seguramente.' },
 			{ text: '{riolu} se acerca al maletín. Las vetas azules del metal se encienden un poco más, como si lo reconocieran. {riolu} enseña los dientes. El metal late. Al mismo ritmo que el polvo. Que las jaulas.', cond: LUC },
 			{ text: 'Melia cierra el maletín de golpe. Luego, para tu sorpresa, te lo tiende.' },
-			{ say: 'melia', text: 'Cógelo. No quiero tocarlo más. Todo lo que he tocado para él estaba sucio y no me di cuenta.' },
+			{ say: 'melia', text: 'Tómalo. No quiero tocarlo más. Todo lo que he tocado para él estaba sucio y no me di cuenta.' },
 			{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#7fd6e0' }, start: 'dark', frames: [
 				{ text: 'Abres el maletín. Sacas el fragmento con las dos manos.' },
 				{ item: 'fragmentored', fx: 'glow', text: 'Está tibio. Pesa más de lo que parece. Las vetas azules y plateadas se encienden bajo tus dedos, como venas.' },
@@ -1212,7 +1212,7 @@ export default {
 			{ text: 'Por la tarde, el rebaño se dispersa por el prado y hay que recogerlo antes de que anochezca. Don Aurelio toma el silbato, sopla… y le da otro golpe de tos que le corta el silbido a la mitad.' },
 			{ choice: [
 				{ text: '«Déjeme, yo los recojo.»', then: [
-					{ text: 'Coges el silbato. Silbas. No pasa nada. Silbas más fuerte. Cincuenta y tres Mareep te miran con educación y siguen comiendo.' },
+					{ text: 'Tomas el silbato. Silbas. No pasa nada. Silbas más fuerte. Cincuenta y tres Mareep te miran con educación y siguen comiendo.' },
 					{ text: '{riolu} suspira, se pone delante del rebaño y suelta un ladrido de aura. Cincuenta y tres Mareep trotan hacia el establo en perfecto orden.', cond: LUC },
 					{ say: 'aurelio', text: '¡Ja! ¡Eso no lo hacía ni mi padre! —Se sienta en la cerca a mirar, todavía con la mano en el pecho—. Ya no estoy para estos trotes, muchach{o|a|e}. Antes los recogía yo solo, corriendo. Ahora los miro y ya me canso.' },
 				] },

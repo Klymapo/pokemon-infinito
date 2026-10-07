@@ -6,6 +6,8 @@ import t0 from './t0-kalos.js';
 import t1 from './t1-encinar.js';
 import t2 from './t2-trigal.js';
 import t3 from './t3-iris.js';
+import t5 from './t5-iniciales.js';
+import t6 from './t6-lola.js';
 
 const block = {
 	id: 'b02', title: 'Acto II · Ecos del pasado', hours: 12, ends: 'b02_fin',
@@ -15,7 +17,7 @@ const block = {
 	gather: {}, patches: {},
 };
 const extraSpots = {};
-for (const part of [comun, t0, t1, t2, t3]) {
+for (const part of [comun, t0, t1, t2, t3, t5, t6]) {
 	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather']) {
 		for (const id in part[k] || {}) {
 			if (block[k][id] && k !== 'npcs') console.warn(`[b02] ${k} duplicado: ${id}`);

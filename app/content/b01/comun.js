@@ -82,7 +82,7 @@ export default {
 			{ text: 'Abres el Menú de Kalos de Gaspar. Huele a mantequilla, a hierbas y a algo que no sabes nombrar.' },
 			{ happy: { who: 'party0', n: 10 } }, { happy: { who: 'party1', n: 10 } }, { happy: { who: 'party2', n: 10 } },
 			{ happy: { who: 'party3', n: 10 } }, { happy: { who: 'party4', n: 10 } }, { happy: { who: 'party5', n: 10 } },
-			{ text: 'Tu equipo come con ganas. Se nota que os habéis acercado un poco más.' },
+			{ text: 'Tu equipo come con ganas. Se nota que se han acercado un poco más.' },
 		],
 	},
 	milestones: [{ flag: 'b01_m_aviso', hoursLeft: 3 }],

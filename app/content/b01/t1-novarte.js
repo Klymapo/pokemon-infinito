@@ -314,7 +314,7 @@ export default {
 	trainers: {
 		// ----- Ruta 4 -----
 		r4_florista: { name: 'Margot', cls: 'Florista', ai: 1, sprite: 'aromalady', team: [{ sp: 'flabebe', lv: 5 }],
-			intro: 'Desde la grieta, en los parterres brotan flores que no conozco. Mis Flabébé no las tocan. Yo tampoco.', win: 'Vale, vale… Ya puedes pisar el césped. Pero solo un poquito.' },
+			intro: 'Desde la grieta, en los parterres brotan flores que no conozco. Mis Flabébé no las tocan. Yo tampoco.', win: 'Bueno, bueno… Ya puedes pisar el césped. Pero solo un poquito.' },
 		r4_aromaterapeuta: { name: 'Céleste', cls: 'Aromaterapeuta', ai: 2, sprite: 'aromalady', team: [{ sp: 'budew', lv: 7 }, { sp: 'combee', lv: 6 }],
 			intro: 'Lavanda, rosa… y algo como una pila quemada. Este parterre huele así desde la inauguración. ¿Tú también lo hueles?', win: 'Tu Riolu huele a tormenta. Es un cumplido. Creo.' },
 		r4_joven: { name: 'Théo', cls: 'Joven', ai: 1, sprite: 'youngster', team: [{ sp: 'fletchling', lv: 6 }, { sp: 'bunnelby', lv: 6 }],
@@ -338,7 +338,7 @@ export default {
 		// ----- Gimnasio de Novarte -----
 		gym_novarte_1: { name: 'Gilles', cls: 'Excursionista', ai: 3, sprite: 'hiker', reward: 400,
 			team: [{ sp: 'geodude', lv: 10 }, { sp: 'nosepass', lv: 10 }],
-			intro: 'Brock nos trae galletas cada mañana. Galletas con el líder, lo llama. Por esas galletas no te dejo pasar.', win: 'Sube, sube. Y coge una galleta al pasar. Es la norma.' },
+			intro: 'Brock nos trae galletas cada mañana. Galletas con el líder, lo llama. Por esas galletas no te dejo pasar.', win: 'Sube, sube. Y agarra una galleta al pasar. Es la norma.' },
 		gym_novarte_2: { name: 'Bernard', cls: 'Montañero', ai: 3, sprite: 'backpacker', reward: 440,
 			team: [{ sp: 'roggenrola', lv: 11 }, { sp: 'onix', lv: 10 }],
 			intro: 'Estas rocas vinieron de Kanto en barco. Pesan como un remordimiento. Y tú vas a tener que escalarlas.', win: 'Arriba está Brock. Si te ofrece comida, acepta. Si te ofrece consejo, acepta dos veces.' },
@@ -357,7 +357,7 @@ export default {
 		patio_karateka: { name: 'Aymeric', cls: 'Karateka', ai: 2, sprite: 'blackbelt', reward: 200, team: [{ sp: 'machop', lv: 11 }],
 			intro: 'Dicen que si combates cien veces en este patio aparece un jefe secreto. Yo llevo noventa y nueve.', win: 'Noventa y nueve. Otra vez. Mañana sí.' },
 		patio_excursionista: { name: 'Odile', cls: 'Excursionista', ai: 2, sprite: 'hiker', reward: 200, team: [{ sp: 'roggenrola', lv: 9 }, { sp: 'geodude', lv: 10 }],
-			intro: 'Aquí calentamos antes de la pared. Tú calientas, yo te enfrío.', win: 'Vale. Ya estás caliente. Muy caliente.' },
+			intro: 'Aquí calentamos antes de la pared. Tú calientas, yo te enfrío.', win: 'Bueno. Ya estás caliente. Muy caliente.' },
 		patio_luchadora: { name: 'Salomé', cls: 'Luchadora', ai: 2, sprite: 'battlegirl', reward: 220, team: [{ sp: 'meditite', lv: 11 }, { sp: 'nosepass', lv: 10 }],
 			intro: 'Brock dice que una roca se rompe por el punto débil. Yo busco el tuyo.', win: 'Lo encontré. Era yo.' },
 
@@ -387,7 +387,7 @@ export default {
 
 		// ----- Ruta 1 -----
 		r1_aprendiz: { name: 'Quentin', cls: 'Aprendiz de jinete', ai: 2, sprite: 'cowgirl', team: [{ sp: 'rhyhorn', lv: 10 }],
-			intro: '¡La campeona dice que no estoy listo para la pista! Así que entreno aquí. Contra ti. Es lo mismo, ¿no?', win: 'No es lo mismo. Vale. Ya lo pillo.' },
+			intro: '¡La campeona dice que no estoy listo para la pista! Así que entreno aquí. Contra ti. Es lo mismo, ¿no?', win: 'No es lo mismo. Ok. Ya lo capto.' },
 		r1_pintor: { name: 'Loïc', cls: 'Pintor', ai: 1, sprite: 'artist', team: [{ sp: 'flabebe', lv: 10 }, { sp: 'ledyba', lv: 9 }],
 			intro: 'Vengo de Acuarela. Allí todos pintamos; aquí todos montan. Yo no sé montar, así que pinto Rhyhorn quietos.', win: 'Hasta los Rhyhorn quietos se me mueven. Tendré que pintarte a ti.' },
 		r1_vecina: { name: 'Josette', cls: 'Vecina de Boceto', ai: 2, sprite: 'lady', team: [{ sp: 'skitty', lv: 10 }, { sp: 'fletchling', lv: 10 }],
@@ -441,7 +441,7 @@ export default {
 					] },
 					{ battle: 'agente_lemnis_r4', lose: 'continue',
 						onWin: [{ rep: { lemnis: -3, policia: 2 } }, { set: { 'flag.b01_agente_vencido': true } }, { text: 'El agente se ajusta las gafas. Le tiembla un poco el dedo sobre el aparato.' }, { say: 'agente_lemnis', text: 'Protocolo es protocolo. Con o sin su permiso.' }],
-						onLose: [{ heal: true, silent: true }, { text: '{riolu} se levanta tambaleándose. El agente ni os mira: ya está apuntando el aparato.' }] },
+						onLose: [{ heal: true, silent: true }, { text: '{riolu} se levanta tambaleándose. El agente ni los mira: ya está apuntando el aparato.' }] },
 					{ text: 'El agente apunta el aparato hacia el Lechonk, que se ha escondido detrás de tus piernas. El aparato empieza a zumbar.' },
 					{ call: 'b01_r4_despertar' },
 				] },
@@ -473,7 +473,7 @@ export default {
 						{ wild: { sp: 'lechonk', lv: 6 },
 							onCatch: [{ set: { 'flag.b01_lechonk_atrapado': true } }, { text: 'El Lechonk se acomoda dentro de la Poké Ball sin protestar. Después de una cápsula de Lemnis, una Poké Ball debe de parecerle un hotel.' }],
 							onWin: [{ text: 'El Lechonk se sacude, te mira ofendido y se va trotando entre las flores. Por lo menos se va libre.' }],
-							onRun: [{ text: 'Os separáis. El Lechonk se pierde trotando entre los parterres. Libre.' }],
+							onRun: [{ text: 'Se separan. El Lechonk se pierde trotando entre los parterres. Libre.' }],
 							onLose: [{ heal: true, silent: true }, { text: 'El Lechonk aprovecha y se escabulle entre las flores. Libre, eso sí.' }] },
 					] },
 					{ text: 'Dejarlo ir libre.', then: [{ text: 'Le haces un gesto con la mano. El Lechonk duda, olfatea a {riolu} una última vez y se va trotando entre los parterres. Se para a comer una flor. Se va.' }] },
@@ -497,11 +497,11 @@ export default {
 			] },
 			{ text: 'Los Combee están despiertos y trabajando. Zumban en formación. Te han visto.' },
 			{ choice: [
-				{ text: 'Sacudir el seto y coger la miel.', then: [
+				{ text: 'Sacudir el seto y tomar la miel.', then: [
 					{ text: 'Sacudes el seto. Error. Un Combee sale disparado con cara de pocos amigos. Bueno, con tres caras de pocos amigos.' },
 					{ wild: { sp: 'combee', lv: 8 }, lose: 'continue',
-						onWin: [{ text: 'Mientras el Combee se recupera, coges un trozo de panal y te alejas a paso ligero.' }, { give: 'honey' }, { set: { 'flag.b01_panal_miel': true } }],
-						onCatch: [{ text: 'Con su guardián dentro de tu Poké Ball, el resto de la colmena decide que no merece la pena. Coges un trozo de panal.' }, { give: 'honey' }, { set: { 'flag.b01_panal_miel': true } }],
+						onWin: [{ text: 'Mientras el Combee se recupera, tomas un trozo de panal y te alejas a paso ligero.' }, { give: 'honey' }, { set: { 'flag.b01_panal_miel': true } }],
+						onCatch: [{ text: 'Con su guardián dentro de tu Poké Ball, el resto de la colmena decide que no merece la pena. Tomas un trozo de panal.' }, { give: 'honey' }, { set: { 'flag.b01_panal_miel': true } }],
 						onRun: [{ text: 'Sales corriendo. Los Combee te persiguen tres setos. Sin miel.' }],
 						onLose: [{ heal: true, silent: true }, { text: 'Los Combee te echan de su seto. Sin miel, y con una picadura en la oreja.' }] },
 					{ if: 'flag.b01_panal_miel && quest.b01_t_gaspar == "ingredientes"', then: [{ say: 'rotom', text: '¡Bzzt! ¡Miel para Gaspar! Con sabor a victoria. Y a picadura.' }] },
@@ -547,7 +547,7 @@ export default {
 			{ set: { 'flag.b01_rhi_novarte': true } },
 			{ choice: [
 				{ text: '«Acepto. Pero luego no llores.»', then: [{ af: { rhi: 1 } }, { say: 'rhi', text: '¡JA! ¡Eso! ¡Así se habla!' }, { call: 'b01_rhi_combate' }] },
-				{ text: '«Vale. Pero sin gritar.»', then: [{ say: 'rhi', text: 'No prometo nada. Yo grito. Es mi forma de respirar.' }, { call: 'b01_rhi_combate' }] },
+				{ text: '«Va. Pero sin gritar.»', then: [{ say: 'rhi', text: 'No prometo nada. Yo grito. Es mi forma de respirar.' }, { call: 'b01_rhi_combate' }] },
 				{ text: '«Hoy no.»', then: [
 					{ af: { rhi: -2 } },
 					{ say: 'rhi', text: 'Cobarde.' },
@@ -560,7 +560,7 @@ export default {
 		b01_rhi_combate: [
 			{ choice: [
 				{ text: '«Antes, déjame pasar por el Centro.»', then: [
-					{ say: 'rhi', text: '¿Ahora? ¿En serio? …Vale. Descanso de medio tiempo. Pero rapidito, que se me enfría la pierna.' },
+					{ say: 'rhi', text: '¿Ahora? ¿En serio? …Va. Descanso de medio tiempo. Pero rapidito, que se me enfría la pierna.' },
 					{ heal: 'Pasas por el Centro Pokémon de la plaza. Cuando sales, Rhi está dando toques a una piedra contra el borde de la fuente. Lleva la cuenta en voz alta.' },
 				] },
 				{ text: '«Así como estoy. Saca tú.»', then: [
@@ -571,7 +571,7 @@ export default {
 				onWin: [
 					{ af: { rhi: 5 } }, { set: { 'flag.b01_rhi_vencida_1': true } },
 					{ say: 'rhi', text: '…' },
-					{ say: 'rhi', text: 'Vale. Vale, vale, vale. Eso ha sido un golazo. Tuyo. Lo reconozco. Que conste que lo reconozco porque es verdad, no porque me caigas bien.' },
+					{ say: 'rhi', text: 'Ok. Ok, ok, ok. Eso ha sido un golazo. Tuyo. Lo reconozco. Que conste que lo reconozco porque es verdad, no porque me caigas bien.' },
 					{ say: 'rhi', text: 'Novat{o|a|e}. —Lo dice distinto. Como si la palabra pesara un poco más—. No está mal, novat{o|a|e}.' },
 				],
 				onLose: [
@@ -600,7 +600,7 @@ export default {
 			{ say: 'rhi', text: 'Yo me la llevo mañana. Y luego a por la siguiente, y la siguiente, y en la Copa nos vemos. Tú en la portería. Yo con el balón.' },
 			{ af: { rhi: 1 } },
 			{ set: { 'flag.b01_rhi_novarte_fin': true } },
-			{ text: 'Rhi coge su bolsa, chuta una última piedra a la fuente (entra limpia por el chorro del centro) y se va hacia el gimnasio sin mirar atrás.' },
+			{ text: 'Rhi agarra su bolsa, chuta una última piedra a la fuente (entra limpia por el chorro del centro) y se va hacia el gimnasio sin mirar atrás.' },
 		],
 
 		// ---------- Gimnasio de Novarte ----------
@@ -658,8 +658,8 @@ export default {
 		],
 		b01_gym_galletas: [
 			{ text: 'Una mesa plegable con un mantel de cuadros y una bandeja de galletas de mantequilla. Un cartelito: «Galletas con el líder. Una por persona. Brock lo sabe».' },
-			{ if: 'flag.b01_galleta', then: [{ text: 'Ya cogiste una. Brock lo sabe. Desde arriba, te guiña un ojo.' }], else: [
-				{ text: 'Coges una. Está calentita. Sabe a domingo.' },
+			{ if: 'flag.b01_galleta', then: [{ text: 'Ya agarraste una. Brock lo sabe. Desde arriba, te guiña un ojo.' }], else: [
+				{ text: 'Agarras una. Está calentita. Sabe a domingo.' },
 				{ heal: 'Te sientes con fuerzas renovadas. Tu equipo también: se han comido las migas.' },
 				{ set: { 'flag.b01_galleta': true } },
 			] },
@@ -713,7 +713,7 @@ export default {
 		],
 		b01_handsome_medalla: [
 			{ text: 'Tu Pokédex vibra en el bolsillo.' },
-			{ say: 'rotom', text: '¡Bzzt! Llamada entrante de… **HANDSOME**. Tiene foto de perfil con bigote falso. ¿Lo cojo? ¡Lo cojo!' },
+			{ say: 'rotom', text: '¡Bzzt! Llamada entrante de… **HANDSOME**. Tiene foto de perfil con bigote falso. ¿Le contesto? ¡Le contesto!' },
 			{ say: 'handsome', text: '{jugador}. ¡Una medalla! Handsome lo celebra. Por dentro. Estoy en un sitio donde no se puede celebrar por fuera.' },
 			{ if: 'flag.b01_agente_vencido', then: [{ say: 'handsome', text: 'Me han dicho que te plantaste delante de un agente de Lemnis en la Ruta 4. Y que le ganaste. Handsome está orgulloso. Y preocupado. Orgullocupado.' }] },
 			{ if: 'flag.b01_lechonk_lemnis', then: [{ say: 'handsome', text: 'Lo del agente de la Ruta 4… Ese Lechonk que se llevaron. He preguntado en Paldea. No ha llegado. Ni ese ni ninguno.' }] },
@@ -740,7 +740,7 @@ export default {
 		b01_peluquera_vuelta: [
 			{ text: 'El Furfrou entra en la peluquería detrás de ti, con la cabeza baja. La señora suelta el abanico.' },
 			{ say: 'peluquera_novarte', text: '¡MI NIÑO! ¡Mi niño precioso! ¡Ven aquí! No, no te escondas. Nadie se va a reír. —Te mira por encima de las gafas—. ¿Verdad?' },
-			{ text: 'Coge las tijeras. Clic, clic, clic. Diez minutos de silencio absoluto. Cuando termina, el Furfrou tiene un **Corte Corazón** impecable. Se mira en el espejo. Se mira otra vez. Se pone a dar saltitos.' },
+			{ text: 'Agarra las tijeras. Clic, clic, clic. Diez minutos de silencio absoluto. Cuando termina, el Furfrou tiene un **Corte Corazón** impecable. Se mira en el espejo. Se mira otra vez. Se pone a dar saltitos.' },
 			{ say: 'peluquera_novarte', text: 'Así. Así se corta. Ni vídeos ni nada. Toma, por traérmelo. Era de mi marido; decía que daba suerte. A mí me da pena venderla.' },
 			{ give: 'nugget' },
 			{ say: 'peluquera_novarte', text: 'Y si alguna vez tienes un Furfrou, tráemelo. A ti te corto gratis. A mi sobrino, nunca más.' },
@@ -783,7 +783,7 @@ export default {
 			{ if: 'flag.b01_lucien_1', then: [
 				{ say: 'lucien', text: '¡{jugador}! ¡{jugador}! ¡Soy yo, Lucien! ¡El de la valla de la Puerta! ¡Ayúdame, es una emergencia!' },
 			], else: [
-				{ say: 'lucien', text: '¡Oye! ¡Tú! ¡Tú eres {el|la|le} de la Puerta, {el|la|le} del Riolu! ¡Te vi en la tele! Me llamo Lucien. ¿Y tú? …¡{jugador}! Vale, {jugador}: ¡ayúdame, es una emergencia!' },
+				{ say: 'lucien', text: '¡Oye! ¡Tú! ¡Tú eres {el|la|le} de la Puerta, {el|la|le} del Riolu! ¡Te vi en la tele! Me llamo Lucien. ¿Y tú? …¡{jugador}! Bueno, {jugador}: ¡ayúdame, es una emergencia!' },
 				{ set: { 'flag.b01_lucien_1': true } },
 			] },
 			{ say: 'lucien', text: 'He venido de excursión con el cole y se me ha volado la gorra. ¡Mi gorra de la suerte! ¡La que tiene una Puerta Lemnis bordada! Está ahí arriba. Y la profe está contando cabezas y si no vuelvo con gorra me va a contar dos veces.' },
@@ -793,7 +793,7 @@ export default {
 				{ text: 'Pedirle a {riolu} que salte.', then: [{ happy: { who: 'riolu', n: 3 } }, { text: '{riolu} mide la distancia, toma impulso en el tocón y salta. Agarra la gorra al vuelo y aterriza delante de Lucien con una pose que nadie le ha enseñado.' }, { say: 'lucien', text: '¡HALA! ¡Es como en las películas! ¡Otra vez! ¡Hazlo otra vez!' }] },
 				{ text: 'Sacudir el árbol.', then: [{ text: 'Sacudes el árbol. Cae la gorra. Cae también un Scatterbug, justo encima de tu cabeza. Te mira. Lo miras. Se va.' }] },
 			] },
-			{ text: 'Lucien coge la gorra. Se queda quieto. La toca otra vez.' },
+			{ text: 'Lucien agarra la gorra. Se queda quieto. La toca otra vez.' },
 			{ say: 'lucien', text: 'Está… calentita. Y tiene pelos naranjas. Y huele a… ¿a chimenea?' },
 			{ say: 'lucien', text: '¡Un zorrito de fuego ha dormido en mi gorra! ¡Lo vi antes, pasó corriendo echando chispas, hacia donde zumban los bichos! ¡Es la mejor gorra del mundo ahora! ¡No pienso lavarla nunca!' },
 			{ say: 'lucien', text: 'Iba muy asustado. ¿Lo vas a buscar? ¡Búscalo! Y si lo encuentras, dile que mi gorra está a su disposición.' },
@@ -850,7 +850,7 @@ export default {
 		b01_acuarela_terraza: [
 			{ text: 'Te sientas en la terraza del puente. Un camarero con delantal de rayas te trae, sin preguntar, un vaso de limonada y un cuenco de agua para cada uno de tus Pokémon.' },
 			{ text: '«Aquí no hay Centro Pokémon», dice. «Pero hay sombra, limonada y nadie con prisa. Para la mayoría de las cosas, es lo mismo».' },
-			{ heal: 'Tu equipo descansa a la sombra de las sombrillas. Cuando os levantáis, estáis como nuevos.' },
+			{ heal: 'Tu equipo descansa a la sombra de las sombrillas. Cuando se levantan, están como nuevos.' },
 			{ if: 'flag.b01_fennekin_unido && !flag.b01_terraza_fennekin', then: [
 				{ text: 'Fennekin se queda mirando el río. Luego estornuda una chispa que cae al agua y hace «fsss». Lo hace otra vez. Y otra. Ha descubierto un juego.' },
 				{ set: { 'flag.b01_terraza_fennekin': true } },
@@ -913,10 +913,10 @@ export default {
 				{ text: 'Mirar a la campeona y reírte.', then: [{ set: { 'vars.b01_carrera': '+1' } }, { text: 'Te ríes. Ella también. Ninguna de las dos cosas sirve para correr, pero el Rhyhorn se contagia y da un último acelerón.' }] },
 			] },
 			{ if: 'vars.b01_carrera >= 3', then: [
-				{ text: 'Cruzáis la meta. Por un cuerno. Tu cuerno. Bueno, el de tu Rhyhorn.' },
+				{ text: 'Cruzan la meta. Por un cuerno. Tu cuerno. Bueno, el de tu Rhyhorn.' },
 				{ say: 'jinete_boceto', text: '¡JA! ¡Me has ganado! ¡A mí! ¡En mi pista! Hacía años que no me pasaba. La última fue… bueno. Mi peque. Antes de irse.' },
 			], else: [
-				{ text: 'Cruzáis la meta. Ella primero, por una cabeza. Tú, justo detrás, con el corazón en la garganta.' },
+				{ text: 'Cruzan la meta. Ella primero, por una cabeza. Tú, justo detrás, con el corazón en la garganta.' },
 				{ say: 'jinete_boceto', text: '¡Casi! Casi, casi. Y para ser tu primera vez, «casi» es muchísimo. Mi peque tardó un verano en llegar a «casi».' },
 			] },
 			{ say: 'jinete_boceto', text: 'Bueno. Trato es trato. Este Rhyhorn es tuyo. Bueno, mío, pero va contigo. Se llama… no tiene nombre. Ponle el que quieras. No te va a hacer caso igual.' },
@@ -930,7 +930,7 @@ export default {
 		],
 		b01_campeona_despues: [
 			{ say: 'jinete_boceto', text: '¿Qué tal el Rhyhorn? ¿Come bien? ¿Te tira? Si te tira, es que le caes bien. Si no te tira, es que le caes muy bien.' },
-			{ if: 'badges >= 1', then: [{ say: 'jinete_boceto', text: 'Ya llevas medallas, ¿eh? Mi peque empezó igual. Algún día os cruzaréis. No le digas que me has ganado. O sí. Dímelo a mí cuando le pongas la cara.' }] },
+			{ if: 'badges >= 1', then: [{ say: 'jinete_boceto', text: 'Ya llevas medallas, ¿eh? Mi peque empezó igual. Algún día se cruzarán. No le digas que me has ganado. O sí. Dímelo a mí cuando le pongas la cara.' }] },
 			{ heal: 'La campeona te sirve un vaso de leche Mu-mu y deja que tu equipo descanse en el establo. Salís como nuevos.' },
 		],
 		b01_boceto_pozo: [

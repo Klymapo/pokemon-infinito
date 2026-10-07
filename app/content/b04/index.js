@@ -6,6 +6,7 @@ import t0 from './t0-azafran.js';
 import t1 from './t1-celeste.js';
 import t2 from './t2-silph.js';
 import t3 from './t3-cueva.js';
+import t4 from './t4-lola.js';
 
 const block = {
 	id: 'b04', title: 'Acto III · La señal', hours: 12, ends: 'b04_fin',
@@ -15,7 +16,7 @@ const block = {
 	gather: {}, patches: {},
 };
 const extraSpots = {};
-for (const part of [comun, t0, t1, t2, t3]) {
+for (const part of [comun, t0, t1, t2, t3, t4]) {
 	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather']) {
 		for (const id in part[k] || {}) {
 			if (block[k][id] && k !== 'npcs') console.warn(`[b04] ${k} duplicado: ${id}`);

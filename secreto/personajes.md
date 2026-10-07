@@ -157,3 +157,9 @@
 - **Lebrun** (revelado en el B4): el topo. Motivo: la operación de su hija **Camille** (15) en una clínica de la Fundación Æther (Alola), pagada por «un amigo»; «la fruta cae del lado al que se inclina el árbol». Recibe sobres con **Ω** y un caramelo de menta; no sabe quién es el Arquitecto.
 - **Canon nuevos:** Misty (Celeste, Agua; orgullosa, simpática, competitiva), Sabrina (Azafrán; gimnasio en pausa por el Intercambio; nota el «eco» del Rotom), Bill (Ruta 25; inventor del PC; descifró la señal y dio el Sintonizador), Señor Fuji (Lavanda; culpa antigua por un Pokémon «al que le quitaron todo»), Presidente de Silph (avergonzado; habló con la prensa).
 - **Casimiro** (genérico con nombre): cazatalentos del Programa de Talentos de Lemnis en el Puente Pepita.
+
+## Fichas nuevas de la Publicación 6 (profundidad)
+
+- **Ramiro Alcalde** (`becario_elm`, 24): becario del Prof. Elm, en bici, casco y chaleco reflectante. Nervioso, se disculpa en ráfagas («perdón, perdón, perdón»), todo en pósits. Llevaba los tres iniciales de Johto a Trigal la noche del desvío. Su Quagsire se llama Don Calma. Apariciones: B2 (Azalea, Iris), B3 (Olivo, cierre). Falta una en el B5+.
+- **Profesor Elm** (`elm`, canon): por holomisor; despistado y cariñoso, investiga huevos. Apariciones: B2–B3 (llamadas y carta). Falta una en el B5+.
+- **Lola Arriaga** (`lola`, ~44): puesto ambulante de bollos al vapor; moño con mechón gris, mandil sobre chamarra negra, lunar. Su Raticate **Tacho**. Voz brusca y cálida, de cuentas claras («Fiado no»). **Secreto:** ex recluta del Team Rocket de Giovanni (Torre Pokémon de Lavanda y toma de la Torre Radio); se fue, cumplió y se arrepiente. Idea de Mario. Apariciones: B2 Trigal, B3 Caoba, B4 Lavanda. Giro propuesto en `registro.md` (Publicación 6).

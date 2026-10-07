@@ -391,7 +391,7 @@ export default {
 		recluta_flare_c1: { name: 'Recluta', cls: 'Team Flare', npc: 'recluta_flare', ai: 2, team: [{ sp: 'houndour', lv: 17 }, { sp: 'croagunk', lv: 18 }],
 			intro: 'Esta es una zona de belleza restringida. Tú, con esa ropa, no cumples los requisitos.', win: '¡Mi traje! ¡Me has arrugado el traje! ¿Sabes lo que cuesta planchar esto en una cueva?' },
 		recluta_flare_c2: { name: 'Recluta', cls: 'Team Flare', npc: 'recluta_flare', ai: 2, team: [{ sp: 'litleo', lv: 18 }, { sp: 'scraggy', lv: 17 }],
-			intro: 'El mundo nuevo será bello. Y tú no saldrás en la foto.', win: 'Vale. Tú sí sales en la foto. Pero borrosa.' },
+			intro: 'El mundo nuevo será bello. Y tú no saldrás en la foto.', win: 'Bueno. Tú sí sales en la foto. Pero borrosa.' },
 		bastien_2: { name: 'Bastien', cls: 'Rival', npc: 'bastien', ai: 3, iv: 24,
 			team: [
 				{ sp: 'frogadier', lv: 19, moves: ['waterpulse', 'quickattack', 'smackdown', 'smokescreen'], ability: 'torrent' },
@@ -415,7 +415,7 @@ export default {
 
 		// ----- Gimnasio de Relieve -----
 		gym_relieve_1: { name: 'Capucine', cls: 'Escaladora', ai: 3, team: [{ sp: 'aipom', lv: 19 }, { sp: 'furret', lv: 20 }],
-			intro: 'Blanca nos trajo de Johto y Lino nos dejó la pared. ¡Ahora somos un gimnasio bilingüe!', win: '¡Sigue subiendo! ¡No mires abajo! …Vale, mira: mi Aipom se está llevando tu gorra.' },
+			intro: 'Blanca nos trajo de Johto y Lino nos dejó la pared. ¡Ahora somos un gimnasio bilingüe!', win: '¡Sigue subiendo! ¡No mires abajo! …Bueno, mira: mi Aipom se está llevando tu gorra.' },
 		gym_relieve_2: { name: 'Toño', cls: 'Vaquero', ai: 3, team: [{ sp: 'tauros', lv: 20 }, { sp: 'stantler', lv: 20 }],
 			intro: 'En el rancho de Blanca, los Tauros suben cuestas así todos los días. Bueno, cuestas más planas. Bastante más planas.', win: '¡Yija! …Perdón. En Kalos no se dice «yija», ¿verdad?' },
 		gym_relieve_3: { name: 'Paloma', cls: 'Animadora', ai: 3, team: [{ sp: 'girafarig', lv: 20 }, { sp: 'dunsparce', lv: 21 }],
@@ -465,7 +465,7 @@ export default {
 			],
 			intro: '¡En nombre de la justicia… y de mi Hawlucha, que se aburre!',
 			win: '¡Derrotado con honor! ¡Así caen los héroes en el capítulo tres, para levantarse en el cuatro!',
-			lose: '¡La justicia ha vencido! …La justicia era yo, ¿verdad? Sí. Vale. ¡Bien!' },
+			lose: '¡La justicia ha vencido! …La justicia era yo, ¿verdad? Sí. Bueno. ¡Bien!' },
 
 		// ----- Crómlech -----
 		sera_1: { name: 'Serafina Lemnis', cls: 'Heredera', npc: 'sera', ai: 5, iv: 31, reward: 3000, bg: 'ruins',
@@ -483,7 +483,7 @@ export default {
 		r11_2: { name: 'Maëlle', cls: 'Luchadora', ai: 2, team: [{ sp: 'hariyama', lv: 24 }, { sp: 'staravia', lv: 24 }],
 			intro: '¡Eh, la aprendiz de la Torre! ¿Traes público? ¡Mejor! Mi hermano y yo vamos de dos en dos.', win: 'Ahora va mi hermano. Te espera un poco más abajo, en la curva. Él pega más fuerte. Yo pego más bonito.' },
 		r11_3: { name: 'Gabin', cls: 'Luchador', ai: 2, team: [{ sp: 'nidorino', lv: 24 }, { sp: 'sawk', lv: 25 }],
-			intro: 'Mi hermana dice que yo pego más fuerte. Es verdad. Lo que no dice es que también pego peor.', win: 'Vale. A la playa. A entrenar. Otra vez. Con ella.' },
+			intro: 'Mi hermana dice que yo pego más fuerte. Es verdad. Lo que no dice es que también pego peor.', win: 'Bueno. A la playa. A entrenar. Otra vez. Con ella.' },
 		r11_4: { name: 'Nadia', cls: 'Técnica de radio', ai: 2, team: [{ sp: 'dedenne', lv: 25 }, { sp: 'chingling', lv: 24 }],
 			intro: 'Mi Dedenne capta la radio con los bigotes. Desde las Fisuras, a veces capta emisoras de Galar. Ayer me enteré del resultado de un partido.', win: 'Ganó el equipo de casa, por cierto. Dos a uno. Con un gol de un tal Nueve.' },
 
@@ -524,7 +524,7 @@ export default {
 
 		// ----- Yantra: Playa de la Torre (entrenamiento) -----
 		playa_yantra_1: { name: 'Agathe', cls: 'Karateka', ai: 2, team: [{ sp: 'machoke', lv: 28 }, { sp: 'throh', lv: 27 }],
-			intro: '¡Cien flexiones en la arena y luego combate! …Bueno, primero el combate.', win: 'Vale. Cien flexiones. Para mí.' },
+			intro: '¡Cien flexiones en la arena y luego combate! …Bueno, primero el combate.', win: 'Va. Cien flexiones. Para mí.' },
 		playa_yantra_2: { name: 'Yanis', cls: 'Cinturón Negro', ai: 2, team: [{ sp: 'hariyama', lv: 28 }, { sp: 'mienfoo', lv: 28 }],
 			intro: 'Las olas son el mejor sparring: nunca se cansan y nunca se ofenden.', win: 'Tú tampoco te cansas. ¿Te ofendes?' },
 	},
@@ -683,7 +683,7 @@ export default {
 						onLose: [{ heal: 'Bastien te pasa un par de Pociones sin decir nada. Tu equipo se recupera.' }] },
 				] },
 				{ text: '«Otro día, Bastien.»', then: [
-					{ say: 'bastien', text: 'Vale. Otro día. —Intenta sonreír. Casi lo consigue—. Hay muchos días.' },
+					{ say: 'bastien', text: 'De acuerdo. Otro día. —Intenta sonreír. Casi lo consigue—. Hay muchos días.' },
 				] },
 			] },
 			{ text: 'Bastien se va por un túnel lateral, hacia la Ruta 9. Antes de doblar la esquina, se da la vuelta como si fuera a decir algo más. No lo dice.' },
@@ -732,7 +732,7 @@ export default {
 		b01_rhi_relieve_1: [
 			{ text: 'En el Muro de Escalada, una chica pelirroja sube a pulso, sin cuerda, maldiciendo a cada agarre. Abajo, tumbado en una colchoneta, un chico de pelo blanco duerme con la boca abierta.' },
 			{ say: 'rhi', text: '¡Tú! —Se deja caer los dos últimos metros y aterriza de pie—. Ni una palabra. NI UNA.' },
-			{ if: 'beat("rhi_1")', then: [{ say: 'rhi', text: '…Vale, una. Sí, me ganaste en Novarte. Ya lo sé. Lo tengo apuntado.' }] },
+			{ if: 'beat("rhi_1")', then: [{ say: 'rhi', text: '…Ok, una. Sí, me ganaste en Novarte. Ya lo sé. Lo tengo apuntado.' }] },
 			{ say: 'rhi', text: 'Perdí contra Blanca. Contra BLANCA. Que lloró cuando ganó. ¿Quién llora cuando gana?' },
 			{ say: 'nate', as: 'Chico dormido', text: 'Tú lloras cuando ganas.' },
 			{ text: 'No ha abierto los ojos.' },
@@ -793,7 +793,7 @@ export default {
 			{ say: 'rhi', text: 'No.' },
 			{ choice: [
 				{ text: '«Dame cinco minutos en el Centro. Vengo de pelear.»', then: [
-					{ say: 'rhi', text: '¿Cinco minutos? ¡En cinco minutos se remonta un partido entero! …Vale. Ve. Que luego no digas que te gané con ventaja.' },
+					{ say: 'rhi', text: '¿Cinco minutos? ¡En cinco minutos se remonta un partido entero! …Bueno. Ve. Que luego no digas que te gané con ventaja.' },
 					{ heal: 'Bajas al Centro Pokémon. La enfermera te devuelve el equipo como nuevo. Cuando sales, Rhi sigue en la cuesta, dando toques a una Poké Ball como si fuera un balón.' },
 				] },
 				{ text: '«Así como estoy. Vamos.»', then: [
@@ -840,7 +840,7 @@ export default {
 			{ text: 'Desde lo alto del muro llega una voz: «¡Primero sube! ¡Con los entrenadores! ¡Es la regla de Lino, no la mía! ¡Yo habría puesto un ascensor!».' },
 		],
 		b01_blanca_reto_fuerte: [
-			{ say: 'blanca', text: '¡Eh, eh, eh! ¿Y ese equipo? ¡Has estado entrenando a escondidas! ¡Eso no es justo! …Vale, sí es justo. Pero me fastidia.' },
+			{ say: 'blanca', text: '¡Eh, eh, eh! ¿Y ese equipo? ¡Has estado entrenando a escondidas! ¡Eso no es justo! …Bueno, sí es justo. Pero me fastidia.' },
 			{ call: 'b01_blanca_reto' },
 		],
 		b01_blanca_reto: [
@@ -858,7 +858,7 @@ export default {
 					{ text: '«¿Estás bien?»', then: [{ say: 'blanca', text: '¡Estoy FATAL! …Ya se me pasa. Dame un segundo. —Se suena la nariz con estruendo—. Ya.' }] },
 					{ text: 'Esperar en silencio.', then: [{ text: 'Esperas. Exactamente cuarenta segundos después, Blanca deja de llorar, como quien cierra un grifo.' }] },
 				] },
-				{ say: 'blanca', text: 'Vale. Ya. Toma. ¡Te la has ganado! ¡Aunque no es justo!' },
+				{ say: 'blanca', text: 'Bueno. Ya. Toma. ¡Te la has ganado! ¡Aunque no es justo!' },
 				{ badge: 'medalla_encanto' },
 				{ cap: 33 },
 				{ give: 'mt_fachada' },
@@ -990,7 +990,7 @@ export default {
 					{ rep: { kalos: 2 } },
 				] },
 				{ text: '«Que {riolu} suba a por ella.»', then: [
-					{ text: '{riolu} trepa el menhir en tres saltos. El Skitty lo mira… y se deja coger, sin un bufido. {riolu} baja con ella en brazos, sin prisa.' },
+					{ text: '{riolu} trepa el menhir en tres saltos. El Skitty lo mira… y se deja agarrar, sin un bufido. {riolu} baja con ella en brazos, sin prisa.' },
 					{ happy: { who: 'riolu', n: 5 } },
 					{ say: 'hector', text: '¡Increíble! ¡Tu compañero es un héroe de verdad!' },
 					{ text: 'Héctor aplaude. Luego deja de aplaudir.' },
@@ -1045,7 +1045,7 @@ export default {
 					{ say: 'az', text: 'Conocí Crómlech cuando todavía no tenía nombre. Cuando estas piedras eran tumbas recién cerradas.' },
 				] },
 				{ text: 'Quedarte en silencio a su lado.', then: [
-					{ text: 'Os quedáis los dos en silencio. La Floette baja de su hombro, se posa un segundo sobre la cabeza de {riolu} y vuelve. El hombre sonríe. Parece que hacía mucho que no lo hacía.' },
+					{ text: 'Se quedan los dos en silencio. La Floette baja de su hombro, se posa un segundo sobre la cabeza de {riolu} y vuelve. El hombre sonríe. Parece que hacía mucho que no lo hacía.' },
 					{ happy: { who: 'riolu', n: 5 } },
 				] },
 			] },
@@ -1104,7 +1104,7 @@ export default {
 				{ say: 'irene', text: 'Anoche los menhires del norte brillaron. Todos a la vez. Lo vi desde la ventana de la posada y lo apunté. Con hora: las dos y diecisiete.' },
 				{ say: 'irene', text: '¿Tú… sabes algo de eso?' },
 				{ choice: [
-					{ text: '«Pregúntale a Handsome.»', then: [{ say: 'irene', text: 'Eso significa que sí. Vale. Lo respeto. Lo detesto, pero lo respeto.' }] },
+					{ text: '«Pregúntale a Handsome.»', then: [{ say: 'irene', text: 'Eso significa que sí. De acuerdo. Lo respeto. Lo detesto, pero lo respeto.' }] },
 					{ text: '«Vi una máquina. Muy antigua. Debajo de los menhires.»', then: [
 						{ af: { irene: 2 } },
 						{ text: 'Irene deja de escribir. Se le cae el lápiz. No lo recoge.' },
@@ -1591,7 +1591,7 @@ export default {
 		// ---- Gimnasio de Yantra ----
 		b01_corelia_espera: [
 			{ text: 'Corelia pasa a toda velocidad por la pista, salta una barandilla, gira en el aire y aterriza delante de ti.' },
-			{ say: 'corelia', text: '¡Primero, la pista! ¡Los tres de la pista! ¡Si no, no vale! ¡A tope!' },
+			{ say: 'corelia', text: '¡Primero, la pista! ¡Los tres de la pista! ¡Si no, no se vale! ¡A tope!' },
 			{ text: 'Y se va.' },
 		],
 		b01_corelia_reto_tope: [
@@ -1602,7 +1602,7 @@ export default {
 			{ text: 'Al final del ocho, en el centro de la pista, Corelia te espera con las manos en las caderas.' },
 			{ say: 'corelia', text: '¡LLEGASTE! ¡Y de pie! La mitad se cae en la segunda rampa. La otra mitad, en la primera.' },
 			{ say: 'corelia', text: 'Te voy a ser sincera: hoy no hay Megaevolución. Aquí, en el gimnasio, lucho como cualquier líder. La Mega es para la Torre. Para quien se la gana.' },
-			{ say: 'corelia', text: 'Mi abuelo dice que la fuerza sin vínculo es solo ruido. ¡Yo digo que el ruido también mola!' },
+			{ say: 'corelia', text: 'Mi abuelo dice que la fuerza sin vínculo es solo ruido. ¡Yo digo que el ruido también es genial!' },
 			{ battle: 'corelia_g3', onWin: [
 				{ say: 'corelia', text: 'Eso… ¡eso ha sido vínculo! ¡Lo he notado en las rodillas! ¡Abuelo, lo he notado en las rodillas!' },
 				{ badge: 'medalla_lucha' },
@@ -1668,7 +1668,7 @@ export default {
 				{ text: 'Un aura que no se parece a la de ningún Lucario que hayas visto. Porque, de algún modo, se parece un poco a la tuya.' },
 				{ happy: { who: 'riolu', n: 50 } },
 			] },
-			{ say: 'corelia', text: '…Vale. Vale, no estoy llorando. Es el viento. Aquí arriba hay mucho viento. ¡Viento a tope!' },
+			{ say: 'corelia', text: '…Ya. Ya, no estoy llorando. Es el viento. Aquí arriba hay mucho viento. ¡Viento a tope!' },
 			{ say: 'cornelio', text: 'Vínculo. De verdad. —Se acaricia el bigote—. Pero la piedra necesita oírlo en combate. Así es la tradición: dos compañeros de aura, frente a frente. Corelia.' },
 			{ text: 'Corelia deja de bromear. Se quita el casco. Se sube la manga izquierda: en la muñeca lleva un guante con una piedra engastada que brilla con todos los colores a la vez.' },
 			{ say: 'corelia', text: 'Ahora sí. Ahora va en serio.' },

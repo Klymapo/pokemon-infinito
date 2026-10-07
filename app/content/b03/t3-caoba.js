@@ -225,7 +225,7 @@ export default {
 		// ----- El peaje -----
 		peaje_toni: { name: 'Toni', cls: 'Recluta Rocket', npc: 'recluta_rocket_b3', ai: 3, team: [{ sp: 'raticate', lv: 44 }, { sp: 'golbat', lv: 45 }, { sp: 'mightyena', lv: 45 }],
 			intro: 'Muy bien. Tú lo has querido. Te cobro en combate. Y si pierdo, pues… pues pierdo. Pero con dignidad.',
-			win: 'Vale. Vale. Sin dignidad. Pasa.' },
+			win: 'Ya. Ya. Sin dignidad. Pasa.' },
 
 		// ----- Trastienda (entrenamiento, repetibles) -----
 		trastienda_1: { name: 'Higinio', cls: 'Apostador', ai: 2, team: [{ sp: 'persian', lv: 44 }, { sp: 'raticate', lv: 45 }],
@@ -295,7 +295,7 @@ export default {
 					{ text: 'Al levantar la barrera se le cae del bolsillo un papel doblado. No se da cuenta. Lo recoges.' },
 				] },
 				{ text: 'Retarle a un combate.', then: [
-					{ say: 'recluta_rocket_b3', as: 'Recluta bajito', text: '¿Un combate? ¿Contra mí? Bueno. Vale. Sí. Lupe, sujétame las pipas.' },
+					{ say: 'recluta_rocket_b3', as: 'Recluta bajito', text: '¿Un combate? ¿Contra mí? Bueno. Va. Sí. Lupe, sujétame las pipas.' },
 					{ battle: 'peaje_toni', onWin: [
 						{ set: { 'flag.b03_peaje_pelea': true } },
 						{ say: 'recluta_rocket_f', as: 'Lupe', text: 'Te lo dije, Toni. Te dije que no te metieras con la gente que lleva un Pokémon azul con pinchos.', cond: LUC },
@@ -375,7 +375,7 @@ export default {
 					{ set: { 'flag.b03_gyarados_rojo': true, 'flag.b03_gyarados_calmado': true } },
 					{ text: 'El Gyarados rojo se derrumba en los bajíos. Respira hondo, muy hondo. Los ojos dejan de estar en blanco. Te mira, y esta vez te ve.' },
 					{ text: 'Luego se hunde despacio en el agua oscura y se aleja, sin rugir. Lento. Cansado. Libre.' },
-					{ say: 'lance', text: 'Así también vale. Lo has dejado tan cansado que no le quedan fuerzas para la rabia. A veces es la única manera.' },
+					{ say: 'lance', text: 'Así también se vale. Lo has dejado tan cansado que no le quedan fuerzas para la rabia. A veces es la única manera.' },
 				],
 				onRun: [
 					{ set: { 'flag.b03_gyarados_rojo': true, 'flag.b03_gyarados_huido': true } },
@@ -465,7 +465,7 @@ export default {
 		b03_ulises: [
 			{ set: { 'flag.b03_ulises_lago': true } },
 			{ quest: 'b02_t_cabina', done: true, silent: true },
-			{ text: 'Entre dos pinos, una cabina de madera azul, con un farolillo encima y ventanitas. Respira: un ruido de acordeón cogiendo aire, que se apaga en un resoplido.' },
+			{ text: 'Entre dos pinos, una cabina de madera azul, con un farolillo encima y ventanitas. Respira: un ruido de acordeón tomando aire, que se apaga en un resoplido.' },
 			{ text: 'La puerta se abre de golpe. Sale un hombre de rizos castaños y abrigo granate, y detrás de él sale una bufanda de rayas. Y sigue saliendo. Y sigue.' },
 			{ say: 'viajero', text: '¡{jugador}! ¡Aquí! ¡Ahora! ¿Qué día es? No me lo digas. Martes. —Se para en seco—. No es martes. El agua dice que no es martes. El agua está diciendo muchas cosas hoy y ninguna buena.' },
 			{ say: 'viajero', text: 'Esa nota. ¿La oyes? No, tú no la oyes. Tu amigo de las orejas sí. —Se agacha delante de {riolu}—. Duele, ¿verdad? A mí también. Es como un diente que te llama por teléfono.', cond: LUC },
@@ -631,7 +631,7 @@ export default {
 				{ say: 'rotom', text: '¡Bzzt! M. Solo M. Hay millones de personas que empiezan por M. Mi lista tiene… bueno, muchas. Ninguna me cuadra.' },
 			] },
 			{ text: 'Junto al panel, colgada de un gancho, una pinza de metal con cables, del tamaño de una pinza de la ropa. Lleva una pegatina: «NO TOCAR (en serio)». Debajo, a mano, la misma letra de las hojas: «Si sale mal: en el cable azul. NO en el rojo. — M.».' },
-			{ text: 'Antes de que puedas cogerla, oyes una puerta al otro lado de la máquina. Una puerta que no habías visto. Y pasos tranquilos. Muy tranquilos.' },
+			{ text: 'Antes de que puedas agarrarla, oyes una puerta al otro lado de la máquina. Una puerta que no habías visto. Y pasos tranquilos. Muy tranquilos.' },
 		],
 		b03_maquina_otra_vez: [
 			{ text: 'La máquina sigue zumbando. Tres veces. Pausa. Tres veces. La pinza sigue en su gancho. Al otro lado, alguien espera sin ninguna prisa.' },
@@ -704,7 +704,7 @@ export default {
 		b03_atlas_despues: [
 			{ text: 'El Houndoom de Atlas cae junto a la máquina. Atlas lo recoge sin prisa y se queda mirando la Poké Ball un rato largo.' },
 			{ say: 'atlas', text: 'Bien. Ya está. —Se sienta en una caja de herramientas, con el traje blanco manchado de hollín—. Haz lo que tengas que hacer con esa máquina. Yo ya no tengo nada que defender.' },
-			{ text: 'Coges la pinza del gancho. «NO TOCAR (en serio)». Buscas el cable azul entre todos los cables. Hay uno rojo justo al lado. Muy al lado.' },
+			{ text: 'Tomas la pinza del gancho. «NO TOCAR (en serio)». Buscas el cable azul entre todos los cables. Hay uno rojo justo al lado. Muy al lado.' },
 			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
 				{ item: 'pinzaonda', text: 'La pinza pesa más de lo que parece. Las mordazas son de cobre, finas, con dientecitos. Tiemblan un poco cuando la acercas a la máquina, como si quisieran morder.' },
 				{ text: 'El cable azul. Lo encuentras. Abres la pinza.' },
@@ -725,7 +725,7 @@ export default {
 			{ say: 'lance', text: 'Estaban en las literas del ala este. Catorce. Ninguno ha intentado pelear. —Mira a Atlas—. Ninguno.' },
 			{ say: 'atlas', text: 'Les dije que no lo hicieran. Por una vez me han hecho caso.' },
 			{ quest: 'b03_m6', stage: 'decision' },
-			{ text: 'En el ordenador del panel, una ventana abierta: «Fundación Raíces · Sincronizando…». Una barra que avanza. Todo lo que esta máquina ha medido en tres semanas, saliendo hacia algún sitio.' },
+			{ text: 'En la computadora del panel, una ventana abierta: «Fundación Raíces · Sincronizando…». Una barra que avanza. Todo lo que esta máquina ha medido en tres semanas, saliendo hacia algún sitio.' },
 			{ say: 'atlas', text: 'Escúchame. —Se levanta—. Si eso termina de enviarse, la fundación sabrá que la prueba se cortó. Y sabrá quién la cortó, porque tu Pokédex ha estado aquí dentro toda la tarde. No sé quién está detrás de la fundación. Sé que no le gusta que le corten las cosas.' },
 			{ say: 'atlas', text: 'Puedo quemarlo. Todo. Los discos, los registros, la sincronización. Que no sepan nada de ti. Pero entonces no habrá pruebas para nadie: ni para el de la capa, ni para la policía. Y yo me iré por donde he venido.' },
 			{ say: 'lance', text: 'O podemos llamar a la policía y entregarlo todo. A él, la máquina, los registros. —Mira a los reclutas—. A todos.' },
@@ -773,7 +773,7 @@ export default {
 			{ set: { 'flag.b03_rocket_quemar': true } },
 			{ rep: { policia: -5 } },
 			{ text: '«Quémalo.» Lo dices bajo. Lance no te oye: ha salido al pasillo a llevarse a los reclutas.' },
-			{ text: 'Atlas te mira un segundo. Luego se mueve deprisa, como quien lo tenía pensado desde hace mucho. Arranca los discos del ordenador, los mete en un cubo de metal, les echa algo de una botella que huele a gasolina y a limón.' },
+			{ text: 'Atlas te mira un segundo. Luego se mueve deprisa, como quien lo tenía pensado desde hace mucho. Arranca los discos de la computadora, los mete en un cubo de metal, les echa algo de una botella que huele a gasolina y a limón.' },
 			{ say: 'atlas', text: 'Houndoom. Poquito.' },
 			{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#c4473a' }, start: 'dark', frames: [
 				{ text: 'El Houndoom suelta una llamita, casi delicada. El cubo prende con un *fump* grave.' },
@@ -829,7 +829,7 @@ export default {
 			{ say: 'noa', as: 'Noa (mensaje)', text: 'Los datos de esa prueba no se quedaban en Johto. Iban por el tendido del Tren Magnético, hacia el este. A Kanto. A Azafrán. Lo he visto en un panel que no debería haber visto.' },
 			{ say: 'noa', as: 'Noa (mensaje)', text: 'Borra esto. Por favor.' },
 			{ quest: 'b03_t_ondas', stage: 'abierto' },
-			{ say: 'rotom', text: '…¡Bzzt! Y una notificación de la Gira, para todos los inscritos: «La Gira continúa en **Kanto**. Los participantes con siete medallas tienen billete gratis en el **Tren Magnético Trigal–Azafrán**. ¡Os esperamos a bordo!».' },
+			{ say: 'rotom', text: '…¡Bzzt! Y una notificación de la Gira, para todos los inscritos: «La Gira continúa en **Kanto**. Los participantes con siete medallas tienen billete gratis en el **Tren Magnético Trigal–Azafrán**. ¡Los esperamos a bordo!».' },
 			{ say: 'rotom', text: 'El Tren Magnético. El que pasa justo por encima del sótano. —Pausa—. Ya sé, ya sé. No digo nada.' },
 			{ if: LUC, then: [
 				{ cutscene: { bg: { type: 'coast', far: '#1a2438', ground: '#4a4a5a' }, start: 'dark', frames: [

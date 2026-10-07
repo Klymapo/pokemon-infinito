@@ -89,8 +89,8 @@ export default {
 			desc: 'Una ciudad atravesada por agua: un río ancho y transparente, canales, puentes de piedra y casas de tejado azul. Todo el mundo va en bicicleta, y quien no, va a nado. Huele a río y a cloro.\n\nEl **Gimnasio** parece una piscina con techo. Al norte empieza el **Puente Pepita**. Al oeste, al otro lado del río, una ladera de roca con la boca oscura de una cueva… y una valla nueva, azul y plata.',
 			descNight: 'De noche, Celeste se refleja entera en el río. Las bicicletas duermen apoyadas en las farolas. Al oeste, junto a la boca de la cueva, hay focos encendidos y un generador que ronca. Antes no había nada.',
 			descs: [
-				{ cond: 'beat("misty_g8") && night', text: 'De noche, Celeste se refleja entera en el río. En la puerta del Gimnasio alguien ha colgado un cartel a mano: «Hoy la líder ha perdido. Está de buen humor. No le preguntéis por qué». Al oeste, los focos de la valla siguen encendidos.' },
-				{ cond: 'beat("misty_g8")', text: 'Celeste, con su río, sus puentes y sus bicicletas. En la puerta del Gimnasio alguien ha pegado una foto de la líder con el pulgar hacia arriba y un texto: «Ha perdido. Está bien. Dejad de preguntar».\n\nAl oeste, la valla azul y plata de la cueva sigue ahí.' },
+				{ cond: 'beat("misty_g8") && night', text: 'De noche, Celeste se refleja entera en el río. En la puerta del Gimnasio alguien ha colgado un cartel a mano: «Hoy la líder ha perdido. Está de buen humor. No le pregunten por qué». Al oeste, los focos de la valla siguen encendidos.' },
+				{ cond: 'beat("misty_g8")', text: 'Celeste, con su río, sus puentes y sus bicicletas. En la puerta del Gimnasio alguien ha pegado una foto de la líder con el pulgar hacia arriba y un texto: «Ha perdido. Está bien. Dejen de preguntar».\n\nAl oeste, la valla azul y plata de la cueva sigue ahí.' },
 			],
 			links: ['k_ruta5', 'ruta24'],
 			mapNote: 'Gimnasio (Misty) · Puente Pepita · la Cueva',
@@ -345,7 +345,7 @@ export default {
 				{ sp: 'wigglytuff', lv: 48, moves: ['hypervoice', 'dazzlinggleam', 'sing', 'fireblast'] },
 			],
 			intro: '¡Segunda! El puente es como una conversación: el primero saluda, la segunda pregunta. Yo pregunto: ¿cuántas medallas? ¡No me lo digas! ¡Enséñamelo!',
-			win: 'Vale, muchas. Muchas medallas. Ya lo he entendido.',
+			win: 'Ya, muchas. Muchas medallas. Ya lo he entendido.',
 			look: { hair: 'bob', hairColor: '#e0763a', outfit: '#e98aa8', outfit2: '#e9e3d0', skin: 1, eyesStyle: 'happy', mouth: 'smile', acc: 'bow' } },
 		pepita_3: { name: 'Gonzalo', cls: 'Joven', ai: 2,
 			team: [
@@ -421,7 +421,7 @@ export default {
 				{ sp: 'dewgong', lv: 50, moves: ['icebeam', 'surf', 'aquajet', 'encore'] },
 			],
 			intro: 'La líder dice que el agua no perdona. Yo tampoco. Bueno, yo un poco. ¡Pero el agua no!',
-			win: 'Vale. Sí. Perdono. Pasa.',
+			win: 'Bueno. Sí. Perdono. Pasa.',
 			look: { hair: 'long', hairColor: '#e0763a', outfit: '#3b7ac4', outfit2: '#e9e8e0', skin: 1, eyesStyle: 'happy', mouth: 'smile', acc: 'goggles' } },
 		gym_celeste_2: { name: 'Abel', cls: 'Nadador', ai: 3, iv: 22, bg: 'gym',
 			team: [
@@ -486,7 +486,7 @@ export default {
 					{ text: 'Darle una bebida de la mochila.', then: [
 						{ if: 'has("lemonade")', then: [{ take: 'lemonade' }], else: [{ if: 'has("sodapop")', then: [{ take: 'sodapop' }], else: [{ take: 'freshwater' }] }] },
 						{ set: { 'flag.b04_guarda_bebida': true } },
-						{ text: 'El guardia la coge con las dos manos. La mira. Se la bebe de un trago, despacio, con los ojos cerrados, como quien escucha una canción de cuando era joven.' },
+						{ text: 'El guardia la toma con las dos manos. La mira. Se la bebe de un trago, despacio, con los ojos cerrados, como quien escucha una canción de cuando era joven.' },
 						{ say: 'guarda_k5', text: 'Esto. Esto es la tradición. Un desconocido. Una bebida. Un «gracias». —Se seca una lágrima con la manga—. Toma. Lo tenía guardado para el siguiente que me trajera algo. Han pasado tres años.' },
 						{ give: 'ppup' },
 					] },
@@ -529,7 +529,7 @@ export default {
 			{ text: 'Le tapas el altavoz a Rotom con el pulgar. Noa sigue andando sin girarse. El grupo cruza el puente y desaparece detrás de la valla.' },
 			{ quest: 'b03_t_noa', done: true, cond: 'quest.b03_t_noa && !done.b03_t_noa' },
 			{ quest: 'b04_t_noa', stage: 'celeste' },
-			{ say: 'rotom', text: '…Vale. Vale. No he visto nada. —Bajito—. Pero lo he visto.' },
+			{ say: 'rotom', text: '…Ok. Ok. No he visto nada. —Bajito—. Pero lo he visto.' },
 			{ say: 'rotom', text: 'Bueno. ¡Celeste! Aquí está el gimnasio de **Misty**: tipo Agua. Si ganamos, son **ocho medallas**. ¡Ocho! Y al norte, pasado el **Puente Pepita**, vive **Bill**, el que inventó el sistema de PC. Si alguien sabe leer una señal rara, es él.' },
 			{ if: 'has("registroondas")', then: [
 				{ say: 'rotom', text: 'Llevamos las hojas de Caoba, las de la firma con una M. Bill seguro que les saca algo.' },
@@ -548,7 +548,7 @@ export default {
 			{ say: 'rotom', text: '• Bastien está en el arranque del Puente Pepita, leyendo. Dice que no hace falta parar.', cond: '!flag.b04_bastien_puente' },
 			{ say: 'rotom', text: '• El dueño de la tienda de bicis tiene un paquete para Bill.', cond: '!flag.b04_rueda_visto && !flag.b04_bill_hecho' },
 			{ say: 'rotom', text: '• Una foto en el Puente Pepita, al atardecer. ¡Me la prometiste! Bueno, me la prometí yo.', cond: 'badge("medalla_cascada") && !has("fotopuente")' },
-			{ say: 'rotom', text: '¡Y ya está! Misty y Bill, hechos. Esta noche dormimos en el Centro, ¿vale? Me hace falta cargar.', cond: 'beat("misty_g8") && flag.b04_bill_hecho' },
+			{ say: 'rotom', text: '¡Y ya está! Misty y Bill, hechos. Esta noche dormimos en el Centro, ¿sí? Me hace falta cargar.', cond: 'beat("misty_g8") && flag.b04_bill_hecho' },
 		],
 
 		// =================== NOA ===================
@@ -556,7 +556,7 @@ export default {
 			{ set: { 'flag.b04_noa_celeste': true } },
 			{ text: 'El callejón de detrás de la tienda de bicis es estrecho y huele a goma. Hay neumáticos apilados hasta la altura de la cabeza. Entre dos pilas, sentada en una caja, está Noa.' },
 			{ text: 'El uniforme es nuevo: gris, sin una arruga, con una insignia rectangular que dice **INVENTARIO · KANTO**. Se ha cortado el pelo. O se lo ha cortado alguien deprisa.' },
-			{ say: 'noa', text: 'No me saludes. Ni ahora ni nunca, si me ves con esto puesto. Si me ves con esto, no me conoces. ¿Vale? Es lo único que te pido. —Se frota los ojos—. No. No es lo único.' },
+			{ say: 'noa', text: 'No me saludes. Ni ahora ni nunca, si me ves con esto puesto. Si me ves con esto, no me conoces. ¿De acuerdo? Es lo único que te pido. —Se frota los ojos—. No. No es lo único.' },
 			{ say: 'noa', text: 'Me han «reasignado». A la cueva del río. A inventariar. Les pregunté: «¿Inventariar qué?». Me dijeron: «Lo que haya». Y me sonrieron. Siempre me sonríen.' },
 			{ say: 'noa', text: 'La tarjeta gris ya no la tengo. Ahora tengo esta. —Te enseña una tarjeta blanca. Pone **VISITANTE**—. Trabajo allí y soy visitante. Eso también es un dato.' },
 			{ if: 'flag.b03_noa_hecho', then: [
@@ -572,11 +572,11 @@ export default {
 				{ say: 'noa', text: 'Escarcha está en una bañera de un hostal de Celeste, con hielo. La dueña ya ni pregunta. Si me pasa algo… la llave está debajo del felpudo. Es un felpudo de Psyduck. Es horrible.' },
 			] },
 			{ say: 'noa', text: 'Y Bastien. A Bastien también lo han llamado. Aquí, a Celeste. «Disponibilidad para estudios». No sé qué estudian. —Se le quiebra la voz—. Me da más miedo eso que la cueva.' },
-			{ text: 'Noa se levanta. Te coge de la manga, muy fuerte, como una niña en un sitio con mucha gente.' },
+			{ text: 'Noa se levanta. Te agarra de la manga, muy fuerte, como una niña en un sitio con mucha gente.' },
 			{ say: 'noa', text: 'Escúchame. Si un día no contesto… si te escribo y luego no contesto… que alguien abra las jaulas. Las que haya. Donde estén. No me esperes para hacerlo.' },
 			{ choice: [
 				{ text: '«Te lo prometo.»', then: [
-					{ say: 'noa', text: 'Vale. —Suelta la manga—. Vale. Ya lo he dicho. Ya pesa menos.' },
+					{ say: 'noa', text: 'Bueno. —Suelta la manga—. Bueno. Ya lo he dicho. Ya pesa menos.' },
 				] },
 				{ text: '«No digas eso. Vas a contestar siempre.»', then: [
 					{ say: 'noa', text: 'Ojalá. —Sonríe, y es peor que si llorara—. Pero prométemelo igual. Las promesas no hacen daño si no hacen falta.' },
@@ -698,7 +698,7 @@ export default {
 			{ battle: 'pepita_5', onWin: [
 				{ set: { 'flag.b04_puente_hecho': true } },
 				{ cap: 52 },
-				{ say: 'cazatalentos_lemnis', text: 'Bueno. Vale. Me lo apunto. —Cierra el maletín—. No pasa nada: el programa es paciente. El programa es *muy* paciente.' },
+				{ say: 'cazatalentos_lemnis', text: 'Bueno. De acuerdo. Me lo apunto. —Cierra el maletín—. No pasa nada: el programa es paciente. El programa es *muy* paciente.' },
 				{ say: 'cazatalentos_lemnis', text: 'Toma. La **pepita** del puente. Es tradición. Hace años la daba otra… organización. De uniforme negro. Ahora la damos nosotros. Las tradiciones cambian de dueño, no de puente.' },
 				{ give: 'nugget' },
 				{ text: 'Se aleja hacia Celeste silbando, con el maletín balanceándose. Al pasar junto a la voluntaria del puente, ella le tira un botellín de agua a los pies. Él lo esquiva sin mirar.' },
@@ -718,7 +718,7 @@ export default {
 			] },
 			{ if: 'flag.b01_bastien_rompe', then: [
 				{ text: 'Bastien está sentado en la barandilla con la cazadora de pana de los codos remendados, leyendo una carta con membrete de abogados. La sujeta como si quemara.' },
-				{ say: 'bastien', text: '¡{jugador}! Has parado. —Agita la carta—. Mira. Los abogados de Lemnis. Dicen que rompí el contrato, vale. Pero que hay una cláusula que «sobrevive a la rescisión». ¿Sabías que una cláusula puede sobrevivir? Yo creía que eso solo lo hacían las cucarachas.' },
+				{ say: 'bastien', text: '¡{jugador}! Has parado. —Agita la carta—. Mira. Los abogados de Lemnis. Dicen que rompí el contrato, bueno. Pero que hay una cláusula que «sobrevive a la rescisión». ¿Sabías que una cláusula puede sobrevivir? Yo creía que eso solo lo hacían las cucarachas.' },
 				{ say: 'bastien', text: 'Cláusula 14.3. Me citan en Celeste. Si no vengo, la demanda se duplica. Así que he venido. Con mi cazadora. Que es mía.' },
 			] },
 			{ if: '!flag.b01_bastien_cubierto && !flag.b01_bastien_rompe', then: [
@@ -832,7 +832,7 @@ export default {
 				] },
 			] },
 			{ say: 'bill', text: 'Es **mi protocolo**. El del sistema de almacenamiento. Tres paquetes, pausa, tres paquetes. Así se mandan los Pokémon de un PC a otro. Alguien está usando la red de PC de toda Kanto como autopista para mover… esto. Lo que sea esto.' },
-			{ say: 'bill', text: 'Espera, que lo sigo. —Se sienta delante de un ordenador enorme lleno de pegatinas y teclea a una velocidad que no parece humana—. Entra desde Johto por el tendido. Llega a **Azafrán**. Pasa por un repetidor… en un edificio pegado a Silph. ¿Quién ha puesto un repetidor ahí sin pedirme permiso?' },
+			{ say: 'bill', text: 'Espera, que lo sigo. —Se sienta delante de una computadora enorme llena de pegatinas y teclea a una velocidad que no parece humana—. Entra desde Johto por el tendido. Llega a **Azafrán**. Pasa por un repetidor… en un edificio pegado a Silph. ¿Quién ha puesto un repetidor ahí sin pedirme permiso?' },
 			{ say: 'bill', text: 'Y desde Azafrán… no va a ningún PC. Ninguno. Sube al norte y **baja**. Hacia un sitio que no tiene PC, ni tendido, ni nada. —Gira la pantalla hacia ti. Un punto rojo parpadea junto a Celeste, al otro lado del río—. **La Cueva Celeste**.' },
 			{ if: 'flag.b04_cueva_vista', then: [
 				{ text: 'Te acuerdas de la valla azul y plata. De los focos. Del guardia que sonreía mucho. De cómo {riolu} se quedó quieto en el puente.', cond: LUC },
@@ -850,7 +850,7 @@ export default {
 				{ text: '{riolu} se acerca al banco de trabajo. Mira la radio. Cierra los ojos. Los apéndices de la cabeza se levantan, despacio, y empiezan a brillar.', cond: LUC },
 				{ fx: 'glow', text: 'El aura azul de {riolu} roza la antena. Y la radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. Bill se queda con la boca abierta y el destornillador en el aire.', cond: LUC },
 				{ fx: 'glow', text: 'Bill le da un golpecito a la radio con el nudillo, como a un melón. La radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. «¡Ja! Siempre funciona», dice Bill. No siempre funciona.', cond: '!(' + LUC + ')' },
-				{ item: 'sintonizadorbill', fx: 'light', text: 'Bill coge un rotulador y, en la rejilla del altavoz, le dibuja dos puntitos y una sonrisa. «Así sabe que es querido. Las máquinas queridas funcionan mejor. Eso no lo dice ningún manual. Lo digo yo».' },
+				{ item: 'sintonizadorbill', fx: 'light', text: 'Bill toma un rotulador y, en la rejilla del altavoz, le dibuja dos puntitos y una sonrisa. «Así sabe que es querido. Las máquinas queridas funcionan mejor. Eso no lo dice ningún manual. Lo digo yo».' },
 			] } },
 			{ say: 'bill', text: 'El **Sintonizador de Bill**. Primer modelo. Único modelo. Está ajustado a esa frecuencia: cuando la tengas cerca, pita. Cuanto más cerca, más pita. Ahí abajo, en la oscuridad, te dirá por dónde va el hilo.' },
 			{ if: LUC, then: [
@@ -896,7 +896,7 @@ export default {
 			{ say: 'misty', as: 'Chica del pelo naranja', text: '¡QUE NO ES UNA CITA! ¡Te he dicho que vinieras a ver cómo nadan los Goldeen! ¡A los Goldeen! ¡Que llevan una semana nadando raro!' },
 			{ say: 'pretendiente_cabo', text: 'Ya, pero… las flores…' },
 			{ say: 'misty', as: 'Chica del pelo naranja', text: '¡Las flores, para tu madre!' },
-			{ text: 'El chico se va arrastrando los pies. Al pasar junto a ti, te mira con los ojos húmedos y te da el ramo sin decir nada. Lo coges por educación. Se le caen dos pétalos.' },
+			{ text: 'El chico se va arrastrando los pies. Al pasar junto a ti, te mira con los ojos húmedos y te da el ramo sin decir nada. Lo tomas por educación. Se le caen dos pétalos.' },
 			{ say: 'misty', as: 'Chica del pelo naranja', text: '¿Y tú? ¿Tú también traes flores? —Te mira de arriba abajo. Mira tu caja de medallas. Mira a tu equipo—. …No. Tú traes otra cosa.' },
 			{ say: 'misty', text: 'Misty. Líder de Celeste. Y antes de que digas nada: sí, me han dicho que tienes siete medallas y un Lucario. Brock me ha escrito desde Kalos. «Si pasa por Celeste uno con un Lucario, no lo subestimes».', cond: LUC },
 			{ say: 'misty', text: 'Misty. Líder de Celeste. Y antes de que digas nada: sí, me han dicho que tienes siete medallas. Brock me ha escrito desde Kalos. «Si pasa por Celeste alguien de la Gira con siete medallas, no lo subestimes».', cond: '!(' + LUC + ')' },
@@ -1053,7 +1053,7 @@ export default {
 			{ text: 'Te giras un segundo para mirar Azafrán. Cuando vuelves la vista, Ysolde ya no está. El letrero luminoso del Centro parpadea, como si alguien acabara de bajarse de él.' },
 			{ quest: 'b04_m2', done: true },
 			{ quest: 'b04_m4', stage: 'tejado' },
-			{ say: 'rotom', text: '¡Bzzt! Vale. Resumen: tenemos ocho medallas, una radio con cara, una foto bonita (o la tendremos) y una misión con nombre. ¡Volvemos a **Azafrán** por la Ruta 5!' },
+			{ say: 'rotom', text: '¡Bzzt! Bueno. Resumen: tenemos ocho medallas, una radio con cara, una foto bonita (o la tendremos) y una misión con nombre. ¡Volvemos a **Azafrán** por la Ruta 5!' },
 			{ intel: { npc: 'ysolde', text: 'Te propuso la Operación Tejado desde el tejado del Centro de Celeste: entrar por arriba en los archivos de Silph, pegados a la Torre Lemnis de Azafrán. Hay tres formas de entrar, según a quién le debas favores.' } },
 		],
 	},

@@ -256,7 +256,7 @@ export default {
 					{ say: 'sobrina', text: 'Bien. —Pausa—. Bien.' },
 				] },
 				{ text: 'No decir nada.', then: [
-					{ say: 'sobrina', text: '¿Sigues ahí? …Vale. Ven en cuanto puedas. ¿Estamos?' },
+					{ say: 'sobrina', text: '¿Sigues ahí? …Bueno. Ven en cuanto puedas. ¿Estamos?' },
 				] },
 			] },
 			{ text: '*Clic.*' },
@@ -389,11 +389,11 @@ export default {
 			{ say: 'agente_lemnis', as: 'Señor del ramo', text: 'El rancho seguiría llamándose Rancho Prado. La familia conservaría la casa. Solo pondríamos nuestra placa en la cerca. Una placa pequeñita. —Mira a Adela—. Y a usted le pagaríamos un sueldo por seguir atendiéndolas. Un sueldo de verdad.' },
 			{ text: 'Deja el ramo en la barandilla, al lado de la taza de café. Junto a la mecedora.' },
 			{ say: 'sobrina', text: '«A los del folleto, ni agua». Eso decía. —Se frota la cara—. Pero también decía que el rancho son ellas. Y ellas comen todos los días.' },
-			{ say: 'sobrina', text: 'Dime tú. Él quería que lo decidiéramos los dos, y yo ahora mismo no sé ni dónde he dejado las llaves del coche.' },
+			{ say: 'sobrina', text: 'Dime tú. Él quería que lo decidiéramos los dos, y yo ahora mismo no sé ni dónde he dejado las llaves del carro.' },
 			{ prompt: '¿Qué pasa con el rancho Prado?', choice: [
 				{ text: '«Que sea tuyo, Adela. Eres su familia.»', then: [
 					{ say: 'sobrina', text: '…Mío. —Lo repite como quien prueba una palabra en otro idioma—. Me voy a pasar el resto de la vida oliendo a oveja.' },
-					{ say: 'sobrina', text: 'Vale. Vale. Me traigo la consulta aquí. Las Miltank de la ruta pueden venir a mí, en vez de ir yo a ellas. Vendo el coche. Pago el pienso. El tejado, que espere. —Respira hondo, por la nariz—. Sale. Justo, pero sale.' },
+					{ say: 'sobrina', text: 'Bueno. Bueno. Me traigo la consulta aquí. Las Miltank de la ruta pueden venir a mí, en vez de ir yo a ellas. Vendo el carro. Pago el pienso. El tejado, que espere. —Respira hondo, por la nariz—. Sale. Justo, pero sale.' },
 					{ say: 'agente_lemnis', as: 'Señor del ramo', text: 'Lo respeto muchísimo. La oferta seguirá en pie. Siempre. —Deja una tarjeta en la barandilla, sin nombre, con la lemniscata en una esquina—. Las flores, quédenselas igual. Por el difunto.' },
 					{ text: 'El coche azul se va por la Ruta 42. Adela tira la tarjeta al cubo del pienso. Los lirios los deja.' },
 					{ say: 'sobrina', text: 'Te voy a escribir. Cada mes. Para que sepas cómo están. Y si un mes no te escribo, es que estoy esquilando. ¿Estamos?' },
@@ -429,13 +429,13 @@ export default {
 							{ say: 'sobrina', text: 'Cuídamela. Y si evoluciona, mándame una foto. Mi tío no se lo va a creer. —Se calla. Se da cuenta de lo que ha dicho—. …Bueno. Mándamela igual.' },
 						] },
 						{ text: 'Que se quede en el rancho.', then: [
-							{ say: 'sobrina', text: 'También vale. Así tienes una razón para volver. Ella te va a esperar en la mecedora. Ya verás.' },
+							{ say: 'sobrina', text: 'También se vale. Así tienes una razón para volver. Ella te va a esperar en la mecedora. Ya verás.' },
 						] },
 					] },
 				] },
 				{ text: '«Que se encargue la Fundación. Que coman, que es lo que importa.»', then: [
 					{ text: 'Adela no dice nada durante un rato. Mira el ramo. Mira la mecedora.' },
-					{ say: 'sobrina', text: '…Vale. Si es lo que hay que hacer para que coman. —Se le endurece la voz—. Pero la casa no la tocan. Ni la mecedora. Ni el cartel.' },
+					{ say: 'sobrina', text: '…Bueno. Si es lo que hay que hacer para que coman. —Se le endurece la voz—. Pero la casa no la tocan. Ni la mecedora. Ni el cartel.' },
 					{ say: 'agente_lemnis', as: 'Señor del ramo', text: 'Por supuesto. Por supuesto que no. —Saca una carpeta azul del coche. Ya traía los papeles hechos. Con el nombre del rancho escrito—. Firme aquí. Y aquí. Y una inicial aquí.' },
 					{ text: 'Adela firma. Tarda mucho en la última inicial.' },
 					{ text: 'El hombre del ramo saca de la maleta del coche una placa azul con una lemniscata y la atornilla en la cerca, junto a la cancela. Tarda dos minutos. Ya traía el destornillador.' },
@@ -655,10 +655,10 @@ export default {
 				] },
 				{ text: 'Pensar en el hombre del ramo de lirios.', cond: 'flag.b03_aurelio_muerto', then: [
 					{ text: 'Piensas en la sonrisa amable del hombre del ramo. En el destornillador que ya traía. Remueves sin darte cuenta de que estás apretando los dientes.' },
-					{ say: 'gaspar', text: 'Uf. Eso no es furia. Eso es rencor. El rencor da un caramelo más oscuro. —Lo huele—. Bueno. También vale.' },
+					{ say: 'gaspar', text: 'Uf. Eso no es furia. Eso es rencor. El rencor da un caramelo más oscuro. —Lo huele—. Bueno. También sirve.' },
 				] },
 				{ text: 'Dejar que {riolu} remueva.', cond: LUC, then: [
-					{ text: '{riolu} coge la cuchara con las dos patas, mira la olla muy serio y suelta un gruñido de aura tan concentrado que el caramelo empieza a burbujear solo.' },
+					{ text: '{riolu} agarra la cuchara con las dos patas, mira la olla muy serio y suelta un gruñido de aura tan concentrado que el caramelo empieza a burbujear solo.' },
 					{ say: 'gaspar', text: '…Nunca había visto un caramelo asustado. Me lo apunto.' },
 				] },
 				{ text: 'Gritarle al caramelo.', then: [
@@ -713,7 +713,7 @@ export default {
 	gather: {
 		huerto_prado: {
 			name: 'Huerto del rancho', icon: '🥕', hours: 22, picks: [1, 3],
-			text: 'Adela riega el huerto a primera hora, antes de la consulta. «Coge lo que quieras. Las zanahorias torcidas, que las derechas son de Borla. Eso no ha cambiado».',
+			text: 'Adela riega el huerto a primera hora, antes de la consulta. «Agarra lo que quieras. Las zanahorias torcidas, que las derechas son de Borla. Eso no ha cambiado».',
 			wait: 'El huerto está recién regado. Adela dice que vuelvas otro día.',
 			table: [
 				{ id: 'oranberry', w: 24, n: [1, 3] }, { id: 'sitrusberry', w: 14, n: [1, 2] }, { id: 'cheriberry', w: 12, n: [1, 2] },
@@ -740,7 +740,7 @@ export default {
 		},
 		colmenas_caoba: {
 			name: 'Colmenas de la ladera', icon: '🍯', hours: 20, picks: [1, 2],
-			text: 'Las colmenas de madera zumban al sol, entre pinos. Un Combee te mira, decide que no eres un problema y te deja coger un poco de lo que sobra.',
+			text: 'Las colmenas de madera zumban al sol, entre pinos. Un Combee te mira, decide que no eres un problema y te deja tomar un poco de lo que sobra.',
 			wait: 'Los Combee están ocupados. Te miran como diciendo: «Hoy no».',
 			table: [
 				{ id: 'honey', w: 40, n: [1, 2] }, { id: 'pinapberry', w: 12, n: [1, 2] }, { id: 'sitrusberry', w: 10, n: [1, 1] },

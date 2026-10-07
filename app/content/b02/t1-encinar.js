@@ -186,7 +186,7 @@ export default {
 				{ text: 'Kurt hace Poké Balls con Bonguris. Si le llevas uno, gruñe. Si le llevas dos, gruñe más. Pero te las hace.' },
 				{ text: 'Cuando un Slowpoke bosteza, llueve. Eso dicen aquí. Por eso en Azalea llueve tanto.' },
 				{ cond: 'flag.b02_kurt_1 && !flag.b02_pozo_hecho', text: 'Por la noche se oyen camiones junto al pozo. Y ruido de cajas. Y alguien que dice «cuidado, que es frágil».' },
-				{ cond: 'flag.b02_pozo_hecho', text: 'Antón ha puesto un cartel en el gimnasio: «Los bichos están nerviosos. No es culpa vuestra. Tampoco suya».' },
+				{ cond: 'flag.b02_pozo_hecho', text: 'Antón ha puesto un cartel en el gimnasio: «Los bichos están nerviosos. No es culpa de ustedes. Tampoco suya».' },
 			],
 		},
 		casa_kurt: {
@@ -267,18 +267,18 @@ export default {
 	// =====================================================================
 	trainers: {
 		// ----- Encinar -----
-		encinar_ramiro: { name: 'Ramiro', cls: 'Cazabichos', ai: 2, team: [{ sp: 'beedrill', lv: 29 }, { sp: 'butterfree', lv: 29 }],
+		encinar_ramiro: { name: 'Leandro', cls: 'Cazabichos', ai: 2, team: [{ sp: 'beedrill', lv: 29 }, { sp: 'butterfree', lv: 29 }],
 			intro: '¡Quieto! Llevo una semana buscando un Pokémon verde que vuela como una hoja. ¿Tú lo has visto? ¡Combate! Así me concentro.', win: 'Si lo ves, no lo persigas. Yo lo perseguí y aparecí dos días después en el mismo sitio.' },
 		encinar_amparo: { name: 'Amparo', cls: 'Dominguera', ai: 2, team: [{ sp: 'gloom', lv: 30 }, { sp: 'noctowl', lv: 30 }],
 			intro: 'Vengo todos los domingos a merendar al Encinar. Este domingo dura ya bastante. ¿Hoy qué día es?', win: 'Toma, un bocadillo. Está fresco. Lo hice esta mañana. O la de antes.' },
 		encinar_eusebio: { name: 'Eusebio', cls: 'Ornitólogo', ai: 2, team: [{ sp: 'noctowl', lv: 30 }, { sp: 'farfetchd', lv: 31 }],
 			intro: 'Los Noctowl del Encinar giran la cabeza todos a la vez, hacia el norte. Llevo tres noches apuntándolo. A ver qué opina el tuyo.', win: 'Los del pueblo dicen que el norte del bosque se ha quedado atascado. Como un cajón. Yo soy ornitólogo, no carpintero.' },
 		encinar_nieves: { name: 'Nieves', cls: 'Campista', ai: 2, team: [{ sp: 'parasect', lv: 30 }, { sp: 'spoink', lv: 31 }],
-			intro: 'No estoy perdida. Estoy explorando con mucha intensidad. ¿Combatimos? Así parece que hago algo.', win: 'Vale, sí, estoy perdida. ¿Azalea está hacia allá? ¿O hacia allá? ¿O es esto Azalea?' },
+			intro: 'No estoy perdida. Estoy explorando con mucha intensidad. ¿Combatimos? Así parece que hago algo.', win: 'Bueno, sí, estoy perdida. ¿Azalea está hacia allá? ¿O hacia allá? ¿O es esto Azalea?' },
 
 		// ----- Pozo Slowpoke -----
 		recluta_pozo_1: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 2, team: [{ sp: 'raticate', lv: 31 }, { sp: 'golbat', lv: 32 }],
-			intro: '¡Alto! Esto es una obra. Con casco imaginario. Aquí abajo no hay nada que ver. Sobre todo, no hay Slowpoke.', win: 'Vale, sí hay Slowpoke. Pero son para una buena causa. La nuestra.' },
+			intro: '¡Alto! Esto es una obra. Con casco imaginario. Aquí abajo no hay nada que ver. Sobre todo, no hay Slowpoke.', win: 'Bueno, sí hay Slowpoke. Pero son para una buena causa. La nuestra.' },
 		recluta_pozo_2: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket_f', ai: 3, team: [{ sp: 'arbok', lv: 32 }, { sp: 'koffing', lv: 32 }, { sp: 'houndoom', lv: 33 }],
 			intro: 'Soy la Tercera. Tercera en cerraduras, en códigos y en llegar a tiempo. En esta familia todos tenemos una especialidad. La mía es que no pases.', win: 'Al Primero no le va a gustar esto. Al Primero nunca le gusta nada. Por eso es el Primero.' },
 		recluta_pozo_3: { name: 'Recluta', cls: 'Team Rocket', npc: 'recluta_rocket', ai: 3, team: [{ sp: 'grimer', lv: 32 }, { sp: 'hypno', lv: 33 }],
@@ -295,7 +295,7 @@ export default {
 			items: [{ id: 'superpotion', n: 1 }],
 			intro: 'Te voy a enseñar lo que es un Rocket de verdad. No como esos llorones de ahí detrás.',
 			win: '¿Esto? ¿Contra un novato? …Ríete. Ríete ahora, que luego no te va a hacer gracia.',
-			lose: 'Así se hace. Sin dudar. Sin mirar atrás. Apuntadlo, inútiles.' },
+			lose: 'Así se hace. Sin dudar. Sin mirar atrás. Apúntenlo, inútiles.' },
 
 		// ----- Gimnasio de Azalea -----
 		gym_azalea_1: { name: 'Fermín', cls: 'Cazabichos', ai: 3, team: [{ sp: 'scyther', lv: 33 }, { sp: 'ledian', lv: 33 }],
@@ -461,17 +461,17 @@ export default {
 			{ text: 'Los dos te miran cuando te acercas. No huyen. No gruñen. No hacen nada. Y en los ojos no tienen ese brillo que tienen todos los Pokémon, ese puntito de luz. Es como mirar una ventana de noche.' },
 			{ say: 'rotom', text: 'Bzzt… Fidough, Paldea. Pachirisu, Sinnoh. Ninguno es de aquí. Constantes… bajas. Muy bajas. No están heridos. No están enfermos. Están… ¿cómo se dice? Están **apagados**.' },
 			{ say: 'rotom', text: 'Eso no es un dato. Eso es una palabra que me he inventado. No me gusta inventarme palabras.' },
-			{ text: 'Junto a los helechos crece un arbusto de **Bayas Aranja**. Coges una.' },
+			{ text: 'Junto a los helechos crece un arbusto de **Bayas Aranja**. Tomas una.' },
 			{ choice: [
 				{ text: 'Dársela al Fidough.', then: [{ set: { 'flag.b02_apagados_fidough': true } }] },
 				{ text: 'Dársela al Pachirisu.', then: [{ set: { 'flag.b02_apagados_pachirisu': true } }] },
 			] },
 			{ if: 'flag.b02_apagados_pachirisu', then: [
 				{ text: 'Le acercas la baya al Pachirisu. La huele. Abre la boca, muy despacio… y no muerde. No le quedan fuerzas ni para eso.' },
-				{ text: 'Coges otra baya y se la das al Fidough. Este sí: mordisquea, despacio, y la masa de su cuerpo sube un poquito, como un bizcocho en el horno.' },
+				{ text: 'Tomas otra baya y se la das al Fidough. Este sí: mordisquea, despacio, y la masa de su cuerpo sube un poquito, como un bizcocho en el horno.' },
 			], else: [
 				{ text: 'Le acercas la baya al Fidough. La huele, la lame y la mordisquea, despacio. La masa de su cuerpo sube un poquito, como un bizcocho en el horno.' },
-				{ text: 'Coges otra baya para el Pachirisu. La huele. Abre la boca, muy despacio… y no muerde. No le quedan fuerzas ni para eso.' },
+				{ text: 'Tomas otra baya para el Pachirisu. La huele. Abre la boca, muy despacio… y no muerde. No le quedan fuerzas ni para eso.' },
 			] },
 			{ text: 'El Fidough se levanta. Las patas le tiemblan, pero se levanta. Te lame la mano una vez, con una lengua tibia que huele a levadura, y se mete despacito entre los helechos.' },
 			{ text: 'El Pachirisu cierra los ojos. Se le acompasa la respiración. Se ha quedado dormido.' },
@@ -773,7 +773,7 @@ export default {
 					{ text: 'Uno de los asistentes saca el teléfono y se aleja unos pasos. Le oyes a medias.' },
 					{ say: 'agente_lemnis', as: 'Asistente de la Gira', text: 'No, aquí no está… Sí, ya sé que dijeron que estaría aquí. Sí. Sí, señor. Esperaremos un poco más.' },
 					{ text: 'Esperan. Toman un té en la plaza. Al cabo de una hora se suben a la furgoneta y se van por la carretera de la costa.' },
-					{ say: 'rotom', text: '¡Bzzt! ¿Por qué nos hemos escondido? ¡Eran de la Gira! ¡Nos buscaban! ¡Es lo más bonito que nos ha pasado hoy! …Vale. Vale. Me callo. Pero que conste que no lo entiendo.' },
+					{ say: 'rotom', text: '¡Bzzt! ¿Por qué nos hemos escondido? ¡Eran de la Gira! ¡Nos buscaban! ¡Es lo más bonito que nos ha pasado hoy! …Ya. Ya. Me callo. Pero que conste que no lo entiendo.' },
 					{ rep: { lemnis: -1 } },
 				] },
 			] },

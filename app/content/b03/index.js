@@ -6,6 +6,10 @@ import t0 from './t0-ruinas.js';
 import t1 from './t1-faro.js';
 import t2 from './t2-rancho.js';
 import t3 from './t3-caoba.js';
+import t5 from './t5-iniciales.js';
+import t6 from './t6-ampharosita.js';
+import t7 from './t7-paneles.js';
+import t8 from './t8-lola.js';
 
 const block = {
 	id: 'b03', title: 'Acto II · Lo que el tiempo se llevó', hours: 12, ends: 'b03_fin',
@@ -15,7 +19,7 @@ const block = {
 	gather: {}, patches: {},
 };
 const extraSpots = {};
-for (const part of [comun, t0, t1, t2, t3]) {
+for (const part of [comun, t0, t1, t2, t3, t5, t6, t7, t8]) {
 	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather']) {
 		for (const id in part[k] || {}) {
 			if (block[k][id] && k !== 'npcs') console.warn(`[b03] ${k} duplicado: ${id}`);

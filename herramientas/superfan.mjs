@@ -47,6 +47,7 @@ const CATS = {
 	habitat: 'Pokémon fuera de su hábitat',
 	horario: 'Pokémon a deshoras',
 	ingles: 'Nombres en inglés en los textos',
+	espanol: 'Español de España que chirría en CDMX',
 	precios: 'Precios que no cuadran con los juegos',
 };
 
@@ -205,6 +206,20 @@ for (const [id, c] of Object.entries(C.challenges)) collect('reto ' + id, c);
 for (const ev of C.events) collect('evento ' + ev.id, ev);
 for (const [id, it] of Object.entries(D.items)) if (it.custom) collect('objeto ' + id, { desc: it.desc, read: it.read });
 for (const [where, t] of texts) for (const mt of t.matchAll(enRe)) note('ingles', '⚠', where, `Dice «${mt[1]}» en inglés; en los juegos en español es ${EN.get(mt[1])}.`);
+
+// ---------------- Español para CDMX ----------------
+// Mario es de Ciudad de México: «coger» es vulgar allí, y el «vosotros» y el «vale» de muletilla suenan a España.
+// No toca «recoger», «escoger», «acoger», «cojín», «cojo» (adjetivo), «vale la pena», «no vale nada», «un vale».
+const W = 'A-Za-zÁÉÍÓÚÜÑáéíóúüñ';
+const ES_RULES = [
+	[new RegExp(`(?<![${W}])[Cc](?:og(?:er|e|es|en|í|ió|ido|ida|idos|idas|iste|isteis|ieron|emos|éis|ía|ías|ían|íamos|imos|iendo)(?:l[oae]s?|me|te|nos|se)?|óge(?:l[oae]s?|me|nos)|ógel[oa]s?)(?![${W}])`, 'g'), m => `«${m}»: en México es vulgar; mejor tomar, agarrar, subir (a un tren) o llevarse.`],
+	[new RegExp(`(?<![${W}])(?:[Vv]osotr[oa]s|[Vv]uestr[oa]s?|[Oo]s)(?![${W}])`, 'g'), m => `«${m}»: vosotros; en CDMX se dice ustedes / les / su.`],
+	[new RegExp(`(?<![${W}])(?!(?:[Vv]einti|[Dd]ieci)?séis)[${W}]+(?:áis|éis)(?![${W}])`, 'g'), m => `«${m}»: conjugación de vosotros; mejor la de ustedes.`],
+	[new RegExp(`(?<![${W}])(?:${'dejad coged mirad venid bajad subid callad tomad escuchad esperad corred sentaos pasad decid traed haced andad apuntad'.split(' ').map(v => `[${v[0]}${v[0].toUpperCase()}]${v.slice(1)}`).join('|')})(?:l[oa]s?|me|nos)?(?![${W}])`, 'g'), m => `«${m}»: imperativo de vosotros; mejor el de ustedes.`],
+	[new RegExp(`(?<![${W}])(?:Vale(?=[.,!…])|¿[Vv]ale\\?|(?<=, )vale(?=[.!…]))`, 'g'), m => `«${m}» como muletilla: en CDMX suena mejor «va», «sale», «bueno», «ok» o «de acuerdo».`],
+	[new RegExp(`(?<![${W}])(?:chaval(?:es|a|as)?|mola(?:n|s)?|guay|gilipollas|hostias?|ordenador(?:es)?|zumos?|patatas?|flip(?:ar|a|as|an|ante|é|ó|ando)|curr(?:ar|o|as|a|an|ando|é|ó))(?![${W}])`, 'gi'), m => `«${m}»: palabra muy de España; busca la de México (computadora, jugo, papa, chamba…) o una neutra.`],
+];
+for (const [where, t] of texts) for (const [re, msg] of ES_RULES) for (const mt of t.matchAll(re)) note('espanol', '·', where, msg(mt[0]));
 
 // ---------------- Precios ----------------
 for (const [sid, sh] of Object.entries(C.shops)) for (const e of sh.items) {
