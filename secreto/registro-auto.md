@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-06T17:25:44.272Z · contenido 2026-10-06.4
+Generado: 2026-10-07T07:06:49.562Z · contenido 2026-10-06.10
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -244,6 +244,7 @@ Generado: 2026-10-06T17:25:44.272Z · contenido 2026-10-06.4
 - `b02_kurt_gracias` — b02:b02_kurt_gracias
 - `b02_lebrun_trigal` — b02:b02_lebrun_trigal
 - `b02_lila_protegida` — b02:b02_lila_trigal
+- `b02_lila_rocket_fin` — b02:b02_lila_trigal
 - `b02_lila_trigal` — b02:b02_lila_trigal
 - `b02_llegada` — b02:b02_llegada
 - `b02_llegada_azalea` — b02:b02_llegada_azalea
@@ -317,6 +318,7 @@ Generado: 2026-10-06T17:25:44.272Z · contenido 2026-10-06.4
 - `b03_jaulas_vistas` — b03:b03_jaulas
 - `b03_kiyo_visto` — b03:b03_kiyo
 - `b03_lago_llegada` — b03:b03_lago_llegada
+- `b03_lila_fin` — b03:b03_lila_gym
 - `b03_lila_hecho` — b03:b03_lila_gym
 - `b03_lila_momento` — b03:b03_lila_momento
 - `b03_lila_sola` — b03:b03_lila_gym

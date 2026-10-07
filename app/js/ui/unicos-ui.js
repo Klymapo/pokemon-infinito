@@ -8,7 +8,7 @@ import { tx } from '../guion.js';
 import { h, say, choose, openSheet } from './core.js';
 import { battle } from './screens.js';
 import { moveReport } from '../movimientos.js';
-import { uniqueWild, uniqueResult, uniquesList, placeName, uniquesDue, markAnnounced } from '../unicos.js';
+import { uniqueWild, returnLevel, uniqueResult, uniquesList, placeName, uniquesDue, markAnnounced } from '../unicos.js';
 
 const ROTOM = () => ({ id: 'rotom', ...(C.npcs.rotom || { name: 'Rotom' }) });
 const spName = sp => D.species[sp]?.name || sp;
@@ -43,7 +43,7 @@ export async function announceUniques(list) {
 		const names = es.map(e => `**${spName(e.sp)}**${e.origin ? ` (el de ${placeName(e.origin)})` : ''}`);
 		await say(ROTOM(), tx(`¡Bzzt! ¡Alerta de Pokédex! ${es.length > 1 ? 'Han vuelto' : 'Ha vuelto'} ${joinY(names)}. ${es.length > 1 ? 'Los' : 'Lo'} detecto en **${placeName(where)}**.`));
 	}
-	await say(ROTOM(), tx('Esta vez ve preparad{o|a|e}: Poké Balls de sobra y algo que no lo debilite, como **Falso Tortazo**, o que lo duerma. Si se vuelve a escapar, regresará después de tu siguiente medalla.'));
+	await say(ROTOM(), tx('Esta vez ve preparad{o|a|e}: Poké Balls de sobra y algo que no lo debilite, como **Falso Tortazo**, o que lo duerma. Si se vuelve a escapar, regresará después de tu siguiente medalla o gran combate.'));
 	await saveGame();
 }
 
@@ -51,7 +51,7 @@ export async function announceUniques(list) {
 export async function announceRetro(keys) {
 	const names = keys.map(k => spName(k.split(':')[1]));
 	await say(ROTOM(), tx(`¡Bzzt! Repasando mis registros he encontrado ${keys.length === 1 ? 'un Pokémon único que se nos escapó' : keys.length + ' Pokémon únicos que se nos escaparon'}: ${joinY(names.map(n => '**' + n + '**'))}.`));
-	await say(ROTOM(), tx('No están perdidos. Volverán a aparecer después de tu **próxima medalla**, y te avisaré de dónde en cuanto los detecte. Puedes verlos en **Más › Segundas oportunidades**.'));
+	await say(ROTOM(), tx('No están perdidos. Volverán a aparecer después de tu **próxima medalla o gran combate**, y te avisaré de dónde en cuanto los detecte. Puedes verlos en **Más › Segundas oportunidades**.'));
 	await saveGame();
 }
 
@@ -61,7 +61,7 @@ export async function uniqueEncounter(key) {
 	const wild = uniqueWild(key);
 	if (!e || !wild) return;
 	const name = spName(e.sp);
-	await say(ROTOM(), tx(`¡Bzzt! Ahí está: **${name}**, Nv. ${e.lv}. Es tu segunda oportunidad.\n${prepNotes()}`));
+	await say(ROTOM(), tx(`¡Bzzt! Ahí está: **${name}**, Nv. ${returnLevel(e)}. Es tu segunda oportunidad.\n${prepNotes()}`));
 	const i = await choose(`¿Vas a por ${name}?`, ['¡Vamos a por él!', 'Todavía no, voy a prepararme']);
 	if (i !== 0) { await say(ROTOM(), tx('Vale. No se moverá de aquí hasta que vuelvas.')); return; }
 	const res = await battle({ wild, canRun: true, canLose: true });
@@ -72,7 +72,7 @@ export async function uniqueEncounter(key) {
 		uniqueResult(key, res.result);
 		if (res.result === 'lose') { healParty(); await say(null, tx(`${name} aprovecha el desastre y desaparece. Tu equipo se recupera poco a poco.`)); }
 		else await say(null, tx(`${name} se escabulle y vuelve a esconderse.`));
-		await say(ROTOM(), tx('No pasa nada. Volverá después de tu **siguiente medalla**, y te aviso.'));
+		await say(ROTOM(), tx('No pasa nada. Volverá después de tu **siguiente medalla o gran combate**, y te aviso.'));
 	}
 	await saveGame();
 }
@@ -82,11 +82,11 @@ export function openUniques() {
 	const sheet = openSheet('Segundas oportunidades', null);
 	const xs = uniquesList();
 	sheet.set([
-		h('div', { class: 'note' }, 'Los Pokémon únicos que se te escapan no se pierden: vuelven después de tu siguiente medalla y Rotom te avisa de dónde.'),
+		h('div', { class: 'note' }, 'Los Pokémon únicos que se te escapan no se pierden: vuelven después de tu siguiente medalla o gran combate de la historia, y Rotom te avisa de dónde.'),
 		xs.length ? h('div', { class: 'list' }, ...xs.map(e => h('div', { class: 'row' },
 			h('div', { class: 'ico' }, '🐾'),
 			h('div', { class: 'lbl' }, h('div', { class: 't' }, `${e.name} · Nv. ${e.lv}`),
-				h('div', { class: 's' }, e.ready ? `Te espera en ${placeName(e.where)}` : `Volverá después de tu próxima medalla${e.origin ? ` · Se escapó en ${placeName(e.origin)}` : ''}`)))))
+				h('div', { class: 's' }, e.ready ? `Te espera en ${placeName(e.where)}` : `Volverá tras tu próxima medalla o gran combate${e.origin ? ` · Se escapó en ${placeName(e.origin)}` : ''}`)))))
 			: h('div', { class: 'empty' }, 'No se te ha escapado ningún Pokémon único. ¡Bien hecho!'),
 	]);
 }

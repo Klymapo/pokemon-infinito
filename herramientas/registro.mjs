@@ -13,7 +13,7 @@ function walk(list, ctx, blk) {
 		if (!c || typeof c !== 'object') continue;
 		if (c.say && c.say !== 'jugador') (npcAll[c.say] ||= {})[blk] = (npcAll[c.say][blk] || new Set()).add(ctx);
 		if (c.set) for (const k in c.set) if (k.startsWith('flag')) (flagsSet[k.split('.')[1]] ||= new Set()).add(blk + ':' + ctx);
-		for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (c[k]) walk(c[k], ctx, blk);
+		for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (c[k]) walk(c[k], ctx, blk);
 		if (c.choice) for (const o of c.choice) walk(o.then, ctx, blk);
 	}
 }

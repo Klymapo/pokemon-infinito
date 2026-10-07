@@ -34,7 +34,7 @@ const CATS = {
 	bloques: 'Reglas de diseño por bloque',
 	mundo: 'Lugares',
 };
-const KIDS = ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun'];
+const KIDS = ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit'];
 function eachCmd(list, fn, depth = 0) {
 	if (!Array.isArray(list) || depth > 12) return;
 	for (const c of list) { if (!c || typeof c !== 'object') continue; fn(c); for (const k of KIDS) eachCmd(c[k], fn, depth + 1); if (c.choice) for (const o of c.choice) eachCmd(o.then, fn, depth + 1); }

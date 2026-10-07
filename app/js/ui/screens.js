@@ -2,7 +2,7 @@
 import { D, toID, TYPE_COLORS, typeStyle, typeName, STAT_NAMES, STATS, abilityName, natureName, moveName, itemName } from '../data.js';
 import { C, topLoc } from '../content.js';
 import {
-	G, newGame, setG, saveGame, beginScene, endScene, loadSaved, exportSave, importSave, deleteSave, evalCond, addItem, removeItem, count, markCaught,
+	G, newGame, setG, saveGame, beginScene, endScene, loadSaved, exportSave, importSave, deleteSave, evalCond, addItem, removeItem, count, markCaught, BOX_MAX, boxInsert,
 } from '../state.js';
 import {
 	createPokemon, displayName, maxHp, calcStats, healFull, expProgress, checkEvolution, addHappy, natureMod, canLearn,
@@ -19,6 +19,7 @@ import { resolveLook } from '../retrato.js';
 import { announceUniques, announceRetro, uniqueEncounter, openUniques, uniquesDue } from './unicos-ui.js';
 import { retroUniques } from '../unicos.js';
 import { openTutor } from './tutor.js';
+import { playPuzzle } from './rejilla.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
 import { fmtMoney, fmtText, rng, pick, fmtDuration, clone } from '../util.js';
 
@@ -49,6 +50,7 @@ export function installHooks() {
 		evolveCheck: async () => { for (const p of G.party) await tryEvolve(p, { trigger: 'level' }); },
 		forceEvolve: (p, to) => evolveUI(p, to),
 		cutscene: spec => playCutscene(spec),
+		puzzle: def => playPuzzle(def),
 	});
 }
 
@@ -983,9 +985,8 @@ export async function receivePokemon(p, { caught = false, silent = false, nickna
 	if (nickname && !silent) await askNickname(p);
 	if (G.party.length < 6) { G.party.push(p); return; }
 	const toBox = async (mon, msg = true) => {
-		const bi = G.boxes.findIndex(b => b.length < 30);
-		(G.boxes[bi >= 0 ? bi : 0]).push(mon);
-		if (msg) await say(null, `**${displayName(mon)}** se ha enviado a la Caja ${(bi >= 0 ? bi : 0) + 1} del PC.`);
+		const bi = boxInsert(G, mon);
+		if (msg) await say(null, `**${displayName(mon)}** se ha enviado a la Caja ${bi + 1} del PC.`);
 	};
 	if (silent) { await toBox(p, false); return; }
 	// Equipo lleno: elegir si entra al equipo (y quién sale) o va al PC
@@ -1479,7 +1480,6 @@ async function openShop(id) {
 // =================== PC ===================
 async function openPC() {
 	return new Promise(resolve => {
-		const BOX_MAX = 30;
 		let box = G.vars.pc_box || 0;
 		let sel = null; // { where: 'party'|'box', box, idx } mientras mueves un Pokémon
 		const sheet = openSheet('PC de almacenamiento', null, { onClose: () => { G.vars.pc_box = box; resolve(); } });
@@ -1597,7 +1597,7 @@ function questTouches() {
 			if (!c || typeof c !== 'object') continue;
 			if (c.quest) set.add(c.quest);
 			if (c.call && depth < 4) scan(C.scripts[c.call], set, depth + 1);
-			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) scan(c[k], set, depth);
+			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k], set, depth);
 			if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then, set, depth);
 		}
 	};
@@ -1772,8 +1772,8 @@ function questNeeds(id) {
 		if (sp.script && sp.cond && (touch[sp.script] || new Set()).has(id) && stageOk(sp.cond)) conds.push(sp.cond);
 	};
 	// También los «si…» dentro de los guiones cuyo «entonces» avanza la misión
-	const touchesList = (list, d = 0) => (list || []).some(c => c && typeof c === 'object' && (c.quest === id || (c.call && d < 4 && touchesList(C.scripts[c.call], d + 1)) || ['then', 'else', 'onWin', 'onCatch'].some(k => Array.isArray(c[k]) && touchesList(c[k], d)) || (Array.isArray(c.choice) && c.choice.some(o => touchesList(o.then, d)))));
-	const walkIfs = (list, d = 0) => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.if && touchesList(c.then) && stageOk(c.if)) conds.push(c.if); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) walkIfs(c[k], d); if (Array.isArray(c.choice)) for (const o of c.choice) walkIfs(o.then, d); } };
+	const touchesList = (list, d = 0) => (list || []).some(c => c && typeof c === 'object' && (c.quest === id || (c.call && d < 4 && touchesList(C.scripts[c.call], d + 1)) || ['then', 'else', 'onWin', 'onCatch', 'onSolve'].some(k => Array.isArray(c[k]) && touchesList(c[k], d)) || (Array.isArray(c.choice) && c.choice.some(o => touchesList(o.then, d)))));
+	const walkIfs = (list, d = 0) => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.if && touchesList(c.then) && stageOk(c.if)) conds.push(c.if); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) walkIfs(c[k], d); if (Array.isArray(c.choice)) for (const o of c.choice) walkIfs(o.then, d); } };
 	for (const sid in C.scripts) if ((touch[sid] || new Set()).has(id)) walkIfs(C.scripts[sid]);
 	for (const loc of Object.values(C.locations)) {
 		for (const sp of loc.spots || []) scan(sp);
@@ -1981,7 +1981,7 @@ function itemUniverse() {
 			if (sp.action?.shop && C.shops[sp.action.shop]) for (const e of C.shops[sp.action.shop].items || []) add(typeof e === 'string' ? e : e.id, `${C.shops[sp.action.shop].name} (${name})`);
 		}
 	}
-	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give) add(c.give, 'historia'); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then); } };
+	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give) add(c.give, 'historia'); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then); } };
 	for (const id in C.scripts) scan(C.scripts[id]);
 	for (const id in G.found || {}) if (!src[id]) add(id, 'encontrado');
 	return src;

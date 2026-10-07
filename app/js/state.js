@@ -4,6 +4,32 @@ import { C } from './content.js';
 import { clone } from './util.js';
 
 export const SAVE_VERSION = 1;
+export const BOX_MAX = 30;
+
+// Mete un Pokémon en la primera caja con sitio (si están todas llenas, abre una caja nueva). Devuelve el índice.
+// Hitos de la historia: suben con cada medalla nueva y cada vez que un jefe o prueba sube el tope de nivel.
+// Los usa todo lo que antes dependía de «la siguiente medalla» (p. ej. los Pokémon únicos que vuelven),
+// para que funcione también en regiones sin gimnasios.
+export function hitos(g = G) { return g?.vars?.hitos ?? (g?.player?.badges?.length || 0); }
+export function addHito(g = G) { g.vars.hitos = hitos(g) + 1; }
+
+export function boxInsert(g, mon) {
+	let bi = g.boxes.findIndex(b => b.length < BOX_MAX);
+	if (bi < 0) { g.boxes.push([]); bi = g.boxes.length - 1; }
+	g.boxes[bi].push(mon);
+	return bi;
+}
+
+// Partidas antiguas guardaban todo en la Caja 1 sin límite («80/30»): reparte lo que sobra en las cajas siguientes.
+export function fixBoxes(g) {
+	if (!Array.isArray(g.boxes)) g.boxes = [];
+	g.boxes = g.boxes.map(b => Array.isArray(b) ? b.filter(Boolean) : []);
+	while (g.boxes.length < 8) g.boxes.push([]);
+	const over = [];
+	for (const b of g.boxes) if (b.length > BOX_MAX) over.push(...b.splice(BOX_MAX));
+	for (const m of over) boxInsert(g, m);
+	return g;
+}
 export let G = null;
 
 export function newGame(player) {
@@ -19,7 +45,7 @@ export function newGame(player) {
 		party: [],
 		boxes: Array.from({ length: 8 }, () => []),
 		bag: {},
-		flags: {}, vars: { cap: 15 }, rep: {}, af: {},
+		flags: {}, vars: { cap: 15, hitos: 0 }, rep: {}, af: {},
 		quests: {},
 		dex: { seen: {}, caught: {} },
 		diary: [],
@@ -111,6 +137,8 @@ export function migrate(g) {
 	if (!g.found) { g.found = {}; for (const k in g.bag || {}) g.found[k] = Date.now(); }
 	g.gather ||= {};
 	g.album ||= {};
+	fixBoxes(g);
+	g.vars.hitos ??= (g.player?.badges?.length || 0);
 	// postales de los pueblos y ciudades que ya visitaste antes de que existiera el álbum
 	for (const id in g.visited || {}) { const l = C.locations[id]; if (l && !l.parent && ['city', 'town'].includes(l.kind) && !g.album[id]) g.album[id] = g.created || Date.now(); }
 	return g;

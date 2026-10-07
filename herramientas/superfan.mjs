@@ -91,7 +91,7 @@ const walkScript = (sid, list) => {
 		if (!c || typeof c !== 'object') continue;
 		if (c.pokemon?.sp) mons.push({ sp: toID(c.pokemon.sp), lv: lvOf(c.pokemon.lv || 5), where: `guion ${sid}`, kind: 'regalo', set: c.pokemon });
 		if (c.wild?.sp) mons.push({ sp: toID(c.wild.sp), lv: lvOf(c.wild.lv || 5), where: `guion ${sid}`, kind: 'salvaje', fixed: true, set: c.wild });
-		for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) walkScript(sid, c[k]);
+		for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) walkScript(sid, c[k]);
 		if (c.choice) for (const o of c.choice) walkScript(sid, o.then);
 	}
 };

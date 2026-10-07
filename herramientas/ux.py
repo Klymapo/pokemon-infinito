@@ -275,6 +275,17 @@ with sync_playwright() as p:
                 f = pg.query_selector('.battle button.btn.fight')
                 if f: f.evaluate('e => e.click()'); time.sleep(0.4); auditar(pg, 'combate-movimientos')
         except Exception: pass
+    # Puzle de rejilla (se abre a mano con el ejemplo de docs/CONTENIDO.md §7.1)
+    try:
+        cerrar_todo(pg)
+        pg.evaluate("""async () => { document.querySelectorAll('.battle').forEach(e => e.remove()); const m = await import('./js/ui/rejilla.js');
+            m.playPuzzle({ title: 'Sala de las rocas', theme: 'ruina', hint: 'Una roca sobre la placa abre la reja.',
+              grid: ['########','#P.....#','#.R.RH.#','#.##...#','#S#IIII#','#..I##D#','#....#G#','########'] }); }""")
+        time.sleep(0.6)
+        auditar(pg, 'puzle')
+        h_ = pg.query_selector('.pz-help')
+        if h_: h_.click(); time.sleep(0.4); auditar(pg, 'puzle-ayuda'); cerrar(pg)
+    except Exception as e: errores_js.append(f'puzle: {e}')
     b.close()
 srv.shutdown()
 

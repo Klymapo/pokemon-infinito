@@ -5,6 +5,7 @@ import { loadDataNode } from './test/node-env.mjs';
 import { D, toID } from '../app/js/data.js';
 import { C, registerBlock } from '../app/js/content.js';
 import { canLearn, learnsetOf } from '../app/js/pokemon.js';
+import { parsePuzzle, solve } from '../app/js/puzle.js';
 
 const strict = process.argv.includes('--estricto');
 loadDataNode();
@@ -16,8 +17,8 @@ const E = (w, m) => errors.push(`${w}: ${m}`);
 const checkGather = () => { for (const [gid, g] of Object.entries(C.gather || {})) { if (!Array.isArray(g.table) || !g.table.length) E('recolección ' + gid, 'tabla vacía'); for (const e of g.table || []) { if (!D.items[e.id]) E('recolección ' + gid, 'objeto inexistente: ' + e.id); if (e.cond) { try { new Function('s', 'with(s){return (' + e.cond + ')}'); } catch (x) { E('recolección ' + gid, 'condición inválida: ' + e.cond); } } } } };
 const W = (w, m) => warns.push(`${w}: ${m}`);
 
-const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve']);
-const AUX_KEYS = new Set(['cond', 'as', 'n', 'silent', 'stage', 'done', 'then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'lose', 'canRun', 'prompt', 'nickname', 'who', 'jingle', 'dim', 'mood']);
+const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve', 'puzzle']);
+const AUX_KEYS = new Set(['cond', 'as', 'n', 'silent', 'stage', 'done', 'then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'lose', 'canRun', 'prompt', 'nickname', 'who', 'jingle', 'dim', 'mood', 'onSolve', 'onQuit']);
 const COND_NS = /\b(flag|flags|vars|rep|af|quest|done)\.([A-Za-z0-9_]+)/g;
 const COND_FUNCS = ['has', 'count', 'badge', 'inParty', 'owns', 'seen', 'caught', 'visited', 'cleared', 'beat', 'date', 'zero'];
 const COND_VARS = ['badges', 'money', 'maxLv', 'partySize', 'pron', 'time', 'night', 'day', 'morning', 'evening', 'season', 'year', 'weekday', 'true', 'false', 'null', 'undefined'];
@@ -26,6 +27,7 @@ const flagsSet = new Set(), flagsRead = new Map(), varsSet = new Set();
 const npcUse = {}; // npc -> Set de contextos
 const useNpc = (id, ctx) => { (npcUse[id] ||= new Set()).add(ctx); };
 const questStagesUsed = [];
+const puzzles = [], puzzleIds = new Map();
 
 function checkCond(where, expr) {
 	if (expr === undefined || expr === null || typeof expr === 'boolean') return;
@@ -82,9 +84,20 @@ function walk(where, list, depth = 0) {
 		case 'learn': checkMove(w, c.learn.move); break;
 		case 'shop': if (!C.shops[c.shop]) E(w, `tienda inexistente: ${c.shop}`); break;
 		case 'forceEvolve': checkSpecies(w, c.forceEvolve.to); break;
+		case 'puzzle': {
+			const pz = c.puzzle || {};
+			const P = parsePuzzle(pz);
+			for (const e of P.errors) E(w, 'puzle: ' + e);
+			if (!P.errors.length) { const sol = solve(P); if (!sol) E(w, 'puzle sin solución'); else puzzles.push({ w, id: pz.id, steps: sol.length }); }
+			if (pz.theme && !['cueva', 'ruina', 'hielo', 'lab'].includes(pz.theme)) E(w, 'puzle: tema desconocido ' + pz.theme);
+			if (pz.id && puzzleIds.has(pz.id) && puzzleIds.get(pz.id) !== w) W(w, 'puzle: id repetido ' + pz.id); else if (pz.id) puzzleIds.set(pz.id, w);
+			if (!c.onSolve) W(w, 'puzle sin onSolve: resolverlo no cambia nada');
+			if (pz.hint && pz.hint.length > 140) W(w, 'puzle: pista de más de 140 caracteres');
+			break;
+		}
 		case 'unlock': if (!['mega', 'z', 'dynamax', 'tera'].includes(c.unlock)) E(w, 'unlock inválido'); break;
 		}
-		for (const k of ['onWin', 'onLose', 'onCatch', 'onRun']) if (c[k]) walk(w + '.' + k, c[k], depth + 1);
+		for (const k of ['onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (c[k]) walk(w + '.' + k, c[k], depth + 1);
 	});
 }
 
@@ -236,6 +249,7 @@ checkEvolutions();
 
 checkGather();
 console.log(`Bloques: ${C.blocks.map(b => b.id).join(', ')} · Lugares: ${Object.keys(C.locations).length} · Entrenadores: ${Object.keys(C.trainers).length} · Guiones: ${Object.keys(C.scripts).length} · Misiones: ${Object.keys(C.quests).length} · NPCs: ${Object.keys(C.npcs).length}`);
+if (puzzles.length) console.log(`Puzles: ${puzzles.length} (${puzzles.map(p => (p.id || p.w) + ' ' + p.steps + ' pasos').join(', ')})`);
 if (lowNpc.length) console.log('NPCs con menos de 3 escenas (deben reaparecer en bloques futuros): ' + lowNpc.join(', '));
 if (warns.length) { console.log(`\n${warns.length} ADVERTENCIAS:`); for (const x of warns) console.log('  ⚠ ' + x); }
 if (errors.length) { console.log(`\n${errors.length} ERRORES:`); for (const x of errors) console.log('  ✖ ' + x); }

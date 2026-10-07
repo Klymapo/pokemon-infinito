@@ -253,6 +253,7 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 | `{ shop: 'id' }`, `{ center: true }`, `{ pc: true }`, `{ save: true }`, `{ evolveCheck: true }` | |
 | `{ nickname: 'last' }`, `{ clearRoute: 'ruta4' }`, `{ wait: 500 }` | |
 | `{ cutscene: { bg: { type: 'cave' }, start: 'dark', frames: [ { text, item, npc, mon, fx, clear } ] } }` | cinemática a pantalla completa con bandas de cine; se avanza tocando. `fx`: `light` (la luz se abre desde el centro), `dark`, `flash`, `shake`, `glow`, `zoom`. `item` usa el pixel art de `PX_ITEMS` (`app/js/art.js`) si existe. Úsala en momentos clave: recibir un objeto clave, abrir una zona nueva, giros |
+| `{ puzzle: { id, title, hint, theme, grid: [...] }, onSolve: [...], onQuit: [...] }` | puzle de rejilla táctil (ver §7.1). `onSolve` corre al resolverlo y `onQuit` si el jugador sale |
 
 **Marcadores en textos:**
 
@@ -261,6 +262,55 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 - `{o|a|e}`: según los pronombres (él/ella/elle). Ejemplos: `Bienvenid{o|a|e}`, `{el|la|le} novat{o|a|e}`.
 
 **Formato:** `**negrita**`, `*cursiva*`, `\n` para salto de línea.
+
+
+### 7.1 Puzles de rejilla (`puzzle`)
+
+Un componente, muchos puzles: rocas que se empujan (como con Fuerza), hielo que resbala, interruptores, puertas y hoyos. Se juega con la cruceta, deslizando el dedo o tocando una casilla en línea con el jugador; tiene **Deshacer**, **Reiniciar**, **Salir** y una ayuda «?» que explica solo lo que sale en ese puzle. Lógica pura en `app/js/puzle.js`; interfaz en `app/js/ui/rejilla.js`.
+
+```js
+{ puzzle: {
+    id: 'b03_ruinas_sala1',      // opcional: guarda veces resuelto y mejor marca en G.puzzles[id]
+    title: 'Sala de las rocas',  // arriba de la rejilla
+    hint: 'Una roca sobre la placa abre la reja.', // ≤ 140 caracteres; se ve debajo de la rejilla
+    theme: 'ruina',              // cueva (por defecto) | ruina | hielo | lab
+    grid: [
+      '########',
+      '#P.....#',
+      '#.R.RH.#',
+      '#.##...#',
+      '#S#IIII#',
+      '#..I##D#',
+      '#....#G#',
+      '########',
+    ],
+    rocks: [[3, 4]],             // opcional: rocas encima de hielo, interruptores o meta
+  },
+  onSolve: [{ set: { 'flag.b03_sala1': true } }, 'La reja del fondo se abre con un chirrido.'],
+  onQuit: ['Mejor vuelvo cuando lo tenga más claro.'] }
+```
+
+| Carácter | Casilla |
+|---|---|
+| `#` | pared |
+| `.` | suelo |
+| `P` | inicio del jugador (uno) |
+| `G` | meta: llegar aquí resuelve el puzle (al menos una) |
+| `R` | roca empujable (sobre suelo). Se empuja caminando contra ella; nunca dos a la vez |
+| `I` | hielo: el jugador y las rocas resbalan hasta chocar o salir del hielo. Resbalando no se empujan rocas |
+| `S` | interruptor: pulsado mientras tiene una roca encima |
+| `D` | puerta: abierta solo con **todos** los interruptores pulsados (sin interruptores, siempre abierta) |
+| `H` | hoyo: no se pisa; una roca empujada dentro lo tapa y desaparece |
+| `~` | agua (decorado, no se pisa) |
+| `*` | roca fija (decorado, no se mueve) |
+
+**Reglas:**
+
+- Máximo **9×9**. En móvil, 7×7 u 8×8 es lo más cómodo.
+- El validador comprueba que el puzle se lee bien y que **tiene solución** (búsqueda en anchura); imprime cuántos pasos mide la más corta. Un puzle sin solución es error.
+- El bot lo resuelve solo. Si sale, se corre `onQuit`; el guion puede ofrecer reintentar (pon el puzle en un spot que se pueda repetir con `cond`).
+- Dificultad orientativa (solución más corta): 6–12 pasos fácil, 13–25 medio, 26+ difícil. Empieza fácil en cada zona y sube.
+- Si el puzle necesita Fuerza u otro movimiento para tener sentido en la historia, ponlo en el `cond` del spot, no en el puzle.
 
 ---
 

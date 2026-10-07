@@ -2,7 +2,7 @@
 // Formato de comandos: ver docs/CONTENIDO.md
 import { D, toID } from './data.js';
 import { C, npc } from './content.js';
-import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame, beginScene, endScene, commitScene } from './state.js';
+import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame, beginScene, endScene, commitScene, addHito } from './state.js';
 import { createPokemon, displayName, healFull, addHappy, maxHp } from './pokemon.js';
 import { uniqueKeyOf, uniqueResult } from './unicos.js';
 
@@ -159,12 +159,12 @@ async function runCmd(c, ctx) {
 		return;
 	}
 	if (c.badge) {
-		if (!G.player.badges.includes(c.badge)) G.player.badges.push(c.badge);
+		if (!G.player.badges.includes(c.badge)) { G.player.badges.push(c.badge); addHito(); }
 		const b = C.badges[c.badge];
 		await UI.say(null, `¡${G.player.name} ha recibido la **${b?.name || c.badge}**!`, { jingle: 'badge', badge: c.badge });
 		return;
 	}
-	if (c.cap !== undefined) { G.vars.cap = c.cap; return; }
+	if (c.cap !== undefined) { if (c.cap > (G.vars.cap ?? 0)) addHito(); G.vars.cap = c.cap; return; }
 	if (c.call) { UI.onScript?.(c.call); await runList(C.scripts[c.call] || [], ctx); return; }
 	if (c.end) { ctx.ended = true; return; }
 	if (c.notice) { UI.toast?.(tx(c.notice)); return; }
@@ -196,6 +196,16 @@ async function runCmd(c, ctx) {
 	if (c.mapUnlock) { G.flags['map_' + c.mapUnlock] = true; return; }
 	if (c.clearRoute) { G.cleared[c.clearRoute] = true; return; }
 	if (c.cutscene) { await UI.cutscene?.(c.cutscene); return; }
+	if (c.puzzle) {
+		// Puzle de rejilla (ver app/js/puzle.js y docs/CONTENIDO.md). Sin interfaz que lo juegue, cuenta como resuelto.
+		const res = UI.puzzle ? await UI.puzzle(c.puzzle) : { result: 'solved', moves: 0 };
+		ctx.lastPuzzle = res;
+		if (res.result === 'solved') {
+			if (c.puzzle.id) { const pz = ((G.puzzles ||= {})[c.puzzle.id] ||= { best: null, n: 0 }); pz.n++; pz.t = Date.now(); if (pz.best === null || res.moves < pz.best) pz.best = res.moves; }
+			if (c.onSolve) await runList(c.onSolve, ctx);
+		} else if (c.onQuit) await runList(c.onQuit, ctx);
+		return;
+	}
 	if (c.input) {
 		const v = await UI.prompt(tx(c.input.text), c.input.default || '');
 		if (c.input.var) G.vars[c.input.var] = v;

@@ -5,12 +5,13 @@
 import { loadDataNode } from './test/node-env.mjs';
 import { D, toID } from '../app/js/data.js';
 import { C, registerBlock, topLoc } from '../app/js/content.js';
-import { G, newGame, evalCond, setExtraScope, addItem, removeItem, count, markCaught } from '../app/js/state.js';
+import { G, newGame, evalCond, setExtraScope, addItem, removeItem, count, markCaught, boxInsert } from '../app/js/state.js';
 import { timeScope } from '../app/js/time.js';
 import { runScript, runFirst, UI } from '../app/js/guion.js';
 import { createPokemon, healFull, maxHp, checkEvolution, evolve, movesLearnedAt, canLearn, displayName } from '../app/js/pokemon.js';
 import { BattleCtl, buildTrainerTeam } from '../app/js/battle.js';
 import * as AI from '../app/js/ai.js';
+import { parsePuzzle, solve } from '../app/js/puzle.js';
 import {
 	L, isRoute, spotsOf, tramoItems, tramoTerrain, rollWild, canMove, markTramo, walkFriendship, canEnter, healParty, whiteout,
 	trainingOpen, routeProg, activeEvents, encounterRate,
@@ -96,6 +97,7 @@ Object.assign(UI, {
 	center: async () => { healParty(); },
 	pc: async () => {},
 	evolveCheck: async () => { for (const p of G.party) tryEvolve(p); },
+	puzzle: async def => { const P = parsePuzzle(def); const sol = P.errors.length ? null : solve(P); if (!sol) { report.errors.push(`puzle sin solución (${curScript})`); return { result: 'quit', moves: 0 }; } report.puzzles = (report.puzzles || 0) + 1; return { result: 'solved', moves: sol.length }; },
 	forceEvolve: async (p, to) => { evolve(p, to); markCaught(to); for (const m of movesLearnedAt(to, p.lv, true)) learn(p, m); },
 });
 const origConsoleError = console.error;
@@ -105,7 +107,7 @@ console.warn = (...a) => { report.errors.push('console.warn: ' + a.map(x => Stri
 function receive(p) {
 	markCaught(p.sp);
 	if (G.party.length < 6) G.party.push(p);
-	else G.boxes[0].push(p);
+	else boxInsert(G, p);
 }
 function learn(p, moveId) {
 	const md = D.moves[moveId];
@@ -323,7 +325,7 @@ function usePotions() {
 let rot = 0;
 function manageTeam() {
 	// equipo: Riolu + los 4 de mayor nivel + un hueco que rota entre los de la caja (como haría alguien probando Pokémon)
-	const all = G.party.concat(G.boxes[0]);
+	const all = G.party.concat(...G.boxes);
 	all.sort((a, b) => (b.uid === G.vars.riolu_uid) - (a.uid === G.vars.riolu_uid) || b.lv - a.lv);
 	const core = all.slice(0, 5), rest = all.slice(5);
 	// si algún sitio de aquí pide un Pokémon concreto en el equipo (inParty("x")), lo mete en el hueco libre
@@ -333,7 +335,8 @@ function manageTeam() {
 	if (want >= 0) { core.push(rest[want]); rest.splice(want, 1); }
 	else if (rest.length) { rot = (rot + 1) % rest.length; core.push(rest[rot]); rest.splice(rot, 1); }
 	G.party = core;
-	G.boxes[0] = rest;
+	G.boxes = G.boxes.map(() => []);
+	for (const p of rest) boxInsert(G, p);
 }
 
 async function grind(target) {

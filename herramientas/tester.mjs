@@ -35,7 +35,7 @@ const tName = id => { const t = C.trainers[id]; return t ? `${t.cls ? t.cls + ' 
 const isBig = id => { const t = C.trainers[id]; return !!t && ((t.ai || 0) >= 4 || /rival|líder|jefe|admin|campe/i.test(t.cls || '') || !!(t.npc && C.npcs[t.npc] && !C.npcs[t.npc].generic)); }; // jefes y personajes con nombre
 
 // ---------------- Utilidades de recorrido ----------------
-const KIDS = ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun'];
+const KIDS = ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit'];
 /** ¿Algún comando de esta lista (o de sus ramas y llamadas) cumple pred? */
 function contains(list, pred, depth = 0, stack = new Set()) {
 	if (!Array.isArray(list) || depth > 8) return false;
@@ -97,6 +97,12 @@ function walk(list, st, onBattle, budget, stack) {
 				const s2 = walk(o.then, { ...st, offered: st.offered || offer, escape: st.escape || out }, onBattle, budget, stack);
 				walk(rest, s2, onBattle, budget, stack);
 			}
+			return st;
+		}
+		if (c.puzzle) {
+			const rest = list.slice(i + 1);
+			const a = walk(c.onSolve, st, onBattle, budget, stack); walk(rest, a, onBattle, budget, stack);
+			const b = walk(c.onQuit, st, onBattle, budget, stack); walk(rest, b, onBattle, budget, stack);
 			return st;
 		}
 		if (c.if) {

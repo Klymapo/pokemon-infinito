@@ -1,14 +1,14 @@
 // Pokémon únicos que se escapan (pedido de Mario, 2026-10-06).
 // Un encuentro único es cualquier `wild` de un guion que se pueda capturar (sin `noCatch`).
 // Si no lo capturas (lo debilitas, huyes o pierdes), se esconde y vuelve más tarde en la historia:
-// al conseguir la siguiente medalla, Rotom avisa de dónde está y aparece en ese pueblo o ciudad
+// al conseguir el siguiente hito (medalla, o jefe o prueba que sube el tope de nivel; ver `hitos()` en state.js), Rotom avisa de dónde está y aparece en ese pueblo o ciudad
 // como un sitio más ("🐾 Snorlax ha vuelto"). Antes del combate se avisa de nuevo para preparar
-// Poké Balls y Falso Tortazo. Si vuelve a escaparse, regresa tras la medalla siguiente.
+// Poké Balls y Falso Tortazo. Si vuelve a escaparse, regresa tras el hito siguiente.
 //
 // Para que un `wild` capturable NO cuente como único (p. ej. un concurso), ponle `unique: false`.
 import { D, toID } from './data.js';
 import { C, topLoc } from './content.js';
-import { G, evalCond } from './state.js';
+import { G, evalCond, hitos } from './state.js';
 
 // Guiones cuyos combates no son de Pokémon únicos.
 const EXCLUDE = new Set(['b02_concurso']);
@@ -27,6 +27,16 @@ const RETRO = {
 };
 const RETRO_VERSION = 1;
 
+// ¿Ya pasó un hito desde que se escapó? (las entradas antiguas solo guardaban las medallas)
+const isDue = e => hitos() > (e.h ?? e.badges);
+/** Nivel de la segunda oportunidad: el original, o el tope actual − 8 si ya quedó muy bajo. */
+// Sin pasarse del nivel al que evolucionaría (un Bagon no vuelve a Nv. 47 sin haber evolucionado).
+export const returnLevel = e => {
+	let top = 100;
+	for (const ev of D.species[e.sp]?.evos || []) { const l = D.species[ev]?.evoLevel; if (l) top = Math.min(top, l - 1); }
+	return Math.max(e.lv || 1, Math.min(top, (G?.vars?.cap ?? 0) - 8));
+};
+
 let REG = null; // key -> { key, sid, wild, catchSets }
 const BY_OBJ = new WeakMap();
 
@@ -43,7 +53,7 @@ function build() {
 				REG[key] = { key, sid, wild: c.wild, catchSets };
 				BY_OBJ.set(c.wild, key);
 			}
-			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun']) walk(c[k], sid);
+			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) walk(c[k], sid);
 			if (Array.isArray(c.choice)) for (const o of c.choice) walk(o?.then, sid);
 		}
 	};
@@ -91,7 +101,7 @@ export function uniqueResult(key, result) {
 	const prev = u.missed[key];
 	u.missed[key] = {
 		sp: toID(R.wild.sp), lv: R.wild.lv,
-		badges: G.player.badges.length,
+		badges: G.player.badges.length, h: hitos(),
 		origin: prev?.origin || topLoc(G.loc)?.id || G.loc || originOf(R.sid),
 		where: null, announced: false,
 		tries: (prev?.tries || 0) + 1,
@@ -110,7 +120,7 @@ export function retroUniques() {
 		if (!R || u.done[key] || u.missed[key]) continue;
 		if (!evalCond(r.happened)) continue;
 		if (evalCond(r.caught)) { u.done[key] = Date.now(); continue; }
-		u.missed[key] = { sp: toID(R.wild.sp), lv: R.wild.lv, badges: G.player.badges.length, origin: originOf(R.sid), where: null, announced: false, tries: 1, t: Date.now(), retro: true };
+		u.missed[key] = { sp: toID(R.wild.sp), lv: R.wild.lv, badges: G.player.badges.length, h: hitos(), origin: originOf(R.sid), where: null, announced: false, tries: 1, t: Date.now(), retro: true };
 		added.push(key);
 	}
 	return added;
@@ -131,7 +141,7 @@ export function uniquesDue() {
 	const out = [];
 	for (const [key, e] of Object.entries(u.missed)) {
 		if (!reg()[key]) continue;
-		if (G.player.badges.length <= e.badges) continue;
+		if (!isDue(e)) continue;
 		if (!e.where || !C.locations[e.where]) e.where = returnPlace();
 		if (!e.announced) out.push({ key, ...e });
 	}
@@ -144,8 +154,8 @@ export function uniqueSpotsAt(locId) {
 	if (!G?.uniq) return [];
 	const out = [];
 	for (const [key, e] of Object.entries(G.uniq.missed)) {
-		if (e.where !== locId || G.player.badges.length <= e.badges || !reg()[key]) continue;
-		out.push({ label: `${D.species[e.sp]?.name || e.sp} ha vuelto`, sub: `Segunda oportunidad · Nv. ${e.lv}`, icon: '🐾', action: { unique: key } });
+		if (e.where !== locId || !isDue(e) || !reg()[key]) continue;
+		out.push({ label: `${D.species[e.sp]?.name || e.sp} ha vuelto`, sub: `Segunda oportunidad · Nv. ${returnLevel(e)}`, icon: '🐾', action: { unique: key } });
 	}
 	return out;
 }
@@ -154,9 +164,14 @@ export function uniqueSpotsAt(locId) {
 export function uniquesList() {
 	if (!G?.uniq) return [];
 	return Object.entries(G.uniq.missed).filter(([k]) => reg()[k]).map(([key, e]) => ({
-		key, ...e, name: D.species[e.sp]?.name || e.sp,
-		ready: G.player.badges.length > e.badges && !!e.where,
+		key, ...e, lv: returnLevel(e), name: D.species[e.sp]?.name || e.sp,
+		ready: isDue(e) && !!e.where,
 	}));
 }
 
-export function uniqueWild(key) { const R = reg()[key]; return R ? { ...R.wild } : null; }
+export function uniqueWild(key) {
+	const R = reg()[key];
+	if (!R) return null;
+	const e = G?.uniq?.missed?.[key];
+	return e ? { ...R.wild, lv: returnLevel(e) } : { ...R.wild };
+}
