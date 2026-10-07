@@ -806,6 +806,20 @@ async function arriveTramo(loc, n, dir) {
 	}
 }
 
+// Textos según el terreno del tramo (antes todo decía «hierba», también en rocas, arena o nieve)
+const TERRAIN_TXT = {
+	grass: { en: 'entre la hierba', move: '¡La hierba se agita!' },
+	flowers: { en: 'entre las flores', move: '¡Las flores se agitan!' },
+	forest: { en: 'entre la maleza', move: '¡La maleza se agita!' },
+	rocks: { en: 'entre las rocas', move: '¡Algo se mueve entre las rocas!' },
+	cave: { en: 'entre las rocas', move: 'Algo se mueve entre las rocas…' },
+	sand: { en: 'en la arena', move: '¡La arena se remueve!' },
+	snow: { en: 'en la nieve', move: '¡La nieve se remueve!' },
+	water: { en: 'bajo la superficie del agua', move: 'Algo se mueve bajo el agua…' },
+	path: { en: 'junto al camino', move: '¡Algo se mueve junto al camino!' },
+};
+const terrainTxt = t => TERRAIN_TXT[t] || TERRAIN_TXT.grass;
+
 async function searchHere() {
 	const loc = L(G.loc);
 	const n = G.route.pos;
@@ -814,14 +828,14 @@ async function searchHere() {
 	if (hidden) {
 		pr.items[n + ':' + hidden.item] = true;
 		addItem(hidden.item, hidden.n || 1);
-		await say(null, `Rebuscando entre la hierba… ¡Has encontrado **${itemName(hidden.item)}**!`);
+		await say(null, `Rebuscando ${terrainTxt(tramoTerrain(loc, n)).en}… ¡Has encontrado **${itemName(hidden.item)}**!`);
 		return;
 	}
 	const terrain = tramoTerrain(loc, n);
 	const w = rollWild(loc, terrain);
 	if (w && rng() < 0.85) {
 		routeMsg = '';
-		await say(null, terrain === 'water' ? 'Algo se mueve bajo el agua…' : terrain === 'cave' ? 'Algo se mueve entre las rocas…' : '¡La hierba se agita!');
+		await say(null, terrainTxt(terrain).move);
 		await battle({ wild: { mon: w.mon, gimmick: w.entry.gimmick }, terrain });
 	} else {
 		routeMsg = 'Buscas un rato, pero no encuentras nada.';
@@ -877,7 +891,7 @@ async function dexnavTrack(loc, terrain, sp) {
 	G.dexnav ||= {};
 	if (G.dexnav.sp !== sp) G.dexnav = { sp, chain: 0 };
 	const b = dexnavBonus(G.dexnav.chain);
-	await say(null, `Rotom marca un movimiento entre la ${terrain === 'cave' ? 'roca' : terrain === 'water' ? 'superficie del agua' : 'hierba'}. Te acercas despacio…`);
+	await say(null, `Rotom marca un movimiento ${terrainTxt(terrain).en}. Te acercas despacio…`);
 	if (rng() > b.find) {
 		const had = G.dexnav.chain;
 		G.dexnav.chain = 0;
