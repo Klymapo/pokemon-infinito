@@ -137,3 +137,7 @@
   - **Componente de rejilla táctil** (`app/js/puzle.js` lógica pura + `app/js/ui/rejilla.js`): rocas empujables, hielo, interruptores, puertas, hoyos, agua y rocas fijas; 4 temas de pixel art propio (cueva, ruina, hielo, lab); cruceta, deslizar, tocar casilla y teclado; Deshacer, Reiniciar, Salir con confirmación y ayuda «?» que explica solo lo que sale. Paso de guion `{ puzzle, onSolve, onQuit }`; guarda veces y mejor marca en `G.puzzles[id]`. El validador comprueba que cada puzle tiene solución (BFS) e imprime cuántos pasos mide; el bot los resuelve solo; el Designer de Canvas revisa la pantalla. Prueba `herramientas/test/rejilla-test.mjs` (en la auditoría, junto con la de únicos y Tutor). **Aún no hay puzles en el contenido**: los pone la sesión de historia.
   - Pendiente menor: el puzle deja aire arriba y abajo de la rejilla en pantallas altas (aceptable; se puede ajustar cuando haya puzles reales).
 
+
+## Bugs corregidos (2026-10-10, tarde)
+
+- «Dulce veneno (III)» seguía pidiendo «Ceniza del incensario 0/1» después de entregarla: la ficha leía las condiciones de diálogos que ya no se ven (la entrega de Kaori). Ahora «Lo que necesitas» solo cuenta sitios visibles hoy, y una misión fijada con 📌 que está en espera lo dice («no tienes que hacer nada por ahora»).

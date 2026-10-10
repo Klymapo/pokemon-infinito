@@ -2377,10 +2377,11 @@ function questTracker() {
 		const partsProg = def.parts ? [`${def.parts.title || 'Lista'} ${(def.parts.items || []).filter(it => { try { return evalCond(it.done); } catch (e) { return false; } }).length}/${(def.parts.items || []).length}`] : [];
 		const prog = partsProg.concat(needs.map(n => n.kind === 'item' ? `${itemName(n.id)} ${Math.min(count(n.id), n.n)}/${n.n}` : `${n.id.charAt(0).toUpperCase() + n.id.slice(1)} ${Math.min(G.vars[n.id] || 0, n.n)}/${n.n}`)).join(' · ');
 		const stage = (def.stages?.[q.stage] || '').replace(/\*\*/g, '');
+		const waiting = def.type !== 'main' && !prog && !(questPlaces()[id] || []).length;
 		box.append(h('button', { class: 'trk', onclick: () => openQuestDetail(id) },
 			h('div', { class: 'trk-t' }, '📌 ' + def.name),
 			h('div', { class: 'trk-s' }, tx(stage)),
-			prog ? h('div', { class: 'trk-p' }, prog) : null));
+			waiting ? h('div', { class: 'trk-p' }, '⏳ En espera: no tienes que hacer nada por ahora') : prog ? h('div', { class: 'trk-p' }, prog) : null));
 	}
 	return box;
 }
@@ -2403,6 +2404,9 @@ function questNeeds(id) {
 	// Una condición vale si no habla de otra etapa de esta misión (si menciona una, debe ser la actual)
 	const stageOk = c => { const m = [...c.matchAll(new RegExp(`quest\\.${id}\\s*==\\s*["'](\\w+)["']`, 'g'))]; return !m.length || m.some(x => x[1] === q.stage); };
 	const scan = (sp) => {
+		// Solo cuentan los sitios que hoy se ven: un diálogo escondido (p. ej., el de una entrega ya hecha) no pide nada
+		const vis = c => { try { return c === undefined || evalCond(c); } catch (e) { return false; } };
+		if ((sp.talk || sp.spot?.talk) && !(vis(sp.cond) && vis(sp.spot?.cond))) return;
 		for (const t of [].concat(sp.talk || sp.spot?.talk || [])) if (t.cond && (touch[t.script] || new Set()).has(id) && stageOk(t.cond)) conds.push(t.cond);
 		// escenas de tramo que se disparan solas cuando cumples algo (p. ej., al encontrar un objeto)
 		if (sp.script && sp.cond && (touch[sp.script] || new Set()).has(id) && stageOk(sp.cond)) conds.push(sp.cond);
