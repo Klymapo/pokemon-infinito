@@ -119,3 +119,7 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | Rancho / Amphy (Faro) | La lente gira entera con la Ampharosita; Amphy sigue drenado | Kaori: antídoto completo más adelante |
 | Ámbar (Petra) | «−3 años» en la máquina de Lazare; Petra rumbo a Canela | Misión prehistórica (cruza con la cabina) |
 | Ruinas Alfa | 4.ª cámara con hueco de pluma | Ho-Oh o un guiño, cuando toque legendario con historia |
+| **Rancho Prado (negocio)** (`p7_rancho`) | Mario es socio en potencia (rama sobrina): Adela le pedirá entrar en cuanto vuelva al rancho | Imprevistos nuevos por bloque; rama Lemnis: Adela llamará «cuando se acabe el contrato» (abrir el negocio al caer la Fundación). A la Mayor le falta la escena en que dice su nombre |
+| Castillo Caduco y cantera de Petroglifo (negocios) | Oportunidades abiertas desde el fin del B1 | Simón: plazo de seis meses «para decirlo en antena» (salida hacia el Acto V). Héctor, de excedencia. La «madriguera fósil» de la galería honda, sin plan |
+| El muñeco de Dolores (Lavanda) | Prometió un muñeco de Riolu/Lucario «cuando le ponga el brazo» | Entregarlo en una visita posterior (objeto con `art`) |
+| Casilda y Jade Peña (Trigal ↔ Azafrán) | «Peso neto» cerrable | Casilda sube al tren «en primavera» (evento del 20–22 mar) |

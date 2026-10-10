@@ -7,17 +7,20 @@ import t1 from './t1-celeste.js';
 import t2 from './t2-silph.js';
 import t3 from './t3-cueva.js';
 import t4 from './t4-lola.js';
+import t5 from './t5-tiendas-premios.js';
+import t6 from './t6-negocios.js';
 
 const block = {
 	id: 'b04', title: 'Acto III · La señal', hours: 12, ends: 'b04_fin',
 	regions: { kanto: { name: 'Kanto', h: 100, land: 'M6,30 L18,14 L40,6 L66,4 L88,10 L97,28 L96,56 L90,78 L74,94 L48,97 L24,92 L8,78 L3,54 Z' } },
 	npcs, quests: misiones,
 	locations: {}, trainers: {}, scripts: {}, challenges: {}, badges: {}, shops: {}, items: {}, events: [], milestones: [],
-	gather: {}, patches: {},
+	gather: {}, patches: {}, ventures: {},
 };
+const parts = [comun, t0, t1, t2, t3, t4, t5, t6];
 const extraSpots = {};
-for (const part of [comun, t0, t1, t2, t3, t4]) {
-	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather']) {
+for (const part of parts) {
+	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather', 'ventures']) {
 		for (const id in part[k] || {}) {
 			if (block[k][id] && k !== 'npcs') console.warn(`[b04] ${k} duplicado: ${id}`);
 			block[k][id] = part[k][id];

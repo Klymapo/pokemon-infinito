@@ -184,7 +184,7 @@ export default {
 				{ label: 'Herboristería de la planta baja', sub: 'Alguien discute con el dependiente sobre setas', icon: '🌿', cond: GIRA, new: '!flag.b02_kaori_trigal', talk: [{ cond: '!flag.b02_kaori_trigal', script: 'b02_kaori_trigal' }, { script: 'b02_kaori_despues' }] },
 				{ label: 'Patio de comidas', sub: 'Una olla enorme entre los puestos de fideos', icon: '🍲', cond: GIRA, new: '!flag.b02_gaspar_trigal', talk: [{ cond: '!flag.b02_gaspar_trigal', script: 'b02_gaspar_trigal' }, { script: 'b02_gaspar_despues' }] },
 				{ label: 'Azotea', sub: 'Zona de entrenamiento (nivel recomendado 38)', icon: '🥋', action: { training: {
-					cap: 38, trainers: ['azotea_1', 'azotea_2', 'azotea_3'], coach: 'Encargado de la azotea',
+					cap: 38, prize: { wins: 3, script: 'p7_premio_azotea' }, trainers: ['azotea_1', 'azotea_2', 'azotea_3'], coach: 'Encargado de la azotea',
 					wild: [{ sp: 'pidgeotto', lv: [33, 35] }, { sp: 'raticate', lv: [33, 35] }, { sp: 'magnemite', lv: [33, 35] }],
 					closed: 'El encargado de la azotea te mira el equipo y niega con la cabeza. «Aquí ya no sacas nada. Bueno, sacas una foto con el Miltank hinchable. Eso siempre.»',
 				} } },

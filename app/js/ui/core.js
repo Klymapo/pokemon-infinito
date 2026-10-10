@@ -92,12 +92,34 @@ export function say(n, text, opts = {}) {
 	});
 }
 
+/**
+ * Carta, nota o diario: una hoja de papel a pantalla completa que se desplaza, con el principio siempre arriba.
+ * (Antes las cartas largas salían en el cuadro de diálogo, que crecía hacia arriba y se perdía el comienzo.)
+ */
+export function readPaper(title, text, { icon = null } = {}) {
+	logLine({ k: 'narr', t: `${title}: ${text}` });
+	return new Promise(resolve => {
+		const close = () => { ov.remove(); resolve(); };
+		const body = h('div', { class: 'paper-body' }, ...String(text).split(/\n\s*\n|\n/).filter(x => x.trim()).map(par => h('p', { html: fmtText(par) })));
+		const more = h('div', { class: 'paper-more' }, 'Desliza para seguir leyendo ↓');
+		const ov = h('div', { class: 'paper-ov', role: 'dialog', 'aria-label': title },
+			h('div', { class: 'paper' },
+				h('div', { class: 'paper-head' }, icon ? h('span', { class: 'paper-ico' }, icon) : null, h('h2', {}, title)),
+				body, more),
+			h('button', { class: 'btn paper-close', onclick: close }, 'Cerrar'));
+		document.body.append(ov);
+		const mark = () => { more.hidden = body.scrollHeight - body.scrollTop - body.clientHeight < 12; };
+		body.addEventListener('scroll', mark, { passive: true });
+		requestAnimationFrame(mark);
+	});
+}
+
 /** Lista de opciones. Resuelve con el índice elegido. */
 export function choose(prompt, options, opts = {}) {
 	return new Promise(resolve => {
 		const ov = h('div', { class: 'overlay dim' });
 		const box = h('div', { class: 'choices' });
-		if (prompt) box.append(h('div', { class: 'prompt' }, prompt));
+		if (prompt) box.append(h('div', { class: 'prompt', html: fmtText(prompt) }));
 		options.forEach((o, i) => {
 			box.append(h('button', { onclick: () => { if (opts.choice) logLine({ k: 'pick', t: o }); ov.remove(); resolve(i); } }, h('span', { html: fmtText(o) })));
 		});

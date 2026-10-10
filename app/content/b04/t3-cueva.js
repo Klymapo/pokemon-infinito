@@ -54,7 +54,7 @@ export default {
 					3: [
 						{ terrain: 'water' },
 						{ text: 'Un **lago subterráneo**, negro, enorme. En la orilla, un campamento de lona: literas plegables, un hornillo, una baraja. Los guardias de Lemnis del turno de descanso matan el tiempo a base de combates.' },
-						{ spot: { action: { training: { cap: 54, trainers: ['ccel_turno_1', 'ccel_turno_2', 'ccel_turno_3'], wild: [{ sp: 'machoke', lv: [51, 53] }, { sp: 'primeape', lv: [51, 53] }, { sp: 'golduck', lv: [51, 54] }], coach: 'Capataz de turno', closed: 'El capataz recoge la baraja: «Aquí ya no te queda nadie a quien ganarle. Y a mí no me queda sueldo que apostar. Sigue, anda. Pero yo no te he visto».' } } }, label: 'El campamento del turno de descanso', sub: 'Zona de entrenamiento (tope 54)', icon: '🥋' },
+						{ spot: { action: { training: { cap: 54, prize: { wins: 3, script: 'p7_premio_campamento' }, trainers: ['ccel_turno_1', 'ccel_turno_2', 'ccel_turno_3'], wild: [{ sp: 'machoke', lv: [51, 53] }, { sp: 'primeape', lv: [51, 53] }, { sp: 'golduck', lv: [51, 54] }], coach: 'Capataz de turno', closed: 'El capataz recoge la baraja: «Aquí ya no te queda nadie a quien ganarle. Y a mí no me queda sueldo que apostar. Sigue, anda. Pero yo no te he visto».' } } }, label: 'El campamento del turno de descanso', sub: 'Zona de entrenamiento (tope 54)', icon: '🥋' },
 						{ item: 'ppup', hidden: true },
 					],
 					4: [

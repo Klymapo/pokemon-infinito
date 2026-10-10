@@ -5,7 +5,7 @@ import * as AI from './ai.js';
 import { D, toID } from './data.js';
 import { G, markSeen, markCaught, count, removeItem } from './state.js';
 import {
-	toSimSet, expGain, addExp, addEVs, addHappy, catchChance, rollCatch, maxHp, displayName,
+	toSimSet, expGain, addExp, addEVs, addHappy, catchChance, rollCatch, maxHp, displayName, expProgress,
 	movesLearnedAt, isBall,
 } from './pokemon.js';
 import { isNight } from './time.js';
@@ -291,7 +291,9 @@ export class BattleCtl {
 			addEVs(p, foe.sp);
 			const levels = addExp(p, amount);
 			this.events.push({ t: 'text', s: `¡${displayName(p)} ha ganado ${amount} puntos de experiencia!`, quiet: !participated });
-			this.events.push({ t: 'exp', uid: p.uid });
+			// La barra se mueve cuando toca en la reproducción (no antes): cada evento lleva cuánto debe marcar
+			const prog = expProgress(p);
+			this.events.push({ t: 'exp', uid: p.uid, prog: levels.length ? 1 : prog });
 			for (const lv of levels) {
 				this.applyLevelToSim(simP, p);
 				this.events.push({ t: 'text', s: `¡**${displayName(p)}** ha subido al nivel **${lv}**!` });
@@ -299,6 +301,7 @@ export class BattleCtl {
 				const newMoves = movesLearnedAt(p.sp, lv);
 				if (newMoves.length) this.levelUps.push({ uid: p.uid, moves: newMoves });
 			}
+			if (levels.length) this.events.push({ t: 'exp', uid: p.uid, prog, reset: true });
 			if (levels.length) this.leveled = (this.leveled || new Set()).add(p.uid);
 		}
 	}
@@ -343,7 +346,12 @@ export class BattleCtl {
 		const out = { shift: !!this.shiftOffer, forceSwitch: !!req?.forceSwitch, wait: !!req?.wait, moves: [], gimmicks: {}, trapped: false, switches: [] };
 		side.pokemon.forEach((sp, idx) => {
 			const p = this.simToParty.get(sp);
-			out.switches.push({ idx, uid: p?.uid, name: sp.name, sp: toID(sp.species.name), lv: sp.level, hp: sp.hp, maxhp: sp.maxhp, fainted: sp.fainted || sp.hp <= 0, active: sp.isActive, status: sp.status });
+			out.switches.push({
+				idx, uid: p?.uid, name: sp.name, sp: toID(sp.species.name), lv: sp.level, hp: sp.hp, maxhp: sp.maxhp, fainted: sp.fainted || sp.hp <= 0, active: sp.isActive, status: sp.status,
+				// Lo esencial para el resumen del equipo en combate (estado real del simulador, no el de antes del combate)
+				types: sp.species.types, item: sp.item || '', abil: sp.ability || '', stats: { ...sp.storedStats },
+				moves: sp.moveSlots.map(ms => ({ id: ms.id, pp: ms.pp, maxpp: ms.maxpp })),
+			});
 		});
 		const a = req?.active?.[0];
 		if (!a || out.forceSwitch) return out;

@@ -219,7 +219,7 @@ with sync_playwright() as p:
             etiqueta = (tabs[ti].inner_text() or str(ti)).strip().split('\n')[0][:14].lower().replace(' ', '-')
             if not tocar(pg, tabs[ti]): continue
             auditar(pg, f'{base}-{etiqueta}')
-            row = pg.query_selector('.sheet .list .row, .sheet .tiles > *, .sheet .pc-grid > *')
+            row = pg.query_selector('.sheet .list .row:not(.news), .sheet .tiles > *, .sheet .pc-grid > *')  # las filas de Novedades viajan: no se tocan
             if row:
                 n0 = len(pg.query_selector_all('.sheet'))
                 if tocar(pg, row):
@@ -246,6 +246,26 @@ with sync_playwright() as p:
             elif tocar(pg, rec): auditar(pg, 'recoleccion')
         cerrar_todo(pg)
     except Exception as e: errores_js.append(f'recolección: {e}')
+    # Más → Negocios: lista, ficha de una oportunidad y ficha de uno propio (se entra desde la oportunidad)
+    try:
+        mas = pg.query_selector('.nav button:has-text("Más")')
+        if mas and tocar(pg, mas):
+            neg = pg.query_selector('.sheet .row:has-text("Negocios")')
+            if neg and tocar(pg, neg):
+                auditar(pg, 'negocios')
+                fila = pg.query_selector('.sheet .neg-row')
+                if fila and tocar(pg, fila):
+                    auditar(pg, 'negocio-ficha')
+                    entrar = pg.query_selector('.sheet button:has-text("Entrar como socio"):not([disabled])')
+                    if entrar and tocar(pg, entrar):
+                        avanzar_dialogos(pg, 40)
+                        auditar(pg, 'negocio-socio')
+                    pg.evaluate("document.querySelectorAll('.sheet-body').forEach(e => e.scrollTop = 700)")
+                    auditar(pg, 'negocio-socio-2')
+                    pg.evaluate("document.querySelectorAll('.sheet-body').forEach(e => e.scrollTop = 99999)")
+                    auditar(pg, 'negocio-socio-3')
+        cerrar_todo(pg)
+    except Exception as e: errores_js.append(f'negocios: {e}')
     # Servicios del lugar: PC, tienda, centro (diálogo)
     for etiqueta, nombre in [('PC', 'pc'), ('Tienda', 'tienda'), ('Centro Pokémon', 'centro')]:
         el = pg.query_selector(f'.main button:has-text("{etiqueta}"), .main .row:has-text("{etiqueta}")')

@@ -57,7 +57,7 @@ export function newGame(player) {
 		notices: {},
 		eventsDone: {},
 		stats: { battles: 0, caught: 0, steps: 0 },
-		found: {}, gather: {}, album: {},
+		found: {}, gather: {}, album: {}, neg: {},
 	};
 	return G;
 }
@@ -137,6 +137,7 @@ export function migrate(g) {
 	if (!g.found) { g.found = {}; for (const k in g.bag || {}) g.found[k] = Date.now(); }
 	g.gather ||= {};
 	g.album ||= {};
+	g.neg ||= {};
 	fixBoxes(g);
 	g.vars.hitos ??= (g.player?.badges?.length || 0);
 	// postales de los pueblos y ciudades que ya visitaste antes de que existiera el álbum
@@ -221,7 +222,11 @@ function scope() {
 		badge: id => G.player.badges.includes(id),
 		money: G.player.money,
 		inParty: spId => G.party.some(p => p.sp === toID(spId) || D.species[p.sp]?.base === toID(spId)),
-		owns: spId => G.party.some(p => p.sp === toID(spId)) || G.boxes.some(b => b.some(p => p.sp === toID(spId))),
+		owns: spId => G.party.some(p => p.sp === toID(spId)) || G.boxes.some(b => b.some(p => p.sp === toID(spId))) || Object.values(G.neg || {}).some(v => (v.workers || []).some(p => p.sp === toID(spId))),
+		// ¿Hay un Pokémon de esa especie o de una evolución suya (works('mareep') ve a un Ampharos) trabajando en algún negocio? works('ampharos')
+		works: spId => { const want = toID(spId); const line = sp => { for (let i = 0, id = sp; i < 4 && id; i++, id = D.species[id]?.prevo) if (id === want) return true; return D.species[sp]?.base === want; }; return Object.values(G.neg || {}).some(v => (v.workers || []).some(p => line(p.sp))); },
+		// ¿Eres socio de ese negocio? partner('rancho_prado')
+		partner: id => !!G.neg?.[id]?.owned,
 		seen: spId => !!G.dex.seen[D.species[toID(spId)]?.num],
 		caught: spId => !!G.dex.caught[D.species[toID(spId)]?.num],
 		visited: id => !!G.visited[id],

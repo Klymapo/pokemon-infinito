@@ -194,7 +194,7 @@ export default {
 			desc: 'Un patio de piedra al pie de la Torre Quemada, con linternas de piedra cubiertas de musgo. Los médiums y los sabios de Iris entrenan aquí al atardecer, entre las sombras de la torre.\n\nUn letrero de madera: «Se ruega no despertar a los que duermen. Ni a los vivos ni a los otros».',
 			mapNote: 'Entrenamiento (nivel 40)',
 			spots: [
-				{ label: 'Entrenar con los médiums y los sabios', sub: 'Entrenamiento (nivel recomendado 40)', icon: '🥋', action: { training: { cap: 40, trainers: ['patio_torre_1', 'patio_torre_2', 'patio_torre_3'], wild: [{ sp: 'haunter', lv: [36, 38] }, { sp: 'misdreavus', lv: [36, 38] }, { sp: 'noctowl', lv: [36, 37] }], coach: 'Sabio del patio', closed: 'El sabio te mira de arriba abajo. «Tu equipo ya no tiene nada que aprender de nuestras sombras. Ve a buscar las tuyas.»' } } },
+				{ label: 'Entrenar con los médiums y los sabios', sub: 'Entrenamiento (nivel recomendado 40)', icon: '🥋', action: { training: { cap: 40, prize: { wins: 3, script: 'p7_premio_patio_quemada' }, trainers: ['patio_torre_1', 'patio_torre_2', 'patio_torre_3'], wild: [{ sp: 'haunter', lv: [36, 38] }, { sp: 'misdreavus', lv: [36, 38] }, { sp: 'noctowl', lv: [36, 37] }], coach: 'Sabio del patio', closed: 'El sabio te mira de arriba abajo. «Tu equipo ya no tiene nada que aprender de nuestras sombras. Ve a buscar las tuyas.»' } } },
 				{ label: 'Un médium que habla solo', sub: 'Agita un dado de veinte caras', icon: '🎲', talk: [{ script: 'b02_medium_dados' }] },
 			],
 		},

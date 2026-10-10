@@ -228,7 +228,7 @@ export default {
 				{ label: 'Pescar desde el muelle', sub: 'El agua está fría y muy clara', icon: '🎣', action: { explore: 'water' } },
 				{ label: 'Orilla de las rocas', icon: '🐚', action: { gather: 'orilla_olivo' } },
 				{ label: 'Muelle de entrenamiento', sub: 'Zona de entrenamiento (nivel recomendado 45)', icon: '🥋', action: { training: {
-					cap: 45, trainers: ['olivo_muelle_1', 'olivo_muelle_2', 'olivo_muelle_3'], coach: 'Contramaestre del muelle',
+					cap: 45, prize: { wins: 3, script: 'p7_premio_muelle' }, trainers: ['olivo_muelle_1', 'olivo_muelle_2', 'olivo_muelle_3'], coach: 'Contramaestre del muelle',
 					wild: [{ sp: 'tentacruel', lv: [41, 43] }, { sp: 'kingler', lv: [41, 43] }, { sp: 'pelipper', lv: [41, 43] }],
 					closed: 'El contramaestre te mira el equipo, se rasca la barba y señala el horizonte. «Aquí ya no vas a aprender nada, muchacho. El mar te queda pequeño. Bueno, el muelle».',
 				} } },

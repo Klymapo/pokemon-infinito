@@ -115,7 +115,20 @@ locations: {
 { label: 'Entrenador: Excursionista Tomás', action: { trainer: 'exc_tomas' } },    // combate único
 { label: 'Dojo', action: { training: { cap: 14, trainers: ['dojo_1', 'dojo_2'], wild: [{ sp: 'machop', lv: [10, 12] }], npc: 'maestro_dojo', closed: 'Texto si ya tienes el nivel' } } },
 { label: 'Explorar el jardín', action: { explore: 'grass' } },  // encuentro salvaje con la tabla `encounters` del lugar
+{ label: 'El rancho', icon: '🐑', action: { venture: 'rancho_prado' } },         // abre la ficha de un negocio (§13)
 ```
+
+**Premio del instructor (`prize`), obligatorio en toda zona de entrenamiento** (pedido de Mario, 2026-10-10: «solo son combates; si me dieran una Megapiedra o una MT temática del lugar o del gimnasio estaría bien»):
+
+```js
+action: { training: { cap: 45, trainers: ['muelle_1', 'muelle_2', 'muelle_3'], coach: 'Contramaestre', /* … */
+  prize: { wins: 3, script: 'b03_premio_muelle' } } }
+```
+
+- Al ganar `wins` combates de práctica (por defecto 3; cuentan los ganados antes de que existiera el premio), el encargado corre `script` **una sola vez**: una escena corta con su voz (2–5 líneas, por qué te lo da, qué tiene que ver con el lugar o con el líder) y un `{ give }`.
+- El premio es **temático**: una MT del tipo del gimnasio o del lugar, o una Megapiedra de un Pokémon que tenga sentido allí. Megapiedras, con medida (una cada 3 o 4 zonas) y nunca de un legendario.
+- Con el equipo por encima del tope, la zona sigue cerrada para subir de nivel, pero deja hacer «combates de exhibición» hasta ganarse el premio. El primer combate siempre es contra alguien a quien aún no has vencido.
+- El mosaico del lugar enseña «🎁 Premio: 1/3 combates» y avisa cuando está listo.
 
 ### 3.2 Rutas
 
@@ -254,6 +267,8 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 | `{ nickname: 'last' }`, `{ clearRoute: 'ruta4' }`, `{ wait: 500 }` | |
 | `{ cutscene: { bg: { type: 'cave' }, start: 'dark', frames: [ { text, item, npc, mon, fx, clear } ] } }` | cinemática a pantalla completa con bandas de cine; se avanza tocando. `fx`: `light` (la luz se abre desde el centro), `dark`, `flash`, `shake`, `glow`, `zoom`. `item` usa el pixel art de `PX_ITEMS` (`app/js/art.js`) si existe. Úsala en momentos clave: recibir un objeto clave, abrir una zona nueva, giros |
 | `{ puzzle: { id, title, hint, theme, grid: [...] }, onSolve: [...], onQuit: [...] }` | puzle de rejilla táctil (ver §7.1). `onSolve` corre al resolverlo y `onQuit` si el jugador sale |
+| `{ read: 'idObjeto' }` / `{ read: { title, text } }` | abre una **hoja de papel** a pantalla completa que se desplaza (cartas, notas, diarios). Con un id usa el `name` y el `read` del objeto. Úsalo cuando el jugador recibe una carta y debe leerla en ese momento; nunca metas una carta larga en un `text` (el cuadro de diálogo es para frases) |
+| `{ venture: 'id' }` / `{ venture: 'id', join: true }` | abre la ficha de un negocio (§13); con `join: true` lo hace socio sin cobrarle la entrada (regalos de la historia). `join: true, open: true` hace las dos cosas |
 
 **Marcadores en textos:**
 
@@ -347,6 +362,7 @@ Son expresiones JavaScript sobre este ámbito:
 | `money`, `maxLv`, `partySize` | dinero, nivel máximo, tamaño del equipo |
 | `inParty('riolu')`, `owns('fennekin')`, `seen('x')`, `caught('x')` | Pokémon |
 | `visited('id')`, `cleared('id')`, `beat('trainerId')` | progreso |
+| `partner('rancho_prado')`, `works('ampharos')` | eres socio de ese negocio · tienes un Pokémon de esa especie trabajando en algún negocio (§13) |
 | `night`, `day`, `morning`, `evening`, `time` | `time` es 'manana', 'dia', 'tarde' o 'noche' |
 | `season` | 'primavera', 'verano', 'otono', 'invierno' |
 | `date('10-31','11-02')` | rango de fechas |
@@ -388,3 +404,62 @@ events: [ {
 ## 12. Validación
 
 Antes de publicar: `node herramientas/validar.mjs` revisa referencias, especies, movimientos, condiciones y conteo de apariciones de NPCs. Después: `node herramientas/build-sw.mjs`.
+
+---
+
+## 13. Negocios (administración de recursos)
+
+> Pedido de Mario, 2026-10-10: tiene muchísimo dinero y nada en que gastarlo; quiso financiar el rancho y «ser dueño colaborador para tener más ganancias». Motor en `app/js/negocios.js`, pantalla en `app/js/ui/negocios-ui.js` (Más › Negocios y spots con `action: { venture }`).
+
+Un negocio produce **en tiempo real** (como la recolección). El jugador entra como socio, **reparte el esfuerzo** entre líneas de producción, compra **mejoras**, pone a **trabajar a Pokémon** del PC, elige **encargado** y **pasa a recoger**: lo que no cabe en el almacén se pierde. De vez en cuando sale un **imprevisto** con una decisión.
+
+```js
+ventures: {
+  rancho_prado: {
+    name: 'Rancho Prado', icon: '🐑', loc: 'rancho_aurelio',  // lugar (para «Ir allí»)
+    partner: 'sobrina',                       // NPC que sale en la ficha
+    cond: 'flag.b03_rancho_jugador || flag.b03_rancho_sobrina', // cuándo aparece como oportunidad
+    blurb: 'Una frase SIN spoilers de qué es.',
+    buy: { cost: 0, text: 'Lo que te dice al entrar', script: 'guion_opcional', set: { 'flag.x': true } },
+    share: [ { cond: 'flag.b03_rancho_jugador', pct: 70 }, { pct: 30 } ],  // tu parte de la ganancia (la primera que cumpla)
+    upkeep: 900,                              // gasto diario (pienso, sueldos): se descuenta antes de repartir
+    store: 3,                                 // días que caben en el almacén
+    lines: {                                  // producción POR DÍA con el 100 % del esfuerzo, sin mejoras
+      lana:  { name: 'Lana', icon: '🧶', desc: 'Se vende sola.', money: 2400 },
+      leche: { name: 'Leche', icon: '🥛', desc: '…', items: [ { id: 'moomoomilk', perDay: 2 } ] },
+      cria:  { name: 'Cría', icon: '🥚', desc: '…', items: [ { id: 'rarecandy', perDay: 0.15 } ], locked: true }, // la abre una mejora con unlock
+    },
+    upgrades: [                               // compras de una sola vez
+      { id: 'tejado', name: 'Tejado del establo', cost: 30000, desc: 'Qué es y qué cambia.', mult: { all: 1.15 } },
+      { id: 'esquiladora', name: 'Esquiladora', cost: 45000, desc: '…', mult: { lana: 1.5 }, need: ['tejado'] },
+      { id: 'paridera', name: 'Paridera', cost: 60000, desc: '…', unlock: 'cria', cond: 'badges >= 7' },
+      { id: 'socio2', name: 'Ampliar tu parte', cost: 80000, desc: '…', share: 20 },   // +20 puntos de participación
+      // otros campos: slots: 1 (un puesto más de trabajo), store: 2 (días de almacén), upkeep: -200, set: { 'flag.x': true }, script: 'escena_al_comprar', hidden: 'cond'
+    ],
+    jobs: { slots: 2, types: ['Electric', 'Normal', 'Grass'], text: 'Qué hacen aquí los Pokémon.', favs: { mareep: 0.1, miltank: 0.12 } },
+    managers: [                               // quién lo lleva; el primero sin cond es el de siempre
+      { npc: 'sobrina', desc: 'Lo cuida entre consulta y consulta.', mult: { leche: 1.2 } },
+      { npc: 'otro_npc', cond: 'flag.y', desc: '…', mult: { lana: 1.25 }, wage: 300 },   // wage = sueldo diario
+    ],
+    eventRate: 0.7,
+    events: [                                 // imprevistos: como mucho uno por día real
+      { id: 'gotera', name: 'Gotera', w: 3, npc: 'sobrina', cond: '…', once: false,
+        text: 'Lo que te cuenta quien lo lleva.',
+        options: [
+          { text: 'Pagar el arreglo', cost: 4000, result: 'Lo que pasa.', effect: { boost: { mult: { all: 1.2 }, days: 3, label: 'Establo seco' } } },
+          { text: 'Que espere', result: '…', effect: { boost: { mult: { all: 0.85 }, days: 2, label: 'Gotera' } } },   // siempre una opción gratis y sin cond
+        ] },
+      // effect: money (a la caja), items: [{ id, n }], boost, set: { 'flag.x': true }, happy: 10 (a los Pokémon que trabajan)
+    ],
+  },
+}
+```
+
+**Reglas de economía (el validador avisa de lo gordo):**
+
+- El dinero del jugador es un **sumidero** antes que una fuente: entrar y mejorarlo todo cuesta de 150 000 a 400 000 ₽; una mejora se amortiza en 8–20 días reales. Lo valioso son los **objetos** que produce (cosas difíciles de conseguir de otra forma) y las **escenas**.
+- Producción de objetos: enteros por día para lo común (leche, bayas), fracciones para lo raro (0,1–0,3/día).
+- Nada que rompa la curva: Caramelos Raros como mucho 0,15/día por negocio.
+- Cada negocio tiene 2–4 líneas, 5–8 mejoras, 2–3 encargados posibles (con voz propia: son personajes que ya conoce el jugador) y 5–8 imprevistos escritos con la voz del encargado. Los imprevistos son el sitio para el humor y para que el mundo se mueva.
+- Un bloque posterior puede **ampliar** un negocio repitiendo su id en `ventures`: las listas (mejoras, imprevistos, encargados) se suman y los objetos (líneas, jobs) se mezclan.
+- Los Pokémon que trabajan salen del PC o del equipo y vuelven cuando el jugador quiera; ganan amistad. `owns()` los cuenta; `inParty()` no.

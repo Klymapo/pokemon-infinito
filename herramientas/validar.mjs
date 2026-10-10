@@ -17,10 +17,10 @@ const E = (w, m) => errors.push(`${w}: ${m}`);
 const checkGather = () => { for (const [gid, g] of Object.entries(C.gather || {})) { if (!Array.isArray(g.table) || !g.table.length) E('recolección ' + gid, 'tabla vacía'); for (const e of g.table || []) { if (!D.items[e.id]) E('recolección ' + gid, 'objeto inexistente: ' + e.id); if (e.cond) { try { new Function('s', 'with(s){return (' + e.cond + ')}'); } catch (x) { E('recolección ' + gid, 'condición inválida: ' + e.cond); } } } } };
 const W = (w, m) => warns.push(`${w}: ${m}`);
 
-const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve', 'puzzle']);
-const AUX_KEYS = new Set(['cond', 'as', 'n', 'silent', 'stage', 'done', 'then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'lose', 'canRun', 'prompt', 'nickname', 'who', 'jingle', 'dim', 'mood', 'onSolve', 'onQuit']);
+const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve', 'puzzle', 'read', 'venture']);
+const AUX_KEYS = new Set(['cond', 'as', 'n', 'silent', 'stage', 'done', 'then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'lose', 'canRun', 'prompt', 'nickname', 'who', 'jingle', 'dim', 'mood', 'onSolve', 'onQuit', 'join', 'open']);
 const COND_NS = /\b(flag|flags|vars|rep|af|quest|done)\.([A-Za-z0-9_]+)/g;
-const COND_FUNCS = ['has', 'count', 'badge', 'inParty', 'owns', 'seen', 'caught', 'visited', 'cleared', 'beat', 'date', 'zero'];
+const COND_FUNCS = ['has', 'count', 'badge', 'inParty', 'owns', 'seen', 'caught', 'visited', 'cleared', 'beat', 'date', 'zero', 'works', 'partner'];
 const COND_VARS = ['badges', 'money', 'maxLv', 'partySize', 'pron', 'time', 'night', 'day', 'morning', 'evening', 'season', 'year', 'weekday', 'true', 'false', 'null', 'undefined'];
 
 const flagsSet = new Set(), flagsRead = new Map(), varsSet = new Set();
@@ -49,6 +49,8 @@ function checkCond(where, expr) {
 	for (const m2 of expr.matchAll(/\b(has|count)\(['"]([^'"]+)['"]\)/g)) if (!D.items[toID(m2[2])]) E(where, `objeto inexistente en condición: ${m2[2]}`);
 	for (const m2 of expr.matchAll(/\b(inParty|owns|seen|caught)\(['"]([^'"]+)['"]\)/g)) if (!D.species[toID(m2[2])]) E(where, `especie inexistente en condición: ${m2[2]}`);
 	for (const m2 of expr.matchAll(/\b(visited|cleared)\(['"]([^'"]+)['"]\)/g)) if (!C.locations[m2[2]]) E(where, `lugar inexistente en condición: ${m2[2]}`);
+	for (const m2 of expr.matchAll(/\bworks\(['"]([^'"]+)['"]\)/g)) if (!D.species[toID(m2[1])]) E(where, `especie inexistente en condición: ${m2[1]}`);
+	for (const m2 of expr.matchAll(/\bpartner\(['"]([^'"]+)['"]\)/g)) if (!C.ventures[m2[1]]) E(where, `negocio inexistente en condición: ${m2[1]}`);
 	for (const m2 of expr.matchAll(/\bbeat\(['"]([^'"]+)['"]\)/g)) if (!C.trainers[m2[1]]) E(where, `entrenador inexistente en condición: ${m2[1]}`);
 }
 
@@ -96,6 +98,8 @@ function walk(where, list, depth = 0) {
 			break;
 		}
 		case 'unlock': if (!['mega', 'z', 'dynamax', 'tera'].includes(c.unlock)) E(w, 'unlock inválido'); break;
+		case 'read': if (typeof c.read === 'string') { if (!D.items[toID(c.read)]?.read) E(w, `read: el objeto «${c.read}» no existe o no tiene texto (read)`); } else if (!c.read?.text) E(w, 'read sin texto'); break;
+		case 'venture': if (!C.ventures[c.venture]) E(w, `negocio inexistente: ${c.venture}`); break;
 		}
 		for (const k of ['onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (c[k]) walk(w + '.' + k, c[k], depth + 1);
 	});
@@ -126,7 +130,12 @@ for (const [id, L] of Object.entries(C.locations)) {
 		if (a.gather && !C.gather[a.gather]) E(sw, 'punto de recolección inexistente: ' + a.gather);
 		if (a.go && !C.locations[a.go]) E(sw, 'lugar inexistente: ' + a.go);
 		if (a.trainer && !C.trainers[a.trainer]) E(sw, 'entrenador inexistente: ' + a.trainer);
-		if (a.training) { for (const t of a.training.trainers || []) if (!C.trainers[t]) E(sw, 'entrenador de entrenamiento inexistente: ' + t); for (const x of a.training.wild || []) checkSpecies(sw, x.sp); if (!a.training.cap) W(sw, 'entrenamiento sin cap'); }
+		if (a.training) { for (const t of a.training.trainers || []) if (!C.trainers[t]) E(sw, 'entrenador de entrenamiento inexistente: ' + t); for (const x of a.training.wild || []) checkSpecies(sw, x.sp); if (!a.training.cap) W(sw, 'entrenamiento sin cap');
+			const pz = a.training.prize;
+			if (pz) { if (!C.scripts[pz.script]) E(sw, 'premio de entrenamiento: guion inexistente ' + pz.script); if (!(a.training.trainers || []).length) E(sw, 'premio de entrenamiento sin entrenadores que vencer'); if ((pz.wins || 3) > 6) W(sw, 'premio de entrenamiento: más de 6 victorias es pesado'); }
+		}
+		if (a.venture && !C.ventures[a.venture]) E(sw, 'negocio inexistente: ' + a.venture);
+
 		if (!s.script && !s.talk && !Object.keys(a).length) E(sw, 'spot sin acción');
 	});
 	checkSpots(L.spots, w);
@@ -203,6 +212,7 @@ for (const ev of C.events) {
 	for (const loc in ev.tramos || {}) { if (!C.locations[loc]) E(w, 'lugar inexistente ' + loc); for (const n in ev.tramos[loc]) for (const it of ev.tramos[loc][n]) if (it.item) checkItem(w, it.item); }
 	for (const loc in ev.onEnter || {}) for (const e of ev.onEnter[loc]) if (!C.scripts[e.script]) E(w, 'guion inexistente ' + e.script);
 }
+checkVentures();
 for (const m of C.milestones) if (!flagsSet.has(m.flag)) W('hito', `el flag ${m.flag} nunca se activa`);
 // flags leídos que nunca se activan
 for (const [f, where] of flagsRead) {
@@ -233,7 +243,7 @@ function checkEvolutions() {
 			scan(v);
 		}
 	};
-	for (const k of ['scripts', 'locations', 'events', 'quests', 'shops', 'gather']) scan(C[k]); // sin entrenadores: sus equipos no se pueden conseguir
+	for (const k of ['scripts', 'locations', 'events', 'quests', 'shops', 'gather', 'ventures']) scan(C[k]); // sin entrenadores: sus equipos no se pueden conseguir
 	for (const [id, s] of Object.entries(C.shops)) for (const e of s.items) items.add(toID(typeof e === 'string' ? e : e.id));
 	const need = e => ['useItem', 'levelHold'].includes(e.evoType) ? toID(e.evoItem) : ['trade', 'levelExtra', 'other'].includes(e.evoType) ? 'linkingcord' : null;
 	const seen = new Set([...sps].filter(s => D.species[s])), q = [...seen];
@@ -247,6 +257,72 @@ function checkEvolutions() {
 }
 checkEvolutions();
 
+// ---------- Negocios ----------
+function checkVentures() {
+	for (const [id, v] of Object.entries(C.ventures || {})) {
+		const w = 'negocio ' + id;
+		if (!v.name) E(w, 'sin nombre');
+		if (!v.blurb) W(w, 'sin blurb (frase sin spoilers para la lista)');
+		if (v.loc && !C.locations[v.loc]) E(w, 'lugar inexistente: ' + v.loc);
+		if (v.partner && !C.npcs[v.partner]) E(w, 'socio (npc) inexistente: ' + v.partner); else if (v.partner) useNpc(v.partner, w);
+		checkCond(w + '.cond', v.cond);
+		if (v.buy?.script && !C.scripts[v.buy.script]) E(w, 'buy.script inexistente: ' + v.buy.script);
+		for (const sh of v.share || []) { checkCond(w + '.share', sh.cond); if (!(sh.pct > 0 && sh.pct <= 100)) E(w, 'share.pct fuera de 1–100'); }
+		const lines = Object.keys(v.lines || {});
+		if (!lines.length) E(w, 'sin líneas de producción');
+		for (const k of lines) {
+			const ln = v.lines[k];
+			if (!ln.name) E(w, `línea ${k} sin nombre`);
+			checkCond(w + '.lines.' + k, ln.cond);
+			if (!ln.money && !(ln.items || []).length) E(w, `la línea ${k} no produce nada`);
+			for (const it of ln.items || []) { checkItem(w + '.lines.' + k, it.id); if (!(it.perDay > 0)) E(w, `línea ${k}: perDay inválido en ${it.id}`); if (it.perDay > 6) W(w, `línea ${k}: ${it.id} a ${it.perDay}/día es mucho`); checkCond(w, it.cond); }
+			if (ln.locked && !(v.upgrades || []).some(u => u.unlock === k)) E(w, `la línea ${k} está bloqueada y ninguna mejora la abre`);
+		}
+		const ups = new Set();
+		for (const u of v.upgrades || []) {
+			const uw = `${w}.mejora ${u.id}`;
+			if (!u.id || !u.name || !u.desc) E(uw, 'le falta id, name o desc');
+			if (ups.has(u.id)) E(uw, 'id repetido'); ups.add(u.id);
+			if (!(u.cost >= 0)) E(uw, 'sin cost');
+			checkCond(uw, u.cond); checkCond(uw, u.hidden);
+			for (const k in u.mult || {}) if (k !== 'all' && !lines.includes(k)) E(uw, 'mult de una línea que no existe: ' + k);
+			if (u.unlock && !lines.includes(u.unlock)) E(uw, 'unlock de una línea que no existe: ' + u.unlock);
+			if (u.script && !C.scripts[u.script]) E(uw, 'guion inexistente: ' + u.script);
+			for (const k in u.set || {}) { const [ns, name] = k.split('.'); if (ns.startsWith('flag')) flagsSet.add(name); if (ns.startsWith('var')) varsSet.add(name); }
+		}
+		for (const u of v.upgrades || []) for (const n of u.need || []) if (!ups.has(n)) E(`${w}.mejora ${u.id}`, 'need de una mejora que no existe: ' + n);
+		for (const m of v.managers || []) {
+			if (!C.npcs[m.npc]) E(w, 'encargado: npc inexistente ' + m.npc); else useNpc(m.npc, w);
+			checkCond(w + '.managers', m.cond);
+			if (!m.desc) W(w, 'encargado sin desc: ' + m.npc);
+			for (const k in m.mult || {}) if (k !== 'all' && !lines.includes(k)) E(w, `encargado ${m.npc}: mult de una línea que no existe: ${k}`);
+		}
+		if ((v.managers || []).length && !(v.managers || []).some(m => m.cond === undefined)) W(w, 'ningún encargado sin condición: puede quedarse sin nadie');
+		for (const t of v.jobs?.types || []) if (!D.types[t]) E(w, 'jobs.types: tipo inexistente ' + t);
+		for (const sp in v.jobs?.favs || {}) checkSpecies(w + '.jobs.favs', sp);
+		const evs = new Set();
+		for (const e of v.events || []) {
+			const ew = `${w}.imprevisto ${e.id}`;
+			if (!e.id || !e.text) E(ew, 'le falta id o text');
+			if (evs.has(e.id)) E(ew, 'id repetido'); evs.add(e.id);
+			if (e.npc && !C.npcs[e.npc]) E(ew, 'npc inexistente: ' + e.npc); else if (e.npc) useNpc(e.npc, ew);
+			checkCond(ew, e.cond);
+			if (!(e.options || []).length) E(ew, 'sin opciones');
+			if (!(e.options || []).some(o => !o.cost && o.cond === undefined)) E(ew, 'necesita al menos una opción gratis y sin condición (si no, el jugador puede quedarse atascado)');
+			for (const o of e.options || []) {
+				if (!o.text) E(ew, 'opción sin text'); if (!o.result) W(ew, 'opción sin result (lo que pasa al elegirla)');
+				checkCond(ew, o.cond);
+				for (const it of o.effect?.items || []) checkItem(ew, it.id);
+				for (const k in o.effect?.boost?.mult || {}) if (k !== 'all' && !lines.includes(k)) E(ew, 'boost de una línea que no existe: ' + k);
+				for (const k in o.effect?.set || {}) { const [ns, name] = k.split('.'); if (ns.startsWith('flag')) flagsSet.add(name); if (ns.startsWith('var')) varsSet.add(name); }
+			}
+		}
+		// Economía: que ninguna mejora tarde una eternidad en pagarse ni se pague en un día
+		const base = lines.reduce((a, k) => Math.max(a, v.lines[k].money || 0), 0);
+		const total = (v.upgrades || []).reduce((a, u) => a + (u.cost || 0), 0) + (v.buy?.cost || 0);
+		if (base && total / base < 5) W(w, `todo el negocio (₽${total}) se paga en menos de 5 días a ₽${base}/día: demasiado rentable`);
+	}
+}
 checkGather();
 console.log(`Bloques: ${C.blocks.map(b => b.id).join(', ')} · Lugares: ${Object.keys(C.locations).length} · Entrenadores: ${Object.keys(C.trainers).length} · Guiones: ${Object.keys(C.scripts).length} · Misiones: ${Object.keys(C.quests).length} · NPCs: ${Object.keys(C.npcs).length}`);
 if (puzzles.length) console.log(`Puzles: ${puzzles.length} (${puzzles.map(p => (p.id || p.w) + ' ' + p.steps + ' pasos').join(', ')})`);

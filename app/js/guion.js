@@ -196,6 +196,19 @@ async function runCmd(c, ctx) {
 	if (c.mapUnlock) { G.flags['map_' + c.mapUnlock] = true; return; }
 	if (c.clearRoute) { G.cleared[c.clearRoute] = true; return; }
 	if (c.cutscene) { await UI.cutscene?.(c.cutscene); return; }
+	// Carta o nota en papel a pantalla completa: { read: 'idObjeto' } o { read: { title, text } }
+	if (c.read) {
+		const it = typeof c.read === 'string' ? D.items[toID(c.read)] : null;
+		const title = it?.name || c.read.title || 'Nota', text = tx(it?.read || c.read.text || '');
+		if (UI.read) await UI.read(title, text, typeof c.read === 'string' ? toID(c.read) : null); else await UI.say(null, text);
+		return;
+	}
+	// Negocios: { venture: 'id' } abre su ficha; { venture: 'id', join: true } te hace socio sin pagar la entrada
+	if (c.venture) {
+		if (c.join && !G.neg?.[c.venture]?.owned) { const { joinVenture, ventureDef } = await import('./negocios.js'); const d = ventureDef(c.venture); if (d) { const cost = d.buy?.cost || 0; G.player.money += cost; joinVenture(c.venture); } }
+		if (!c.join || c.open) await UI.venture?.(c.venture);
+		return;
+	}
 	if (c.puzzle) {
 		// Puzle de rejilla (ver app/js/puzle.js y docs/CONTENIDO.md). Sin interfaz que lo juegue, cuenta como resuelto.
 		const res = UI.puzzle ? await UI.puzzle(c.puzzle) : { result: 'solved', moves: 0 };

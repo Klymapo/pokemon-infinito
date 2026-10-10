@@ -89,3 +89,8 @@ Aplícalo a las tres ideas:
 - Canon de Ruinas Alfa: inscripciones ESCAPA, LUZ y AGUA en las cámaras; hueco con forma de pluma en una 4.ª cámara (semilla para Ho-Oh, sin plan).
 - Jingle del farero (Ampharosita): señal «dos largos, uno corto».
 - Idea de Mario usada: **la arrepentida** (Lola Arriaga, ex recluta Rocket de la época de Giovanni). Ideas de ChatGPT aún sin usar: siguen arriba.
+
+## Publicación 7 (2026-10-10)
+
+- Rancho: cartón «CREE» torcido sobre la puerta del establo (*Ted Lasso*). Castillo: «la tarta es mentira» (*Portal*). Cantera: «diez mil millones por ciento seguro» en boca de Petra (*Dr. Stone*). Primeape Tera Fantasma = guiño a Annihilape (Mario tiene uno). «Disco Técnico», la tienda de MT, es una tienda de vinilos.
+- **Gustos confirmados por Mario (2026-10-10):** la muerte de Aurelio («me encantó, aunque dolió»), el suspenso de Noa, poder encerrar al jefe y soltar a los demás (matices en vez de todo o nada), las zonas de entrenamiento. **No le gusta** recibir dos Pokémon de la misma línea. Quiere **gestionar** cosas con su dinero y que sus decisiones den «más ganancias»; quiere **avisos** en vez de recorrer el mundo buscando qué hay nuevo.

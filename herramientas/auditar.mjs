@@ -63,7 +63,7 @@ for (const [nombre, archivo, fich] of [['Game Tester', 'tester.mjs', 'tester'], 
 }
 
 // 1b. Pruebas del motor
-for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs', 'herramientas/test/rejilla-test.mjs', 'herramientas/test/unicos-tutor-test.mjs']) {
+for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs', 'herramientas/test/rejilla-test.mjs', 'herramientas/test/unicos-tutor-test.mjs', 'herramientas/test/pc-multi-test.mjs', 'herramientas/test/negocios-test.mjs']) {
 	const r = await run('node', [t]);
 	report.push(`Prueba \`${t}\`: ${r.code === 0 ? 'OK' : '**FALLA**'}`, '');
 	if (r.code !== 0) { blockers.push(`Falla la prueba ${t}`); report.push('```', r.out.slice(-2000), '```', ''); }

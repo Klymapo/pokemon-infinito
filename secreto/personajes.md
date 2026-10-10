@@ -163,3 +163,9 @@
 - **Ramiro Alcalde** (`becario_elm`, 24): becario del Prof. Elm, en bici, casco y chaleco reflectante. Nervioso, se disculpa en ráfagas («perdón, perdón, perdón»), todo en pósits. Llevaba los tres iniciales de Johto a Trigal la noche del desvío. Su Quagsire se llama Don Calma. Apariciones: B2 (Azalea, Iris), B3 (Olivo, cierre). Falta una en el B5+.
 - **Profesor Elm** (`elm`, canon): por holomisor; despistado y cariñoso, investiga huevos. Apariciones: B2–B3 (llamadas y carta). Falta una en el B5+.
 - **Lola Arriaga** (`lola`, ~44): puesto ambulante de bollos al vapor; moño con mechón gris, mandil sobre chamarra negra, lunar. Su Raticate **Tacho**. Voz brusca y cálida, de cuentas claras («Fiado no»). **Secreto:** ex recluta del Team Rocket de Giovanni (Torre Pokémon de Lavanda y toma de la Torre Radio); se fue, cumplió y se arrepiente. Idea de Mario. Apariciones: B2 Trigal, B3 Caoba, B4 Lavanda. Giro propuesto en `registro.md` (Publicación 6).
+
+## Fichas nuevas de la Publicación 7
+
+- **Rosaura** (`p7_rosaura`; es la entrenadora `r42_rosaura` del B2 y la del ramo en la cancela del B3): vecina de la Ruta 42, treinta años esquilando. De usted, terca, «yo pago lo que debo»; su Tauros es enamoradizo. Encargada posible del rancho.
+- **La Mayor** (`p7_mayor`): la recluta Rocket que cuidaba de los demás; solo si el jugador los dejó libres. Hace que todo el mundo coma caliente. No dice su nombre: «lo guardo para cuando me lo gane otra vez». **Pendiente:** la escena en que lo dice.
+- **Casilda Peña** (`p7_casilda`, joyera de la 4.ª planta de Trigal, Mega-Sableye) y su hermana **Jade** (`p7_jade`, Almacenes de Azafrán). **Ciro** (`p7_ciro`, Mega-Pidgeot, Azafrán y luego Trigal). **Evaristo** (`p7_evaristo`, pescador del Lago de la Furia, hermano del contramaestre de Olivo, Mega-Gyarados). **Dolores** (`p7_dolores`, arregla muñecos en Lavanda, Mega-Banette).

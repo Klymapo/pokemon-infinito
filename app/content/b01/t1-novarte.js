@@ -74,7 +74,7 @@ export default {
 				{ label: 'Tienda Pokémon', action: { shop: 'tienda_1' } },
 				{ label: 'Gimnasio de Novarte', sub: 'Brock, tipo Roca', icon: '🏟️', action: { go: 'gym_novarte' }, new: '!badge("medalla_roca")' },
 				{ label: 'Patio del Gimnasio', sub: 'Zona de entrenamiento (nivel 13)', icon: '🥋', action: { training: {
-					cap: 13, npc: 'aprendiz_brock',
+					cap: 13, prize: { wins: 3, script: 'p7_premio_patio_novarte' }, npc: 'aprendiz_brock',
 					trainers: ['patio_karateka', 'patio_excursionista', 'patio_luchadora'],
 					wild: [{ sp: 'roggenrola', lv: [9, 11] }, { sp: 'geodude', lv: [9, 11] }, { sp: 'machop', lv: [9, 11] }, { sp: 'nosepass', lv: [10, 12] }],
 					closed: 'El aprendiz te mira de arriba abajo. «Tu equipo ya está para la pared. Si sigues aquí, Brock me regaña por hacerte perder el tiempo. Y Brock regaña con comida. Sin postre.»',

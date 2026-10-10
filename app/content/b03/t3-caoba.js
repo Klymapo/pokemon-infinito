@@ -155,7 +155,7 @@ export default {
 			mapNote: 'Trastienda: combates clandestinos (entrenamiento)',
 			spots: [
 				{ label: 'El dependiente', sub: 'Sonríe demasiado', icon: '🧔', talk: [{ cond: 'flag.b03_guarida_abierta', script: 'b03_dependiente_despues' }, { script: 'b03_dependiente' }] },
-				{ label: 'La trastienda', sub: 'Combates «amistosos» detrás de la cortina (tope 47)', icon: '🥊', action: { training: { cap: 47, trainers: ['trastienda_1', 'trastienda_2', 'trastienda_3'], wild: [{ sp: 'raticate', lv: [43, 45] }, { sp: 'murkrow', lv: [43, 45] }, { sp: 'grimer', lv: [43, 45] }], coach: 'Dependiente', closed: 'El dependiente te para en la cortina: «Aquí ya no te queda nadie a quien ganar. Y yo ya no te quedo a quien sacarle dinero. Fuera, fuera».' } } },
+				{ label: 'La trastienda', sub: 'Combates «amistosos» detrás de la cortina (tope 47)', icon: '🥊', action: { training: { cap: 47, prize: { wins: 3, script: 'p7_premio_trastienda' }, trainers: ['trastienda_1', 'trastienda_2', 'trastienda_3'], wild: [{ sp: 'raticate', lv: [43, 45] }, { sp: 'murkrow', lv: [43, 45] }, { sp: 'grimer', lv: [43, 45] }], coach: 'Dependiente', closed: 'El dependiente te para en la cortina: «Aquí ya no te queda nadie a quien ganar. Y yo ya no te quedo a quien sacarle dinero. Fuera, fuera».' } } },
 				{ label: 'Las estatuas de Persian', sub: 'Lance las mira muy fijamente', icon: '🐈', cond: M6_GUARIDA + ' && !flag.b03_guarida_abierta', new: 'true', talk: [{ script: 'b03_tienda_puzle' }] },
 				{ label: 'Bajar por la escalera oculta', sub: 'Huele a humedad y a ozono', icon: '🪜', cond: 'flag.b03_guarida_abierta', new: '!flag.b03_guarida_llegada || (flag.b03_atlas_visto && !beat("atlas_1"))', action: { go: 'guarida_rocket' } },
 			],

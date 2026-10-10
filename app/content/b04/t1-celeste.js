@@ -271,7 +271,7 @@ export default {
 				{ label: 'PC de Bill', sub: 'El original. Tiene pegatinas', icon: '💻', action: { pc: true } },
 				{ label: 'El Cabo', sub: 'Alguien grita en las rocas', icon: '🌊', cond: '!flag.b04_misty_cabo', new: 'true', talk: [{ script: 'b04_misty_cabo' }] },
 				{ label: 'El Cabo', sub: 'Zona de entrenamiento (nivel recomendado 53)', icon: '🥋', cond: 'flag.b04_misty_cabo', action: { training: {
-					cap: 53, trainers: ['cabo_1', 'cabo_2', 'cabo_3'], coach: 'Socorrista del Cabo',
+					cap: 53, prize: { wins: 3, script: 'p7_premio_cabo' }, trainers: ['cabo_1', 'cabo_2', 'cabo_3'], coach: 'Socorrista del Cabo',
 					wild: [{ sp: 'seaking', lv: [50, 52] }, { sp: 'golduck', lv: [50, 52] }, { sp: 'kingler', lv: [50, 52] }, { sp: 'seadra', lv: [50, 52] }],
 					closed: 'El socorrista te mira el equipo, se baja las gafas de sol y vuelve a subírselas. «Aquí ya no hay olas para ti. Vete a por la líder, anda, que la estás haciendo esperar».',
 				} } },

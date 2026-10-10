@@ -179,7 +179,7 @@ export default {
 					{ script: 'b02_anciano_1' },
 				] },
 				{ label: 'Un niño junto a la fuente', sub: 'Muy serio para su edad', icon: '🧒', talk: [{ script: 'b02_nino_azalea' }] },
-				{ label: 'Huerto de Bonguris', sub: 'Entrenamiento (nivel recomendado 35)', icon: '🥋', cond: 'flag.b02_llegada_azalea', action: { training: { cap: 35, trainers: ['ent_azalea_1', 'ent_azalea_2', 'ent_azalea_3'], wild: [{ sp: 'ledian', lv: [30, 32] }, { sp: 'ariados', lv: [30, 32] }, { sp: 'skiploom', lv: [30, 31] }], coach: 'Cuidadora del huerto', closed: 'Tu equipo ya está hecho a los bichos. Aquí no vas a aprender nada nuevo. El gimnasio, en cambio…' } } },
+				{ label: 'Huerto de Bonguris', sub: 'Entrenamiento (nivel recomendado 35)', icon: '🥋', cond: 'flag.b02_llegada_azalea', action: { training: { cap: 35, prize: { wins: 3, script: 'p7_premio_huerto' }, trainers: ['ent_azalea_1', 'ent_azalea_2', 'ent_azalea_3'], wild: [{ sp: 'ledian', lv: [30, 32] }, { sp: 'ariados', lv: [30, 32] }, { sp: 'skiploom', lv: [30, 31] }], coach: 'Cuidadora del huerto', closed: 'Tu equipo ya está hecho a los bichos. Aquí no vas a aprender nada nuevo. El gimnasio, en cambio…' } } },
 				{ label: 'Árbol de Bonguris', sub: 'Detrás de la casa de Kurt', icon: '🌰', action: { gather: 'arbol_bonguri' } },
 			],
 			rumors: [

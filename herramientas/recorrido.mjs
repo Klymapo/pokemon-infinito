@@ -239,8 +239,27 @@ async function doSpot(s) {
 	if (a.go) { if (canEnter(a.go).ok) await enter(a.go, { from: G.loc }); return; }
 	if (a.trainer) { if (!G.beaten[a.trainer] || a.repeat) await battle({ trainer: a.trainer }); return; }
 	if (a.training) {
-		if (!trainingOpen(a.training.cap)) return;
-		if (a.training.trainers?.length) await battle({ trainer: a.training.trainers[Math.floor(Math.random() * a.training.trainers.length)] });
+		// Premio del instructor: como en el juego, cuentan las victorias y el guion corre una sola vez
+		const t = a.training, pz = t.prize;
+		const wins = () => (t.trainers || []).reduce((n, id) => n + (G.beaten[id] || 0), 0);
+		const claim = async () => { if (pz?.script && !G.flags['premio:' + pz.script] && wins() >= (pz.wins || 3)) { G.flags['premio:' + pz.script] = true; await run(pz.script); } };
+		await claim();
+		const pending = pz?.script && !G.flags['premio:' + pz.script];
+		if (!trainingOpen(t.cap) && !pending) return;
+		if (t.trainers?.length) { const fresh = t.trainers.filter(id => !G.beaten[id]); const pool = fresh.length ? fresh : t.trainers; await battle({ trainer: pool[Math.floor(Math.random() * pool.length)] }); await claim(); }
+		return;
+	}
+	if (a.venture) {
+		// Negocios: entra si le sobra dinero, corre las escenas de entrada y de la mejora más barata, y recoge
+		const N = await import('../app/js/negocios.js');
+		const def = N.ventureDef(a.venture);
+		if (!def) return;
+		if (!N.owned(a.venture) && evalCond(def.cond ?? true) && G.player.money >= (def.buy?.cost || 0) + 8000) { if (N.joinVenture(a.venture).ok && def.buy?.script) await run(def.buy.script); }
+		if (N.owned(a.venture)) {
+			const u = N.upgradesOf(a.venture).filter(x => !x.bought && x.available && G.player.money >= x.cost + 8000).sort((x, y) => x.cost - y.cost)[0];
+			if (u && N.buyUpgrade(a.venture, u.id).ok && u.script) await run(u.script);
+			N.collect(a.venture);
+		}
 		return;
 	}
 	if (a.explore) { const w = rollWild(L(G.loc), a.explore === true ? 'grass' : a.explore); if (w) await battle({ wild: { mon: w.mon } }); }
@@ -384,7 +403,8 @@ for (step = 0; step < MAX; step++) {
 		const a = s.action || {};
 		const sg = sigNow();
 		if (a.center || a.pc || a.shop) { if (!rec.n) { rec.n = 1; await doSpot(s); } continue; }
-		if (a.training) continue;
+		if (a.training) { if (a.training.prize?.script && !G.flags['premio:' + a.training.prize.script] && rec.n < 6) { rec.n++; await doSpot(s); did = true; break; } continue; }
+		if (a.venture) { if (rec.n < 3) { rec.n++; await doSpot(s); did = true; break; } continue; }
 		if (a.trainer) { if (!G.beaten[a.trainer] && rec.n < 8) { rec.n++; await doSpot(s); did = true; break; } continue; }
 		if (a.go && G.visited[a.go]) { if (isNew && rec.n < 15 && Math.random() < 0.5) { rec.n++; await doSpot(s); did = true; break; } continue; }
 		if (a.explore) { if (rec.n < 12 && Math.random() < 0.5) { rec.n++; await doSpot(s); did = true; break; } continue; }

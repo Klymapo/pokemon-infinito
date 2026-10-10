@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
+Generado: 2026-10-10T17:31:10.020Z · contenido 2026-10-10.1
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -18,9 +18,9 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 | Bill (`bill`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
 | Blanca (`blanca`) | 4 | 3 | 0 | 0 | 7 ⚠ 2 bloque(s) |
 | Brock (`brock`) | 6 | 3 | 0 | 0 | 9 ⚠ 2 bloque(s) |
-| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 9 | 0 | 13 ⚠ 2 bloque(s) |
+| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 9 | 6 | 19 |
 | Prof. Ciprés (`cipres`) | 7 | 2 | 0 | 0 | 9 ⚠ 2 bloque(s) |
-| Conde Vladimiro (`conde`) | 8 | 1 | 0 | 0 | 9 ⚠ 2 bloque(s) |
+| Conde Vladimiro (`conde`) | 8 | 1 | 0 | 6 | 15 |
 | Corelia (`corelia`) | 8 | 3 | 5 | 1 | 17 |
 | Cornelio (`cornelio`) | 5 | 0 | 0 | 0 | 5 ⚠ 1 bloque(s) |
 | Dámaso Ferrán (`damaso`) | 0 | 2 | 5 | 0 | 7 ⚠ 2 bloque(s) |
@@ -29,11 +29,11 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 | Prof. Gadd (`gadd`) | 3 | 0 | 0 | 2 | 5 ⚠ 2 bloque(s) |
 | Gaspar (`gaspar`) | 8 | 6 | 4 | 0 | 18 |
 | Handsome (`handsome`) | 12 | 11 | 1 | 9 | 33 |
-| Héctor (`hector`) | 5 | 1 | 0 | 0 | 6 ⚠ 2 bloque(s) |
+| Héctor (`hector`) | 5 | 1 | 0 | 2 | 8 |
 | Dra. Irene Solberg (`irene`) | 3 | 1 | 9 | 0 | 13 |
 | Campeona retirada (`jinete_boceto`) | 4 | 0 | 0 | 0 | 4 ⚠ 1 bloque(s) |
 | Kaori (`kaori`) | 0 | 8 | 3 | 5 | 16 |
-| Kiyo (`kiyo`) | 0 | 0 | 3 | 2 | 5 ⚠ 2 bloque(s) |
+| Kiyo (`kiyo`) | 0 | 0 | 3 | 3 | 6 ⚠ 2 bloque(s) |
 | Kurt (`kurt`) | 0 | 7 | 0 | 0 | 7 ⚠ 1 bloque(s) |
 | Lance (`lance`) | 0 | 0 | 9 | 0 | 9 ⚠ 1 bloque(s) |
 | Inspector Lebrun (`lebrun`) | 3 | 2 | 0 | 5 | 10 |
@@ -48,7 +48,14 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 | Morti (`morti`) | 0 | 4 | 0 | 0 | 4 ⚠ 1 bloque(s) |
 | Nate (`nate`) | 6 | 2 | 0 | 0 | 8 ⚠ 2 bloque(s) |
 | Noa Lambert (`noa`) | 4 | 2 | 2 | 1 | 9 |
-| Petra (`petra`) | 3 | 5 | 6 | 1 | 15 |
+| Casilda Peña (`p7_casilda`) | 0 | 0 | 0 | 7 | 7 ⚠ 1 bloque(s) |
+| Ciro (`p7_ciro`) | 0 | 0 | 0 | 4 | 4 ⚠ 1 bloque(s) |
+| Dolores (`p7_dolores`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
+| Evaristo (`p7_evaristo`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
+| Jade Peña (`p7_jade`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
+| La Mayor (`p7_mayor`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
+| Rosaura (`p7_rosaura`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
+| Petra (`petra`) | 3 | 5 | 6 | 4 | 18 |
 | Philippe (`philippe`) | 4 | 1 | 0 | 0 | 5 ⚠ 2 bloque(s) |
 | Presidente de Silph (`presidente_silph`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
 | Protón (`proton`) | 0 | 2 | 0 | 0 | 2 ⚠ 1 bloque(s) |
@@ -58,9 +65,9 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 | Fabien Rouxel (`rouxel`) | 3 | 1 | 0 | 0 | 4 ⚠ 2 bloque(s) |
 | Sabrina (`sabrina`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
 | Serafina Lemnis (`sera`) | 4 | 8 | 0 | 3 | 15 |
-| Simón (`simon`) | 3 | 0 | 0 | 0 | 3 ⚠ 1 bloque(s) |
-| Adela (`sobrina`) | 0 | 0 | 5 | 1 | 6 ⚠ 2 bloque(s) |
-| Tobías (`tobias`) | 8 | 0 | 5 | 6 | 19 |
+| Simón (`simon`) | 3 | 0 | 0 | 2 | 5 ⚠ 2 bloque(s) |
+| Adela (`sobrina`) | 0 | 0 | 5 | 14 | 19 ⚠ 2 bloque(s) |
+| Tobías (`tobias`) | 8 | 0 | 5 | 8 | 21 |
 | Ulises (`viajero`) | 3 | 2 | 1 | 1 | 7 |
 | Xero (`xero`) | 3 | 0 | 0 | 2 | 5 ⚠ 2 bloque(s) |
 | Yasmina (`yasmina`) | 0 | 0 | 17 | 0 | 17 ⚠ 1 bloque(s) |
@@ -494,6 +501,31 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 - `lola_conocida` — b02:lola_trigal_1
 - `lola_entrega` — b02:lola_entrega_radio
 - `mount_rhyhorn` — b01:b01_campeona_carrera, b01:b01_jinetes_rhyhorn
+- `p7_adela_aviso` — b04:p7_adela_aviso
+- `p7_c_propuesta` — b04:p7_castillo_propuesta
+- `p7_c_tasa` — b04:p7_c_up_tasa
+- `p7_cartalata_dada` — b04:p7_rancho_trato, b04:p7_adela_lata
+- `p7_casilda_1` — b04:p7_casilda_intro
+- `p7_casilda_reto_visto` — b04:p7_casilda_reto
+- `p7_ciro_1` — b04:p7_ciro
+- `p7_ciro_trigal` — b04:p7_ciro_trigal
+- `p7_dj_1` — b04:p7_dj_intro
+- `p7_dolores_1` — b04:p7_dolores
+- `p7_e_propuesta` — b04:p7_exc_propuesta
+- `p7_evaristo_1` — b04:p7_evaristo
+- `p7_hector` — b04:p7_hector_llega
+- `p7_jade_1` — b04:p7_jade_intro
+- `p7_jade_nota` — b04:p7_jade_sobre
+- `p7_mayor` — b04:p7_mayor_llega
+- `p7_rancho_casa` — b04:p7_rancho_casa
+- `p7_rancho_lemnis` — b04:p7_rancho_lemnis
+- `p7_rancho_oferta` — b04:p7_rancho_trato
+- `p7_rancho_trato` — b04:p7_rancho_trato
+- `p7_recado_dado` — b04:p7_casilda_recado
+- `p7_recado_hecho` — b04:p7_casilda_nota
+- `p7_rosaura` — b04:p7_rosaura_llega
+- `p7_simon` — b04:p7_simon_llega
+- `p7_tobias` — b04:p7_tobias_llega
 
 ## Misiones
 
@@ -593,6 +625,7 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 - `b04_q_tejado` (main) Desde arriba: mirar → bajar → hecha
 - `b04_q_archivo` (main) Lo que hay en la planta 11: buscar → salir → hecha
 - `b04_q_ceniza` (side) Lo que se queda un poco más: bajar → hecha
+- `p7_s_recado` (side) Peso neto: llevar → volver → hecha
 
 ## Entrenadores con nombre de NPC
 
@@ -675,6 +708,10 @@ Generado: 2026-10-07T09:32:09.981Z · contenido 2026-10-06.10
 - `ccel_turno_2` (b04) Nieves: Primeape 52, Golbat 52
 - `ccel_turno_3` (b04) Teodoro: Electrode 53, Golduck 52
 - `magda_1` (b04) Magda Ivers: Magnezone 51, Klinklang 50, Porygon-Z 51, Electivire 52, Metagross 53
+- `p7_casilda_duelo` (b04) Casilda: Carbink 46, Probopass 47, Sableye 48
+- `p7_evaristo_duelo` (b04) Evaristo: Seaking 47, Poliwrath 48, Gyarados 50
+- `p7_ciro_duelo` (b04) Ciro: Dodrio 48, Fearow 48, Pidgeot 50
+- `p7_dolores_duelo` (b04) Dolores: Mismagius 51, Dusclops 51, Banette 53
 
 ## Nombres de entrenadores usados (para no repetir)
 

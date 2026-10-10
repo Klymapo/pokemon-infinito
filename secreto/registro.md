@@ -239,3 +239,48 @@ Mario va por el B2 (`b02_m2`); B3 y B4 ya publicados: no se escribe el B5. Plan 
 
 - Pasada de español para CDMX en todo lo publicado (~214 textos: coger, vosotros, vale, chaval, mola, guay, ordenador…). El Superfan avisa si vuelven.
 - Colección: Iniciales 4 → 7/29; Fósiles 2 → 6/15 (Kabuto, Omanyte, Aerodactyl, Amaura); Megapiedras: + Ampharosita.
+
+---
+
+## Publicación 7 (2026-10-10, sesión de día con Mario): profundidad a partir de sus notas
+
+Sin bloque nuevo. Plan en `secreto/bloques/p7-plan.md`. Mario iba por **Azafrán (B4), 7 medallas, tope 50, ₽213 000**, rama `b03_rancho_sobrina` y `b03_rocket_libres`.
+
+### Motor e interfaz
+
+- **Negocios** (`app/js/negocios.js`, `ui/negocios-ui.js`, CONTENIDO §13): estado en `G.neg`. Condiciones nuevas `partner()` y `works()` (toda la línea evolutiva).
+- **Novedades** (Diario › Novedades, globo en la barra y señales en el mapa): Rotom lista misiones que se ofrecen, gente con «!», escenas al llegar a sitios ya visitados, premios listos y negocios. Estado en `G.news`.
+- **Premio del instructor** (`training.prize`; flag `premio:<guion>`), **hoja de papel** para cartas (`{ read }` y «Leer»), **mapa** con símbolos por tipo de lugar, señales y pestañas por región, **fondos por contexto** (`data-ctx`), **resumen del equipo en combate**, **PC** con selección múltiple, mover y nombrar cajas (`G.boxNames`), **dar objeto** en hoja con pestañas, **evolución** en la pestaña Datos, **montura** que frena donde hay algo, galopa a tramos conocidos y saca más de las vetas.
+- Bugs: PS reales al usar objetos en combate (antes salían los de antes del combate), PS en rojo, la barra de experiencia ya no se adelanta al golpe.
+
+### Tiendas, premios, Megas y Teras (`b04/t5-tiendas-premios.js`)
+
+- **Trigal** (`cc_trigal`): 4.ª planta `p7_piedras_trigal` (las 10 piedras, Piedra Oval, Mineral Negro, Garra Afilada, Cordón Unión) y 5.ª planta `p7_mt_trigal` (24 MT). **Azafrán**: `p7_almacenes_azafran` con `p7_piedras_azafran` y `p7_mt_azafran` (20 MT; las de preparación y potencia ≥ 110, con 8 medallas). 51 MT nuevas `p7_mt_*`.
+- **Premios** (3 victorias): Novarte Roca Afilada · Relieve **Aerodactylita** · Yantra Esfera Aural · Azalea Chupavidas · Azotea de Trigal Vozarrón · Torre Quemada **Delphoxita** · Torre Bellsprout Paz Mental · Muelle de Olivo **Gyaradosita** · Caoba Rayo Hielo · Dojo **Galladita** · El Cabo Surf · campamento de la Cueva Celeste Golpe Bajo.
+- **Megas ajenas (opcionales, curan antes):** Casilda (Trigal, Mega-Sableye 48), Evaristo (Lago de la Furia, Mega-Gyarados 50), Ciro (Azafrán, Mega-Pidgeot 50), Dolores (Lavanda, Mega-Banette 53).
+- **Teras salvajes (peso 3–4):** Trevenant (Encinar), Quagsire (Ruta 32), Girafarig (Ruta 43), Primeape Tera Fantasma (Ruta 5 de Kanto), Golduck (Cueva Celeste).
+- **Misión `p7_s_recado` «Peso neto»** (Casilda y Jade Peña): sobre y nota con `read`; premio a elegir entre Piedra Día, Noche o Alba.
+- **Semillas:** Evaristo dice que la Megapiedra de su Gyarados «se calentaba sola» mientras la boya estaba encendida (eco de biblia §3.3.5). **Dolores promete un muñeco de Riolu/Lucario «cuando le ponga el brazo»: hay que cumplirlo.** Casilda subirá al tren «en primavera».
+
+### Negocios (`b04/t6-negocios.js`)
+
+| Id | Lugar | Socio | Aparece con | Entrada | Parte |
+|---|---|---|---|---|---|
+| `p7_rancho` | `rancho_aurelio` | Adela | `flag.b03_rancho_jugador \|\| flag.p7_rancho_trato` | 0 (jugador) / ₽20 000 dentro de `p7_rancho_trato` (sobrina) | 60→85 % / 45→70 % |
+| `p7_castillo` | Vánitas | el Conde | `flag.b01_fin && visited("castillo_caduco")` | ₽20 000 | 30→50 % |
+| `p7_excavacion` | Petroglifo | Dr. Lazare | `flag.b01_fin && visited("petroglifo")` | ₽12 000 | 40→60 % |
+
+- **Rama sobrina (la de Mario):** Adela admite que aceptó el rancho «porque me lo pedías tú» y que le viene grande; pide ella el socio («a un socio no se le dan las gracias: se le rinden cuentas») y le da `p7_cartalata`, la primera carta que nunca mandó.
+- **Rama Lemnis:** no hay negocio. Adela firmó; «los martes miran las cuentas»; «los contratos se acaban; ese día sí te voy a llamar» (`p7_rancho_lemnis`). Para abrirlo en un bloque futuro basta ampliar el `cond`.
+- **Encargados que se ganan con escena:** Rosaura (`p7_rosaura`, la vecina de la Ruta 42, tras la esquiladora) y **la Mayor** (`p7_mayor`, recluta suelta, solo con `b03_rocket_libres`): vive encima del establo y «guarda su nombre para cuando se lo gane otra vez». Castillo: Héctor (de excedencia en la aseguradora) y Simón (plazo de seis meses para decirlo en antena). Cantera: Tobías y Duquesa retransmiten; Petra dirige a distancia por croquis.
+- **Los dos Ampharos:** `p7_rancho_casa` (Ampharos alumbrando el establo de noche o en el prado; Mareep/Flaaffy en la mecedora). La primera vez Adela da el cencerro viejo (Cascabel Alivio).
+- **Hechos nuevos:** Aurelio pagó el último curso de veterinaria de Adela con un préstamo de la cooperativa de Iris y le dijo que era una beca (mejora `deudas`, rama jugador). La Tercera está «donde le pagan por abrir cosas que sí son suyas» y Lupe «donde no tiene que hablar con nadie». Una tejedora de Vánitas le compraba lana a Aurelio. La galería honda de la cantera es una «madriguera fósil» de algo grande (semilla sin plan).
+- Economía medida: todo comprado ≈ ₽420 000; con todo, ₽14 000–27 000/día entre los tres más objetos (vitaminas, Más PP, piedras, Restaurar Todo). Caramelo Raro ≤ 0,08/día.
+
+### Pendientes que dejó el lector independiente (Publicación 7)
+
+- `p7_cartalata` solo se entrega en el trato si `flag.b04_adela_msg`; si no, spot «Adela y la lata de las galletas» (`p7_adela_lata`, flag `p7_cartalata_dada`).
+- **Rama jugador:** la foto del B4 dice «tejado arreglado» y el negocio lo da por roto (mejora «tejado», imprevisto «gotera»). Condicionar o retocar cuando se toque esa zona.
+- **La mecedora:** con una Mareep viviendo en el rancho, los textos del B3 siguen diciendo «Vacía. Nadie se sienta». Parche de `descs` en un bloque posterior.
+- `p7_rancho_casa` trata a cualquier Mareep/Flaaffy/Ampharos como del rancho (vale para Candela y Faro).
+- La salida de Simón hacia el Acto V debe leer `flag.p7_simon`.

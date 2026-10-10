@@ -92,6 +92,9 @@ export async function runBattle(cfg, hooks) {
 	}
 
 	const vis = { p1: {}, p2: {} };
+	// Experiencia que se ve en pantalla: la real ya está sumada cuando empieza la reproducción del turno,
+	// así que la barra solo avanza cuando llega su evento (después del golpe y del «se debilitó»).
+	const expShown = Object.fromEntries(G.party.map(p => [p.uid, expProgress(p)]));
 	const cardOf = side => side === 'p1' ? meCard : foeCard;
 	const spriteOf = side => side === 'p1' ? meSprite : foeSprite;
 
@@ -106,9 +109,10 @@ export async function runBattle(cfg, hooks) {
 		bar.style.width = (r * 100).toFixed(1) + '%';
 		bar.className = hpClass(r);
 		if (side === 'p1') {
-			c.querySelector('.hpn').textContent = `${Math.max(0, Math.round(v.hp))}/${v.maxhp}`;
-			const p = G.party.find(x => x.uid === v.uid);
-			if (p) c.querySelector('.expbar i').style.width = (expProgress(p) * 100) + '%';
+			const hpn = c.querySelector('.hpn');
+			hpn.textContent = `${Math.max(0, Math.round(v.hp))}/${v.maxhp}`;
+			hpn.className = 'hpn ' + hpClass(r);
+			if (expShown[v.uid] !== undefined) c.querySelector('.expbar i').style.width = (expShown[v.uid] * 100) + '%';
 		}
 		const tags = c.querySelector('.tags');
 		tags.innerHTML = '';
@@ -195,7 +199,18 @@ export async function runBattle(cfg, hooks) {
 			case 'tera': vis[e.side].tera = e.type; spriteOf(e.side).classList.add('tera'); renderCard(e.side); flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); await sleep(400); break;
 			case 'dyn': spriteOf(e.side).classList.toggle('dyn', e.on); await sleep(400); break;
 			case 'crit': flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); break;
-			case 'exp': if (vis.p1.uid === e.uid) { const p = G.party.find(x => x.uid === e.uid); if (p) { meCard.querySelector('.expbar i').style.width = (expProgress(p) * 100) + '%'; } } break;
+			case 'exp': {
+				const p = G.party.find(x => x.uid === e.uid);
+				const to = e.prog ?? (p ? expProgress(p) : 0);
+				expShown[e.uid] = to;
+				if (vis.p1.uid === e.uid) {
+					const bar = meCard.querySelector('.expbar i');
+					if (e.reset) { bar.style.transition = 'none'; bar.style.width = '0%'; void bar.offsetWidth; bar.style.transition = ''; }
+					bar.style.width = (to * 100) + '%';
+					await sleep(e.reset ? 300 : 520);
+				}
+				break;
+			}
 			case 'levelup': if (vis.p1.uid === e.uid) { vis.p1.lv = e.lv; renderCard('p1'); } break;
 			case 'ball': {
 				const fs = foeSprite.querySelector('img,.fallback,canvas');
@@ -295,48 +310,86 @@ export async function runBattle(cfg, hooks) {
 			if (isBall(id)) { G.settings.lastBall = id; resolve({ type: 'ball', ball: id }); return; }
 			const info = healInfo(id);
 			if (info?.boost || info?.crit || info?.mist) { resolve({ type: 'item', item: id, uid: vis.p1.uid }); return; }
-			// elegir objetivo
-			const targets = G.party;
-			const i = await choose(`¿En qué Pokémon usar ${D.items[id]?.name}?`, targets.map(p => `${displayName(p)} · ${p.hp}/${maxHp(p)} PS${p.status ? ' · ' + STATUS_ES[p.status] : ''}`).concat(['Cancelar']));
-			if (i >= targets.length) return;
-			const p = targets[i];
-			let moveIdx;
-			if (info?.pp) {
-				const j = await choose('¿Qué movimiento?', p.moves.map(m => `${D.moves[m.id]?.name} ${m.pp}`).concat(['Cancelar']));
-				if (j >= p.moves.length) return;
-				moveIdx = j;
+			// Elegir objetivo, con los PS reales de este combate (antes salían los de antes de empezar: debilitados «al máximo»)
+			const useful = sw => info?.revive ? sw.fainted : !sw.fainted && ((info?.hp || info?.pct) && sw.hp < sw.maxhp || info?.cure && sw.status && sw.status !== 'fnt' || info?.pp || info?.ppAll);
+			teamOverlay({
+				title: `Usar ${D.items[id]?.name || id}`,
+				hint: info?.revive ? 'Elige a un Pokémon debilitado.' : 'Elige en quién usarlo. Los PS son los de este combate.',
+				dim: sw => !useful(sw),
+				onTap: async (sw, close) => {
+					const p = G.party.find(x => x.uid === sw.uid);
+					if (!p) return;
+					let moveIdx;
+					if (info?.pp) {
+						const j = await choose('¿Qué movimiento?', sw.moves.map(m => `${D.moves[m.id]?.name || m.id} · PP ${m.pp}/${m.maxpp}`).concat(['Cancelar']), { cancel: sw.moves.length });
+						if (j >= sw.moves.length) return;
+						moveIdx = j;
+					}
+					close();
+					resolve({ type: 'item', item: id, uid: p.uid, moveIdx });
+				},
+				back: () => {},
+			});
+		};
+		/**
+		 * Resumen del equipo a pantalla completa: los seis a la vez, con PS, estado, tipos, objeto,
+		 * sus cuatro movimientos (con PP) y sus características. Sirve para cambiar y para elegir en quién usar un objeto.
+		 */
+		const teamOverlay = ({ title, hint, onTap, dim, back, backLabel = 'Atrás' }) => {
+			root.querySelector('.bteam')?.remove();
+			const close = () => ov.remove();
+			const grid = h('div', { class: 'bteam-grid' });
+			const SN = [['atk', 'Atq'], ['def', 'Def'], ['spa', 'AtE'], ['spd', 'DfE'], ['spe', 'Vel']];
+			for (const sw of o.switches) {
+				const p = G.party.find(x => x.uid === sw.uid);
+				const r = sw.maxhp ? sw.hp / sw.maxhp : 0;
+				const st = sw.status && sw.status !== 'fnt' ? sw.status : '';
+				grid.append(h('button', { class: 'tcard' + (sw.fainted ? ' fainted' : '') + (sw.active ? ' active' : '') + (dim?.(sw) ? ' dim' : ''), onclick: () => onTap(sw, close) },
+					h('div', { class: 'tc-head' },
+						h('div', { class: 'tc-sp' }, monImg(sw.sp, { anim: false, shiny: p?.shiny })),
+						h('div', { class: 'tc-id' },
+							h('div', { class: 'tc-name' }, h('span', { class: 'tc-nm' }, sw.name), h('span', { class: 'lv' }, 'Nv.' + sw.lv)),
+							h('div', { class: 'hpbar' }, h('i', { class: hpClass(r), style: { width: (r * 100) + '%' } })),
+							h('div', { class: 'tc-hp' },
+								h('span', { class: 'tc-tags' }, sw.active ? h('span', { class: 'status act' }, 'ACTIVO') : null, sw.fainted ? h('span', { class: 'status fnt' }, 'DEB') : null, st ? h('span', { class: 'status ' + st }, STATUS_ES[st]) : null),
+								h('span', { class: 'hpnum ' + hpClass(r) }, `${sw.hp}/${sw.maxhp}`)))),
+					h('div', { class: 'tc-types' }, ...(sw.types || []).map(t => h('span', { class: 'type', style: typeStyle(t) }, typeName(t))), sw.item ? h('span', { class: 'tc-item' }, '✦ ' + (D.items[sw.item]?.name || sw.item)) : null),
+					h('div', { class: 'tc-moves' }, ...sw.moves.map(m => {
+						const md = D.moves[m.id] || {};
+						return h('div', { class: 'tc-mv' + (m.pp <= 0 ? ' out' : ''), style: typeStyle(md.type) }, h('span', {}, md.name || m.id), h('b', {}, `${m.pp}/${m.maxpp}`));
+					})),
+					h('div', { class: 'tc-stats' }, ...SN.map(([k, n]) => h('div', {}, h('span', {}, n), h('b', {}, sw.stats?.[k] ?? '–'))))));
 			}
-			resolve({ type: 'item', item: id, uid: p.uid, moveIdx });
+			const ov = h('div', { class: 'bteam' },
+				h('div', { class: 'bteam-head' }, h('h2', {}, title), hint ? h('div', { class: 'bteam-hint' }, hint) : null),
+				grid,
+				back ? h('div', { class: 'bteam-foot' }, h('button', { class: 'btn', onclick: () => { close(); back(); } }, backLabel)) : null);
+			root.append(ov);
+			return close;
 		};
 		const showSwitch = (forced) => {
 			panel.innerHTML = '';
-			const list = h('div', { style: { gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '44vh', overflowY: 'auto' } });
-			for (const s of o.switches) {
+			const blocked = o.trapped && !forced;
+			const onTap = async (s, close) => {
 				const p = G.party.find(x => x.uid === s.uid);
-				const r = s.maxhp ? s.hp / s.maxhp : 0;
-				const canSwitch = !s.fainted && !s.active && !(o.trapped && !forced);
-				const onTap = async () => {
-					const opts = [canSwitch ? (forced ? 'Sacarlo' : 'Cambiar') : null, 'Ver datos', 'Cancelar'].filter(Boolean);
-					const i = await choose(`${s.name} · Nv. ${s.lv} · ${s.hp}/${s.maxhp} PS`, opts, { cancel: opts.length - 1 });
-					if (opts[i] === 'Sacarlo' || opts[i] === 'Cambiar') resolve({ type: 'switch', idx: s.idx });
-					else if (opts[i] === 'Ver datos' && p) {
-						const { openSummary } = await import('./screens.js');
-						openSummary(p, null, { battle: true, hp: s.hp, maxhp: s.maxhp, status: s.status });
-					}
-				};
-				const card = h('button', { class: 'mon' + (s.fainted ? ' fainted' : '') + (s.active ? ' sel' : ''), onclick: onTap },
-					h('div', { class: 'sprite' }, monImg(s.sp, { anim: false, shiny: p?.shiny })),
-					h('div', { class: 'info' },
-						h('div', { class: 'name' }, s.name, h('span', { class: 'lv' }, 'Nv.' + s.lv), s.status && s.status !== 'fnt' ? h('span', { class: 'status ' + s.status }, STATUS_ES[s.status]) : null),
-						h('div', { class: 'hpbar' }, h('i', { class: hpClass(r), style: { width: (r * 100) + '%' } })),
-						h('div', { class: 'hptext' }, h('span', {}, s.active ? 'En combate' : s.fainted ? 'Debilitado' : ''), h('span', {}, `${s.hp}/${s.maxhp}`))));
-				list.append(card);
-			}
-			panel.append(list);
-			if (o.shift) panel.append(h('button', { class: 'btn backrow', onclick: () => resolve({ type: 'noshift' }) }, 'No cambiar'));
-			else if (!forced) panel.append(h('button', { class: 'btn backrow', onclick: showMain }, 'Atrás'));
-			if (o.trapped && !forced) log.innerHTML = fmtText('¡No puedes cambiar de Pokémon ahora!');
-			else log.innerHTML = o.shift ? '¿A quién quieres sacar?' : forced ? '¿Qué Pokémon vas a sacar?' : 'Toca un Pokémon para cambiarlo o ver sus datos.';
+				const canSwitch = !s.fainted && !s.active && !blocked;
+				const opts = [canSwitch ? (forced || o.shift ? 'Sacarlo' : 'Cambiar') : null, 'Ver todos sus datos', 'Cancelar'].filter(Boolean);
+				const why = s.active ? ' · ya está en combate' : s.fainted ? ' · debilitado' : blocked ? ' · no puedes cambiar ahora' : '';
+				const i = await choose(`${s.name} · Nv. ${s.lv} · ${s.hp}/${s.maxhp} PS${why}`, opts, { cancel: opts.length - 1 });
+				if (opts[i] === 'Sacarlo' || opts[i] === 'Cambiar') { close(); resolve({ type: 'switch', idx: s.idx }); }
+				else if (opts[i] === 'Ver todos sus datos' && p) {
+					const { openSummary } = await import('./screens.js');
+					openSummary(p, null, { battle: true, hp: s.hp, maxhp: s.maxhp, status: s.status });
+				}
+			};
+			teamOverlay({
+				title: 'Tu equipo',
+				hint: blocked ? '¡No puedes cambiar de Pokémon ahora! Puedes mirar cómo están.' : o.shift ? '¿A quién quieres sacar?' : forced ? '¿Qué Pokémon vas a sacar?' : 'Toca un Pokémon para cambiarlo o ver todos sus datos.',
+				onTap,
+				back: o.shift ? () => resolve({ type: 'noshift' }) : forced ? null : showMain,
+				backLabel: o.shift ? 'No cambiar' : 'Atrás',
+			});
+			log.innerHTML = blocked ? fmtText('¡No puedes cambiar de Pokémon ahora!') : o.shift ? '¿A quién quieres sacar?' : forced ? '¿Qué Pokémon vas a sacar?' : 'Elige un Pokémon.';
 		};
 		if (o.forceSwitch) showSwitch(true); else showMain();
 	});

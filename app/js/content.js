@@ -3,7 +3,7 @@ import { D, toID } from './data.js';
 
 export const C = {
 	blocks: [], regions: {}, locations: {}, npcs: {}, trainers: {}, quests: {}, scripts: {}, shops: {},
-	challenges: {}, events: [], milestones: [], badges: {}, gather: {}, version: '',
+	challenges: {}, events: [], milestones: [], badges: {}, gather: {}, ventures: {}, version: '',
 };
 
 function mergeLocation(base, patch) {
@@ -36,6 +36,16 @@ export function registerBlock(b) {
 	Object.assign(C.scripts, b.scripts || {});
 	Object.assign(C.shops, b.shops || {});
 	Object.assign(C.gather, b.gather || {});
+	// Negocios: un bloque posterior puede ampliar uno que ya existe (más mejoras, imprevistos, encargados o líneas)
+	for (const id in b.ventures || {}) {
+		const v = b.ventures[id], cur = C.ventures[id];
+		if (!cur) { C.ventures[id] = { id, ...v }; continue; }
+		for (const k in v) {
+			if (Array.isArray(v[k]) && Array.isArray(cur[k])) cur[k] = cur[k].concat(v[k]);
+			else if (v[k] && typeof v[k] === 'object' && !Array.isArray(v[k]) && cur[k] && typeof cur[k] === 'object') cur[k] = { ...cur[k], ...v[k] };
+			else cur[k] = v[k];
+		}
+	}
 	for (const id in b.challenges || {}) C.challenges[id] = { id, ...b.challenges[id] };
 	Object.assign(C.badges, b.badges || {});
 	C.events.push(...(b.events || []));

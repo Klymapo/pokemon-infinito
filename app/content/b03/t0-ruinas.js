@@ -93,7 +93,7 @@ export default {
 			desc: 'Un patio de grava junto al estanque, a la sombra de la Torre Bellsprout. Los aprendices de sabio entrenan aquí: se balancean, combaten, se balancean otra vez.\n\nUn letrero de madera: «La flexibilidad es la fuerza del junco. (Por favor, no pisen el junco.)»',
 			mapNote: 'Entrenamiento (nivel 41)',
 			spots: [
-				{ label: 'Entrenar con los aprendices', sub: 'Entrenamiento (nivel recomendado 41)', icon: '🥋', action: { training: { cap: 41, trainers: ['patio_bs_1', 'patio_bs_2', 'patio_bs_3'], wild: [{ sp: 'weepinbell', lv: [37, 39] }, { sp: 'noctowl', lv: [37, 39] }, { sp: 'haunter', lv: [37, 39] }], coach: 'Aprendiz de sabio', closed: 'El aprendiz se balancea, te mira y deja de balancearse. «Tu equipo ya no necesita doblarse más. Ahora tiene que aprender a romperse sin romperse. Eso no se enseña aquí.»' } } },
+				{ label: 'Entrenar con los aprendices', sub: 'Entrenamiento (nivel recomendado 41)', icon: '🥋', action: { training: { cap: 41, prize: { wins: 3, script: 'p7_premio_patio_bellsprout' }, trainers: ['patio_bs_1', 'patio_bs_2', 'patio_bs_3'], wild: [{ sp: 'weepinbell', lv: [37, 39] }, { sp: 'noctowl', lv: [37, 39] }, { sp: 'haunter', lv: [37, 39] }], coach: 'Aprendiz de sabio', closed: 'El aprendiz se balancea, te mira y deja de balancearse. «Tu equipo ya no necesita doblarse más. Ahora tiene que aprender a romperse sin romperse. Eso no se enseña aquí.»' } } },
 			],
 		},
 
