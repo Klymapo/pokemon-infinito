@@ -127,7 +127,7 @@ export function itemSources(itemId) {
 			}
 		}
 	}
-	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give && toID(c.give) === itemId) story = true; for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o?.then); } };
+	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give && toID(c.give) === itemId) story = true; if (c.minigame && [...(c.minigame.guaranteed || []), ...(c.minigame.loot || []).map(e => e.id)].some(x => toID(x) === itemId)) story = true; for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o?.then); } };
 	for (const id in C.scripts) { scan(C.scripts[id]); if (story) break; }
 	return { shops, gather, ground, unknown, story };
 }

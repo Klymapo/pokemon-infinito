@@ -12,6 +12,7 @@ import { createPokemon, healFull, maxHp, checkEvolution, evolve, movesLearnedAt,
 import { BattleCtl, buildTrainerTeam } from '../app/js/battle.js';
 import * as AI from '../app/js/ai.js';
 import { parsePuzzle, solve } from '../app/js/puzle.js';
+import * as MJ from '../app/js/minijuegos.js';
 import {
 	L, isRoute, spotsOf, tramoItems, tramoTerrain, rollWild, canMove, markTramo, walkFriendship, canEnter, healParty, whiteout,
 	trainingOpen, routeProg, activeEvents, encounterRate,
@@ -98,6 +99,13 @@ Object.assign(UI, {
 	pc: async () => {},
 	evolveCheck: async () => { for (const p of G.party) tryEvolve(p); },
 	puzzle: async def => { const P = parsePuzzle(def); const sol = P.errors.length ? null : solve(P); if (!sol) { report.errors.push(`puzle sin solución (${curScript})`); return { result: 'quit', moves: 0 }; } report.puzzles = (report.puzzles || 0) + 1; return { result: 'solved', moves: sol.length }; },
+	// Minijuegos: los juega el jugador automático «normal»; comprueba que lo ganado sale de la carga
+	minigame: async P => {
+		const res = MJ.autoPlay(P, { skill: MJ.NORMAL_SKILL, seed: Math.floor(Math.random() * 1e9) });
+		if ((res.won || []).some(i => !P.cargo[i])) report.errors.push(`minijuego: premio fuera de la carga (${curScript})`);
+		const m = (report.minis ||= {})[P.type] ||= { n: 0, w: 0 }; m.n++; if (res.result === 'win') m.w++; else miniLost = true;
+		return res;
+	},
 	forceEvolve: async (p, to) => { evolve(p, to); markCaught(to); for (const m of movesLearnedAt(to, p.lv, true)) learn(p, m); },
 });
 const origConsoleError = console.error;
@@ -213,14 +221,17 @@ async function enter(id, { from } = {}) {
 	}
 }
 UI.onScript = id => report.scripts.add(id);
+let miniLost = false;
 const gaveBy = {}; // guion → veces que ha dado objetos o dinero
 async function run(id) {
 	const prev = curScript; curScript = typeof id === 'string' ? id : '(inline)';
 	report.scripts.add(curScript);
 	if (VERBOSE) log(`[${step}] ${G.loc} → guion ${curScript}`);
 	const bagN = Object.values(G.bag).reduce((a, b) => a + b, 0), money = G.player.money;
+	miniLost = false;
 	await runScript(id);
-	const gained = Object.values(G.bag).reduce((a, b) => a + b, 0) > bagN || G.player.money > money;
+	const gained = !miniLost && // la consolación de un minijuego perdido no cuenta como regalo repetido
+		 Object.values(G.bag).reduce((a, b) => a + b, 0) > bagN || G.player.money > money;
 	if (gained && typeof id === 'string' && !/generico|recordar|despues|tienda|shop/.test(id)) {
 		gaveBy[id] = (gaveBy[id] || 0) + 1;
 		if (gaveBy[id] === 2) report.repeatGifts.push(`${id} (en ${G.loc}) ha dado objetos o dinero más de una vez`);
@@ -228,8 +239,36 @@ async function run(id) {
 	curScript = prev;
 }
 
+/** Recolección con minijuego: prueba las dos vías (jugar y recoger rápido). El bot no toca los puntos sin `game`, como hasta ahora. */
+function botGather(gid) {
+	const def = C.gather[gid], gdef = MJ.gatherGame(gid, def);
+	if (!gdef) return;
+	const stat = (report.minis ||= {})['recolección'] ||= { n: 0, w: 0 };
+	for (const via of ['jugar', 'rapido']) {
+		const cargo = MJ.gatherCargo(def, { cond: evalCond, withExtra: via === 'jugar' });
+		if (!cargo.length) { report.errors.push(`recolección ${gid}: no sale nada (${via})`); continue; }
+		let items;
+		if (via === 'jugar') {
+			const P = MJ.prepare({ def: gdef, mode: 'gather', G, cargo, cond: evalCond });
+			const res = MJ.autoPlay(P, { skill: MJ.NORMAL_SKILL });
+			items = MJ.settle(G, P, res).items;
+			const base = MJ.sumCargo(cargo.filter(c => c.base)), all = MJ.sumCargo(cargo);
+			for (const id in base) if ((items[id] || 0) < base[id]) report.errors.push(`recolección ${gid}: jugando se pierde la base (${id})`);
+			for (const id in items) if (items[id] > (all[id] || 0)) report.errors.push(`recolección ${gid}: se entrega más de lo que había (${id})`);
+			stat.n++; if (res.result === 'win') stat.w++;
+		} else {
+			if (cargo.some(c => c.rare && def.table.some(e => !e.rare))) report.errors.push(`recolección ${gid}: recoger rápido da algo rare`);
+			items = MJ.sumCargo(cargo);
+		}
+		for (const id in items) { if (!D.items[id]) report.errors.push(`recolección ${gid}: objeto inexistente ${id}`); else addItem(id, items[id]); }
+	}
+	G.gather[G.loc + ':' + gid] = Date.now();
+	G.flags['rec_' + gid] = true;
+}
+
 async function doSpot(s) {
 	const a = s.action || {};
+	if (a.gather) return botGather(a.gather);
 	if (s.script) return run(s.script);
 	if (s.talk) { for (const v of s.talk) if (v.cond === undefined || evalCond(v.cond)) { await run(v.script); return; } return; }
 	if (a.script) return run(a.script);
@@ -297,6 +336,7 @@ async function routeWalk(loc) {
 		for (const it of tramoItems(loc, pos)) {
 			if (it.item && !pr.items[pos + ':' + it.item]) { pr.items[pos + ':' + it.item] = true; addItem(it.item, it.n || 1); }
 			if (it.trainer && it.optional && !G.beaten[it.trainer]) await battle({ trainer: it.trainer });
+			if (it.spot?.action?.gather && (it.cond === undefined || evalCond(it.cond)) && !G.gather[loc.id + ':' + it.spot.action.gather]) botGather(it.spot.action.gather);
 			if (it.talk && (it.cond === undefined || evalCond(it.cond))) { const k = loc.id + '|t' + pos + '|' + (it.talk.find(x => x.cond === undefined || evalCond(x.cond))?.script || ''); const sg = sigNow(); const rec = spotRuns[k] ||= { n: 0, sig: '' }; if (rec.sig !== sg && rec.n < 6) { rec.n++; rec.sig = sg; await runFirst(it.talk); } }
 			if (it.branch && (it.branch.cond === undefined || evalCond(it.branch.cond)) && !G.visited[it.branch.go]) { await enter(it.branch.go, { from: loc.id }); return; }
 			if (G.loc !== loc.id) return;
@@ -463,6 +503,7 @@ console.log(`Medallas: ${G.player.badges.join(', ')} · Dinero ₽${G.player.mon
 console.log(`Combates: ${report.battles.trainer} entrenador, ${report.battles.wild} salvajes · ganados ${report.battles.won} · perdidos ${report.battles.lost}`);
 console.log(`Gimnasios:\n  ${report.gyms.join('\n  ') || '-'}`);
 console.log(`Diario: ${G.diary.length} entradas · textos mostrados: ${report.texts}`);
+if (report.minis) console.log(`Minijuegos: ${Object.entries(report.minis).map(([k, m]) => `${k} ${m.w}/${m.n} ganados`).join(' · ')}`);
 console.log(`Misiones hechas (${done.length}): ${done.join(', ')}`);
 console.log(`Misiones abiertas (${open.length}): ${open.join(', ')}`);
 console.log(`Misiones nunca iniciadas (${never.length}): ${never.join(', ')}`);

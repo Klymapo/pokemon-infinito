@@ -331,13 +331,13 @@ export default {
 			{ text: 'Te da un sobre de papel de estraza. En el remite, con letra grande y apretada: «Para cuando haga falta».' },
 			{ give: 'cartaaurelio' },
 			{ say: 'sobrina', text: 'No la he leído. Es tuya. Léela aquí, si quieres. Yo voy a… a hacer algo con el café.' },
-			{ cutscene: { bg: { type: 'ranch', ground: '#8ab86a', far: '#c97a4a' }, start: 'dark', frames: [
-				{ item: 'cartaaurelio', text: 'Abres el sobre. Una hoja de cuaderno, escrita por las dos caras con letra grande, redonda y temblorosa.' },
-				{ text: '«Muchach{o|a|e}: si está leyendo esto, es que no me dio tiempo a decírselo en el porche. Ya me perdonará. Nunca he sido bueno con los tiempos: llego tarde a todo menos al ordeño.»' },
-				{ text: '«Desde lo de Kalos ando cansado. Volví de aquella grieta morada como si me hubieran quitado unos años. No de encima: de los que me quedaban.»' },
-				{ text: '«Copito se va a poner rara. Se pone rara cuando falta alguien. Rásquele detrás de la oreja izquierda. La derecha no.»' },
-				{ text: '«Las cosas buenas se quedan en los sitios. Usted es de las que se van, y está bien: alguien tiene que llevárselas a otros sitios.»' },
-				{ fx: 'glow', text: '«P. D.: La mecedora no se vende. Que se siente alguien. Aunque sea Copito.»' },
+			{ cutscene: { time: 'tarde', bg: { type: 'ranch', ground: '#8ab86a', far: '#c97a4a' }, start: 'dark', frames: [
+				{ cam: 'push', item: 'cartaaurelio', text: 'Abres el sobre. Una hoja de cuaderno, escrita por las dos caras con letra grande, redonda y temblorosa.' },
+				{ fx: 'letter', actors: [{ key: '_c', dim: true }], cam: 'still', text: '«Muchach{o|a|e}: si está leyendo esto, es que no me dio tiempo a decírselo en el porche. Ya me perdonará. Nunca he sido bueno con los tiempos: llego tarde a todo menos al ordeño.»' },
+				{ fx: 'letter', text: '«Desde lo de Kalos ando cansado. Volví de aquella grieta morada como si me hubieran quitado unos años. No de encima: de los que me quedaban.»' },
+				{ fx: 'letter', text: '«Copito se va a poner rara. Se pone rara cuando falta alguien. Rásquele detrás de la oreja izquierda. La derecha no.»' },
+				{ fx: 'letter', text: '«Las cosas buenas se quedan en los sitios. Usted es de las que se van, y está bien: alguien tiene que llevárselas a otros sitios.»' },
+				{ fx: ['glow', 'letter'], text: '«P. D.: La mecedora no se vende. Que se siente alguien. Aunque sea Copito.»' },
 			] } },
 			{ if: COPITO_TUYA, then: [
 				{ text: 'Copito apoya la cabeza en tu rodilla mientras doblas la carta. Le rascas detrás de la oreja izquierda. La derecha no.' },
@@ -352,11 +352,11 @@ export default {
 		// =================== LA NOCHE Y LA DECISIÓN ===================
 		b03_rancho_decision: [
 			{ if: 'flag.b03_rancho_sobrina || flag.b03_rancho_jugador || flag.b03_rancho_lemnis', then: [{ call: 'b03_adela_despues' }, { end: true }] },
-			{ cutscene: { bg: { type: 'ranch', ground: '#3a4a3a', far: '#1e2238' }, start: 'dark', frames: [
-				{ text: 'Esa noche duermes en el sofá de Don Aurelio. Está duro. Huele a heno y a pipa vieja.' },
-				{ fx: 'glow', text: 'Por la ventana se ven las Mareep del establo, encendiéndose una a una conforme oscurece. El rancho entero parece un pueblo de noche, visto desde una montaña.' },
-				{ text: 'En el porche no se enciende nada. La mecedora es la única cosa oscura de todo el prado.' },
-				{ text: 'Copito duerme a tus pies. {riolu} se ha quedado sentado en el escalón, toda la noche, mirando el camino. Como quien hace guardia.' },
+			{ cutscene: { time: 'noche', bg: { type: 'ranch', ground: '#3a4a3a', far: '#1e2238' }, start: 'dark', frames: [
+				{ cam: 'still', text: 'Esa noche duermes en el sofá de Don Aurelio. Está duro. Huele a heno y a pipa vieja.' },
+				{ on: false, color: '#ffe27a', cam: 'pan-right', fx: 'glow', text: 'Por la ventana se ven las Mareep del establo, encendiéndose una a una conforme oscurece. El rancho entero parece un pueblo de noche, visto desde una montaña.' },
+				{ cam: 'still', text: 'En el porche no se enciende nada. La mecedora es la única cosa oscura de todo el prado.' },
+				{ actors: [{ mon: 'mareep', key: 'copito', at: 0.3, size: 's', enter: 'fade', emote: 'zzz' }, { mon: '{riolu}', key: 'rio', at: 0.7, size: 's', enter: 'fade' }], on: false, fx: 'iris-out', text: 'Copito duerme a tus pies. {riolu} se ha quedado sentado en el escalón, toda la noche, mirando el camino. Como quien hace guardia.' },
 			] } },
 			{ diary: 'Hoy llegamos tarde al rancho de Don Aurelio. Se fue esta mañana, en su mecedora, mirando a sus Mareep. Adela dice que fue en paz. Yo la creo.\n\nCopito no se separó de mi entrenador{|a|e} en todo el día. {riolu} tampoco. Yo no tengo patas para pegarme a nadie, así que me quedé encendido toda la noche, por si alguien necesitaba luz.\n\nDon Aurelio decía que las cosas buenas se quedan en los sitios. Hoy he guardado el rancho entero en mi memoria: el establo rojo, el pozo, el escalón del porche y las cincuenta y tres. Para que se quede en algún sitio más.\n\nLo vamos a echar mucho de menos. Los Rotom no sabemos muy bien cómo se hace eso. Creo que lo estoy aprendiendo.', cond: 'flag.b01_diario' },
 			{ text: 'Por la mañana, Adela está en el escalón del porche con una taza de café. Solo una. La otra mano la tiene vacía y no sabe dónde ponerla.' },
@@ -405,10 +405,10 @@ export default {
 					{ say: 'sobrina', text: 'Así lo hacemos: el rancho es tuyo. Yo lo cuido, que vivo al otro lado del monte y no me cuesta nada. Tú pagas el pienso cuando puedas, vienes cuando puedas, y cuando vengas, esquilas. ¿Estamos?' },
 					{ say: 'agente_lemnis', as: 'Señor del ramo', text: 'Vaya. Qué bonito. —Lo dice como si lo pensara de verdad—. La oferta seguirá en pie. Para usted también, {jugador}. Siempre. Las flores, quédenselas.' },
 					{ text: 'El coche azul se va por la Ruta 42. Adela entra en la casa y vuelve con algo en la mano.' },
-					{ cutscene: { bg: { type: 'ranch', ground: '#8ab86a', far: '#c9a46a' }, start: 'dark', frames: [
-						{ item: 'llaverancho', text: 'Una llave de hierro, grande, oxidada en los dientes, atada a un cencerro diminuto de latón.' },
-						{ text: 'En el cencerro hay algo grabado a punta de navaja, con letra torpe: «PRADO».' },
-						{ fx: 'light', text: 'Abre la cancela, el establo y la casa. Y la senda del monte, detrás del establo. «Las tres puertas que importan», decía él.' },
+					{ cutscene: { time: 'manana', bg: { type: 'ranch', ground: '#8ab86a', far: '#c9a46a' }, start: 'dark', frames: [
+						{ actors: [{ id: 'sobrina', at: 'left' }], on: '_c', item: 'llaverancho', text: 'Una llave de hierro, grande, oxidada en los dientes, atada a un cencerro diminuto de latón.' },
+						{ actors: [{ key: '_c', do: 'bob' }], cam: 'push', text: 'En el cencerro hay algo grabado a punta de navaja, con letra torpe: «PRADO».' },
+						{ fx: ['light', 'sparkle'], text: 'Abre la cancela, el establo y la casa. Y la senda del monte, detrás del establo. «Las tres puertas que importan», decía él.' },
 					] } },
 					{ give: 'llaverancho' },
 					{ set: { 'flag.b03_rancho_jugador': true } },
@@ -485,9 +485,9 @@ export default {
 				{ text: 'Debajo del cojín hay un papel doblado en cuatro. Lo saca Adela, que te ha visto mirar.' },
 				{ say: 'sobrina', text: 'Lo estaba haciendo la semana pasada. Con los lápices de colores que me quitó cuando yo tenía diez años. Dibujaba fatal. —Lo desdobla—. Mira.' },
 				{ cutscene: { bg: { type: 'ranch', ground: '#8ab86a', far: '#e0903a' }, start: 'dark', frames: [
-					{ item: 'dibujorancho', text: 'El rancho Prado al atardecer, visto desde el prado. El establo rojo, torcido. El pozo. Las Mareep, cada una con una lucecita amarilla pintada encima.' },
-					{ text: 'Y el porche. Y en el porche, la mecedora. Vacía.' },
-					{ fx: 'glow', text: 'Él no se dibujó. Él era el que estaba mirando.' },
+					{ actors: [{ id: 'sobrina', at: 'left' }], on: '_c', item: 'dibujorancho', text: 'El rancho Prado al atardecer, visto desde el prado. El establo rojo, torcido. El pozo. Las Mareep, cada una con una lucecita amarilla pintada encima.' },
+					{ actors: [{ key: 'sobrina', dim: true }], on: '_c', cam: 'push', text: 'Y el porche. Y en el porche, la mecedora. Vacía.' },
+					{ cam: 'still', fx: 'glow', text: 'Él no se dibujó. Él era el que estaba mirando.' },
 				] } },
 				{ say: 'sobrina', text: '«Uno no se ve desde fuera», decía. —Te lo da—. Quédatelo tú. Yo ya tengo el de verdad.' },
 				{ give: 'dibujorancho' },
@@ -560,9 +560,10 @@ export default {
 			{ set: { 'flag.b03_m_aviso': true } },
 			{ quest: 'b03_m5', done: true, cond: '!done.b03_m5' },
 			{ quest: 'b03_m6', stage: 'caoba', cond: '!quest.b03_m6' },
-			{ cutscene: { bg: { type: 'town', roofs: ['#3d2a22', '#4a3a4a', '#2b2f3a'], far: '#6a7a8a', hill: '#3a5a4a' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Sales del Monte Mortero a un valle frío, entre pinos. Abajo, **Pueblo Caoba**: tejados de pizarra, humo en todas las chimeneas y un olor dulzón a caramelo quemado.' },
-				{ text: 'Hace frío. El primer frío de verdad desde que llegaste a Johto. Se te mete por las mangas y se queda ahí, como si te conociera.' },
+			{ cutscene: { weather: 'smoke', bg: { type: 'town', roofs: ['#3d2a22', '#4a3a4a', '#2b2f3a'], far: '#6a7a8a', hill: '#3a5a4a' }, start: 'dark', frames: [
+				{ big: true, text: 'Pueblo Caoba', sub: 'Johto', hold: 2400, cam: 'still' },
+				{ cam: 'pull', fx: 'light', text: 'Sales del Monte Mortero a un valle frío, entre pinos. Abajo, **Pueblo Caoba**: tejados de pizarra, humo en todas las chimeneas y un olor dulzón a caramelo quemado.' },
+				{ weather: 'fog', text: 'Hace frío. El primer frío de verdad desde que llegaste a Johto. Se te mete por las mangas y se queda ahí, como si te conociera.' },
 			] } },
 			{ text: 'En la plaza hay más gente de la normal para un pueblo tan pequeño, y toda mira hacia el norte. Hacia el camino del **Lago de la Furia**.' },
 			{ text: '{riolu} también mira al norte. Las orejas tiesas. Los apéndices de la nuca, temblando un poco. Como cuando oye un ruido que nadie más oye.', cond: LUC },

@@ -195,6 +195,18 @@ export class BattleCtl {
 			this.swallowFail = null;
 			if (cmd === '-fail' && args[1] === sw) return;
 		}
+		// Datos extra para las animaciones: el último «move» se va completando con lo que le pasa (no cambia la lógica)
+		const mv = this._mv;
+		if (cmd === 'upkeep' || cmd === 'turn' || cmd === 'cant' || cmd === '-end' || cmd === 'switch' || cmd === 'drag' || cmd === 'replace') this._mv = null;
+		else if (mv) {
+			if (cmd === '-crit') mv.crit = true;
+			else if (cmd === '-supereffective') mv.eff = 2;
+			else if (cmd === '-resisted') mv.eff = 0.5;
+			else if (cmd === '-miss') mv.miss = true;
+			else if (cmd === '-immune') { mv.immune = true; mv.eff = 0; }
+			else if (cmd === '-fail' || cmd === '-notarget') mv.fail = true;
+			else if (cmd === '-activate' && /Protect|Detect|Shield|Bunker|Obstruct|Silk Trap|Bulwark|Max Guard/.test(args[2] || '')) mv.blocked = true;
+		}
 		// Eventos de estado para la interfaz
 		switch (cmd) {
 		case 'switch': case 'drag': case 'replace': {
@@ -228,7 +240,10 @@ export class BattleCtl {
 		case '-damage': case '-heal': case '-sethp': {
 			const side = this.sideOf(args[1]);
 			const [hp, maxhp] = (args[2] || '').split(' ')[0].split('/').map(Number);
-			this.events.push({ t: 'hp', side, hp: isNaN(hp) ? 0 : hp, maxhp: maxhp || undefined, from: kwArgs.from });
+			const hev = { t: 'hp', side, hp: isNaN(hp) ? 0 : hp, maxhp: maxhp || undefined, from: kwArgs.from };
+			// Daño directo del movimiento en curso: la interfaz baja la barra en el instante del golpe
+			if (cmd === '-damage' && !kwArgs.from && this._mv && side !== this._mv.side) { hev.byMove = true; this._mv.hitEvs.push(hev); this._mv.hits++; }
+			this.events.push(hev);
 			break;
 		}
 		case 'faint': {
@@ -240,7 +255,14 @@ export class BattleCtl {
 		case '-curestatus': this.events.push({ t: 'status', side: this.sideOf(args[1]), status: '' }); break;
 		case 'move': {
 			const mid = toID(args[2]);
-			this.events.push({ t: 'move', side: this.sideOf(args[1]), move: mid, type: D.moves[mid]?.type, miss: !!kwArgs.miss, z: !!kwArgs.zeffect });
+			const raw = Dex.data.Moves[mid];
+			this._mv = {
+				t: 'move', side: this.sideOf(args[1]), move: mid, type: D.moves[mid]?.type, miss: !!kwArgs.miss, z: !!kwArgs.zeffect,
+				// para las animaciones: objetivo, categoría, contacto, turno de carga y los golpes que conecta
+				target: this.sideOf(args[3]) || null, cat: raw?.category || D.moves[mid]?.cat, contact: !!raw?.flags?.contact, still: !!kwArgs.still || !!kwArgs.prepare,
+				hits: 0, hitEvs: [],
+			};
+			this.events.push(this._mv);
 			break;
 		}
 		case '-terastallize': this.events.push({ t: 'tera', side: this.sideOf(args[1]), type: args[2] }); break;
@@ -248,6 +270,7 @@ export class BattleCtl {
 		case '-zpower': this.events.push({ t: 'zpower', side: this.sideOf(args[1]) }); break;
 		case '-start':
 			if (args[2] === 'Dynamax') this.events.push({ t: 'dyn', side: this.sideOf(args[1]), on: true, gmax: args[3] === 'Gmax' });
+			else if (args[2] === 'confusion') this.events.push({ t: 'vol', side: this.sideOf(args[1]), v: 'confusion' });
 			break;
 		case '-end':
 			if (args[2] === 'Dynamax') this.events.push({ t: 'dyn', side: this.sideOf(args[1]), on: false });
@@ -257,6 +280,8 @@ export class BattleCtl {
 			this.events.push({ t: 'boost', side: this.sideOf(args[1]), stat: args[2], n });
 			break;
 		}
+		case '-weather': this.events.push({ t: 'weather', w: toID(args[1]), upkeep: !!kwArgs.upkeep }); break;
+		case 'cant': this.events.push({ t: 'cant', side: this.sideOf(args[1]), why: toID(args[2]) }); break;
 		case '-crit': this.events.push({ t: 'crit' }); break;
 		case '-supereffective': this.events.push({ t: 'eff', n: 2 }); break;
 		case '-resisted': this.events.push({ t: 'eff', n: 0.5 }); break;

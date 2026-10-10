@@ -123,3 +123,5 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | Castillo Caduco y cantera de Petroglifo (negocios) | Oportunidades abiertas desde el fin del B1 | Simón: plazo de seis meses «para decirlo en antena» (salida hacia el Acto V). Héctor, de excedencia. La «madriguera fósil» de la galería honda, sin plan |
 | El muñeco de Dolores (Lavanda) | Prometió un muñeco de Riolu/Lucario «cuando le ponga el brazo» | Entregarlo en una visita posterior (objeto con `art`) |
 | Casilda y Jade Peña (Trigal ↔ Azafrán) | «Peso neto» cerrable | Casilda sube al tren «en primavera» (evento del 20–22 mar) |
+| Evaristo y el contramaestre (Lago de la Furia ↔ Olivo) | Evaristo compró el boleto a Olivo y no lo ha usado (`p8_botella`) | Tercera aparición: el reencuentro en el Muelle de Olivo |
+| El roble del Parque Nacional | Heracrossita entregada; el muchacho del Heracross «dejó de venir» | Semilla sin plan |

@@ -218,9 +218,9 @@ export default {
 			{ if: 'has("sintonizadorbill")', then: [
 				{ text: 'El **Sintonizador de Bill** ya no pita: canta. *Pi-pi-pi-pi-pi*, sin pausa, tan deprisa que los pitidos se pegan unos a otros en un solo chillido.' },
 				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#7fb8e0' }, start: 'dark', frames: [
-					{ item: 'sintonizadorbill', text: 'Sacas la radio color crema. La antena tiembla. La ruedecita gira sola, despacio, hasta el tope.' },
-					{ fx: 'glow', text: 'Y la cueva se ilumina. No toda: un **hilo**. Un hilo finísimo de luz azul pálida que sale de la pared, cruza el techo de la galería y baja hacia el fondo, tenso como la cuerda de una guitarra.' },
-					{ text: 'Es el mismo hilo. El del Lago de la Furia. El que viste apagarse bajo el agua, con el aura de {riolu}, la noche que se calló el lago. Ha cruzado medio Kanto bajo tierra. Y acaba aquí.' },
+					{ actors: [{ key: '_c', do: 'shake' }], cam: 'push', item: 'sintonizadorbill', text: 'Sacas la radio color crema. La antena tiembla. La ruedecita gira sola, despacio, hasta el tope.' },
+					{ weather: 'sparks', cam: 'pan-up', fx: 'glow', text: 'Y la cueva se ilumina. No toda: un **hilo**. Un hilo finísimo de luz azul pálida que sale de la pared, cruza el techo de la galería y baja hacia el fondo, tenso como la cuerda de una guitarra.' },
+					{ fx: 'heartbeat', color: '#1f6a8a', cam: 'pan-down', text: 'Es el mismo hilo. El del Lago de la Furia. El que viste apagarse bajo el agua, con el aura de {riolu}, la noche que se calló el lago. Ha cruzado medio Kanto bajo tierra. Y acaba aquí.' },
 				] } },
 			], else: [
 				{ text: 'En el techo de la galería, muy fino, casi invisible, un hilo de luz azul pálida baja hacia el fondo, tenso como la cuerda de una guitarra.' },
@@ -233,11 +233,11 @@ export default {
 		b04_nucleo_llegada: [
 			{ set: { 'flag.b04_magda_vista': true } },
 			{ text: 'La galería desemboca en una sala tan grande que tu linterna se pierde antes de llegar al techo. No hace falta linterna: la sala está llena de luz.' },
-			{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'dark', frames: [
-				{ text: 'En el centro, un anillo de metal del tamaño de una plaza, clavado en la roca. Alrededor, columnas de cristal azul arrancadas de la cueva y atadas con cables gruesos como brazos.' },
-				{ fx: 'light', text: 'Del anillo sube una columna de luz que zumba, grave, constante. El hilo del techo baja hasta ella y se pierde dentro.' },
-				{ fx: 'zoom', mon: 'mewtwo', text: 'Y dentro de la luz, flotando a un metro del suelo, hay alguien. Una figura alta, pálida, con una cola larga que cuelga sin fuerza. Hilos de luz le atraviesan los brazos, el pecho, la frente. Tiene los ojos cerrados.' },
-				{ fx: 'shake', text: 'Cada pocos segundos, la columna pulsa. Y cada vez que pulsa, la figura se tensa entera, como quien aguanta un grito con la boca cerrada.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'dark', frames: [
+				{ cam: 'pan-up', text: 'En el centro, un anillo de metal del tamaño de una plaza, clavado en la roca. Alrededor, columnas de cristal azul arrancadas de la cueva y atadas con cables gruesos como brazos.' },
+				{ cam: 'push', fx: 'light', text: 'Del anillo sube una columna de luz que zumba, grave, constante. El hilo del techo baja hasta ella y se pierde dentro.' },
+				{ fx: ['zoom', 'rise', 'silhouette'], actors: [{ mon: 'mewtwo', key: 'm2', at: 0.75, size: 'l', do: 'float', dim: true }], text: 'Y dentro de la luz, flotando a un metro del suelo, hay alguien. Una figura alta, pálida, con una cola larga que cuelga sin fuerza. Hilos de luz le atraviesan los brazos, el pecho, la frente. Tiene los ojos cerrados.' },
+				{ color: '#7a5cff', actors: [{ key: 'm2', do: 'shake' }], fx: ['shake', 'heartbeat', 'silhouette'], text: 'Cada pocos segundos, la columna pulsa. Y cada vez que pulsa, la figura se tensa entera, como quien aguanta un grito con la boca cerrada.' },
 			] } },
 			{ if: PIEZA_EN_NODO, then: [
 				{ text: 'En el centro del anillo, encajada como una llave en su cerradura, hay una pieza de metal oscuro con vetas azul y plata. La conoces. La tuviste en las manos en la Torre Quemada de Iris. Estaba tibia.' },
@@ -250,12 +250,12 @@ export default {
 			] },
 			{ if: LUC, then: [
 				{ text: '{riolu} da un paso hacia la luz. Otro. Tiene el aura encendida por todo el cuerpo, sin quererlo, como quien tiene fiebre. Le pones una mano en el hombro. Se para. Pero no deja de mirar.' },
-				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'dark', frames: [
-					{ fx: 'glow', mon: 'lucario', text: 'El aura de {riolu} se estira hacia la columna de luz. Sola. Como una mano que se tiende sin pedir permiso.' },
-					{ text: 'Toca uno de los hilos. Durante un instante, solo un instante, la figura de dentro de la luz deja de tensarse.' },
-					{ fx: 'flash', text: 'Y abre los ojos. Morados. Cansadísimos. Y te mira. No a ti: a {riolu}.' },
-					{ text: '*…¿Quién…?*\n\nLa voz no suena. Está dentro de tu cabeza, como un pensamiento que no es tuyo.' },
-					{ fx: 'dark', text: 'La columna pulsa otra vez, más fuerte. La figura cierra los ojos. El aura de {riolu} se retira de golpe, como una mano que se quema.' },
+				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'fade', frames: [
+					{ fx: 'glow', actors: [{ mon: 'mewtwo', key: 'm2', at: 0.75, size: 'l', do: 'float', enter: 'none', dim: true }, { mon: '{riolu}', key: 'rio', at: 0.26, enter: 'left' }], text: 'El aura de {riolu} se estira hacia la columna de luz. Sola. Como una mano que se tiende sin pedir permiso.' },
+					{ fx: 'aura', on: 'rio', cam: 'push', text: 'Toca uno de los hilos. Durante un instante, solo un instante, la figura de dentro de la luz deja de tensarse.' },
+					{ color: '#d8c4ff', actors: [{ key: 'm2', dim: false }], fx: 'flash', text: 'Y abre los ojos. Morados. Cansadísimos. Y te mira. No a ti: a {riolu}.' },
+					{ fx: 'heartbeat', color: '#7a5cff', cam: 'still', actors: [{ key: 'm2', emote: '?' }], text: '*…¿Quién…?*\n\nLa voz no suena. Está dentro de tu cabeza, como un pensamiento que no es tuyo.' },
+					{ shake: 2, actors: [{ key: 'm2', dim: true }, { key: 'rio', do: 'back' }], fx: 'dark', text: 'La columna pulsa otra vez, más fuerte. La figura cierra los ojos. El aura de {riolu} se retira de golpe, como una mano que se quema.' },
 				] } },
 				{ text: '{riolu} retrocede un paso y se queda jadeando. Tiene las palmas abiertas, temblando.' },
 			] },
@@ -349,23 +349,23 @@ export default {
 			{ say: 'magda', text: 'No lo toque. —No se levanta. No grita. Solo lo dice—. No sabe lo que hace.' },
 			{ if: LUC, then: [
 				{ text: '{riolu} pasa a tu lado sin mirarte. Se planta delante de la pieza del centro del anillo. Respira hondo. Y pone las dos palmas encima.' },
-				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'dark', frames: [
-					{ fx: 'glow', mon: 'lucario', text: 'El aura le sale de golpe, por las palmas, por el pecho, por los ojos. Azul. Mucha más de la que le has visto nunca. Baja por la pieza, se mete en el anillo y sube por los hilos de luz, uno a uno, como agua por raíces.' },
-					{ text: 'Llega hasta Mewtwo. Lo envuelve. No tira de él: lo sostiene.' },
-					{ fx: 'flash', text: 'Mewtwo abre los ojos. Esta vez no los cierra.' },
-					{ text: '*…Tú no tomas.*\n\nOtra vez la voz dentro de tu cabeza. Más clara. Sorprendida.\n\n*…Das.*' },
-					{ fx: 'shake', text: 'Mewtwo levanta una mano. Los hilos de luz que le atraviesan el cuerpo se tensan… y se tensan… y el aura de {riolu} empuja desde fuera mientras la mente de Mewtwo empuja desde dentro.' },
-					{ fx: 'flash', text: 'Una columna de cristal se parte. Otra. El anillo cruje por tres sitios. Los cables saltan de sus grapas como látigos.' },
-					{ fx: 'dark', text: 'La columna de luz se apaga. Silencio. Un silencio enorme. Solo el goteo, otra vez, como si la cueva hubiera estado aguantando la respiración y por fin la soltara.' },
+				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'fade', frames: [
+					{ cam: 'push', fx: ['glow', 'ripple'], actors: [{ mon: 'mewtwo', key: 'm2', at: 0.75, size: 'l', do: 'float', enter: 'none', dim: true }, { mon: '{riolu}', key: 'rio', at: 0.28, enter: 'left' }], text: 'El aura le sale de golpe, por las palmas, por el pecho, por los ojos. Azul. Mucha más de la que le has visto nunca. Baja por la pieza, se mete en el anillo y sube por los hilos de luz, uno a uno, como agua por raíces.' },
+					{ fx: 'aura', color: '#6f9bff', on: 'm2', text: 'Llega hasta Mewtwo. Lo envuelve. No tira de él: lo sostiene.' },
+					{ actors: [{ key: 'm2', dim: false }], fx: 'flash', text: 'Mewtwo abre los ojos. Esta vez no los cierra.' },
+					{ fx: 'aura', cam: 'still', actors: [{ key: 'm2', emote: '!' }], on: 'rio', text: '*…Tú no tomas.*\n\nOtra vez la voz dentro de tu cabeza. Más clara. Sorprendida.\n\n*…Das.*' },
+					{ shake: 3, color: '#b08ad8', on: 'm2', fx: ['shake', 'quake', 'aura'], text: 'Mewtwo levanta una mano. Los hilos de luz que le atraviesan el cuerpo se tensan… y se tensan… y el aura de {riolu} empuja desde fuera mientras la mente de Mewtwo empuja desde dentro.' },
+					{ shake: 3, weather: 'dust', on: false, fx: ['flash', 'impact'], text: 'Una columna de cristal se parte. Otra. El anillo cruje por tres sitios. Los cables saltan de sus grapas como látigos.' },
+					{ bg: { type: 'cave', dark: true, crystals: '#9fd8ff' }, weather: 'none', cam: 'still', fx: 'dark', text: 'La columna de luz se apaga. Silencio. Un silencio enorme. Solo el goteo, otra vez, como si la cueva hubiera estado aguantando la respiración y por fin la soltara.' },
 				] } },
 				{ text: '{riolu} cae de rodillas, con las palmas humeando. Corres hacia él. Te deja que lo sujetes. Está agotado. Y sonríe. Casi nada, con la comisura de la boca. Pero sonríe.' },
 				{ happy: { who: 'riolu', n: 15 } },
 			], else: [
 				{ text: 'Sacas el **Sintonizador de Bill**. Sin saber muy bien por qué, giras la ruedecita hasta el tope, al revés. Si escucha la señal, a lo mejor también sabe contestarle.', cond: 'has("sintonizadorbill")' },
-				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'dark', frames: [
-					{ fx: 'shake', text: 'La columna de luz tartamudea. Pulsa a destiempo. Durante un instante, la frecuencia se rompe.' },
-					{ fx: 'flash', text: 'Y en ese instante, Mewtwo abre los ojos. Levanta una mano. Los hilos de luz que le atraviesan se tensan, y se tensan, y se parten.' },
-					{ fx: 'dark', text: 'Las columnas de cristal se derrumban. El anillo cruje por tres sitios. La luz se apaga. Silencio.' },
+				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff', fissure: true }, start: 'fade', frames: [
+					{ actors: [{ mon: 'mewtwo', key: 'm2', at: 0.75, size: 'l', do: 'float', enter: 'none', dim: true }], color: '#7a5cff', fx: ['shake', 'heartbeat'], text: 'La columna de luz tartamudea. Pulsa a destiempo. Durante un instante, la frecuencia se rompe.' },
+					{ actors: [{ key: 'm2', dim: false }], fx: ['flash', 'quake'], text: 'Y en ese instante, Mewtwo abre los ojos. Levanta una mano. Los hilos de luz que le atraviesan se tensan, y se tensan, y se parten.' },
+					{ bg: { type: 'cave', dark: true, crystals: '#9fd8ff' }, weather: 'dust', shake: 3, fx: 'dark', text: 'Las columnas de cristal se derrumban. El anillo cruje por tres sitios. La luz se apaga. Silencio.' },
 				] } },
 			] },
 			{ text: 'En la oscuridad, a la luz roja de las lámparas de emergencia, Mewtwo está de pie en el centro del anillo partido. Más alto de lo que parecía dentro de la luz. Más delgado.' },
@@ -373,8 +373,8 @@ export default {
 			{ text: 'Te mira, mucho rato. Luego mira a Magda, que no se ha movido de su silla y sigue escribiendo, con la mano un poco menos firme.', cond: '!(' + LUC + ')' },
 			{ text: 'No dice nada. Ni dentro de tu cabeza ni fuera.' },
 			{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff' }, start: 'dark', frames: [
-				{ fx: 'glow', mon: 'mewtwo', text: 'Un golpe de aire. Las gotas del techo, durante un segundo, caen hacia arriba.' },
-				{ fx: 'flash', text: 'Y ya no está. En el centro del anillo solo queda una marca en la roca, como si algo muy pesado hubiera estado ahí de pie mucho, mucho tiempo.' },
+				{ color: '#b08ad8', actors: [{ key: '_c', size: 'l', do: 'float' }], fx: 'glow', mon: 'mewtwo', text: 'Un golpe de aire. Las gotas del techo, durante un segundo, caen hacia arriba.' },
+				{ actors: [{ key: '_c', remove: true, exit: 'up' }], weather: 'dust', fx: 'flash', text: 'Y ya no está. En el centro del anillo solo queda una marca en la roca, como si algo muy pesado hubiera estado ahí de pie mucho, mucho tiempo.' },
 			] } },
 			{ say: 'magda', text: 'Rendimiento: cuatro por ciento. —Lo dice en voz alta, para su libreta—. No está destruido. Está herido. Se puede reparar. Tardaremos meses. —Levanta la vista—. Y ahora no tenemos fuente.' },
 			{ say: 'magda', text: 'Lo apunto como un fallo mío. No suyo. Usted ha hecho exactamente lo que dicen sus informes que hace.' },
@@ -594,9 +594,9 @@ export default {
 			{ say: 'rotom', text: 'Oye, {jugador}. Mira lo que tengo en la galería. —La pantalla se enciende sola—. Una foto. De dentro de la cueva. Toda azul. Es preciosa.' },
 			{ say: 'rotom', text: '…No me acuerdo de haberla hecho. —Pausa—. Será que estaba muy emocionado. Me pasa. Bueno, no me pasa nunca. Pero hoy ha sido un día de cosas que no pasan nunca.' },
 			{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#9fd8ff' }, start: 'dark', frames: [
-				{ item: 'fotocueva', fx: 'light', text: 'En la pantalla: la sala del nodo, iluminada entera por un aura azul. En el centro, una silueta pequeña con las palmas levantadas, y alrededor, todos los cristales de la cueva encendidos a la vez, como un cielo al revés.' },
-				{ fx: 'zoom', text: 'Arriba, en la esquina, desenfocada, muy alta y muy pálida, una figura con una cola larga. Mira hacia abajo. Hacia la silueta pequeña.' },
-				{ text: 'La foto está tomada desde un ángulo raro. Desde más arriba de donde llevabas la Pokédex. Rotom le ha puesto de título «Aura».' },
+				{ cam: 'push', item: 'fotocueva', fx: 'light', text: 'En la pantalla: la sala del nodo, iluminada entera por un aura azul. En el centro, una silueta pequeña con las palmas levantadas, y alrededor, todos los cristales de la cueva encendidos a la vez, como un cielo al revés.' },
+				{ actors: [{ key: '_c', size: 'l' }], fx: 'zoom', text: 'Arriba, en la esquina, desenfocada, muy alta y muy pálida, una figura con una cola larga. Mira hacia abajo. Hacia la silueta pequeña.' },
+				{ fx: 'heartbeat', color: '#1f4a9a', cam: 'still', text: 'La foto está tomada desde un ángulo raro. Desde más arriba de donde llevabas la Pokédex. Rotom le ha puesto de título «Aura».' },
 			] } },
 			{ give: 'fotocueva' },
 			{ text: 'Y otra vez. Una notificación de la Gira, para todos los inscritos.' },

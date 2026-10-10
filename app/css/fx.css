@@ -1,0 +1,44 @@
+/* Efectos de combate (app/js/ui/fx.js): lienzo pixelado, rótulos y vida de los sprites. */
+.fxc { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; image-rendering: pixelated; pointer-events: none; }
+.fxo { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.fx-flash { position: absolute; inset: 0; opacity: 0; pointer-events: none; z-index: 6; background: #fff; }
+.fxt { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; pointer-events: none; z-index: 40; }
+.battle .bcard { z-index: 2; }
+.battle .bsprite { transition: none; transform-origin: 50% 100%; will-change: transform, opacity; }
+.battle .bsprite.fx-front { z-index: 3; }
+
+/* Respiración en reposo (también con el recuadro de iniciales cuando no carga el sprite) */
+.battle .bsprite > img, .battle .bsprite > .fallback { transform-origin: 50% 100%; animation: fxbreath 2.8s ease-in-out infinite; }
+.battle .bsprite.foe > img, .battle .bsprite.foe > .fallback { animation-duration: 3.3s; animation-delay: -1.1s; }
+@keyframes fxbreath { 0%, 100% { transform: none; } 50% { transform: scale(.985, 1.035); } }
+.battle .bsprite.mega > * { filter: drop-shadow(0 0 7px #f6c) saturate(1.2); }
+.battle .bsprite.tera > * { filter: drop-shadow(0 0 7px #9ff) brightness(1.08); }
+.battle .bsprite.dyn > * { filter: drop-shadow(0 0 9px #e33) saturate(1.3); }
+.battle.fx-off .bsprite > * { animation: none; }
+
+/* Rótulos breves sobre el campo */
+.fx-lbl { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-family: var(--pixel); font-size: 19px; line-height: 1; color: #fff; letter-spacing: .5px;
+	text-shadow: -2px 0 #16161e, 2px 0 #16161e, 0 -2px #16161e, 0 2px #16161e, -2px -2px #16161e, 2px -2px #16161e, -2px 2px #16161e, 2px 2px #16161e, 0 4px 0 rgba(0,0,0,.35);
+	animation: fxlbl .95s steps(12) forwards; }
+.fx-lbl.se { color: #ffe86a; font-size: 21px; }
+.fx-lbl.nve { color: #c2c8d6; font-size: 16px; }
+.fx-lbl.miss { color: #e8eef8; font-size: 17px; }
+.fx-lbl.crit { color: #ff8a70; font-size: 21px; }
+.fx-lbl.low { margin-top: 24px; }
+.fx-lbl.lvl { color: #ffe86a; font-size: 22px; }
+.fx-lbl.num { color: #ff9a8a; font-size: 18px; animation-name: fxnum; }
+.fx-lbl.num.heal { color: #8af0a0; }
+@keyframes fxlbl { 0% { opacity: 0; transform: translate(-50%, -30%) scale(.6); } 14% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); } 26% { transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -62%); } 100% { opacity: 0; transform: translate(-50%, -85%); } }
+@keyframes fxnum { 0% { opacity: 0; transform: translate(-50%, -20%); } 15% { opacity: 1; transform: translate(-50%, -80%); } 70% { opacity: 1; transform: translate(-50%, -150%); } 100% { opacity: 0; transform: translate(-50%, -190%); } }
+
+/* Golpe crítico: corte de pantalla con líneas */
+.fx-crit { position: absolute; inset: -20% -40%; background: repeating-linear-gradient(118deg, transparent 0 22px, rgba(255,255,255,.9) 22px 26px, transparent 26px 60px, rgba(255,226,122,.85) 60px 63px, transparent 63px 96px); animation: fxcrit .34s steps(7) forwards; }
+@keyframes fxcrit { 0% { opacity: 0; transform: translate(-14%, 10%); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(14%, -10%); } }
+
+/* Captura: la Ball se queda quieta en el suelo entre sacudidas */
+.cball { z-index: 4; }
+
+@media (prefers-reduced-motion: reduce) {
+	.battle .bsprite > * { animation: none; }
+	.fx-lbl { animation-timing-function: linear; }
+}

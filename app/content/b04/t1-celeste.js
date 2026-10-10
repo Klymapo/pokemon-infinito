@@ -783,11 +783,11 @@ export default {
 			] },
 			{ text: 'El cielo se pone naranja. Luego rosa. El río se vuelve de cobre. Las barandillas amarillas del puente brillan como si fueran de oro de verdad. Por algo se llama así.' },
 			{ say: 'rotom', text: '¡Bzzt! ¡Quieto! ¡Quiet{o|a|e}! ¡Así! ¡Tres, dos…!' },
-			{ cutscene: { bg: { type: 'route', far: '#e98a5a', hill: '#4a5a8a', flowers: '#f2c43a' }, start: 'light', frames: [
+			{ cutscene: { time: 'tarde', bg: { type: 'route', far: '#e98a5a', hill: '#4a5a8a', flowers: '#f2c43a' }, start: 'light', frames: [
 				{ text: 'El sol se apoya en el horizonte, detrás de Celeste. Los tejados azules se vuelven morados. El agua del río lo copia todo.' },
-				{ text: 'En la barandilla, una silueta con ocho medallas en la caja. A su lado, otra silueta, azul, con las orejas levantadas, mirando el mismo sol.', cond: LUC },
-				{ text: 'En la barandilla, una silueta con ocho medallas en la caja, mirando el sol como quien mira una meta.', cond: '!(' + LUC + ')' },
-				{ item: 'fotopuente', fx: 'flash', text: '*Clic.* En la pantalla de la Pokédex aparece la foto. Rotom le pone título sin pensárselo: **«Ocho»**.' },
+				{ actors: [{ id: 'jugador', key: 'tu', at: 0.34, enter: 'fade' }, { mon: '{riolu}', key: 'rio', at: 0.72, enter: 'fade' }], fx: 'silhouette', cam: 'still', text: 'En la barandilla, una silueta con ocho medallas en la caja. A su lado, otra silueta, azul, con las orejas levantadas, mirando el mismo sol.', cond: LUC },
+				{ actors: [{ id: 'jugador', key: 'tu', at: 'center', enter: 'fade' }], fx: 'silhouette', cam: 'still', text: 'En la barandilla, una silueta con ocho medallas en la caja, mirando el sol como quien mira una meta.', cond: '!(' + LUC + ')' },
+				{ actors: [{ key: 'tu', remove: true, exit: 'fade' }, { key: 'rio', remove: true, exit: 'fade' }], on: '_c', item: 'fotopuente', fx: 'flash', text: '*Clic.* En la pantalla de la Pokédex aparece la foto. Rotom le pone título sin pensárselo: **«Ocho»**.' },
 			] } },
 			{ give: 'fotopuente' },
 			{ say: 'rotom', text: 'Es la foto de una persona clasificada. Se nota, ¿a que sí? Se nota en los hombros.' },
@@ -843,14 +843,14 @@ export default {
 			{ say: 'bill', text: 'Exacto. Y ahí abajo no llega mi red. Así que necesitas algo que oiga la señal tú solit{o|a|e}. Algo de bolsillo. Dame diez minutos. Bueno, veinte. Bueno, dame una hora y no te vayas.' },
 			{ text: 'Bill se encierra en el banco de trabajo. Se oyen martillazos, soldador, un «¡ay!», otro «¡ay!», y una canción tarareada que no termina nunca. El Clefairy te trae un té sin que se lo pidas.' },
 			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ text: 'Bill vuelve con algo en las manos. Una radio de bolsillo de color crema, con una antena plegable y una rejilla redonda. Le falta algo.' },
+				{ actors: [{ id: 'bill', at: 'left' }], text: 'Bill vuelve con algo en las manos. Una radio de bolsillo de color crema, con una antena plegable y una rejilla redonda. Le falta algo.' },
 				{ text: 'Enrosca una **ruedecita** en el costado. Clic-clic. Gira suave.', cond: 'flag.b04_rueda_entregada' },
 				{ text: 'Saca de un cajón un Voltorb de juguete, le quita una rueda con un destornillador y se la enrosca a la radio en el costado. Clic-clic. «Lo siento, Voltorbito», murmura.', cond: '!flag.b04_rueda_entregada' },
-				{ text: 'Gira la ruedecita. La radio sisea. Ruido blanco. Nada. Bill frunce el ceño. «Está cerca, pero no la pilla. Le falta… oído».' },
-				{ text: '{riolu} se acerca al banco de trabajo. Mira la radio. Cierra los ojos. Los apéndices de la cabeza se levantan, despacio, y empiezan a brillar.', cond: LUC },
-				{ fx: 'glow', text: 'El aura azul de {riolu} roza la antena. Y la radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. Bill se queda con la boca abierta y el destornillador en el aire.', cond: LUC },
-				{ fx: 'glow', text: 'Bill le da un golpecito a la radio con el nudillo, como a un melón. La radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. «¡Ja! Siempre funciona», dice Bill. No siempre funciona.', cond: '!(' + LUC + ')' },
-				{ item: 'sintonizadorbill', fx: 'light', text: 'Bill toma un rotulador y, en la rejilla del altavoz, le dibuja dos puntitos y una sonrisa. «Así sabe que es querido. Las máquinas queridas funcionan mejor. Eso no lo dice ningún manual. Lo digo yo».' },
+				{ actors: [{ key: 'bill', emote: '?' }], text: 'Gira la ruedecita. La radio sisea. Ruido blanco. Nada. Bill frunce el ceño. «Está cerca, pero no la pilla. Le falta… oído».' },
+				{ actors: [{ mon: '{riolu}', key: 'rio', at: 0.7, enter: 'right' }], text: '{riolu} se acerca al banco de trabajo. Mira la radio. Cierra los ojos. Los apéndices de la cabeza se levantan, despacio, y empiezan a brillar.', cond: LUC },
+				{ actors: [{ key: 'bill', emote: '!' }], on: 'rio', fx: 'glow', text: 'El aura azul de {riolu} roza la antena. Y la radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. Bill se queda con la boca abierta y el destornillador en el aire.', cond: LUC },
+				{ actors: [{ key: 'bill', do: 'hop' }], fx: 'glow', text: 'Bill le da un golpecito a la radio con el nudillo, como a un melón. La radio, de golpe, **pita**. Tres veces. Pausa. Tres veces. «¡Ja! Siempre funciona», dice Bill. No siempre funciona.', cond: '!(' + LUC + ')' },
+				{ item: 'sintonizadorbill', fx: ['light', 'sparkle'], text: 'Bill toma un rotulador y, en la rejilla del altavoz, le dibuja dos puntitos y una sonrisa. «Así sabe que es querido. Las máquinas queridas funcionan mejor. Eso no lo dice ningún manual. Lo digo yo».' },
 			] } },
 			{ say: 'bill', text: 'El **Sintonizador de Bill**. Primer modelo. Único modelo. Está ajustado a esa frecuencia: cuando la tengas cerca, pita. Cuanto más cerca, más pita. Ahí abajo, en la oscuridad, te dirá por dónde va el hilo.' },
 			{ if: LUC, then: [
@@ -1000,14 +1000,14 @@ export default {
 			{ if: LUC, then: [
 				{ text: '{riolu} se tumba a los pies de la cama, como siempre, con la espalda contra la pared y la cara hacia la puerta. Tarda en dormirse. Cuando por fin se duerme, el aura le brilla un poco, muy tenue, al ritmo de la respiración.' },
 				{ text: 'Te quedas dormid{o|a|e} mirando ese brillo. Y sueñas.' },
-				{ cutscene: { bg: { type: 'coast', far: '#2a3448', ground: '#4a3a3a' }, start: 'dark', frames: [
-					{ text: 'Una isla. Rocas oscuras, de color de hierro viejo, con vetas de óxido. Olas grises que rompen sin ruido. El cielo, del mismo gris que el mar.' },
-					{ text: 'En lo alto de un acantilado, de espaldas, un hombre con sombrero. No se mueve. El viento le agita el abrigo, pero no el sombrero.' },
-					{ fx: 'glow', text: 'A su lado, un **Lucario**. Más alto que {riolu}. Más viejo. Mira el mar con los brazos cruzados, como quien espera un barco que lleva mucho tiempo sin llegar.' },
-					{ text: 'El aura del Lucario del acantilado se enciende. Azul. Igual que la de {riolu}. Exactamente igual.' },
-					{ fx: 'zoom', text: 'Y entonces se gira. Despacio. No hacia ti. Hacia {riolu}, que está a tu lado en el sueño, aunque no sabías que estaba.' },
-					{ text: 'Se miran. Ninguno de los dos se mueve. El hombre del sombrero no se gira.' },
-					{ fx: 'dark', text: 'Una ola rompe contra el acantilado. Esta vez sí suena.' },
+				{ cutscene: { weather: 'fog', tint: '#5a6a8a', bg: { type: 'coast', far: '#2a3448', ground: '#4a3a3a' }, start: 'dark', frames: [
+					{ cam: 'pan-right', text: 'Una isla. Rocas oscuras, de color de hierro viejo, con vetas de óxido. Olas grises que rompen sin ruido. El cielo, del mismo gris que el mar.' },
+					{ cam: 'pan-up', text: 'En lo alto de un acantilado, de espaldas, un hombre con sombrero. No se mueve. El viento le agita el abrigo, pero no el sombrero.' },
+					{ actors: [{ mon: 'lucario', key: 'viejo', at: 0.68, size: 'l', enter: 'fade', flip: true }], fx: 'glow', text: 'A su lado, un **Lucario**. Más alto que {riolu}. Más viejo. Mira el mar con los brazos cruzados, como quien espera un barco que lleva mucho tiempo sin llegar.' },
+					{ fx: 'aura', on: 'viejo', text: 'El aura del Lucario del acantilado se enciende. Azul. Igual que la de {riolu}. Exactamente igual.' },
+					{ actors: [{ mon: '{riolu}', key: 'rio', at: 0.24, size: 's', enter: 'fade' }, { key: 'viejo', do: 'turn' }], fx: 'zoom', text: 'Y entonces se gira. Despacio. No hacia ti. Hacia {riolu}, que está a tu lado en el sueño, aunque no sabías que estaba.' },
+					{ fx: 'silhouette', cam: 'still', text: 'Se miran. Ninguno de los dos se mueve. El hombre del sombrero no se gira.' },
+					{ shake: 2, fx: ['dark', 'ripple'], text: 'Una ola rompe contra el acantilado. Esta vez sí suena.' },
 				] } },
 				{ text: 'Te despiertas de golpe. Está oscuro. {riolu} está sentado en el borde de la cama, despierto, mirando la ventana. Tiene la respiración rápida.' },
 				{ text: 'Le pones la mano en la espalda. Tarda mucho en volver a tumbarse. Cuando lo hace, se pega a ti más que de costumbre.' },
@@ -1034,9 +1034,9 @@ export default {
 				{ if: LUC, then: [{ text: '{riolu} mira el toldo. Te mira a ti. Tiene la cara exacta de alguien que ya sabe cómo acaba esto.' }] },
 				{ prompt: 'El borde del tejado. El toldo de la tienda de bicis.', choice: [
 					{ text: 'Saltar.', then: [
-						{ cutscene: { bg: { type: 'city', roofs: ['#3b7ac4', '#8ab0c8', '#e9e3d0'] }, start: 'light', frames: [
-							{ fx: 'zoom', text: 'Das un paso al vacío. Tres pisos. El aire de la mañana huele a río. Un Pidgeotto te mira pasar con la cara de quien ha visto cosas peores.' },
-							{ fx: 'shake', text: 'Caes en el toldo de la tienda de bicis. Rebota. Rebotas. Y aterrizas, de culo, sobre una montaña de cámaras de bicicleta que el dueño tenía apiladas en la acera.' },
+						{ cutscene: { time: 'manana', bg: { type: 'city', roofs: ['#3b7ac4', '#8ab0c8', '#e9e3d0'] }, start: 'light', frames: [
+							{ cam: 'pan-down', actors: [{ mon: 'pidgeotto', at: 0.78, size: 's', enter: 'right', do: 'float' }], fx: ['zoom', 'speedlines'], text: 'Das un paso al vacío. Tres pisos. El aire de la mañana huele a río. Un Pidgeotto te mira pasar con la cara de quien ha visto cosas peores.' },
+							{ shake: 3, actors: [{ key: 'pidgeotto', remove: true, exit: 'up' }], on: false, fx: 'impact', text: 'Caes en el toldo de la tienda de bicis. Rebota. Rebotas. Y aterrizas, de culo, sobre una montaña de cámaras de bicicleta que el dueño tenía apiladas en la acera.' },
 							{ fx: 'flash', text: 'El dueño sale corriendo con un timbre en cada mano. Te mira. Mira el toldo. Te mira otra vez. «¿Quieres una bici?», pregunta, por si acaso.' },
 						] } },
 						{ set: { 'flag.b04_vencejo_pluma': true } },

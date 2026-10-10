@@ -9,6 +9,7 @@ import t3 from './t3-cueva.js';
 import t4 from './t4-lola.js';
 import t5 from './t5-tiendas-premios.js';
 import t6 from './t6-negocios.js';
+import t7 from './t7-minijuegos.js';
 
 const block = {
 	id: 'b04', title: 'Acto III · La señal', hours: 12, ends: 'b04_fin',
@@ -17,7 +18,7 @@ const block = {
 	locations: {}, trainers: {}, scripts: {}, challenges: {}, badges: {}, shops: {}, items: {}, events: [], milestones: [],
 	gather: {}, patches: {}, ventures: {},
 };
-const parts = [comun, t0, t1, t2, t3, t4, t5, t6];
+const parts = [comun, t0, t1, t2, t3, t4, t5, t6, t7];
 const extraSpots = {};
 for (const part of parts) {
 	for (const k of ['locations', 'trainers', 'scripts', 'challenges', 'badges', 'shops', 'items', 'quests', 'npcs', 'gather', 'ventures']) {

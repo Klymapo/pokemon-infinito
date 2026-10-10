@@ -40,6 +40,8 @@ La historia es **infinita**: cada madrugada (3:00, hora de Ciudad de México) un
 | `app/sw.js` | Service worker **generado**. Regenéralo siempre antes de publicar. |
 | `docs/DISENO.md` | Diseño público (sin spoilers). |
 | `docs/CONTENIDO.md` | **Formato exacto del contenido.** Léelo antes de escribir nada. |
+| `docs/CINE.md` | **Formato de las cinemáticas** y recetas por tipo de momento. |
+| `docs/MINIJUEGOS.md` | **Minijuegos para conseguir objetos**: formato, niveles y economía. |
 | `docs/ARTE.md` | **Guía de pixel art** (siluetas, caras, revisión con imágenes). Obligatoria para cualquier trabajo de arte. |
 | `secreto/` | Documentos con spoilers: biblia, personajes, candidatas, hilos, registro, balance, referencias, planes por bloque y auditorías. |
 | `herramientas/` | Validador, bot de recorrido, registro, auditoría, prueba de humo y builds. |
@@ -129,6 +131,9 @@ Trabaja en este orden. Usa la lista de tareas para que Mario vea el progreso si 
    - **Premio del instructor (pedido de Mario, 2026-10-10):** toda zona de entrenamiento lleva `prize` (`docs/CONTENIDO.md` §3.1): una MT o Megapiedra temática del lugar o del gimnasio, con su escena. Megapiedras, una de cada 3 o 4, de Pokémon que Mario tenga o pueda conseguir.
    - **Negocios (pedido de Mario, 2026-10-10):** cada bloque abre un negocio nuevo en su región o amplía uno que ya exista (más mejoras, imprevistos o encargados; se repite el id en `ventures`), con un personaje querido como socio. Formato y reglas de economía en `docs/CONTENIDO.md` §13.
    - **Mecánicas a la vista (pedido de Mario, 2026-10-10):** cada bloque enseña al menos dos Megas ajenas y una Tera (salvaje de Fisura o de entrenador), dentro de `balance.md` §4.8. Los combates con mecánica que no sean de jefe, opcionales.
+   - **Cinemáticas (pedido de Mario, 2026-10-10):** escríbelas con el formato de `docs/CINE.md` (actores, cámara, clima, efectos): nunca un fondo con un texto y ya. Siguen siendo 2–4 por bloque.
+   - **Minijuegos para conseguir objetos (pedido de Mario, 2026-10-10):** cada bloque trae al menos 4 sitios nuevos con minijuego (`docs/MINIJUEGOS.md`): puntos diarios con `gather.game` y una o dos escenas únicas con premio especial, variando entre excavar, pescar, cosechar, rastrear, cerradura y el puzle de rejilla.
+   - **Sub-lugares:** un edificio o zona interior solo es visible para Novedades, Diario y viajes si hoy existe un spot `go` (o un `branch`) visible que lleve a él. No dejes sub-lugares accesibles sin entrada, y cierra con `cond` las entradas de escenas ya terminadas.
    - **Cartas y notas:** siempre como objeto con `read` y, si se leen en el momento, con `{ read: 'id' }` (hoja de papel). Nunca una carta larga en un `text`.
    - **Novedades:** lo nuevo que aparezca en zonas viejas sale solo en Diario › Novedades si el spot tiene `new` o su guion toca una misión sin empezar. Pon siempre `new` a los spots de contenido añadido a zonas ya visitadas, o Mario no se enterará.
    - **Colección:** cada bloque añade puntos de recolección (`gather`) en sus rutas y cuevas, 2 o 3 objetos para leer (`read`: cartas, notas, diarios de NPCs que cuenten algo de su historia) y al menos un recuerdo para mirar (`art`). Mario pidió poder ver y recolectar muchas cosas.
@@ -170,7 +175,7 @@ Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea.
    - Superficies azules con texto blanco: `var(--aura-fill)`, no `var(--aura)`.
    - Nada de letra < 12 px ni botones < 44 px de lado corto (en el mapa cuenta la zona de toque invisible).
 
-La auditoría también corre `herramientas/test/pc-multi-test.mjs` (PC) y `herramientas/test/negocios-test.mjs` (entrar, producir, almacén, esfuerzo, Pokémon trabajando, mejoras e imprevistos de **todos** los negocios publicados).
+La auditoría también corre `cine-test.mjs` (todas las cinemáticas contra su vocabulario), `minijuegos-test.mjs`, `fx-eventos-test.mjs` (orden de los eventos de combate que la interfaz necesita), `herramientas/test/pc-multi-test.mjs` (PC) y `herramientas/test/negocios-test.mjs` (entrar, producir, almacén, esfuerzo, Pokémon trabajando, mejoras e imprevistos de **todos** los negocios publicados).
 
 Si añadiste mecánicas nuevas al motor, añade también su prueba (por ejemplo, en `herramientas/test/battle-test.mjs`) y ejecútala.
 

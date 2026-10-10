@@ -6,6 +6,8 @@ import { D, toID } from '../app/js/data.js';
 import { C, registerBlock } from '../app/js/content.js';
 import { canLearn, learnsetOf } from '../app/js/pokemon.js';
 import { parsePuzzle, solve } from '../app/js/puzle.js';
+import { checkCutscene } from '../app/js/cine-spec.js';
+import { MINI_TYPES, checkDef, checkGatherGame, gatherGame, winRate, rareRate } from '../app/js/minijuegos.js';
 
 const strict = process.argv.includes('--estricto');
 loadDataNode();
@@ -14,20 +16,24 @@ for (const b of mod.BLOCKS) registerBlock(b);
 
 const errors = [], warns = [];
 const E = (w, m) => errors.push(`${w}: ${m}`);
-const checkGather = () => { for (const [gid, g] of Object.entries(C.gather || {})) { if (!Array.isArray(g.table) || !g.table.length) E('recolección ' + gid, 'tabla vacía'); for (const e of g.table || []) { if (!D.items[e.id]) E('recolección ' + gid, 'objeto inexistente: ' + e.id); if (e.cond) { try { new Function('s', 'with(s){return (' + e.cond + ')}'); } catch (x) { E('recolección ' + gid, 'condición inválida: ' + e.cond); } } } } };
+const checkGather = () => { for (const [gid, g] of Object.entries(C.gather || {})) { if (!Array.isArray(g.table) || !g.table.length) E('recolección ' + gid, 'tabla vacía'); for (const e of g.table || []) { if (!D.items[e.id]) E('recolección ' + gid, 'objeto inexistente: ' + e.id); if (e.cond) { try { new Function('s', 'with(s){return (' + e.cond + ')}'); } catch (x) { E('recolección ' + gid, 'condición inválida: ' + e.cond); } } } for (const m of checkGatherGame(gid, g, MG_CTX)) E('recolección ' + gid, 'game: ' + m); if (g.game && !checkGatherGame(gid, g, MG_CTX).length) { const gd = gatherGame(gid, g); if (g.table.some(e => e.rare)) { const rr = rareRate(gd, { n: 60, table: g.table, picks: g.picks }); if (rr.had >= 5 && !rr.got) E('recolección ' + gid, 'game: las entradas rare no se consiguen nunca'); } minigames.push({ w: 'recolección ' + gid, id: gd.id, type: gd.type, level: gd.level, win: winRate({ ...gd, loot: g.table }, { n: 30 }).win }); } else if (!g.game && (g.table || []).some(e => e.rare)) W('recolección ' + gid, 'entradas rare sin game: salen como cualquier otra'); } };
 const W = (w, m) => warns.push(`${w}: ${m}`);
 
-const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve', 'puzzle', 'read', 'venture']);
+const KNOWN_CMDS = new Set(['say', 'text', 'choice', 'if', 'set', 'rep', 'af', 'give', 'take', 'money', 'pokemon', 'battle', 'wild', 'heal', 'go', 'quest', 'diary', 'intel', 'badge', 'cap', 'call', 'end', 'notice', 'toast', 'scene', 'wait', 'happy', 'learn', 'unlock', 'shop', 'save', 'evolveCheck', 'nickname', 'center', 'pc', 'mapUnlock', 'clearRoute', 'cutscene', 'input', 'forceEvolve', 'puzzle', 'read', 'venture', 'minigame']);
 const AUX_KEYS = new Set(['cond', 'as', 'n', 'silent', 'stage', 'done', 'then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'lose', 'canRun', 'prompt', 'nickname', 'who', 'jingle', 'dim', 'mood', 'onSolve', 'onQuit', 'join', 'open']);
 const COND_NS = /\b(flag|flags|vars|rep|af|quest|done)\.([A-Za-z0-9_]+)/g;
 const COND_FUNCS = ['has', 'count', 'badge', 'inParty', 'owns', 'seen', 'caught', 'visited', 'cleared', 'beat', 'date', 'zero', 'works', 'partner'];
 const COND_VARS = ['badges', 'money', 'maxLv', 'partySize', 'pron', 'time', 'night', 'day', 'morning', 'evening', 'season', 'year', 'weekday', 'true', 'false', 'null', 'undefined'];
 
 const flagsSet = new Set(), flagsRead = new Map(), varsSet = new Set();
+for (const gid in C.gather || {}) flagsSet.add('rec_' + gid); // el motor activa flag.rec_<id> la primera vez que se recoge en un punto
 const npcUse = {}; // npc -> Set de contextos
 const useNpc = (id, ctx) => { (npcUse[id] ||= new Set()).add(ctx); };
 const questStagesUsed = [];
 const puzzles = [], puzzleIds = new Map();
+const minigames = [], minigameIds = new Map();
+const MG_KEYS = new Set(['type', 'id', 'title', 'hint', 'theme', 'level', 'loot', 'guaranteed', 'picks', 'wild', 'wildChance', 'consolation', 'lootTitle', 'seed']);
+const MG_CTX = { has: id => !!D.items[id], hasSp: id => !!D.species[id] };
 
 function checkCond(where, expr) {
 	if (expr === undefined || expr === null || typeof expr === 'boolean') return;
@@ -95,6 +101,23 @@ function walk(where, list, depth = 0) {
 			if (pz.id && puzzleIds.has(pz.id) && puzzleIds.get(pz.id) !== w) W(w, 'puzle: id repetido ' + pz.id); else if (pz.id) puzzleIds.set(pz.id, w);
 			if (!c.onSolve) W(w, 'puzle sin onSolve: resolverlo no cambia nada');
 			if (pz.hint && pz.hint.length > 140) W(w, 'puzle: pista de más de 140 caracteres');
+			break;
+		}
+		case 'cutscene': for (const m of checkCutscene(c.cutscene, { npc: id => !!C.npcs[id], species: id => !!D.species[toID(id)], item: id => !!D.items[toID(id)] })) W(w, 'cinemática: ' + m); break;
+		case 'minigame': {
+			const mg = c.minigame || {};
+			for (const e of checkDef(mg, MG_CTX)) E(w, 'minijuego: ' + e);
+			for (const k of Object.keys(mg)) if (!MG_KEYS.has(k)) W(w, 'minijuego: clave desconocida ' + k);
+			for (const e of [...(mg.loot || []), ...(mg.wild || [])]) if (e?.cond) checkCond(w + ' (minijuego)', e.cond);
+			if (MINI_TYPES.includes(mg.type) && !checkDef(mg, MG_CTX).length) {
+				const wr = winRate(mg, { n: 40 }), rr = rareRate(mg, { n: 40 });
+				if (wr.win < 0.5) E(w, `minijuego: un jugador normal solo gana el ${Math.round(wr.win * 100)} % de las veces (baja level)`);
+				if (rr.had >= 5 && !rr.got) E(w, 'minijuego: las entradas rare no se consiguen nunca');
+				minigames.push({ w, id: mg.id, type: mg.type, level: mg.level || 2, win: wr.win });
+			}
+			if (!mg.id) W(w, 'minijuego sin id: no guarda récord ni ayuda adaptativa propia');
+			else if (minigameIds.has(mg.id) && minigameIds.get(mg.id) !== w) W(w, 'minijuego: id repetido ' + mg.id); else minigameIds.set(mg.id, w);
+			if (!c.onWin && !(mg.loot || []).length && !(mg.guaranteed || []).length) W(w, 'minijuego sin onWin ni objetos: ganar no cambia nada');
 			break;
 		}
 		case 'unlock': if (!['mega', 'z', 'dynamax', 'tera'].includes(c.unlock)) E(w, 'unlock inválido'); break;
@@ -325,6 +348,7 @@ function checkVentures() {
 }
 checkGather();
 console.log(`Bloques: ${C.blocks.map(b => b.id).join(', ')} · Lugares: ${Object.keys(C.locations).length} · Entrenadores: ${Object.keys(C.trainers).length} · Guiones: ${Object.keys(C.scripts).length} · Misiones: ${Object.keys(C.quests).length} · NPCs: ${Object.keys(C.npcs).length}`);
+if (minigames.length) { const by = {}; for (const m of minigames) (by[m.type] ||= []).push(m); console.log(`Minijuegos: ${minigames.length} (${Object.entries(by).map(([t, l]) => `${t} ×${l.length}, gana ${Math.round(Math.min(...l.map(m => m.win)) * 100)}–${Math.round(Math.max(...l.map(m => m.win)) * 100)} %`).join('; ')})`); }
 if (puzzles.length) console.log(`Puzles: ${puzzles.length} (${puzzles.map(p => (p.id || p.w) + ' ' + p.steps + ' pasos').join(', ')})`);
 if (lowNpc.length) console.log('NPCs con menos de 3 escenas (deben reaparecer en bloques futuros): ' + lowNpc.join(', '));
 if (warns.length) { console.log(`\n${warns.length} ADVERTENCIAS:`); for (const x of warns) console.log('  ⚠ ' + x); }

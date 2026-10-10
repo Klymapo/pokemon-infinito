@@ -319,10 +319,10 @@ export default {
 					{ say: 'petra', text: 'Esa es la cero.' },
 					{ text: 'Lazare pone los dos ámbares en la bandeja del Restaurador, uno al lado del otro. La máquina zumba. La pantalla parpadea.' },
 					{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-						{ fx: 'light', text: 'Primera línea, en verde: «MUESTRA A · ÁMBAR · COINCIDENCIA: AERODACTYL · ANTIGÜEDAD ESTIMADA: MUY ALTA».' },
-						{ fx: 'glow', text: 'Segunda línea, en amarillo: «MUESTRA B · ÁMBAR · SIN COINCIDENCIAS».' },
-						{ fx: 'shake', text: 'Y una tercera línea, que nadie ha pedido: «MUESTRA B · ANTIGÜEDAD ESTIMADA: −3 AÑOS».' },
-						{ fx: 'dark', text: 'Menos tres. La pantalla se queda así un momento. Luego se apaga sola, como si le diera vergüenza.' },
+						{ actors: [{ id: 'cientifico_fosiles', at: 'left' }, { id: 'petra', at: 'right' }], on: false, fx: 'light', text: 'Primera línea, en verde: «MUESTRA A · ÁMBAR · COINCIDENCIA: AERODACTYL · ANTIGÜEDAD ESTIMADA: MUY ALTA».' },
+						{ on: false, fx: 'glow', text: 'Segunda línea, en amarillo: «MUESTRA B · ÁMBAR · SIN COINCIDENCIAS».' },
+						{ actors: [{ key: 'cientifico_fosiles', emote: '?' }, { key: 'petra', emote: '!' }], on: false, color: '#d8c84a', fx: ['shake', 'heartbeat'], text: 'Y una tercera línea, que nadie ha pedido: «MUESTRA B · ANTIGÜEDAD ESTIMADA: −3 AÑOS».' },
+						{ actors: [{ key: 'cientifico_fosiles', dim: true }, { key: 'petra', dim: true }], cam: 'still', fx: 'dark', text: 'Menos tres. La pantalla se queda así un momento. Luego se apaga sola, como si le diera vergüenza.' },
 					] } },
 					{ say: 'cientifico_fosiles', text: '…Se ha estropeado. Le pasa cuando hay humedad. —Le da un golpecito a la máquina. No se enciende—. Hay mucha humedad hoy.' },
 					{ text: 'Petra no dice nada. Mira el ámbar. Mira la pantalla apagada. Se queda callada mucho rato, que en Petra es muchísimo. Chispas le baja de la cabeza al hombro, como para hacerle compañía.' },
@@ -406,46 +406,46 @@ export default {
 		],
 
 		b03_panel_kabuto: [
-			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Lazare mete el Fósil Domo en la cápsula. La máquina se ilumina por dentro, azul, y empieza a zumbar como un refrigerador muy viejo.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'lab' }, start: 'dark', frames: [
+				{ actors: [{ id: 'cientifico_fosiles', at: 'left' }], cam: 'push', fx: 'light', text: 'Lazare mete el Fósil Domo en la cápsula. La máquina se ilumina por dentro, azul, y empieza a zumbar como un refrigerador muy viejo.' },
 				{ fx: 'glow', text: 'El caparazón se vuelve transparente. Debajo, algo se mueve. Patitas. Muchas.' },
-				{ mon: 'kabuto', fx: 'flash', text: 'La tapa se abre con un siseo. Sobre la bandeja, un **Kabuto** parpadea con sus dos ojitos rojos y se esconde bajo el caparazón. Luego asoma. Luego se esconde otra vez.' },
+				{ weather: 'none', actors: [{ key: 'cientifico_fosiles', emote: 'heart' }, { key: '_c', do: 'bob' }], mon: 'kabuto', fx: 'flash', text: 'La tapa se abre con un siseo. Sobre la bandeja, un **Kabuto** parpadea con sus dos ojitos rojos y se esconde bajo el caparazón. Luego asoma. Luego se esconde otra vez.' },
 			] } },
 			{ say: 'cientifico_fosiles', text: 'Hola, pequeño. Llevas trescientos millones de años escondido. Puedes salir. Fuera ya no hay ola.' },
 			{ pokemon: { sp: 'kabuto', lv: 25, happy: 70 } },
 			{ say: 'petra', text: '¡Hola! ¡Hola, hola! —Pala le aprieta las manos un poco más fuerte—. No lo toco. No lo toco. Pero hola.', cond: PETRA_AQUI },
 		],
 		b03_panel_omanyte: [
-			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Lazare mete el Fósil Hélix en la cápsula, con la espiral hacia arriba, «que es como les gusta». La máquina se ilumina y zumba.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'lab' }, start: 'dark', frames: [
+				{ actors: [{ id: 'cientifico_fosiles', at: 'left' }], cam: 'push', fx: 'light', text: 'Lazare mete el Fósil Hélix en la cápsula, con la espiral hacia arriba, «que es como les gusta». La máquina se ilumina y zumba.' },
 				{ fx: 'glow', text: 'La concha gira. Despacio. Una vuelta. Dos. Algo dentro se estira.' },
-				{ mon: 'omanyte', fx: 'flash', text: 'La tapa se abre. Un **Omanyte** sale de la concha con diez tentáculos a la vez, mira la luz del techo y se queda embobado, como quien ve una lámpara por primera vez.' },
+				{ weather: 'none', actors: [{ key: 'cientifico_fosiles', emote: '...' }, { key: '_c', do: 'nod' }], mon: 'omanyte', fx: 'flash', text: 'La tapa se abre. Un **Omanyte** sale de la concha con diez tentáculos a la vez, mira la luz del techo y se queda embobado, como quien ve una lámpara por primera vez.' },
 			] } },
 			{ say: 'cientifico_fosiles', text: 'Le gusta la luz. Normal. Lleva mucho tiempo a oscuras. —Apaga y enciende la lámpara de la mesa. El Omanyte sigue la luz con los ojos, fascinado—. Esto va a ser un problema.' },
 			{ pokemon: { sp: 'omanyte', lv: 25, happy: 70 } },
 		],
 		b03_panel_aerodactyl: [
-			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Lazare mete el Ámbar Viejo en la cápsula con las dos manos, como quien acuesta a un bebé. La máquina se ilumina, amarilla esta vez, y zumba más fuerte.' },
-				{ fx: 'shake', text: 'Todo el laboratorio vibra. Las vitrinas tintinean. La taza de café se va sola hacia el borde de la mesa.' },
-				{ mon: 'aerodactyl', fx: 'flash', text: 'La tapa sale volando. Un **Aerodactyl** abre las alas en mitad del laboratorio, chilla con un sonido que no se ha oído en millones de años y tira la taza de café al suelo.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'lab' }, start: 'dark', frames: [
+				{ actors: [{ id: 'cientifico_fosiles', at: 'left' }], cam: 'push', fx: 'light', text: 'Lazare mete el Ámbar Viejo en la cápsula con las dos manos, como quien acuesta a un bebé. La máquina se ilumina, amarilla esta vez, y zumba más fuerte.' },
+				{ fx: ['shake', 'quake'], text: 'Todo el laboratorio vibra. Las vitrinas tintinean. La taza de café se va sola hacia el borde de la mesa.' },
+				{ weather: 'none', shake: 3, actors: [{ key: 'cientifico_fosiles', emote: '!' }, { key: '_c', size: 'l', do: 'hop' }], mon: 'aerodactyl', fx: ['flash', 'impact'], text: 'La tapa sale volando. Un **Aerodactyl** abre las alas en mitad del laboratorio, chilla con un sonido que no se ha oído en millones de años y tira la taza de café al suelo.' },
 			] } },
 			{ say: 'cientifico_fosiles', text: '¡Mi taza! —Mira la taza. Mira al Aerodactyl. Se le pasa enseguida—. Da igual. Era fea. Bienvenido, grandullón. Aquí no hay cielo, pero hay techo alto.' },
 			{ pokemon: { sp: 'aerodactyl', lv: 25, happy: 70 } },
 			{ say: 'petra', text: 'Lazare, el ala. Mírale el ala. Es igual que la del relieve de la cámara. ¡Igual! —Pala no la suelta. Hace bien.', cond: PETRA_AQUI + ' && flag.b03_panel_ala' },
 		],
 		b03_panel_tyrunt: [
-			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Lazare mete el Fósil Mandíbula en la cápsula con unas pinzas muy largas. «Por si acaso», dice. La máquina se ilumina y zumba.' },
-				{ mon: 'tyrunt', fx: 'flash', text: 'La tapa se abre. Un **Tyrunt** pequeño sale de un salto, ruge con todas sus fuerzas (no mucha fuerza) y le muerde las pinzas a Lazare.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'lab' }, start: 'dark', frames: [
+				{ actors: [{ id: 'cientifico_fosiles', at: 'left' }], cam: 'push', fx: 'light', text: 'Lazare mete el Fósil Mandíbula en la cápsula con unas pinzas muy largas. «Por si acaso», dice. La máquina se ilumina y zumba.' },
+				{ weather: 'none', actors: [{ key: 'cientifico_fosiles', do: 'shake', emote: 'sweat' }, { key: '_c', do: 'hop' }], mon: 'tyrunt', fx: 'flash', text: 'La tapa se abre. Un **Tyrunt** pequeño sale de un salto, ruge con todas sus fuerzas (no mucha fuerza) y le muerde las pinzas a Lazare.' },
 			] } },
 			{ say: 'cientifico_fosiles', text: '¡Igualito que el otro! ¡Muerde con cariño! Con muchísimo cariño. Suelta, cariño.' },
 			{ pokemon: { sp: 'tyrunt', lv: 25, happy: 70 } },
 		],
 		b03_panel_amaura: [
-			{ cutscene: { bg: { type: 'lab' }, start: 'dark', frames: [
-				{ fx: 'light', text: 'Lazare mete el Fósil Aleta en la cápsula. Baja un poco la temperatura del laboratorio, sin que nadie le diga nada: «les gusta el fresco». La máquina se ilumina y zumba.' },
-				{ mon: 'amaura', fx: 'glow', text: 'La tapa se abre despacio. Una **Amaura** levanta la cabeza. Las velas del cuello se le encienden de colores, verde, rosa, azul, como una aurora de un cielo que ya no existe.' },
+			{ cutscene: { weather: 'sparks', bg: { type: 'lab' }, start: 'dark', frames: [
+				{ actors: [{ id: 'cientifico_fosiles', at: 'left' }], cam: 'push', fx: 'light', text: 'Lazare mete el Fósil Aleta en la cápsula. Baja un poco la temperatura del laboratorio, sin que nadie le diga nada: «les gusta el fresco». La máquina se ilumina y zumba.' },
+				{ weather: 'none', color: '#9fe8d8', actors: [{ key: 'cientifico_fosiles', emote: '...' }], on: '_c', mon: 'amaura', fx: ['glow', 'sparkle'], text: 'La tapa se abre despacio. Una **Amaura** levanta la cabeza. Las velas del cuello se le encienden de colores, verde, rosa, azul, como una aurora de un cielo que ya no existe.' },
 			] } },
 			{ say: 'cientifico_fosiles', text: '…Siempre me pasa lo mismo con estas. Se me empañan las gafas. Es la humedad. —Se quita las gafas—. Es la humedad.' },
 			{ pokemon: { sp: 'amaura', lv: 25, happy: 70 } },

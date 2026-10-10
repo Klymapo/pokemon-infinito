@@ -1,0 +1,118 @@
+/* Minijuegos (ver app/js/ui/minijuegos.js y mj-*.js). Marco común + piezas de cada juego.
+   Colores: siempre variables del tema (--ink…); los únicos fijos son los de las piezas pixel art y sus tintas. */
+.mj { position: fixed; inset: 0; z-index: 35; display: flex; flex-direction: column; align-items: center; max-width: 560px; margin: 0 auto; background: radial-gradient(120% 80% at 50% 28%, var(--ink-3) 0%, var(--ink) 72%); padding: calc(10px + var(--safe-t)) 12px calc(12px + var(--safe-b)); opacity: 0; transition: opacity .22s; touch-action: none; }
+.mj.in { opacity: 1; }
+.mj-top { width: 100%; display: flex; align-items: center; gap: 10px; }
+.mj-title { flex: 1; font-family: var(--pixel); font-size: 20px; color: var(--cream); line-height: 1.2; }
+.mj-help { width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--cream); color: var(--cream); font-family: var(--pixel); font-size: 20px; flex: none; }
+
+/* marcador */
+.mj-stats { width: 100%; display: flex; align-items: center; gap: 14px; min-height: 30px; margin: 6px 0 8px; }
+.mj-stat { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 13px; font-weight: 800; color: var(--muted); }
+.mj-stat.grow { flex: 1; }
+.mj-stat-l { white-space: nowrap; }
+.mj-stat-n { font-family: var(--pixel); font-size: 17px; color: var(--gold); min-width: 2ch; }
+.mj-bar { flex: 1; height: 14px; border-radius: 4px; background: var(--ink); border: 2px solid var(--line); overflow: hidden; min-width: 60px; }
+.mj-bar-fill { height: 100%; width: 100%; background: var(--green); transition: width .18s steps(6); }
+.mj-bar-fill[data-lvl="mid"] { background: var(--gold); }
+.mj-bar-fill[data-lvl="low"] { background: var(--red); }
+.mj-pips { display: inline-flex; gap: 5px; }
+.mj-pips i { width: 12px; height: 12px; border-radius: 3px; border: 2px solid var(--line); background: var(--ink); }
+.mj-pips i.on { background: var(--gold); border-color: var(--cream); }
+
+/* escenario */
+.mj-stage { flex: 1; min-height: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; position: relative; }
+.mj-canvas { display: block; flex: none; border: 3px solid var(--ink); border-radius: 6px; box-shadow: 0 0 0 2px var(--line), 0 10px 30px rgba(0,0,0,.45); touch-action: none; }
+.mj-canvas.shake { animation: mjshake .14s steps(3); }
+.mj-canvas.shake-big { animation: mjshake2 .22s steps(4); }
+@keyframes mjshake { 33% { transform: translate(2px, 1px); } 66% { transform: translate(-2px, -1px); } }
+@keyframes mjshake2 { 25% { transform: translate(4px, 2px); } 50% { transform: translate(-4px, -2px); } 75% { transform: translate(3px, -2px); } }
+.mj.win .mj-canvas { box-shadow: 0 0 0 3px var(--gold), 0 0 28px rgba(242,179,61,.6); }
+.mj.lose .mj-canvas { filter: saturate(.55) brightness(.8); }
+.mj-end { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); padding: 12px 20px; border-radius: 14px; background: var(--cream); color: var(--ink); border: 3px solid var(--ink); box-shadow: 0 8px 24px rgba(0,0,0,.5); text-align: center; animation: mjpop .25s steps(4); z-index: 2; white-space: nowrap; }
+.mj-end-t { font-family: var(--pixel); font-size: 22px; }
+.mj-end-s { font-weight: 800; font-size: 14px; margin-top: 2px; }
+.mj-end.win { background: var(--gold); }
+@keyframes mjpop { from { transform: translate(-50%, -50%) scale(.6); opacity: 0; } }
+
+/* mensaje y controles */
+.mj-msg { width: 100%; min-height: 56px; margin: 10px 0 8px; padding: 9px 14px; border-radius: 12px; background: var(--cream); color: var(--ink); font-weight: 700; font-size: 15px; line-height: 1.3; display: flex; align-items: center; border-left: 6px solid var(--cream-2); }
+.mj-msg[data-kind="good"] { border-left-color: var(--green); }
+.mj-msg[data-kind="bad"] { border-left-color: var(--red); }
+.mj-ctrl { width: 100%; display: flex; align-items: stretch; gap: 10px; }
+.mj-game-ctrl { flex: 1; display: flex; gap: 10px; min-width: 0; }
+.mj-btn { min-height: 56px; min-width: 44px; padding: 8px 14px; border-radius: 12px; background: var(--ink-2); border: 2px solid var(--line); font-weight: 800; font-size: 15px; color: var(--text); }
+.mj-btn:disabled { color: var(--muted); background: transparent; border-style: dashed; }
+.mj-btn.quit { border-color: var(--cream-2); color: var(--cream); flex: none; }
+.mj-main { flex: 1; font-family: var(--pixel); font-size: 19px; background: var(--aura-fill); border-color: var(--aura-soft); color: #fff; }
+.mj-main:active { transform: translateY(1px); }
+.mj-main[data-kind="wait"] { background: var(--ink-2); border-color: var(--line); color: var(--muted); }
+.mj-main[data-kind="bite"] { background: var(--gold); border-color: var(--cream); color: var(--ink); animation: mjpulse .3s steps(2) infinite; }
+.mj-main[data-kind="reel"]:active { background: var(--green); color: var(--ink); }
+@keyframes mjpulse { 50% { transform: scale(1.03); } }
+.mj-tip { flex: 1; display: flex; align-items: center; font-size: 14px; font-weight: 700; color: var(--muted); line-height: 1.3; }
+.mj-ico { display: block; flex: none; }
+.mj-confirm { display: flex; flex-direction: column; gap: 10px; margin: 14px 12px; }
+.mj-legend .row { padding: 12px 14px; }
+
+/* excavación: herramientas */
+.mj-tool { flex: 1; display: flex; align-items: center; gap: 8px; padding: 6px 10px; text-align: left; }
+.mj-tool[aria-pressed="true"] { background: var(--aura-fill); border-color: var(--cream); color: #fff; }
+.mj-tool-t { display: flex; flex-direction: column; min-width: 0; }
+.mj-tool-n { font-family: var(--pixel); font-size: 17px; line-height: 1.1; }
+.mj-tool-c { font-size: 12px; font-weight: 700; color: var(--muted); line-height: 1.2; }
+.mj-tool[aria-pressed="true"] .mj-tool-c { color: #fff; }
+.mj-tool.risky:not([aria-pressed="true"]) { border-color: var(--red); }
+
+/* pesca: tensión */
+.mj-reel { width: 100%; max-width: 384px; display: flex; flex-direction: column; gap: 6px; }
+.mj-reel.idle { opacity: .38; }
+.mj-gauge-lbl { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; font-weight: 800; color: var(--muted); }
+.mj-gauge-lbl b { font-family: var(--pixel); font-size: 14px; color: var(--cream); font-weight: 500; }
+.mj-gauge { position: relative; height: 30px; border-radius: 6px; background: var(--ink); border: 3px solid var(--line); overflow: hidden; }
+.mj-gauge[data-st="high"] { border-color: var(--red); }
+.mj-gauge[data-st="ok"] { border-color: var(--green); }
+.mj-gauge.warn { animation: mjshake .14s steps(3) infinite; }
+.mj-zone { position: absolute; top: 0; bottom: 0; background: var(--green); }
+.mj-gauge-red { position: absolute; top: 0; bottom: 0; right: 0; background: repeating-linear-gradient(135deg, var(--red) 0 6px, #8a2428 6px 12px); opacity: calc(.45 + var(--stress, 0) * .55); }
+.mj-needle { position: absolute; top: -3px; bottom: -3px; width: 8px; margin-left: -4px; background: var(--cream); border: 2px solid var(--ink); border-radius: 2px; }
+
+/* rastreo: leyenda */
+.mj-legend-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; font-size: 12px; font-weight: 800; color: var(--text); }
+.mj-leg { display: inline-flex; align-items: center; gap: 5px; }
+.mj-leg canvas { width: 24px; height: 24px; background: var(--ink); border-radius: 4px; }
+
+/* cerradura */
+.mj-chest { border: 0; box-shadow: none; border-radius: 0; background: none; }
+.mj.win .mj-chest, .mj.lose .mj-chest { box-shadow: none; }
+.mj-dots { display: flex; gap: 6px; min-height: 14px; }
+.mj-dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); background: var(--ink); }
+.mj-dots i.on { background: var(--gold); border-color: var(--cream); }
+.mj-runes { width: 100%; max-width: 400px; display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+.mj-runes.n6 { grid-template-columns: repeat(3, 1fr); }
+.mj-rune { height: 104px; border-radius: 14px; background: var(--off); border: 3px solid var(--ink); box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 4px 0 rgba(0,0,0,.35); display: grid; place-items: center; }
+.mj-rune canvas { width: 60px; height: 60px; }
+.mj-rune.lit { background: var(--on); box-shadow: inset 0 0 0 3px #fff, 0 0 22px var(--on); transform: translateY(2px); }
+.mj-runes.showing .mj-rune { cursor: default; }
+.mj-runes.shake { animation: mjshake2 .22s steps(4); }
+
+/* resumen del botín */
+.mj-loot { position: fixed; inset: 0; z-index: 55; display: grid; place-items: center; max-width: 560px; margin: 0 auto; padding: 16px; background: rgba(10, 12, 20, .72); opacity: 0; transition: opacity .18s; }
+.mj-loot.in { opacity: 1; }
+.mj-loot-card { width: 100%; max-width: 380px; max-height: 100%; overflow-y: auto; background: var(--ink-2); border: 3px solid var(--cream); border-radius: 18px; padding: 16px 14px 14px; box-shadow: 0 16px 40px rgba(0,0,0,.6); display: flex; flex-direction: column; gap: 10px; }
+.mj-loot-title { font-family: var(--pixel); font-size: 24px; color: var(--gold); text-align: center; }
+.mj-loot-text { font-size: 14.5px; line-height: 1.4; color: var(--text); text-align: center; }
+.mj-loot-list { display: flex; flex-direction: column; gap: 6px; }
+.mj-loot-row { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 10px; border-radius: 12px; background: var(--ink-3); border: 1px solid var(--line); animation: mjrow .25s steps(4) both; }
+.mj-loot-row.extra { border-color: var(--gold); }
+@keyframes mjrow { from { transform: translateY(8px); opacity: 0; } }
+.mj-loot-name { flex: 1; font-weight: 800; font-size: 15px; min-width: 0; }
+.mj-loot-n { font-family: var(--pixel); font-size: 17px; color: var(--cream); }
+.mj-chip { font-size: 12px; font-weight: 800; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.mj-chip.new { background: var(--gold); color: var(--ink); }
+.mj-chip.extra { background: var(--ink); color: var(--gold); border: 1px solid var(--gold); }
+.mj-loot-note { font-size: 13px; line-height: 1.35; color: var(--muted); text-align: center; }
+.mj-loot-ok { width: 100%; }
+
+@media (max-height: 700px) { .mj-msg { min-height: 48px; font-size: 14px; margin: 6px 0; } .mj-rune { height: 84px; } .mj-btn { min-height: 48px; } }
+@media (prefers-reduced-motion: reduce) { .mj, .mj *, .mj-loot, .mj-loot * { animation: none !important; transition: none !important; } }

@@ -284,3 +284,21 @@ Sin bloque nuevo. Plan en `secreto/bloques/p7-plan.md`. Mario iba por **Azafrán
 - **La mecedora:** con una Mareep viviendo en el rancho, los textos del B3 siguen diciendo «Vacía. Nadie se sienta». Parche de `descs` en un bloque posterior.
 - `p7_rancho_casa` trata a cualquier Mareep/Flaaffy/Ampharos como del rancho (vale para Candela y Faro).
 - La salida de Simón hacia el Acto V debe leer `flag.p7_simon`.
+
+---
+
+## Publicación 8 (2026-10-10, tarde, sesión de día con Mario): cinemáticas, combate, minijuegos y arreglos
+
+Sin bloque nuevo. Pedido de Mario: «las animaciones me preocupan más las de cinemáticas, después las de combate» y «las diferentes mecánicas para obtener objetos: incluye más; me gustó lo de deslizar la piedra para los fósiles».
+
+- **Cinemáticas** (`app/js/ui/cine.js`, `cine-spec.js`, `docs/CINE.md`): fondo por capas con paralaje y ambiente, cámara, actores, clima, efectos y texto que se escribe. Las 79 publicadas usan ya el vocabulario nuevo (56 a fondo). Solo cambió la puesta en escena. `mon: '{riolu}'` = el compañero tal como esté.
+- **Combate** (`app/js/ui/fx.js`): efecto propio por tipo × clase (contacto, proyectil, estado), entradas, debilitarse, estados, clima, Mega/Tera, números de daño. La barra de PS baja en el golpe y la de EXP después del «se debilitó». Ajustes › Animaciones apaga combate y cinemáticas.
+- **Minijuegos** (`app/js/minijuegos.js`, `ui/mj-*.js`, `docs/MINIJUEGOS.md`): excavación, pesca, cosecha, rastreo (con Riolu/Lucario) y cerradura. Comando `{ minigame }` y `gather.game` (jugar o recoger rápido). Contenido en `b04/t7-minijuegos.js`: 13 puntos diarios en Kalos, Johto y Kanto y 5 escenas únicas:
+  - `p8_lazare_bloque` (Lab. de Fósiles): Fósil Cráneo → Cranidos nv 28 (o 2 Caramelos Raros si ya lo tiene) + `p8_nota_petra`.
+  - `p8_roble_heracross` (Parque Nacional): **Heracrossita**. El muchacho del Heracross «dejó de venir» (semilla sin plan).
+  - `p8_absol_reflejos` (Cueva Reflejos, con Riolu/Lucario): **Absolita**.
+  - `p8_cornelio_arcon` (Torre Maestra): MT A Bocajarro + `p8_nota_cornelio`; Cornelio deja un papel «para el siguiente».
+  - `p8_evaristo_botella` (Lago de la Furia): `p8_carta_botella` + MT Hidroariete. **Evaristo compró el boleto a Olivo para ver a su hermano y aún no lo usa.**
+  - Flags: `p8_bloque_hecho`, `p8_heracronita`, `p8_absolita`, `p8_arcon_cornelio`, `p8_botella`, `p8_taquillero`, y `rec_<id>` (la pone el motor la primera vez que se recoge en un punto).
+- **Arreglo grave:** «Ir» desde Novedades (Publicación 7) dejaba entrar en sub-lugares cuya entrada la historia aún no había abierto (las Azoteas de Azafrán, el Tren Magnético ya terminado). Mario entró en las Azoteas antes de tiempo. Ahora Novedades, Diario y viajes solo cuentan lugares con una entrada visible hoy (`reachable()` en `screens.js`), y `app/js/reparaciones.js` deshace ese estado al cargar (`p7_entrada_adelantada`: solo si no llegó a saltar a Silph). **Si Mario pasó de las Azoteas (flag `b04_salto`), no se repara solo: pedirle la partida.**
+- **Diario:** «Por hacer» solo lista lo que necesita que él actúe; las historias de personajes que esperan van en «En espera» (antes «Registro»). Novedades avisa también cuando una misión suya pasa a poder avanzarse.

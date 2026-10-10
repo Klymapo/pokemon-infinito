@@ -9,6 +9,7 @@ import { portraitFor } from './core.js';
 import { h, say, choose, prompt, toast } from './core.js';
 import { sleep, fmtText } from '../util.js';
 import { isNight } from '../time.js';
+import { createFx } from './fx.js';
 import { tx } from '../guion.js';
 
 const STATUS_ES = { par: 'PAR', brn: 'QUE', psn: 'ENV', tox: 'ENV', slp: 'DOR', frz: 'CON', fnt: 'DEB' };
@@ -50,8 +51,6 @@ export async function runBattle(cfg, hooks) {
 	bg.classList.add('bg');
 	const foeSprite = h('div', { class: 'bsprite foe' });
 	const meSprite = h('div', { class: 'bsprite me' });
-	const fx = h('div', { class: 'fx' });
-	const flash = h('div', { class: 'flash' });
 	const mkCard = side => {
 		const c = h('div', { class: 'bcard ' + side, style: { visibility: 'hidden' } });
 		c.innerHTML = `<div class="n"><span class="nm"></span><span class="lv"></span></div><div class="hpbar"><i></i></div>${side === 'me' ? '<div class="hpn"></div><div class="expbar"><i></i></div>' : ''}<div class="tags"></div>`;
@@ -59,11 +58,14 @@ export async function runBattle(cfg, hooks) {
 		return c;
 	};
 	const foeCard = mkCard('foe'), meCard = mkCard('me');
-	const field = h('div', { class: 'field' }, bg, h('div', { class: 'plat foe' }), h('div', { class: 'plat me' }), foeSprite, meSprite, foeCard, meCard, fx, flash);
+	const field = h('div', { class: 'field' }, bg, h('div', { class: 'plat foe' }), h('div', { class: 'plat me' }), foeSprite, meSprite, foeCard, meCard);
 	const log = h('div', { class: 'blog', role: 'log', 'aria-live': 'polite' });
 	const panel = h('div', { class: 'bpanel' });
 	const root = h('div', { class: 'battle' }, field, log, panel);
 	document.body.append(root);
+	// Efectos: lienzo pixelado bajo las tarjetas de PS y coreografía de los sprites (fx.js)
+	const fx = createFx(field, { spriteOf: side => side === 'p1' ? meSprite : foeSprite, settings: () => G.settings, before: foeCard, root });
+	root.classList.toggle('fx-off', fx.off);
 
 	// Ficha del entrenador rival: retrato pequeño + nombre, dentro de la tarjeta rival
 	let trainerPortrait = null;
@@ -122,7 +124,7 @@ export async function runBattle(cfg, hooks) {
 	function setSprite(side, sp, shiny) {
 		const s = spriteOf(side);
 		s.innerHTML = '';
-		s.className = 'bsprite ' + (side === 'p1' ? 'me' : 'foe');
+		s.className = 'bsprite ' + (side === 'p1' ? 'me' : 'foe') + (vis[side].tera ? ' tera' : '') + (vis[side].dyn ? ' dyn' : '') + (vis[side].mega ? ' mega' : '');
 		s.append(monImg(sp, { back: side === 'p1', shiny }));
 	}
 
@@ -133,72 +135,98 @@ export async function runBattle(cfg, hooks) {
 	log.addEventListener('click', () => skipWait?.());
 	const wait = ms => new Promise(r => { const t = setTimeout(r, ms); skipWait = () => { clearTimeout(t); r(); }; });
 
-	function burst(side, type) {
-		const b = h('div', { class: 'burst go' });
-		const c = TYPE_COLORS[type] || '#fff';
-		b.style.background = `radial-gradient(circle, #fff 0%, ${c} 40%, transparent 70%)`;
-		const tgt = spriteOf(side).getBoundingClientRect(), fr = field.getBoundingClientRect();
-		b.style.left = (tgt.left - fr.left + tgt.width / 2 - 45) + 'px';
-		b.style.top = (tgt.top - fr.top + tgt.height / 2 - 45) + 'px';
-		fx.append(b);
-		setTimeout(() => b.remove(), 600);
+	// Un toque acelera la animación en curso (no la corta) y salta la espera del texto
+	field.addEventListener('click', () => fx.hurry());
+	log.addEventListener('click', () => fx.hurry());
+	const other = side => side === 'p1' ? 'p2' : 'p1';
+	/** Aplica un cambio de PS a la tarjeta y devuelve la fracción perdida (>0) o ganada (<0). */
+	function applyHp(e) {
+		const v = vis[e.side], before = v.hp, max = e.maxhp || v.maxhp || 1;
+		const sameScale = !e.maxhp || e.maxhp === v.maxhp;
+		v.hp = e.hp;
+		if (e.maxhp) v.maxhp = e.maxhp;
+		if (e.lv) v.lv = e.lv;
+		renderCard(e.side);
+		if (!sameScale || e.lv || before === undefined) return 0;
+		if (before !== e.hp) fx.number(e.side, e.hp - before);
+		return (before - e.hp) / max;
 	}
 
+	let lastLine = '';
 	async function play(events) {
-		for (const e of events) {
+		for (let i = 0; i < events.length; i++) {
+			const e = events[i];
+			if (e.done) continue;
+			fx.calm();
 			switch (e.t) {
 			case 'text':
 				if (e.quiet && G.settings.textSpeed >= 2) break;
+				// «¡Es supereficaz!» repetido en cada golpe de un movimiento múltiple: una sola vez
+				if (e.s === lastLine && events[i - 1]?.t !== 'move') break;
+				lastLine = e.s;
 				log.innerHTML = fmtText(e.s);
 				await wait(textDelay());
 				break;
 			case 'switch': {
 				const v = vis[e.side];
-				Object.assign(v, e.info, { tera: null });
+				// El texto de la salida («¡Adelante!», «X saca a Y») se ve a la vez que la Ball, no después
+				const nx = events[i + 1], t0 = performance.now();
+				const line = e.say || (nx?.t === 'text' && !nx.done && !nx.quiet ? (nx.done = true, nx.s) : null);
+				if (v.name && !fx.gone(e.side)) await fx.recall(e.side);
+				if (line) { log.innerHTML = fmtText(line); lastLine = line; }
+				Object.assign(v, e.info, { tera: null, dyn: false, mega: false });
 				if (e.side === 'p1') v.uid = ctl.partyOf(ctl.active('p1'))?.uid;
 				setSprite(e.side, e.info.sp, e.info.shiny);
 				renderCard(e.side); renderTeams();
-				if (e.info.shiny) { flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); }
-				await sleep(250);
+				await fx.sendOut(e.side, { wild: kind === 'wild' && e.side === 'p2', shiny: e.info.shiny });
+				if (line) await wait(Math.max(120, textDelay() * 0.85 - (performance.now() - t0)));
 				break;
 			}
-			case 'forme':
-				vis[e.side].sp = e.sp;
-				setSprite(e.side, e.sp, vis[e.side].shiny);
-				spriteOf(e.side).classList.add('mega');
-				flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go');
-				await sleep(500);
+			case 'forme': {
+				const v = vis[e.side];
+				const isMega = events.slice(i + 1, i + 5).some(x => x.t === 'mega' && x.side === e.side);
+				const swap = () => { v.sp = e.sp; if (isMega) v.mega = true; setSprite(e.side, e.sp, v.shiny); };
+				if (isMega) await fx.mega(e.side, swap); else await fx.morph(e.side, swap);
 				break;
-			case 'hp':
-				vis[e.side].hp = e.hp;
-				if (e.maxhp) vis[e.side].maxhp = e.maxhp;
-				if (e.lv) vis[e.side].lv = e.lv;
-				renderCard(e.side);
-				await sleep(380);
+			}
+			case 'hp': {
+				const from = toID(e.from || '');
+				const d = applyHp(e);
+				if (d > 0) {
+					if (from === 'psn' || from === 'brn' || from === 'tox') await fx.statusTick(e.side, from === 'tox' ? 'psn' : from);
+					else if (from === 'confusion') await fx.statusTick(e.side, 'confusion');
+					await fx.hurt(e.side, d);
+				} else if (d < 0) fx.heal(e.side);
+				await fx.wait(d ? 260 : 120);
 				break;
+			}
 			case 'move': {
-				const s = spriteOf(e.side);
-				s.classList.add(e.side === 'p1' ? 'lunge-me' : 'lunge-foe');
-				await sleep(160);
-				s.classList.remove('lunge-me', 'lunge-foe');
-				const md = D.moves[e.move];
-				const tgt = md?.target === 'self' || md?.cat === 'Status' && /self|ally/.test(md?.target || '') ? e.side : (e.side === 'p1' ? 'p2' : 'p1');
-				if (!e.miss) {
-					burst(tgt, e.type);
-					if (md?.cat !== 'Status' && tgt !== e.side) { const t = spriteOf(tgt); t.classList.remove('hit'); void t.offsetWidth; t.classList.add('hit'); }
-				}
-				await sleep(200);
+				// El texto «X usó Y» sale a la vez que la animación, no después
+				const nx = events[i + 1], t0 = performance.now();
+				if (nx?.t === 'text' && !nx.done) { log.innerHTML = fmtText(nx.s); nx.done = true; lastLine = nx.s; }
+				const hitEvs = e.hitEvs || [];
+				const shown = Math.min(hitEvs.length, 5);
+				await fx.move(e, { onHit: k => {
+					let d = 0, any = false;
+					for (let q = k; q < (k >= shown - 1 ? hitEvs.length : k + 1); q++) { const he = hitEvs[q]; if (!he || he.done) continue; he.done = true; any = true; d += applyHp(he); }
+					renderTeams();
+					return any ? d : 0.2;
+				} });
+				if (nx?.done) await wait(Math.max(120, textDelay() * 0.85 - (performance.now() - t0)));
 				break;
 			}
 			case 'faint':
-				spriteOf(e.side).classList.add('faint');
 				vis[e.side].hp = 0; renderCard(e.side); renderTeams();
-				await sleep(450);
+				await fx.faint(e.side);
 				break;
-			case 'status': vis[e.side].status = e.status; renderCard(e.side); renderTeams(); break;
-			case 'tera': vis[e.side].tera = e.type; spriteOf(e.side).classList.add('tera'); renderCard(e.side); flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); await sleep(400); break;
-			case 'dyn': spriteOf(e.side).classList.toggle('dyn', e.on); await sleep(400); break;
-			case 'crit': flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); break;
+			case 'status': vis[e.side].status = e.status; renderCard(e.side); renderTeams(); await fx.status(e.side, e.status); break;
+			case 'cant': if (['par', 'slp', 'frz'].includes(e.why)) await fx.statusTick(e.side, e.why); break;
+			case 'vol': await fx.statusTick(e.side, e.v); break;
+			case 'boost': await fx.boost(e.side, e.stat, e.n); break;
+			case 'weather': await fx.weather(e.w, e.upkeep); break;
+			case 'zpower': await fx.zpower(e.side); break;
+			case 'tera': vis[e.side].tera = e.type; await fx.tera(e.side, e.type); spriteOf(e.side).classList.add('tera'); renderCard(e.side); break;
+			case 'dyn': vis[e.side].dyn = e.on; spriteOf(e.side).classList.toggle('dyn', e.on); await fx.dyn(e.side, e.on); break;
 			case 'exp': {
 				const p = G.party.find(x => x.uid === e.uid);
 				const to = e.prog ?? (p ? expProgress(p) : 0);
@@ -211,31 +239,33 @@ export async function runBattle(cfg, hooks) {
 				}
 				break;
 			}
-			case 'levelup': if (vis.p1.uid === e.uid) { vis.p1.lv = e.lv; renderCard('p1'); } break;
+			case 'levelup': if (vis.p1.uid === e.uid) { vis.p1.lv = e.lv; renderCard('p1'); await fx.levelup(e.lv); } break;
 			case 'ball': {
-				const fs = foeSprite.querySelector('img,.fallback,canvas');
 				const kindB = e.ball === 'greatball' ? 'great' : e.ball === 'ultraball' ? 'ultra' : 'poke';
 				const ball = h('div', { class: 'cball throw' }, ballIcon(40, kindB));
-				fx.append(ball);
+				fx.over.append(ball);
 				await sleep(420);
-				if (fs) { fs.style.transition = 'transform .25s, opacity .25s, filter .25s'; fs.style.filter = 'brightness(3) saturate(0)'; fs.style.transform = 'scale(.2)'; fs.style.opacity = '0'; }
+				await fx.capIn('p2', ball);
 				ball.classList.remove('throw'); ball.classList.add('land');
 				await sleep(380);
-				for (let i = 0; i < e.shakes; i++) { ball.classList.remove('shake'); void ball.offsetWidth; ball.classList.add('shake'); await sleep(620); }
+				fx.capLand(ball);
+				for (let k = 0; k < e.shakes; k++) { ball.classList.remove('shake'); void ball.offsetWidth; ball.classList.add('shake'); fx.capShake(ball, k); await sleep(620); }
 				if (e.caught) {
 					ball.classList.add('caught');
-					for (let k = 0; k < 3; k++) fx.append(h('div', { class: 'cstar s' + k }, '✦'));
+					fx.capStars(ball);
+					for (let k = 0; k < 3; k++) fx.over.append(h('div', { class: 'cstar s' + k }, '✦'));
 					await sleep(900);
-					fx.querySelectorAll('.cstar').forEach(x => x.remove());
+					fx.over.querySelectorAll('.cstar').forEach(x => x.remove());
 				} else {
 					ball.classList.add('pop'); await sleep(220); ball.remove();
-					if (fs) { fs.style.filter = ''; fs.style.transform = ''; fs.style.opacity = '1'; }
+					await fx.capOut('p2', ball);
 				}
 				break;
 			}
 			}
 		}
 		skipWait = null;
+		fx.calm();
 	}
 
 	// ---------- Menús ----------
@@ -396,6 +426,7 @@ export async function runBattle(cfg, hooks) {
 
 	// ---------- Bucle ----------
 	// Entrada: el entrenador aparece en su sitio antes de sacar a su primer Pokémon
+	await fx.intro(kind === 'wild' ? 'wild' : (trainer?.ai || 0) >= 4 ? 'boss' : 'trainer');
 	if (trainer && trainerPortrait) {
 		const big = h('div', { class: 'tintro' }, trainerPortrait());
 		foeSprite.append(big);
@@ -404,7 +435,16 @@ export async function runBattle(cfg, hooks) {
 		big.classList.add('out');
 		await sleep(280);
 	}
-	await play(ctl.start());
+	// Al empezar se ve primero al rival (el salvaje salta de la hierba con su texto) y luego sale tu Pokémon
+	const opening = evs => {
+		const i = evs.findIndex(e => e.t === 'switch' && e.side === 'p1'), j = evs.findIndex(e => e.t === 'switch' && e.side === 'p2');
+		if (i < 0 || j < i) return evs;
+		const out = evs.slice(), grp = out.splice(j, out[j + 1]?.t === 'text' ? 2 : 1);
+		out.splice(i, 0, ...grp);
+		if (kind === 'wild' && grp.length === 1 && out[i - 1]?.t === 'text') { grp[0].say = out[i - 1].s; out.splice(i - 1, 1); }
+		return out;
+	};
+	await play(opening(ctl.start()));
 	let res = { result: null };
 	let guard = 0;
 	while (guard++ < 500) {
@@ -453,6 +493,7 @@ export async function runBattle(cfg, hooks) {
 			await wait(1800);
 		}
 	}
+	fx.destroy();
 	root.remove();
 
 	// Movimientos nuevos

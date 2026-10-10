@@ -500,10 +500,10 @@ export default {
 			{ text: 'Las luces del vagón parpadean. Una vez. Dos. Y se apagan.' },
 			{ if: LUC, then: [
 				{ cutscene: { bg: { type: 'cave', dark: true, crystals: '#7fb0e0' }, start: 'dark', frames: [
-					{ text: 'Oscuridad total. Alguien grita. Un bebé empieza a llorar dos filas más allá. Un Pokémon gruñe en su Poké Ball.' },
-					{ fx: 'glow', text: 'Y entonces se enciende una luz azul. {riolu} está de pie en el pasillo, con los ojos cerrados y las palmas abiertas. El aura le sale del pecho, tranquila, como el agua de una fuente.' },
-					{ fx: 'light', text: 'Llena el vagón entero. Las caras de los pasajeros se vuelven azules, asombradas. El bebé deja de llorar y alarga la mano hacia la luz, como si se pudiera agarrar.' },
-					{ text: '—¡Un Lucario linterna! —grita un niño. Su madre le manda callar. Luego se queda mirando también.' },
+					{ shake: 1, cam: 'still', text: 'Oscuridad total. Alguien grita. Un bebé empieza a llorar dos filas más allá. Un Pokémon gruñe en su Poké Ball.' },
+					{ actors: [{ mon: '{riolu}', key: 'rio', at: 'center', enter: 'fade' }], fx: ['glow', 'ripple'], text: 'Y entonces se enciende una luz azul. {riolu} está de pie en el pasillo, con los ojos cerrados y las palmas abiertas. El aura le sale del pecho, tranquila, como el agua de una fuente.' },
+					{ fx: ['light', 'aura'], text: 'Llena el vagón entero. Las caras de los pasajeros se vuelven azules, asombradas. El bebé deja de llorar y alarga la mano hacia la luz, como si se pudiera agarrar.' },
+					{ actors: [{ key: 'rio', emote: 'sweat' }], text: '—¡Un Lucario linterna! —grita un niño. Su madre le manda callar. Luego se queda mirando también.' },
 				] } },
 				{ happy: { who: 'riolu', n: 10 } },
 			], else: [
@@ -526,8 +526,8 @@ export default {
 			{ text: '{riolu} abre los ojos y se sienta, como si no hubiera pasado nada. Un señor de la fila de atrás le ofrece medio sándwich. {riolu} lo acepta. Ha trabajado.', cond: LUC },
 			{ text: 'El asiento de la mujer del termo sigue vacío. Sobre la mesita plegable se ha quedado la servilleta de papel.' },
 			{ cutscene: { bg: { type: 'indoor', wall: '#e9e8e0', floor: '#3b4a6a' }, start: 'dark', frames: [
-				{ item: 'servilletam', fx: 'light', text: 'Una servilleta del vagón restaurante, con el logo del Tren Magnético en una esquina. Está llena de números en columnas tan rectas que parecen impresas.' },
-				{ text: 'Abajo, una frase subrayada. Y una firma de una sola letra, pequeña y recta, como quien firma por costumbre: **M.**' },
+				{ cam: 'push', item: 'servilletam', fx: 'light', text: 'Una servilleta del vagón restaurante, con el logo del Tren Magnético en una esquina. Está llena de números en columnas tan rectas que parecen impresas.' },
+				{ fx: 'heartbeat', color: '#1f4a9a', actors: [{ key: '_c', size: 'l' }], text: 'Abajo, una frase subrayada. Y una firma de una sola letra, pequeña y recta, como quien firma por costumbre: **M.**' },
 			] } },
 			{ give: 'servilletam' },
 			{ say: 'rotom', text: '¡Bzzt! ¿«M.»? Hay muchísima gente que empieza por M. Muchísima. Mareep. Misty. Mamá. Magikarp, aunque los Magikarp no firman. —Pausa—. Lo guardo, por si vuelve a por ella.' },
@@ -781,9 +781,9 @@ export default {
 			{ if: LUC, then: [
 				{ text: '{riolu} da un paso adelante. Cierra los ojos. Sabrina, muy despacio, también.' },
 				{ cutscene: { bg: { type: 'gym', wall: '#2a2440', floor: '#6a4a8a' }, start: 'dark', frames: [
-					{ fx: 'glow', text: 'El aura de {riolu} se enciende, azul, y se extiende por el suelo como agua. Desde la silla, otra cosa sale a su encuentro: una presión, rosa, invisible, que hace temblar el aire como el calor sobre el asfalto.' },
-					{ text: 'Se tocan en mitad de la sala. Las tres cucharas se ponen a girar a la vez, en el mismo sentido, despacio, como las agujas de un reloj que alguien acaba de poner en hora.' },
-					{ fx: 'light', text: 'Las baldosas de teletransporte se encienden un instante, todas, por primera vez en meses. Y se apagan.' },
+					{ actors: [{ id: 'sabrina', at: 0.78, enter: 'none', dim: true }, { mon: '{riolu}', key: 'rio', at: 0.3, enter: 'left' }], fx: ['glow', 'ripple'], text: 'El aura de {riolu} se enciende, azul, y se extiende por el suelo como agua. Desde la silla, otra cosa sale a su encuentro: una presión, rosa, invisible, que hace temblar el aire como el calor sobre el asfalto.' },
+					{ tint: '#d86aa8', fx: 'aura', color: '#ff8ad0', on: false, actors: [{ key: 'sabrina', dim: false }], text: 'Se tocan en mitad de la sala. Las tres cucharas se ponen a girar a la vez, en el mismo sentido, despacio, como las agujas de un reloj que alguien acaba de poner en hora.' },
+					{ tint: 'none', fx: 'light', text: 'Las baldosas de teletransporte se encienden un instante, todas, por primera vez en meses. Y se apagan.' },
 				] } },
 				{ say: 'sabrina', text: 'Tu Lucario me está leyendo. Con educación: llama antes de entrar. —Abre los ojos—. Me cae bien. Casi nadie llama.' },
 				{ happy: { who: 'riolu', n: 5 } },
@@ -844,10 +844,10 @@ export default {
 				{ say: 'kiyo', text: 'La otra vez tenía una piedra en el fondo del lago. Ahora el lago está más hondo.', cond: 'flag.b03_kiyo_visto' },
 					{ say: 'kiyo', text: 'Hondo y quieto, como un lago sin viento. —Se gira hacia la pila de tablas—. Diez tablas. Mis discípulos rompen cuatro, cinco. Yo, ocho, en un día bueno. ¿Me harías el honor?' },
 				{ cutscene: { bg: { type: 'gym', wall: '#8a5a3a', floor: '#d8c49a' }, start: 'dark', frames: [
-					{ text: '{riolu} se coloca delante de la pila. Diez tablas de madera de roble, una encima de otra, sobre dos bloques de hormigón. Todo el dojo se calla.' },
-					{ fx: 'glow', text: 'Cierra los ojos. El aura se le recoge en la palma, pequeña, densa, azul casi blanca, como una estrella del tamaño de una canica.' },
-					{ fx: 'shake', text: 'La palma baja. *CRAC.* Una tabla. Dos. Cinco. Ocho. Nueve…' },
-					{ fx: 'zoom', text: '…y se para. La palma, quieta, a un pelo de la décima tabla. No la toca. La décima tabla tiembla, entera, y se queda donde está.' },
+					{ actors: [{ id: 'kiyo', at: 0.8, enter: 'none', dim: true }, { mon: '{riolu}', key: 'rio', at: 0.4, enter: 'left' }], cam: 'still', text: '{riolu} se coloca delante de la pila. Diez tablas de madera de roble, una encima de otra, sobre dos bloques de hormigón. Todo el dojo se calla.' },
+					{ cam: 'push', fx: 'glow', text: 'Cierra los ojos. El aura se le recoge en la palma, pequeña, densa, azul casi blanca, como una estrella del tamaño de una canica.' },
+					{ shake: 3, fx: ['impact', 'speedlines'], text: 'La palma baja. *CRAC.* Una tabla. Dos. Cinco. Ocho. Nueve…' },
+					{ actors: [{ key: 'kiyo', dim: false, emote: '!' }], on: 'rio', fx: 'zoom', text: '…y se para. La palma, quieta, a un pelo de la décima tabla. No la toca. La décima tabla tiembla, entera, y se queda donde está.' },
 				] } },
 				{ text: 'Silencio. Un cinturón negro deja caer su toalla.' },
 				{ say: 'kiyo', text: 'No ha roto la décima. —Se arrodilla junto a la pila, la toca con un dedo—. No ha roto la décima porque no ha querido. —Te mira, con los ojos brillantes—. Diez años para aprender a perder. Y este sabe ya cuándo no ganar.' },

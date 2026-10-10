@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-10T17:31:10.020Z · contenido 2026-10-10.1
+Generado: 2026-10-10T22:04:14.971Z · contenido 2026-10-10.1
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -18,11 +18,11 @@ Generado: 2026-10-10T17:31:10.020Z · contenido 2026-10-10.1
 | Bill (`bill`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
 | Blanca (`blanca`) | 4 | 3 | 0 | 0 | 7 ⚠ 2 bloque(s) |
 | Brock (`brock`) | 6 | 3 | 0 | 0 | 9 ⚠ 2 bloque(s) |
-| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 9 | 6 | 19 |
+| Dr. Lazare (`cientifico_fosiles`) | 4 | 0 | 9 | 8 | 21 |
 | Prof. Ciprés (`cipres`) | 7 | 2 | 0 | 0 | 9 ⚠ 2 bloque(s) |
 | Conde Vladimiro (`conde`) | 8 | 1 | 0 | 6 | 15 |
 | Corelia (`corelia`) | 8 | 3 | 5 | 1 | 17 |
-| Cornelio (`cornelio`) | 5 | 0 | 0 | 0 | 5 ⚠ 1 bloque(s) |
+| Cornelio (`cornelio`) | 5 | 0 | 0 | 2 | 7 ⚠ 2 bloque(s) |
 | Dámaso Ferrán (`damaso`) | 0 | 2 | 5 | 0 | 7 ⚠ 2 bloque(s) |
 | Profesor Elm (`elm`) | 0 | 3 | 2 | 0 | 5 ⚠ 2 bloque(s) |
 | Señor Fuji (`fuji`) | 0 | 0 | 0 | 4 | 4 ⚠ 1 bloque(s) |
@@ -51,7 +51,7 @@ Generado: 2026-10-10T17:31:10.020Z · contenido 2026-10-10.1
 | Casilda Peña (`p7_casilda`) | 0 | 0 | 0 | 7 | 7 ⚠ 1 bloque(s) |
 | Ciro (`p7_ciro`) | 0 | 0 | 0 | 4 | 4 ⚠ 1 bloque(s) |
 | Dolores (`p7_dolores`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
-| Evaristo (`p7_evaristo`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
+| Evaristo (`p7_evaristo`) | 0 | 0 | 0 | 5 | 5 ⚠ 1 bloque(s) |
 | Jade Peña (`p7_jade`) | 0 | 0 | 0 | 3 | 3 ⚠ 1 bloque(s) |
 | La Mayor (`p7_mayor`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
 | Rosaura (`p7_rosaura`) | 0 | 0 | 0 | 2 | 2 ⚠ 1 bloque(s) |
@@ -526,6 +526,17 @@ Generado: 2026-10-10T17:31:10.020Z · contenido 2026-10-10.1
 - `p7_rosaura` — b04:p7_rosaura_llega
 - `p7_simon` — b04:p7_simon_llega
 - `p7_tobias` — b04:p7_tobias_llega
+- `p8_absolita` — b04:p8_absol_reflejos
+- `p8_arcon_cornelio` — b04:p8_cornelio_arcon
+- `p8_arcon_visto` — b04:p8_cornelio_arcon
+- `p8_bloque_hecho` — b04:p8_lazare_bloque
+- `p8_bloque_visto` — b04:p8_lazare_bloque
+- `p8_botella` — b04:p8_evaristo_botella
+- `p8_botella_vista` — b04:p8_evaristo_botella
+- `p8_heracronita` — b04:p8_roble_heracross
+- `p8_reflejos_visto` — b04:p8_absol_reflejos
+- `p8_roble_visto` — b04:p8_roble_heracross
+- `p8_taquillero` — b04:p8_taquillero
 
 ## Misiones
 

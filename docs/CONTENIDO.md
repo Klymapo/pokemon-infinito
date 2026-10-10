@@ -43,6 +43,11 @@ export default {
   },
   // Se colocan como spot en lugares ({ label, icon, action: { gather: 'orilla' } })
   // o en tramos de ruta ({ spot: { action: { gather: 'orilla' } }, label, icon }), por ejemplo con `patches`.
+  // Con minijuego: `game: 'dig'|'fish'|'catch'|'aura'|'lock'` o `game: { type, level, theme, hint, wild, wildChance }`.
+  //   Al recoger se elige «Jugar» (sale más, y solo así salen las entradas `rare: true` de la tabla) o «Recoger rápido»
+  //   (lo de siempre). `ask` es el texto de esa pregunta. Formato y reglas de economía: docs/MINIJUEGOS.md §4.
+  // El motor activa `flag.rec_<id>` la primera vez que se recoge en un punto: en puntos añadidos a zonas ya
+  //   visitadas, pon `new: '!flag.rec_<id>'` en el spot para que salga en Diario › Novedades hasta que se pruebe.
   // Las ciudades y pueblos (kind city/town) dan una postal automática al visitarlos (Colección → Postales).
   events: [ ... ],           // §10 eventos por fecha
   milestones: [ { flag: 'b01_m_relieve', hoursLeft: 3 } ],  // §11 aviso de ritmo
@@ -265,8 +270,9 @@ Un guion es una lista de comandos. Una cadena suelta equivale a `{ text }`. Cual
 | `{ unlock: 'mega' }` | habilita la mecánica (además hace falta el objeto clave: `megaring`, `zring`, `dynamaxband`, `teraorb`) |
 | `{ shop: 'id' }`, `{ center: true }`, `{ pc: true }`, `{ save: true }`, `{ evolveCheck: true }` | |
 | `{ nickname: 'last' }`, `{ clearRoute: 'ruta4' }`, `{ wait: 500 }` | |
-| `{ cutscene: { bg: { type: 'cave' }, start: 'dark', frames: [ { text, item, npc, mon, fx, clear } ] } }` | cinemática a pantalla completa con bandas de cine; se avanza tocando. `fx`: `light` (la luz se abre desde el centro), `dark`, `flash`, `shake`, `glow`, `zoom`. `item` usa el pixel art de `PX_ITEMS` (`app/js/art.js`) si existe. Úsala en momentos clave: recibir un objeto clave, abrir una zona nueva, giros |
+| `{ cutscene: { bg: { type: 'cave' }, start: 'dark', frames: [ { text, item, npc, mon, actors, fx, cam, … } ] } }` | cinemática a pantalla completa: fondo vivo con paralaje, cámara, actores que entran y reaccionan, clima, efectos y texto que se escribe. Se avanza tocando (mantener pulsado ofrece saltarla). **Formato completo, recetas y reglas en `docs/CINE.md`**; léelo antes de escribir una. Úsala en momentos clave (objeto clave, llegada, giro, pérdida, legendario, clímax): de 2 a 4 por bloque |
 | `{ puzzle: { id, title, hint, theme, grid: [...] }, onSolve: [...], onQuit: [...] }` | puzle de rejilla táctil (ver §7.1). `onSolve` corre al resolverlo y `onQuit` si el jugador sale |
+| `{ minigame: { type, id, title, hint, theme, level, loot: [...], guaranteed: [...], … }, onWin: [...], onLose: [...], onQuit: [...] }` | minijuego para conseguir objetos: `dig` excavar, `fish` pescar, `catch` cosechar, `aura` rastrear, `lock` cerradura (ver **`docs/MINIJUEGOS.md`**). Entrega el botín él solo; perder da una consolación y salir no da nada, y los dos dejan reintentar |
 | `{ read: 'idObjeto' }` / `{ read: { title, text } }` | abre una **hoja de papel** a pantalla completa que se desplaza (cartas, notas, diarios). Con un id usa el `name` y el `read` del objeto. Úsalo cuando el jugador recibe una carta y debe leerla en ese momento; nunca metas una carta larga en un `text` (el cuadro de diálogo es para frases) |
 | `{ venture: 'id' }` / `{ venture: 'id', join: true }` | abre la ficha de un negocio (§13); con `join: true` lo hace socio sin cobrarle la entrada (regalos de la historia). `join: true, open: true` hace las dos cosas |
 

@@ -466,10 +466,10 @@ export default {
 			{ text: 'Te agachas. La luz de la lemniscata pasa por encima, azul, y sigue. Miras.' },
 			{ text: 'Por la pasarela cruzan dos guardias, uno detrás de otro, con linternas. Uniformes negros, gorra negra. En el pecho, donde antes debía de haber una letra, un parche gris cosido a mano. Llegan a Silph, dan la vuelta y vuelven a la Torre. Cuentas: **seis minutos** de ida y vuelta.' },
 			{ if: LUC, then: [
-				{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
-					{ text: '{riolu} se agacha a tu lado. Cierra los ojos. Los apéndices de detrás de las orejas se levantan, despacio.' },
-					{ fx: 'glow', text: 'Y de pronto, a través de las paredes de cristal, ves lo que ve él: siluetas de luz. Azules, rojas, amarillas. Personas. Pokémon. Un guardia sentado en una silla, en la planta once, con la cabeza caída de sueño. Otro, de pie junto a una fotocopiadora.' },
-					{ text: 'Y en una sala del fondo, una silueta sola, inclinada sobre una mesa. Brilla de un color raro. Inquieto. Como una bombilla que zumba.' },
+				{ cutscene: { time: 'noche', bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
+					{ actors: [{ mon: '{riolu}', key: 'rio', at: 0.3, size: 's', enter: 'left' }], cam: 'still', text: '{riolu} se agacha a tu lado. Cierra los ojos. Los apéndices de detrás de las orejas se levantan, despacio.' },
+					{ weather: 'sparks', cam: 'push', fx: ['glow', 'ripple'], text: 'Y de pronto, a través de las paredes de cristal, ves lo que ve él: siluetas de luz. Azules, rojas, amarillas. Personas. Pokémon. Un guardia sentado en una silla, en la planta once, con la cabeza caída de sueño. Otro, de pie junto a una fotocopiadora.' },
+					{ fx: 'heartbeat', color: '#d8c84a', cam: 'pan-right', text: 'Y en una sala del fondo, una silueta sola, inclinada sobre una mesa. Brilla de un color raro. Inquieto. Como una bombilla que zumba.' },
 				] } },
 				{ text: 'Cuando {riolu} abre los ojos, las siluetas se apagan. Pero te acuerdas de dónde estaba cada una.' },
 				{ happy: { who: 'riolu', n: 3 } },
@@ -524,10 +524,10 @@ export default {
 			{ text: 'El hombre del traje blanco no se gira. Pelo azul peinado hacia atrás. Las manos a la espalda. Mira la Torre Lemnis como miraba la máquina de Caoba: como quien mira una chimenea.' },
 			{ say: 'atlas', text: 'Una hora esperando. Sabía que subirías: en Caoba también entraste por donde nadie entra. —Se gira—. Los que van por los tejados siempre acaban pasando por aquí. Solo hay que tener paciencia. Yo tengo mucha.' },
 			{ say: 'atlas', text: 'Te dije que te debía una. Y yo pago lo que debo. —Saca algo del bolsillo interior de la chaqueta—. Cuando la fundación nos pagaba, la familia también limpiaba. Oficinas, de noche. Esta torre. Esa de al lado. Me quedé una cosa. Por costumbre.' },
-			{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
-				{ fx: 'light', item: 'tarjetallave', text: 'Una tarjeta magnética gris, con el logo rojo de Silph S.A. en una esquina. Gastada en los bordes, de tanto pasar por lectores que no la querían dejar entrar.' },
-				{ text: 'Por detrás, una banda negra y, escrito a rotulador con letra pequeña, un número que alguien ha tachado. Debajo, otro número. Tachado también. Debajo: «11».' },
-				{ fx: 'glow', text: 'La luz de la lemniscata pasa por encima de ustedes. La tarjeta brilla un instante, gris y roja. Luego, otra vez, oscuridad.' },
+			{ cutscene: { time: 'noche', bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
+				{ actors: [{ id: 'atlas', at: 'left', dim: true }], on: '_c', fx: 'light', item: 'tarjetallave', text: 'Una tarjeta magnética gris, con el logo rojo de Silph S.A. en una esquina. Gastada en los bordes, de tanto pasar por lectores que no la querían dejar entrar.' },
+				{ actors: [{ key: '_c', do: 'turn' }], cam: 'push', text: 'Por detrás, una banda negra y, escrito a rotulador con letra pequeña, un número que alguien ha tachado. Debajo, otro número. Tachado también. Debajo: «11».' },
+				{ color: '#6f9bff', fx: 'glow', text: 'La luz de la lemniscata pasa por encima de ustedes. La tarjeta brilla un instante, gris y roja. Luego, otra vez, oscuridad.' },
 			] } },
 			{ give: 'tarjetallave' },
 			{ set: { 'flag.b04_entrada_lista': true, 'flag.b04_atlas_pagado': true } },
@@ -593,12 +593,12 @@ export default {
 				{ text: 'Saltar.', then: [] },
 				{ text: 'Respirar hondo… y saltar.', then: [] },
 			] },
-			{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e', '#c4a43a'], far: '#1f2e4f' }, start: 'light', frames: [
-				{ fx: 'zoom', text: 'Abres los brazos. Das un paso al vacío. Y caes.' },
-				{ text: 'El viento te tira de la capucha. Las ventanas pasan a toda velocidad: una oficina vacía, una planta de plástico, un póster de un Machoke levantando cajas con la espalda recta. Un Pidgeotto que duerme en una cornisa abre un ojo y lo vuelve a cerrar.' },
-				{ fx: 'shake', text: '*¡FLUMP!*\n\nEl toldo te recibe como un tambor. Rebotas. El toldo cede. Y aterrizas, de espaldas, en una montaña de naranjas.' },
+			{ cutscene: { time: 'noche', bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e', '#c4a43a'], far: '#1f2e4f' }, start: 'light', frames: [
+				{ cam: 'pan-down', fx: ['zoom', 'speedlines'], text: 'Abres los brazos. Das un paso al vacío. Y caes.' },
+				{ fx: 'speedlines', cam: 'pan-down', actors: [{ mon: 'pidgeotto', at: 0.8, size: 's', enter: 'down', emote: 'zzz' }], text: 'El viento te tira de la capucha. Las ventanas pasan a toda velocidad: una oficina vacía, una planta de plástico, un póster de un Machoke levantando cajas con la espalda recta. Un Pidgeotto que duerme en una cornisa abre un ojo y lo vuelve a cerrar.' },
+				{ shake: 3, actors: [{ key: 'pidgeotto', remove: true, exit: 'up' }], on: false, fx: 'impact', text: '*¡FLUMP!*\n\nEl toldo te recibe como un tambor. Rebotas. El toldo cede. Y aterrizas, de espaldas, en una montaña de naranjas.' },
 				{ fx: 'flash', text: 'Las naranjas salen rodando en todas direcciones por el callejón. Una, dos, cuarenta. Una manzana te cae en la frente desde lo alto de la pila, con mucha puntería.' },
-				{ text: 'Ysolde aterriza al lado. Sin ruido. En la única caja vacía. Se arregla la capucha.' },
+				{ actors: [{ id: 'ysolde', at: 'right', enter: 'drop' }], text: 'Ysolde aterriza al lado. Sin ruido. En la única caja vacía. Se arregla la capucha.' },
 			] } },
 			{ text: '{riolu} aterriza un segundo después, de pie, en la caja de las Bayas Zreza, sin aplastar ni una. Se sacude. Te mira, tumbad{o|a|e} entre las naranjas. Si un Lucario pudiera reírse con los ojos, sería así.', cond: LUC },
 			{ set: { 'flag.b04_salto': true } },
@@ -635,9 +635,9 @@ export default {
 			{ if: ROCKET_NINGUNA, then: [
 				{ text: 'La puerta de servicio tiene una cerradura electrónica, una cámara y un cartel que dice «Alarma conectada». Ysolde la mira como quien mira un crucigrama fácil.' },
 				{ text: 'Se sube la manga izquierda. El Honedge sale de su brazo sin hacer ruido: una espada de hoja fina, con un ojo en la empuñadura. Mira la cerradura. Mira a Ysolde. Ysolde asiente.' },
-				{ cutscene: { bg: { type: 'city', roofs: ['#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
-					{ fx: 'flash', text: 'Un destello. Un ruido muy pequeño, como el de unas tijeras cortando un hilo.' },
-					{ text: 'La cerradura sigue en su sitio. La lucecita sigue en verde. Pero el pestillo, por dentro, está partido en dos, limpio como una rebanada de pan.' },
+				{ cutscene: { time: 'noche', bg: { type: 'city', roofs: ['#5a626e'], far: '#1f2e4f' }, start: 'dark', frames: [
+					{ actors: [{ id: 'ysolde', at: 'left', dim: true }, { mon: 'honedge', at: 0.68, size: 's', enter: 'pop' }], fx: ['flash', 'slash'], text: 'Un destello. Un ruido muy pequeño, como el de unas tijeras cortando un hilo.' },
+					{ actors: [{ key: 'honedge', do: 'nod' }], cam: 'push', text: 'La cerradura sigue en su sitio. La lucecita sigue en verde. Pero el pestillo, por dentro, está partido en dos, limpio como una rebanada de pan.' },
 				] } },
 				{ say: 'ysolde', text: 'Las puertas que no se abren con favores. —El Honedge vuelve a su manga—. Sube. Planta once. Yo vigilo la escalera.' },
 			] },
@@ -702,9 +702,9 @@ export default {
 			{ text: 'Esas cifras ya las has oído. Las mismas, en el mismo orden, con la misma voz tranquila de quien lee un parte. En un parque, junto a una Puerta, una mañana sin dormir.' },
 			{ text: 'Abres el cajón de la **L.** Dentro hay una sola carpeta, muy fina. Y, en el fondo del cajón, rodando sueltos, un puñado de caramelos de menta. Envueltos en papel azul. Retorcidos por las dos puntas.' },
 			{ cutscene: { bg: { type: 'indoor', wall: '#cfd6e2', floor: '#4a4f6a' }, start: 'dark', frames: [
-				{ fx: 'light', item: 'informefuentel', text: 'Unas hojas grapadas. «Informe de seguimiento». Cada línea, una hora y un lugar. Luminalia, 06:42. La Agencia. Relieve. El Encinar. Trigal. El tren.' },
-				{ text: 'Y al final de cada línea, la misma firma. Una sola letra, a máquina: **Fuente: L.**' },
-				{ fx: 'zoom', text: 'Grapado a la última hoja, un caramelo de menta envuelto en papel azul.' },
+				{ cam: 'push', fx: 'light', item: 'informefuentel', text: 'Unas hojas grapadas. «Informe de seguimiento». Cada línea, una hora y un lugar. Luminalia, 06:42. La Agencia. Relieve. El Encinar. Trigal. El tren.' },
+				{ fx: 'heartbeat', color: '#1f2e4f', actors: [{ key: '_c', size: 'l' }], cam: 'still', text: 'Y al final de cada línea, la misma firma. Una sola letra, a máquina: **Fuente: L.**' },
+				{ color: '#1f2e4f', fx: ['zoom', 'heartbeat'], text: 'Grapado a la última hoja, un caramelo de menta envuelto en papel azul.' },
 			] } },
 			{ give: 'informefuentel' },
 			{ set: { 'flag.b04_fuente_l': true } },
@@ -758,9 +758,9 @@ export default {
 			], else: [
 				{ text: 'La carpeta está. Gruesa, con la esquina mordida por algún Rattata de archivo. Nadie la ha tocado en doce años: tiene polvo hasta en las grapas.' },
 				{ cutscene: { bg: { type: 'indoor', wall: '#cfd6e2', floor: '#4a4f6a' }, start: 'dark', frames: [
-					{ fx: 'light', item: 'expedienteolmedo', text: '«Silph S.A. · Expediente de personal. Matías Olmedo Rivas. Ingeniero jefe, División Transporte. Proyecto ARCO».' },
-					{ text: '«Última anotación: Baja voluntaria». Tachado. Encima, con otra letra: «**Trasladado a: Proyecto Arco II · Teselia**». Autoriza: un sello pequeño, dibujado a mano, con un ocho tumbado.' },
-					{ fx: 'zoom', text: 'Grapada atrás, una foto de carné. Gafas torcidas. Cara de no haber dormido. Y por detrás, a lápiz: «Para D., por si preguntan».' },
+					{ cam: 'push', fx: 'light', item: 'expedienteolmedo', text: '«Silph S.A. · Expediente de personal. Matías Olmedo Rivas. Ingeniero jefe, División Transporte. Proyecto ARCO».' },
+					{ actors: [{ key: '_c', size: 'l' }], text: '«Última anotación: Baja voluntaria». Tachado. Encima, con otra letra: «**Trasladado a: Proyecto Arco II · Teselia**». Autoriza: un sello pequeño, dibujado a mano, con un ocho tumbado.' },
+					{ actors: [{ key: '_c', do: 'turn' }], fx: 'zoom', text: 'Grapada atrás, una foto de carné. Gafas torcidas. Cara de no haber dormido. Y por detrás, a lápiz: «Para D., por si preguntan».' },
 				] } },
 				{ give: 'expedienteolmedo' },
 				{ say: 'rotom', text: '¡Bzzt! ¡Trasladado! No desapareció: lo trasladaron. ¡A Teselia! —Pausa—. «Para D.». D. de Dámaso. Lo guardó para Dámaso.', cond: 'flag.b03_renata_espera' },
@@ -970,10 +970,10 @@ export default {
 			] },
 			{ text: 'El presidente se acerca a la pared, junto al ascensor. Hay una caja roja con una tapa de cristal y un botón dentro: «**ALARMA GENERAL** · Solo en caso de emergencia».' },
 			{ say: 'presidente_silph', text: 'Este botón lo mandé poner yo, hace veinte años. Nunca lo he pulsado. Nunca ha hecho falta. —Rompe el cristal con el codo, con más fuerza de la que esperabas—. Hoy es la primera cosa que decido en un año.' },
-			{ cutscene: { bg: { type: 'indoor', wall: '#cfd6e2', floor: '#4a4f6a' }, start: 'light', frames: [
-				{ fx: 'flash', text: 'La alarma de Silph S.A. suena por primera vez en veinte años. Un timbre largo, viejo, que hace temblar los cristales de los archivadores.' },
-				{ fx: 'shake', text: 'Por las ventanas, en la Torre Lemnis, se encienden las luces planta por planta, de abajo arriba, como una cremallera.' },
-				{ text: 'Abajo, en la avenida, las primeras sirenas. Policía de Kanto. Y detrás, de todas las calles, furgonetas blancas con una lemniscata en la puerta, que llegan a toda velocidad.' },
+			{ cutscene: { time: 'noche', bg: { type: 'indoor', wall: '#cfd6e2', floor: '#4a4f6a' }, start: 'light', frames: [
+				{ actors: [{ id: 'presidente_silph', at: 'left' }], tint: '#c4473a', color: '#ff6a5a', fx: ['flash', 'quake'], text: 'La alarma de Silph S.A. suena por primera vez en veinte años. Un timbre largo, viejo, que hace temblar los cristales de los archivadores.' },
+				{ cam: 'pan-up', fx: ['shake', 'heartbeat'], text: 'Por las ventanas, en la Torre Lemnis, se encienden las luces planta por planta, de abajo arriba, como una cremallera.' },
+				{ fx: 'heartbeat', cam: 'pan-down', actors: [{ key: 'presidente_silph', dim: true }], text: 'Abajo, en la avenida, las primeras sirenas. Policía de Kanto. Y detrás, de todas las calles, furgonetas blancas con una lemniscata en la puerta, que llegan a toda velocidad.' },
 			] } },
 			{ say: 'presidente_silph', text: 'Váyase. Por el ascensor, hasta arriba del todo. A la azotea. —Pulsa el botón del ático—. Cuando lleguen, les diré que estaba solo. Y que he encontrado cosas en mi archivo que no son mías. Y que quiero que se las lleven a una comisaría. A una de verdad.' },
 			{ text: 'Las puertas del ascensor se cierran. Lo último que ves es al presidente de Silph S.A., en bata y zapatillas, colocándose bien la corbata delante de las cajas de Lemnis, como quien se prepara para una foto.' },
@@ -994,10 +994,10 @@ export default {
 			{ text: 'Sentada en el borde del helipuerto, con las piernas colgando sobre el vacío, como si no se hubiera movido de ahí en toda la noche, está Ysolde.' },
 			{ say: 'rotom', text: '¡Bzzt! ¡Tú! ¡Te fuiste! ¡Nos dejaste solos con Atenea! ¡Con su lima!' },
 			{ say: 'ysolde', text: 'Los dejé con quien tenían que estar. —Ni se gira—. Si me quedo, Atenea me reconoce. Si me reconoce, sabe que hay Vencejos en Azafrán. Y entonces los tejados se acaban. Para mí y para ti.' },
-			{ cutscene: { bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e', '#c4a43a'], far: '#1f2e4f' }, start: 'dark', frames: [
-				{ text: 'Se sientan los dos en el borde del helipuerto. Abajo, la policía de Kanto entra en Silph con cajas vacías. Sale con cajas llenas.' },
-				{ fx: 'glow', text: 'Las furgonetas de Lemnis siguen llegando. De todas las calles. Hasta de la carretera del norte, la que viene de Celeste, con las luces de emergencia puestas y sin frenar en los cruces.' },
-				{ text: 'Enfrente, en la Torre Lemnis, la planta veinticuatro está a oscuras. La persiana, bajada hasta abajo.' },
+			{ cutscene: { time: 'noche', bg: { type: 'city', roofs: ['#8a8f9e', '#5a626e', '#c4a43a'], far: '#1f2e4f' }, start: 'dark', frames: [
+				{ actors: [{ id: 'ysolde', at: 'right', enter: 'none' }], cam: 'pan-down', text: 'Se sientan los dos en el borde del helipuerto. Abajo, la policía de Kanto entra en Silph con cajas vacías. Sale con cajas llenas.' },
+				{ on: false, color: '#6f9bff', cam: 'pan-right', fx: 'glow', text: 'Las furgonetas de Lemnis siguen llegando. De todas las calles. Hasta de la carretera del norte, la que viene de Celeste, con las luces de emergencia puestas y sin frenar en los cruces.' },
+				{ actors: [{ key: 'ysolde', dim: true }], cam: 'pan-up', text: 'Enfrente, en la Torre Lemnis, la planta veinticuatro está a oscuras. La persiana, bajada hasta abajo.' },
 			] } },
 			{ text: '{riolu} se sienta en el borde a tu lado, con las piernas colgando como las de ustedes. El aura le brilla muy tenue, al ritmo de la respiración. Mira hacia el norte. No hacia las furgonetas. Más allá.', cond: LUC },
 			{ say: 'ysolde', text: 'Mira las furgonetas. Vienen todas. Hasta las del norte. —Señala con la barbilla—. Esta noche, en esta ciudad, nadie vigila nada que no sea este edificio.' },
@@ -1125,10 +1125,10 @@ export default {
 				{ if: LUC, then: [
 					{ text: '{riolu} se pone a tu lado y cierra los ojos. El aura se le enciende, muy bajito. El humo se endereza. Se queda quieto. Esperando.' },
 				] },
-				{ cutscene: { bg: { type: 'cave', dark: true, fog: true, crystals: '#b08ad8' }, start: 'dark', frames: [
-					{ text: 'Recoges un poco de ceniza del borde del incensario. Está tibia. Se mete en los pliegues del pañuelo como harina gris.' },
-					{ fx: 'glow', item: 'cenizatorre', text: 'Por un momento, en el humo, te parece ver formas. Una cola. Unas orejas. Un hocico. Muchas. Se acercan al pañuelo, lo huelen… y se apartan, tranquilas, como quien da permiso.' },
-					{ text: 'El humo vuelve a subir recto. El incensario sigue encendido. No le falta nada.' },
+				{ cutscene: { weather: 'smoke', bg: { type: 'cave', dark: true, fog: true, crystals: '#b08ad8' }, start: 'dark', frames: [
+					{ cam: 'push', text: 'Recoges un poco de ceniza del borde del incensario. Está tibia. Se mete en los pliegues del pañuelo como harina gris.' },
+					{ color: '#b08ad8', cam: 'still', fx: 'glow', item: 'cenizatorre', text: 'Por un momento, en el humo, te parece ver formas. Una cola. Unas orejas. Un hocico. Muchas. Se acercan al pañuelo, lo huelen… y se apartan, tranquilas, como quien da permiso.' },
+					{ actors: [{ key: '_c', dim: true }], cam: 'pan-up', text: 'El humo vuelve a subir recto. El incensario sigue encendido. No le falta nada.' },
 				] } },
 				{ give: 'cenizatorre' },
 				{ say: 'rotom', text: '¡Bzzt! …Me ha dado un escalofrío en el circuito. —Pausa—. Los Rotom no tenemos escalofríos. Me lo he inventado. Pero ha sido muy real.' },
@@ -1145,10 +1145,10 @@ export default {
 			{ say: 'fuji', text: 'Kaori, hija, no hace falta que lo pruebes en ti cada vez.' },
 			{ say: 'kaori', text: 'Sí hace falta. Si no lo pruebo yo, no sé qué siente ella. —No levanta la vista—. Y ella no me lo puede contar.' },
 			{ cutscene: { bg: { type: 'indoor', wall: '#d8c49a', floor: '#8a6a4a' }, start: 'dark', frames: [
-				{ text: 'Kaori se arrodilla junto a la Ponyta. Le abre la boca con dos dedos, con un cuidado que no le habías visto nunca, y le pone tres gotas en la lengua.' },
-				{ text: 'Nada. Un segundo. Dos. La Ponyta respira despacio, igual que antes. Kaori no se mueve.' },
-				{ fx: 'glow', text: 'Y en la punta de la crin blanca aparece una chispa. Pequeña. Naranja. Del tamaño de la llama de una vela de cumpleaños.' },
-				{ fx: 'light', text: 'La chispa no crece. Pero tampoco se apaga. Se queda ahí, temblando, cada vez que la Ponyta respira.' },
+				{ actors: [{ id: 'kaori', at: 'left' }, { mon: 'ponyta', at: 0.7, enter: 'none', dim: true }], text: 'Kaori se arrodilla junto a la Ponyta. Le abre la boca con dos dedos, con un cuidado que no le habías visto nunca, y le pone tres gotas en la lengua.' },
+				{ cam: 'still', text: 'Nada. Un segundo. Dos. La Ponyta respira despacio, igual que antes. Kaori no se mueve.' },
+				{ color: '#ffb060', actors: [{ key: 'ponyta', dim: false }], cam: 'push', fx: 'glow', text: 'Y en la punta de la crin blanca aparece una chispa. Pequeña. Naranja. Del tamaño de la llama de una vela de cumpleaños.' },
+				{ color: '#ffb060', actors: [{ key: 'kaori', emote: '...' }], on: 'ponyta', fx: ['light', 'sparkle'], text: 'La chispa no crece. Pero tampoco se apaga. Se queda ahí, temblando, cada vez que la Ponyta respira.' },
 			] } },
 			{ set: { 'flag.b04_kaori_paso': true, 'flag.b04_fuji_hecho': true } },
 			{ af: { kaori: 6 } },

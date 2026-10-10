@@ -819,10 +819,10 @@ export default {
 			{ text: 'Don Aurelio se quita el sombrero, se seca los ojos con la manga y lo disimula fatal.' },
 			{ say: 'aurelio', text: 'Esto es para usted. Cada una de mis niñas me ha dejado un mechón, mientras las abrazaba. Con la lana de un Mareep y un farol viejo se hace esto.' },
 			{ cutscene: { bg: { type: 'ranch' }, start: 'dark', frames: [
-				{ item: 'farollana', text: 'Mete los mechones de lana en un farol de hojalata, lo cierra y lo frota contra la manga, una, dos, tres veces…' },
-				{ fx: 'flash', text: '*Chss.* La lana se carga de estática. Una chispa diminuta salta dentro del farol.' },
-				{ fx: 'light', text: 'Y el farol se enciende. Una luz amarilla, cálida, que no tiembla. La penumbra bajo el árbol se abre en círculo a su alrededor.' },
-				{ fx: 'glow', text: 'Los Mareep levantan la cabeza a la vez. Conocen esa luz.' },
+				{ actors: [{ id: 'aurelio', at: 'left', enter: 'left' }], on: '_c', cam: 'push', item: 'farollana', text: 'Mete los mechones de lana en un farol de hojalata, lo cierra y lo frota contra la manga, una, dos, tres veces…' },
+				{ actors: [{ key: 'aurelio', do: 'nod' }], on: '_c', fx: ['flash', 'sparkle'], text: '*Chss.* La lana se carga de estática. Una chispa diminuta salta dentro del farol.' },
+				{ on: '_c', cam: 'pull', fx: 'light', text: 'Y el farol se enciende. Una luz amarilla, cálida, que no tiembla. La penumbra bajo el árbol se abre en círculo a su alrededor.' },
+				{ actors: [{ key: 'aurelio', dim: true }, { mon: 'mareep', key: 'm1', at: 0.66, size: 's', enter: 'up', emote: '!' }, { mon: 'mareep', key: 'm2', at: 0.87, size: 's', enter: 'up', flip: true }], on: '_c', fx: 'glow', text: 'Los Mareep levantan la cabeza a la vez. Conocen esa luz.' },
 			] } },
 			{ give: 'farollana' },
 			{ say: 'aurelio', text: 'El **Farol de Lana**. Alumbra lo que haga falta: cuevas, galerías, sótanos. En mi rancho lo usábamos para buscar a las que se perdían de noche. Ahora le toca a usted.' },
@@ -1124,9 +1124,9 @@ export default {
 			] },
 			{ if: 'has("farollana")', then: [
 				{ cutscene: { bg: { type: 'cave', crystals: '#7fd6e0' }, start: 'dark', frames: [
-					{ text: 'Negro. Tan negro que la rampa parece no tener fondo.' },
-					{ item: 'farollana', fx: 'glow', text: 'Sacas el Farol de Lana y lo frotas contra la manga, como hacía Don Aurelio.' },
-					{ fx: 'light', clear: true, text: 'La luz amarilla baja por la rampa delante de ti… y la galería aparece entera.' },
+					{ cam: 'still', text: 'Negro. Tan negro que la rampa parece no tener fondo.' },
+					{ cam: 'push', item: 'farollana', fx: 'glow', text: 'Sacas el Farol de Lana y lo frotas contra la manga, como hacía Don Aurelio.' },
+					{ cam: 'pan-down', fx: 'light', clear: true, text: 'La luz amarilla baja por la rampa delante de ti… y la galería aparece entera.' },
 				] } },
 			] },
 			{ text: 'Enciendes la linterna y bajas por la rampa.', cond: '!has("farollana")' },

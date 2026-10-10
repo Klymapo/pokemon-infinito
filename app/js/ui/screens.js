@@ -22,6 +22,10 @@ import { openTutor } from './tutor.js';
 import { evolutionInfo } from '../movimientos.js';
 import { moveMany, moveBox, swapBoxes, boxName, hasBoxName, setBoxName, BOX_NAME_MAX } from '../pc.js';
 import { playPuzzle } from './rejilla.js';
+import { repairSave } from '../reparaciones.js';
+import { playCutscene } from './cine.js';
+import { playMinigame, showLoot } from './minijuegos.js';
+import { MINI_INFO, gatherGame, gatherCargo, prepare, settle, sumCargo } from '../minijuegos.js';
 import { openVentures, openVenture, setVentureHooks } from './negocios-ui.js';
 import { ventureList, venturesSummary, pending as venturePending } from '../negocios.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
@@ -55,50 +59,11 @@ export function installHooks() {
 		forceEvolve: (p, to) => evolveUI(p, to),
 		cutscene: spec => playCutscene(spec),
 		puzzle: def => playPuzzle(def),
+		minigame: def => playMinigame(def),
 		read: (title, text, itemId) => readPaper(title, text, { icon: itemId ? itemImg(itemId) : null }),
 		venture: id => openVenture(id),
 	});
 	setVentureHooks({ travel: id => guarded(() => travelTo(id)), summary: (p, onChange) => openSummary(p, onChange, { battle: true, hp: p.hp, maxhp: maxHp(p) }) });
-}
-
-// =================== Cinemáticas ===================
-/**
- * Escena corta a pantalla completa con bandas de cine. spec:
- * { bg: {type, ...}, start: 'dark'|'light', frames: [{ text, item, npc, mon, fx }] }
- * fx: 'light' (la luz se abre desde el centro), 'dark', 'flash', 'shake', 'glow', 'zoom'.
- * Se avanza tocando. Respeta «reducir movimiento» del sistema.
- */
-async function playCutscene(spec = {}) {
-	const bg = sceneCanvas({ ...(spec.bg || {}), seed: (spec.bg?.seed || G.loc || 'cs') + 'cs' });
-	bg.classList.add('cs-bg');
-	const veil = h('div', { class: 'cs-veil' + (spec.start === 'dark' ? ' on' : '') });
-	const center = h('div', { class: 'cs-center' });
-	const cap = h('div', { class: 'cs-cap' });
-	const hint = h('div', { class: 'cs-hint' }, 'Toca para seguir');
-	const stage = h('div', { class: 'cs-stage' }, bg, center, veil);
-	const root = h('div', { class: 'cutscene', role: 'dialog', 'aria-label': 'Escena' }, h('div', { class: 'cs-bar top' }, logButton('dlg-log cs-log')), stage, h('div', { class: 'cs-bar bot' }, cap, hint));
-	document.body.append(root);
-	requestAnimationFrame(() => root.classList.add('in'));
-	const tap = () => new Promise(r => { const f = () => { root.removeEventListener('click', f); r(); }; setTimeout(() => root.addEventListener('click', f), 250); });
-	for (const fr of spec.frames || []) {
-		if (fr.item || fr.npc || fr.mon) {
-			center.innerHTML = '';
-			const el = fr.item ? (pxItem(fr.item, 96) || itemImg(fr.item)) : fr.npc ? portraitFor({ id: fr.npc, ...C.npcs[fr.npc] }) : monImg(fr.mon, { anim: true });
-			center.append(h('div', { class: 'cs-obj' }, el));
-		}
-		if (fr.clear) center.innerHTML = '';
-		for (const k of ['light', 'glow', 'shake', 'zoom']) stage.classList.remove('fx-' + k);
-		if (fr.fx === 'dark') veil.className = 'cs-veil on';
-		if (fr.fx === 'light') { veil.className = 'cs-veil on'; void veil.offsetWidth; veil.className = 'cs-veil open'; }
-		if (fr.fx === 'flash') { const f = h('div', { class: 'cs-flash' }); stage.append(f); setTimeout(() => f.remove(), 600); }
-		if (fr.fx && fr.fx !== 'dark' && fr.fx !== 'flash') { void stage.offsetWidth; stage.classList.add('fx-' + fr.fx); }
-		cap.innerHTML = fr.text ? fmtText(tx(fr.text)) : '';
-		if (fr.text) logLine({ k: 'narr', t: tx(fr.text) });
-		await tap();
-	}
-	root.classList.remove('in');
-	await new Promise(r => setTimeout(r, 300));
-	root.remove();
 }
 
 // =================== Título ===================
@@ -140,8 +105,11 @@ function continueGame(save) {
 	setG(save);
 	mainSwipe();
 	try { const added = retroUniques(); if (added.length) G.uniq.retroNews = added; } catch (e) { console.error(e); }
+	let fixNotes = [];
+	try { fixNotes = repairSave(); } catch (e) { console.error(e); }
 	startClock();
 	render();
+	if (fixNotes.length) setTimeout(async () => { for (const n of fixNotes) await say({ name: 'Rotom', look: { hair: 'spiky', hairColor: '#e07a3a', skin: '#f6f0e6', eyes: '#4c7cf0', outfit: '#e07a3a', outfit2: '#4c7cf0', eyesStyle: 'happy', mouth: 'grin' } }, '¡Bzzt! ' + n); await saveGame(); }, 600);
 }
 
 let clockStarted = false;
@@ -566,22 +534,59 @@ async function gatherHere(gid, loc) {
 	const left = gatherLeft(gid, loc);
 	if (left) { await say(null, tx(def.wait || 'Ya recogiste lo que había.') + ` Vuelve en unas ${Math.ceil(left / 3600e3)} h.`); return; }
 	const table = def.table.filter(e => e.cond === undefined || evalCond(e.cond));
-	const tot = table.reduce((s, e) => s + (e.w || 1), 0);
-	const roll = () => { let r = rng() * tot; return table.find(e => (r -= (e.w || 1)) < 0) || table[0]; };
-	const [p0, p1] = def.picks || [1, 2];
 	// La montura rompe roca: en vetas, piedras y cristales saca una tanda más
 	const rocky = mounted() && (def.rocky ?? (/[⛏💎🪨]/u.test(def.icon || '') || table.some(e => ['loot', 'evolution', 'collectibles', 'jewels'].includes(D.items[toID(e.id)]?.cat) && /stone|shard|nugget|crystal|ore|gem|rock|fossil|dust/.test(toID(e.id)))));
+	// Punto con minijuego (`game`): se elige entre jugar (puede salir más, y lo raro) o recoger rápido (lo de siempre)
+	const gdef = gatherGame(gid, def);
+	if (gdef) {
+		const verb = MINI_INFO[gdef.type]?.verb || 'Jugar';
+		const i = await choose(tx(def.ask || def.text || 'Aquí hay algo que recoger.'), [`${verb} (puede salir más)`, 'Recoger rápido', 'Ahora no']);
+		if (i === 0) return gatherPlay(gid, loc, def, gdef, rocky);
+		if (i !== 1) return;
+	}
+	const pool = gdef && table.some(e => !e.rare) ? table.filter(e => !e.rare) : table; // lo `rare` solo sale jugando
+	const tot = pool.reduce((s, e) => s + (e.w || 1), 0);
+	const roll = () => { let r = rng() * tot; return pool.find(e => (r -= (e.w || 1)) < 0) || pool[0]; };
+	const [p0, p1] = def.picks || [1, 2];
 	const picks = p0 + Math.floor(rng() * (p1 - p0 + 1)) + (rocky ? 1 : 0);
 	const got = {};
 	for (let i = 0; i < picks; i++) { const e = roll(); const [n0, n1] = e.n || [1, 1]; got[e.id] = (got[e.id] || 0) + n0 + Math.floor(rng() * (n1 - n0 + 1)); }
 	const fresh = Object.keys(got).filter(id => !G.found?.[id]);
 	for (const id in got) addItem(id, got[id]);
 	G.gather[loc.id + ':' + gid] = Date.now();
+	G.flags['rec_' + gid] = true; // para el `new` de los puntos añadidos a zonas ya visitadas
 	const lines = Object.entries(got).map(([id, n]) => `**${itemName(id)}**${n > 1 ? ' ×' + n : ''}${fresh.includes(id) ? ' 🆕' : ''}`);
 	await say(null, tx(def.text || 'Has recogido algunas cosas.') + (rocky ? ' Tu montura parte la roca de una embestida y aparece algo más.' : '') + '\n' + lines.join(' · '));
 	if (fresh.length) toast(`📖 ${fresh.length === 1 ? 'Nuevo objeto' : fresh.length + ' objetos nuevos'} en tu Colección`);
 	await saveGame();
 	render();
+}
+
+/** Recolección jugando: la base (lo de «Recoger rápido») va segura; lo que consigas en el minijuego es extra. Salir a medias deja solo la base. */
+async function gatherPlay(gid, loc, def, gdef, rocky) {
+	const cargo = gatherCargo(def, { rnd: rng, cond: evalCond, extraPicks: rocky ? 1 : 0 });
+	const P = prepare({ def: { ...gdef, title: tx(gdef.title), hint: tx(gdef.hint) }, mode: 'gather', G, cargo, cond: evalCond });
+	const res = await playMinigame(P);
+	const { items } = settle(G, P, res);
+	const base = sumCargo(cargo.filter(c => c.base));
+	const rows = [];
+	for (const id in items) {
+		const b = Math.min(items[id], base[id] || 0), x = items[id] - b, fresh = !G.found?.[id];
+		if (b) rows.push({ id, n: b, fresh });
+		if (x) rows.push({ id, n: x, fresh: fresh && !b, extra: true });
+	}
+	const freshN = Object.keys(items).filter(id => !G.found?.[id]).length;
+	for (const id in items) addItem(id, items[id]);
+	G.gather[loc.id + ':' + gid] = Date.now();
+	G.flags['rec_' + gid] = true; // para el `new` de los puntos añadidos a zonas ya visitadas
+	await saveGame();
+	const nx = rows.filter(r => r.extra).reduce((s, r) => s + r.n, 0);
+	const note = (res.result === 'quit' ? 'Has salido a medias: te llevas lo básico.' : nx ? `Jugando has sacado **${nx} ${nx === 1 ? 'cosa' : 'cosas'} más** que recogiendo rápido.` : 'Esta vez no ha salido nada extra.')
+		+ (rocky ? ' Tu montura ha partido la roca: una tanda más.' : '');
+	await showLoot({ title: tx(def.name || '¡Botín!'), text: tx(def.text || ''), items: rows, note });
+	if (freshN) toast(`📖 ${freshN === 1 ? 'Nuevo objeto' : freshN + ' objetos nuevos'} en tu Colección`);
+	render();
+	if (res.result === 'win' && res.wild) await battle({ wild: { sp: res.wild.sp, lv: res.wild.lv } });
 }
 
 /** Todos los puntos de recolección que ya conoces (lugares visitados y tramos de ruta vistos). */
@@ -2039,6 +2044,8 @@ async function travelTo(id, tramo = null) {
 	if (!target) return;
 	if (G.loc === id && (tramo === null || G.route?.pos === tramo)) { render(); return; }
 	const dest = topLoc(id) || target;
+	reachCache = null;
+	if (target.parent && !reachable().has(id)) { await say(null, `Ahora mismo no hay forma de entrar en ${target.name}.`); id = dest.id; tramo = null; }
 	const here = topLoc(G.loc);
 	const start = G.route ? G.loc : here?.id;
 	const path = dest.id === start ? [start] : findPath(start, dest.id);
@@ -2051,7 +2058,7 @@ async function travelTo(id, tramo = null) {
 	if (id !== dest.id) {
 		// sub-lugares anidados: entra de fuera hacia dentro
 		const chain = [];
-		for (let l = target; l && l.id !== dest.id; l = L(l.parent)) chain.unshift(l.id);
+		for (let l = L(id); l && l.id !== dest.id; l = L(l.parent)) chain.unshift(l.id);
 		for (const step of chain) { const c2 = canEnter(step); if (!c2.ok) { await say(null, tx(c2.msg)); break; } await enterLocation(step, { from: G.loc }); if (G.loc !== step) return; }
 	}
 	if (tramo !== null && G.loc === id && L(id).route) {
@@ -2059,6 +2066,32 @@ async function travelTo(id, tramo = null) {
 		else toast(`Está en el tramo ${tramo}: avanza por la ruta hasta llegar.`);
 	}
 	render();
+}
+
+// =================== Lugares a los que de verdad puedes ir ahora ===================
+// Un edificio o zona interior solo cuenta si hoy existe una entrada visible hasta él (un sitio «ir a…» o un desvío de ruta)
+// desde un lugar que ya conoces. Así ni las Novedades ni el Diario enseñan (ni dejan viajar a) sitios cuya puerta
+// la historia aún no ha abierto, o trenes que ya se fueron.
+let reachCache = null, reachAt = 0;
+function reachable() {
+	if (reachCache && Date.now() - reachAt < 1500) return reachCache;
+	const R = new Set(), queue = [];
+	const add = id => { if (id && L(id) && !R.has(id)) { R.add(id); queue.push(id); } };
+	for (const loc of Object.values(C.locations)) if (!loc.parent && G.visited[loc.id]) add(loc.id);
+	add(G.loc);
+	while (queue.length) {
+		const loc = L(queue.pop());
+		if (!canEnter(loc.id).ok && loc.id !== G.loc) continue;
+		let spots = [];
+		try { spots = spotsOf(loc); } catch (e) { spots = []; }
+		for (const s of spots) { const go = s.action?.go; if (go && L(go)?.parent) add(go); }
+		if (loc.route) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) {
+			if (it.branch?.go && L(it.branch.go)?.parent && (it.branch.cond === undefined || evalCond(it.branch.cond))) add(it.branch.go);
+			const go = it.spot?.action?.go; if (go && L(go)?.parent) add(go);
+		}
+	}
+	reachCache = R; reachAt = Date.now();
+	return R;
 }
 
 // =================== Novedades ===================
@@ -2079,7 +2112,13 @@ function newsScan() {
 		if (pz && !pz.claimed && pz.ready) put({ key: 'pz:' + a.training.prize.script, kind: 'prize', icon: '🎁', title: `Premio listo: ${label}`, sub: 'Ya ganaste los combates. Pasa a recogerlo.', loc: loc.id, tramo: n, place: placeOf(loc, n) });
 		if (!(s.talk || s.script || a.script || a.talk)) return;
 		const m = spotMarker(s);
-		if (!m || m.kind === 'active') return;
+		if (!m) return;
+		if (m.kind === 'active') {
+			// Una misión que ya tienes y que aquí puede avanzar: avisa cuando pasa de «en espera» a «te toca»
+			const def = C.quests[m.q], st = G.quests[m.q];
+			if (def && st) put({ key: 'a:' + m.q + ':' + (st.stage || ''), kind: 'active', icon: def.type === 'main' ? '⭐' : def.type === 'thread' ? '🧵' : '📜', title: def.name, sub: `Te toca · ${label}`, loc: loc.id, tramo: n, place: placeOf(loc, n), q: m.q });
+			return;
+		}
 		if (m.kind === 'new') {
 			const def = C.quests[m.q];
 			put({ key: 'q:' + m.q, kind: 'quest', icon: def.type === 'main' ? '⭐' : def.type === 'thread' ? '🧵' : def.type === 'event' ? '🎉' : '📜', title: def.name, sub: `Misión nueva · ${label}`, loc: loc.id, tramo: n, place: placeOf(loc, n), q: m.q });
@@ -2094,9 +2133,9 @@ function newsScan() {
 		}
 	};
 	const touch = questTouches();
+	const R = reachable();
 	for (const loc of Object.values(C.locations)) {
-		const top = topLoc(loc.id);
-		if (!G.visited[loc.id] && !G.visited[top?.id]) continue;
+		if (!R.has(loc.id)) continue;
 		if (loc.hidden !== undefined && safe(loc.hidden)) continue;
 		for (const s of spotsOf(loc)) addSpot(loc, s);
 		if (loc.route && G.visited[loc.id]) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) if (it.talk || it.spot) addSpot(loc, it, n);
@@ -2204,12 +2243,10 @@ function questPlaces() {
 		const txt = spot.label ? `${where} · ${spot.label}` : where;
 		const put = q => { const arr = (out[q] ||= []); if (!arr.includes(txt)) arr.push(txt); };
 		for (const sc of scripts) for (const q of touch[sc] || []) put(q);
-		// Misiones ya en curso: también los diálogos que se abrirán cuando cumplas lo que piden
-		if (Array.isArray(spot.talk)) for (const e of spot.talk) for (const q of touch[e.script] || []) if (G.quests[q] && !G.quests[q].done) put(q);
 	};
+	const R = reachable();
 	for (const loc of Object.values(C.locations)) {
-		const top = topLoc(loc.id);
-		if (!G.visited[loc.id] && !G.visited[top?.id]) continue;
+		if (!R.has(loc.id)) continue;
 		for (const sp of spotsOf(loc)) add(loc, sp);
 		if (loc.route) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) if (it.talk || it.script) add(loc, it);
 	}
@@ -2246,11 +2283,11 @@ function openDiary(startTab = null) {
 		const logq = active.filter(x => !todo.includes(x));
 		const NS = newsState({ force: true });
 		const counts = { news: NS.unread || NS.items.length, active: todo.length, avail: avail.length, log: logq.length, done: done.length };
-		const tabs = h('div', { class: 'tabs' }, ...[['news', 'Novedades'], ['active', 'Por hacer'], ['avail', 'Nuevas'], ['log', 'Registro'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
+		const tabs = h('div', { class: 'tabs' }, ...[['news', 'Novedades'], ['active', 'Por hacer'], ['avail', 'Nuevas'], ['log', 'En espera'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
 			h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, counts[k] ? h('span', { class: 'tabcount' }, String(counts[k])) : null)));
 		const body = h('div', {});
 		if (tab === 'news') {
-			const KINDS = [['quest', 'Misiones que te ofrecen'], ['enter', 'La historia sigue en…'], ['talk', 'Gente con algo nuevo que decir'], ['prize', 'Premios por recoger'], ['venture', 'Negocios']];
+			const KINDS = [['active', 'Misiones tuyas que puedes avanzar'], ['quest', 'Misiones que te ofrecen'], ['enter', 'La historia sigue en…'], ['talk', 'Gente con algo nuevo que decir'], ['prize', 'Premios por recoger'], ['venture', 'Negocios']];
 			body.append(h('div', { class: 'qgroup' }, h('b', {}, '🔔 Novedades'), h('span', {}, 'Rotom revisa por ti todos los lugares que ya conoces, sus edificios y sus rutas. Toca «Ir» para viajar directo. Cuando aparezca algo nuevo, te avisa.')));
 			if (!NS.items.length) body.append(h('div', { class: 'empty' }, 'Nada nuevo en los lugares que conoces. Cuando avances en la historia o pase el tiempo, Rotom te avisará aquí.'));
 			const unread = NS.items.filter(i => i.unread);
@@ -2298,10 +2335,10 @@ function openDiary(startTab = null) {
 					intoBody.append(h('div', { class: 'list' }, ...group.map(([id, q]) => rowOf(id, q))));
 				}
 			};
-			if (tab === 'log') body.append(h('div', { class: 'qgroup log' }, h('b', {}, '📖 Registro'), h('span', {}, 'Historias abiertas que seguirán más adelante. No tienes que hacer nada por ahora: se avisará cuando haya novedades.')));
+			if (tab === 'log') body.append(h('div', { class: 'qgroup log' }, h('b', {}, '⏳ En espera'), h('span', {}, 'Historias abiertas que seguirán solas más adelante. No tienes que hacer nada: cuando alguna te necesite, pasará a «Por hacer» y Rotom te avisará.')));
 			const cal = tab === 'active' ? eventCalendar() : [];
 			if (cal.length) body.append(h('div', { class: 'section-title' }, '🎉 Eventos de temporada'), h('div', { class: 'evstrip inlist' }, ...cal.map(eventRow)));
-			if (tab === 'active' && qs.length) body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Toca una misión para ver todo lo que necesitas. Con 📌 Seguir la tienes siempre a la vista.')));
+			if (tab === 'active' && qs.length) body.append(h('div', { class: 'qgroup' }, h('b', {}, '📌 Por hacer'), h('span', {}, 'Solo lo que necesita que actúes tú ahora. Toca una misión para ver qué hacer y dónde. Las historias que esperan están en «En espera».')));
 			byType(qs, body);
 		}
 		sheet.set([tabs, body]);
@@ -2581,7 +2618,7 @@ function itemUniverse() {
 			if (sp.action?.shop && C.shops[sp.action.shop]) for (const e of C.shops[sp.action.shop].items || []) add(typeof e === 'string' ? e : e.id, `${C.shops[sp.action.shop].name} (${name})`);
 		}
 	}
-	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give) add(c.give, 'historia'); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then); } };
+	const scan = list => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.give) add(c.give, 'historia'); if (c.minigame) for (const x of [...(c.minigame.guaranteed || []), ...(c.minigame.loot || []).map(e => e.id)]) add(x, 'historia'); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k]); if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then); } };
 	for (const id in C.scripts) scan(C.scripts[id]);
 	for (const id in G.found || {}) if (!src[id]) add(id, 'encontrado');
 	return src;
@@ -2828,6 +2865,7 @@ function openSettings() {
 			h('div', { class: 'section-title' }, 'Juego'),
 			h('div', { class: 'list' },
 				h('button', { class: 'row', onclick: () => { G.settings.textSpeed = ((G.settings.textSpeed ?? 2) + 1) % 4; setTextSpeed(G.settings.textSpeed); draw(); } }, h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Velocidad del texto')), h('b', {}, speeds[G.settings.textSpeed ?? 2])),
+				toggle('Animaciones de combate', 'Efectos de los ataques y de las escenas. Sin ellas, solo un destello corto.', 'anim'),
 				toggle('Repartir Experiencia', 'Todo el equipo gana EXP (la mitad si no combate).', 'expShare'),
 				h('button', { class: 'row', onclick: () => { G.settings.battleStyle = (G.settings.battleStyle ?? 'shift') === 'shift' ? 'set' : 'shift'; draw(); } }, h('div', { class: 'lbl' }, h('div', { class: 't' }, 'Estilo de combate'), h('div', { class: 's' }, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio: cuando cae un Pokémon rival, te pregunta si quieres cambiar el tuyo.' : 'Fijo: no te pregunta; sigues con el mismo Pokémon.')), h('b', {}, (G.settings.battleStyle ?? 'shift') === 'shift' ? 'Cambio' : 'Fijo')),
 				G.vars.mount ? toggle('Usar montura', 'Avanzas dos tramos por paso en rutas.', 'useMount') : null,

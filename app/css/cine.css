@@ -1,0 +1,221 @@
+/* Cinemáticas (motor en app/js/ui/cine.js; formato y guía en docs/CINE.md) */
+@property --cs-ir { syntax: '<percentage>'; inherits: false; initial-value: 150%; }
+
+.cutscene { position: fixed; inset: 0; z-index: 60; background: #05060c; max-width: 560px; margin: 0 auto; overflow: hidden; outline: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; --cs-base: clamp(160px, 21.5vh, 210px); --cs-bar: calc(22px + var(--safe-t, 0px)); }
+.cs-stage { position: absolute; inset: 0; overflow: hidden; }
+.cs-shake { position: absolute; inset: 0; }
+.cs-bg, .cs-fxc { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; pointer-events: none; }
+.cs-bg { transform-origin: 50% 56%; will-change: transform; }
+
+/* Bandas de cine: cerradas al empezar, se abren hasta quedar finas */
+.cs-bar { position: absolute; left: 0; right: 0; height: 50%; background: #000; z-index: 5; pointer-events: none; transition: transform .75s cubic-bezier(.6, 0, .2, 1); }
+.cs-bar.top { top: 0; }
+.cs-bar.bot { bottom: 0; }
+.cutscene.in .cs-bar.top { transform: translateY(calc(-100% + var(--cs-bar))); }
+.cutscene.in .cs-bar.bot { transform: translateY(calc(100% - 8px - var(--safe-b, 0px))); }
+.cutscene.out .cs-bar { transition-duration: .4s; }
+
+/* Banda de texto: degradado sobre la escena, nunca una caja negra */
+.cs-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; min-height: var(--cs-base); box-sizing: border-box; padding: 34px 22px calc(26px + var(--safe-b, 0px)); display: flex; flex-direction: column; background: linear-gradient(to bottom, rgba(5, 6, 14, 0) 0, rgba(5, 6, 14, .8) 34px, rgba(5, 6, 14, .93) 90px, #05060c 100%); opacity: 0; transition: opacity .5s .35s; }
+.cutscene.in .cs-band { opacity: 1; }
+.cutscene.out .cs-band { transition-delay: 0s; transition-duration: .2s; }
+.cs-name { min-height: 0; display: flex; align-items: center; gap: 8px; font-family: var(--pixel); font-size: 17px; color: #ffe27a; letter-spacing: .4px; }
+.cs-band.has-name .cs-name { margin-bottom: 5px; }
+.cs-name b { font-weight: 700; }
+.cs-chip { width: 36px; height: 36px; border-radius: 9px; overflow: hidden; border: 2px solid #f3e6c4; flex: none; display: block; }
+.cs-chip > * { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.cs-cap { color: #f3e6c4; font-family: var(--body); font-size: 17px; font-weight: 700; line-height: 1.46; text-shadow: 0 1px 0 #000; flex: 1; }
+.cs-cap b { color: #ffe27a; }
+.cs-cap em, .cs-cap i { color: #d9e4ff; }
+.cs-hid { visibility: hidden; }
+.cs-hint { align-self: flex-end; display: flex; align-items: center; gap: 8px; height: 14px; margin-top: 6px; font-family: var(--body); font-size: 12px; font-weight: 800; color: #aeb6c8; opacity: 0; transition: opacity .25s; }
+.cs-band.ready .cs-hint { opacity: 1; }
+.cs-hint-t { display: none; }
+.cutscene.first .cs-hint-t { display: inline; }
+.cs-hint i { width: 0; height: 0; border: 6px solid transparent; border-top: 8px solid #ffe27a; border-bottom: 0; animation: csHint 1s steps(2) infinite; }
+.cutscene.is-auto .cs-hint { visibility: hidden; }
+.cutscene.is-big .cs-band { background: linear-gradient(to bottom, rgba(5, 6, 14, 0), rgba(5, 6, 14, .7) 70%, #05060c); }
+/* fx 'letter': la banda se vuelve papel */
+.cs-band.paper { margin: 0 12px calc(18px + var(--safe-b, 0px)); min-height: calc(var(--cs-base) - 30px); padding: 20px 20px 16px; background: #f3e6c4; border-radius: 4px; box-shadow: 0 0 0 2px #cdb98a, 0 10px 26px rgba(0, 0, 0, .6); transform: rotate(-.6deg); background-image: repeating-linear-gradient(to bottom, transparent 0 24px, rgba(120, 96, 50, .16) 24px 25px); }
+.cs-band.paper .cs-cap { color: #2a2233; font-style: italic; font-weight: 700; text-shadow: none; line-height: 25px; }
+.cs-band.paper .cs-cap b { color: #8a3a1e; }
+.cs-band.paper .cs-cap em, .cs-band.paper .cs-cap i { color: #3a4a7a; }
+.cs-band.paper .cs-name { color: #6a4a1e; }
+.cs-band.paper .cs-hint { color: #6a5a3a; }
+.cs-band.paper .cs-hint i { border-top-color: #8a3a1e; }
+
+/* Rótulo grande (big: true) */
+.cs-big { position: absolute; left: 0; right: 0; top: 30%; z-index: 4; padding: 0 22px; text-align: center; pointer-events: none; opacity: 0; }
+.cs-big.on { animation: csBig .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+.cs-big-t { display: inline-block; font-family: var(--pixel); font-size: 36px; line-height: 1.1; color: #fff6dc; letter-spacing: 1.5px; text-shadow: 0 3px 0 #16203a, 3px 0 0 #16203a, -3px 0 0 #16203a, 0 -3px 0 #16203a, 0 7px 0 rgba(0, 0, 0, .45); padding-bottom: 12px; background: linear-gradient(#ffe27a, #ffe27a) center bottom / 100% 4px no-repeat; }
+.cs-big.on .cs-big-t { animation: csBigBar 1.1s .1s cubic-bezier(.2, .7, .2, 1) backwards; }
+.cs-big-s { margin-top: 12px; font-family: var(--body); font-size: 16px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: #f3e6c4; text-shadow: 0 2px 0 #16203a, 0 0 8px #000; }
+
+/* Registro, mantener pulsado y saltar */
+.cutscene .dlg-log.cs-log { position: absolute; bottom: auto; top: calc(8px + var(--safe-t, 0px)); right: 10px; z-index: 8; opacity: .82; }
+.cs-hold { position: absolute; z-index: 8; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; border: 4px solid #ffe27a; box-sizing: border-box; opacity: 0; pointer-events: none; transform: scale(.3); }
+.cutscene.holding .cs-hold { animation: csHold .6s .16s linear forwards; }
+.cs-skip { position: absolute; z-index: 9; left: 12px; top: calc(8px + var(--safe-t, 0px)); min-height: 44px; padding: 0 16px 2px; font-family: var(--pixel); font-size: 16px; color: #f3e6c4; background: #17223b; border: 2px solid #f3e6c4; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, .45); transform: translateX(-130%); transition: transform .25s cubic-bezier(.2, .8, .2, 1); pointer-events: none; }
+.cutscene.skip-on .cs-skip { transform: none; pointer-events: auto; }
+.cs-skip::after { content: ' ▸▸'; color: #ffe27a; }
+
+/* Capas de efecto */
+.cs-tint { position: absolute; inset: 0; pointer-events: none; opacity: 0; mix-blend-mode: hard-light; transition: opacity .9s; }
+.cs-tint.on { opacity: .34; }
+.cs-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse at 50% 46%, transparent 34%, var(--vig, #8a0a22) 125%); }
+.cs-stage.fx-heartbeat .cs-vig { animation: csHeart 1.15s ease-out infinite; }
+.cs-stage.fx-heartbeat .cs-shake { animation: csHeartS 1.15s ease-out infinite; }
+.cs-flash { position: absolute; inset: 0; background: #fff; animation: csFlash .65s ease-out forwards; pointer-events: none; z-index: 3; }
+.cs-iris { position: absolute; inset: 0; pointer-events: none; z-index: 3; --ix: 50%; --iy: 46%; background: radial-gradient(circle at var(--ix) var(--iy), transparent var(--cs-ir), #000 calc(var(--cs-ir) + .4%)); transition: --cs-ir 1s cubic-bezier(.5, 0, .3, 1); }
+.cs-iris.shut { --cs-ir: 0%; }
+.cs-iris.hole { --cs-ir: 30%; }
+.cs-cover { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 3; }
+.cs-cover.fade.on { opacity: 1; transition: opacity .4s ease-in; }
+.cs-cover.fade.off { opacity: 0; transition: opacity .5s ease-out; }
+.cs-cover.wipe { opacity: 1; transform: translateX(-104%); box-shadow: 30px 0 0 rgba(0, 0, 0, .5), -30px 0 0 rgba(0, 0, 0, .5); }
+.cs-cover.wipe.on { transform: none; transition: transform .36s ease-in; }
+.cs-cover.wipe.off { transform: translateX(104%); transition: transform .44s ease-out; }
+.cs-shake.sh1 { animation: csShake1 .4s steps(5) 1; }
+.cs-shake.sh2 { animation: csShake2 .55s steps(6) 1; }
+.cs-shake.sh3 { animation: csShake3 .85s steps(9) 1; }
+.cs-stage.fx-quake .cs-shake { animation: csQuake .3s steps(4) infinite; }
+
+/* Actores */
+.cs-actors { position: absolute; inset: 0; pointer-events: none; transform-origin: 50% 74%; }
+.cs-actor { position: absolute; left: clamp(calc(var(--sz) * .5 + 2px), var(--x, 50%), calc(100% - var(--sz) * .5 - 2px)); bottom: calc(var(--cs-base) - 18px); width: 0; height: 0; z-index: 1; --sz: 184px; --lift: 0px; transition: left .8s cubic-bezier(.4, 0, .3, 1); }
+.cs-actor.sz-s { --sz: 136px; }
+.cs-actor.sz-l { --sz: 232px; }
+.cs-actor.k-mon, .cs-actor.k-spr { bottom: calc(var(--cs-base) + 14px); z-index: 2; --sz: 150px; }
+.cs-actor.k-mon.sz-s { --sz: 108px; }
+.cs-actor.k-mon.sz-l { --sz: 200px; }
+.cs-actor.k-item { bottom: calc(var(--cs-base) + 14px); z-index: 3; --sz: 112px; --lift: 96px; }
+.cs-actor.k-item.sz-s { --sz: 80px; --lift: 70px; }
+.cs-actor.k-item.sz-l { --sz: 152px; --lift: 110px; }
+.cs-actor.speaking { z-index: 4; }
+.cs-a-in { position: absolute; left: calc(var(--sz) * -.5); bottom: var(--lift); width: var(--sz); display: flex; justify-content: center; align-items: flex-end; }
+.cs-a-do { position: relative; display: flex; justify-content: center; align-items: flex-end; transform-origin: 50% 100%; }
+.cs-a-body { position: relative; display: block; transition: filter .7s, transform .25s; filter: drop-shadow(2px 3px 0 rgba(4, 6, 16, .4)); transform-origin: 50% 100%; }
+.cs-a-body.flip { transform: scaleX(-1); }
+.cs-actor.near .cs-a-body { transform: scale(1.12); }
+.cs-actor.near .cs-a-body.flip { transform: scale(-1.12, 1.12); }
+.cs-actor.away .cs-a-body { transform: scale(.88); }
+.cs-actor.away .cs-a-body.flip { transform: scale(-.88, .88); }
+.cs-actor.dim .cs-a-body { filter: brightness(.45) saturate(.65); }
+.cs-stage.is-dark .cs-actor:not(.lit) .cs-a-body { filter: brightness(.5) saturate(.6); }
+.cs-stage.fx-silhouette .cs-actor .cs-a-body { filter: brightness(0) !important; }
+.cs-bust { width: var(--sz); height: var(--sz); display: block; image-rendering: pixelated; }
+.cs-item { width: var(--sz); height: var(--sz); display: block; image-rendering: pixelated; }
+span.cs-item { display: grid; place-items: center; font-size: calc(var(--sz) * .7); line-height: 1; }
+span.cs-item img { width: 100%; height: 100%; image-rendering: pixelated; }
+.cs-mon { display: block; min-width: 40px; max-width: calc(var(--sz) * 1.3); max-height: calc(var(--sz) * 1.3); object-fit: contain; image-rendering: pixelated; }
+.cs-spr { display: block; height: calc(var(--sz) * 1.2); image-rendering: pixelated; }
+/* Si el sprite del Pokémon no carga (sin conexión y sin caché): un medallón con sus tipos y su nombre */
+.cs-medal { position: relative; width: calc(var(--sz) * .8); height: calc(var(--sz) * .8); margin-bottom: 18px; border-radius: 50%; box-sizing: border-box; border: 5px solid #16203a; display: grid; place-items: center; background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .75) 0 6%, rgba(255, 255, 255, 0) 7%), radial-gradient(circle, rgba(22, 32, 58, 0) 0 52%, rgba(22, 32, 58, .3) 53% 58%, rgba(22, 32, 58, 0) 59%), linear-gradient(135deg, var(--c1) 0 50%, var(--c2) 50% 100%); box-shadow: inset 0 -12px 0 rgba(0, 0, 0, .22), inset 0 0 0 4px rgba(255, 255, 255, .3), 0 0 0 3px #f3e6c4; }
+.cs-medal i { font-family: var(--pixel); font-style: normal; font-weight: 700; font-size: calc(var(--sz) * .42); line-height: 1; color: #fff; text-shadow: 0 4px 0 #16203a, 4px 0 0 #16203a, -4px 0 0 #16203a, 0 -4px 0 #16203a, 3px 3px 0 #16203a, -3px 3px 0 #16203a, 3px -3px 0 #16203a, -3px -3px 0 #16203a; margin-top: -8px; }
+.cs-medal b { position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); white-space: nowrap; font-family: var(--pixel); font-weight: 600; font-size: 18px; letter-spacing: .5px; color: #f3e6c4; background: #16203a; border: 2px solid #f3e6c4; border-radius: 8px; padding: 2px 12px 4px; }
+.cs-a-shadow { display: none; position: absolute; left: calc(var(--sz) * -.3); bottom: -9px; width: calc(var(--sz) * .6); height: 16px; border-radius: 50%; background: rgba(4, 6, 16, .46); animation: csShadow 3.2s ease-in-out infinite; }
+.cs-actor.k-mon .cs-a-shadow, .cs-actor.k-spr .cs-a-shadow, .cs-actor.k-item .cs-a-shadow { display: block; }
+.cs-actor.k-item .cs-a-shadow { left: calc(var(--sz) * -.24); width: calc(var(--sz) * .48); height: 12px; animation-name: csShadowF; }
+.cs-actor.leaving .cs-a-shadow { opacity: 0; transition: opacity .3s; }
+.cs-stage.is-dark .cs-a-shadow { opacity: 0; }
+
+/* Halo y rayos detrás del actor (glow, rays) */
+.cs-a-halo, .cs-a-rays { position: absolute; left: 50%; top: 50%; z-index: -1; border-radius: 50%; opacity: 0; pointer-events: none; transition: opacity .5s; }
+.cs-a-halo { width: calc(var(--sz) * 2.3); height: calc(var(--sz) * 2.3); margin: calc(var(--sz) * -1.15) 0 0 calc(var(--sz) * -1.15); background: radial-gradient(circle, color-mix(in srgb, var(--glow, #ffe27a) 80%, transparent) 0, color-mix(in srgb, var(--glow, #ffe27a) 34%, transparent) 30%, transparent 66%); }
+.cs-a-rays { width: calc(var(--sz) * 4); height: calc(var(--sz) * 4); margin: calc(var(--sz) * -2) 0 0 calc(var(--sz) * -2); background: repeating-conic-gradient(color-mix(in srgb, var(--glow, #ffe27a) 75%, #fff) 0 6deg, transparent 6deg 22.5deg); -webkit-mask: radial-gradient(circle, #000 12%, transparent 66%); mask: radial-gradient(circle, #000 12%, transparent 66%); }
+.cs-actor.fx-glow .cs-a-halo { opacity: 1; animation: csHalo 1.7s ease-in-out infinite; }
+.cs-actor.fx-rays .cs-a-rays { opacity: .5; animation: csRays 16s linear infinite; }
+.cs-actor.fx-glow .cs-a-body { filter: drop-shadow(0 0 7px var(--glow, #ffe27a)); }
+.cs-actor.fx-aura .cs-a-body { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 9px var(--glow, #6f9bff)); }
+.cs-actor.evolving .cs-a-body { animation: csEvo 1.66s linear forwards; }
+
+/* Bocadillos de emoción */
+.cs-emote { position: absolute; left: 58%; bottom: calc(var(--sz) * .88); z-index: 2; min-width: 34px; height: 34px; box-sizing: border-box; padding: 0 8px 3px; display: grid; place-items: center; font-family: var(--pixel); font-weight: 700; font-size: 24px; line-height: 1; color: #16203a; background: #fffaf0; border: 3px solid #16203a; border-radius: 12px 12px 12px 3px; animation: csEmote .45s cubic-bezier(.3, 1.6, .5, 1) backwards, csBob 1.4s .45s ease-in-out infinite; }
+.cs-emote.ico { padding: 0 4px; }
+.cs-emote canvas { width: 21px; height: 21px; image-rendering: pixelated; display: block; }
+
+/* Entradas y salidas */
+.cs-a-in.in-left { animation: csInL .7s cubic-bezier(.2, .8, .3, 1) backwards; }
+.cs-a-in.in-right { animation: csInR .7s cubic-bezier(.2, .8, .3, 1) backwards; }
+.cs-a-in.in-up { animation: csInU .7s cubic-bezier(.2, .8, .3, 1) backwards; }
+.cs-a-in.in-down { animation: csInD .7s cubic-bezier(.2, .8, .3, 1) backwards; }
+.cs-a-in.in-fade { animation: csInF .8s ease-out backwards; }
+.cs-a-in.in-drop { animation: csInDrop .8s cubic-bezier(.5, 0, .9, .6) backwards; }
+.cs-a-in.in-pop { animation: csInPop .55s cubic-bezier(.3, 1.5, .5, 1) backwards; }
+.cs-a-in.in-rise { animation: csInRise 1.5s cubic-bezier(.2, .7, .3, 1) backwards; }
+.cs-a-in.in-walk { animation: csWalk .4s ease-in-out 2; }
+.cs-a-in.out-left { animation: csInL .5s ease-in reverse forwards; }
+.cs-a-in.out-right { animation: csInR .5s ease-in reverse forwards; }
+.cs-a-in.out-up { animation: csInD .5s ease-in reverse forwards; }
+.cs-a-in.out-down { animation: csInU .5s ease-in reverse forwards; }
+.cs-a-in.out-fade { animation: csInF .45s ease-in reverse forwards; }
+.cs-a-in.out-drop { animation: csOutDrop .5s ease-in forwards; }
+.cs-a-in.out-pop { animation: csOutPop .4s ease-in forwards; }
+
+/* Acciones */
+.cs-a-do.do-idle { animation: csBreath 3.4s ease-in-out infinite; }
+.cs-a-do.do-bob { animation: csBob 1.5s ease-in-out infinite; }
+.cs-a-do.do-float { animation: csFloat 3.2s ease-in-out infinite; }
+.cs-a-do.do-hop { animation: csHop .35s cubic-bezier(.3, 0, .6, 1) 2; }
+.cs-a-do.do-shake { animation: csAShake .5s steps(8) 1; }
+.cs-a-do.do-nod { animation: csNod .38s ease-in-out 2; }
+.cs-a-do.do-bow { animation: csBow 1.5s ease-in-out 1; }
+.cs-a-do.do-spin { animation: csSpin .45s linear 2; }
+.cs-a-do.do-turn { animation: csTurn .3s ease-in-out 1; }
+.cs-a-do.do-faint { animation: csFaint .9s cubic-bezier(.5, 0, .8, .5) forwards; }
+.cs-actor.fainted .cs-a-body { filter: brightness(.6) saturate(.5); }
+
+@keyframes csHint { 50% { transform: translateY(3px); } }
+@keyframes csBig { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes csBigBar { from { background-size: 0 4px; } }
+@keyframes csHold { 0% { opacity: .2; transform: scale(.3); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes csHeart { 0% { opacity: .2; } 10% { opacity: .95; } 22% { opacity: .35; } 34% { opacity: .8; } 62%, 100% { opacity: .2; } }
+@keyframes csHeartS { 0%, 62%, 100% { transform: none; } 10% { transform: scale(1.016); } 22% { transform: scale(1.004); } 34% { transform: scale(1.011); } }
+@keyframes csFlash { from { opacity: .95; } to { opacity: 0; } }
+@keyframes csShake1 { 20% { transform: translate(-3px, 2px); } 40% { transform: translate(3px, -2px); } 60% { transform: translate(-2px, 1px); } 80% { transform: translate(1px, -1px); } }
+@keyframes csShake2 { 16% { transform: translate(-7px, 4px); } 33% { transform: translate(6px, -5px); } 50% { transform: translate(-5px, 3px); } 66% { transform: translate(4px, -2px); } 83% { transform: translate(-2px, 1px); } }
+@keyframes csShake3 { 11% { transform: translate(-13px, 7px) rotate(-.5deg); } 22% { transform: translate(12px, -9px) rotate(.5deg); } 33% { transform: translate(-10px, 6px); } 44% { transform: translate(9px, -6px); } 55% { transform: translate(-7px, 4px); } 66% { transform: translate(5px, -3px); } 77% { transform: translate(-3px, 2px); } 88% { transform: translate(2px, -1px); } }
+@keyframes csQuake { 25% { transform: translate(-2px, 2px); } 50% { transform: translate(2px, -1px); } 75% { transform: translate(-1px, -2px); } }
+@keyframes csShadow { 50% { transform: scaleX(.94); } }
+@keyframes csShadowF { 50% { transform: scale(.74); opacity: .7; } }
+@keyframes csHalo { 50% { transform: scale(1.14); opacity: .78; } }
+@keyframes csRays { to { transform: rotate(360deg); } }
+@keyframes csEvo { 0%, 12%, 26%, 38%, 50%, 59%, 67% { filter: none; transform: none; } 6%, 19%, 32%, 44%, 55%, 63% { filter: brightness(0) invert(1); transform: scale(1.04); } 72%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 12px #fff); transform: scale(1.1); } }
+@keyframes csEmote { from { transform: scale(0) translateY(10px); } }
+@keyframes csInL { from { transform: translateX(-120vw); } }
+@keyframes csInR { from { transform: translateX(120vw); } }
+@keyframes csInU { from { transform: translateY(70px); opacity: 0; } }
+@keyframes csInD { from { transform: translateY(-70px); opacity: 0; } }
+@keyframes csInF { from { opacity: 0; } }
+@keyframes csInDrop { 0% { transform: translateY(-90vh); } 62% { transform: none; } 78% { transform: translateY(-16px); } 100% { transform: none; } }
+@keyframes csInPop { from { transform: scale(.2); opacity: 0; } }
+@keyframes csInRise { from { transform: translateY(130px); opacity: 0; } 40% { opacity: 1; } }
+@keyframes csWalk { 50% { transform: translateY(-9px); } }
+@keyframes csOutDrop { to { transform: translateY(60vh); opacity: 0; } }
+@keyframes csOutPop { to { transform: scale(.1); opacity: 0; } }
+@keyframes csBreath { 50% { transform: translateY(2px); } }
+@keyframes csBob { 50% { transform: translateY(-6px); } }
+@keyframes csFloat { 50% { transform: translateY(-14px); } }
+@keyframes csHop { 50% { transform: translateY(-26px); } }
+@keyframes csAShake { 12% { transform: translateX(-7px); } 25% { transform: translateX(7px); } 37% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 62% { transform: translateX(-4px); } 75% { transform: translateX(4px); } 87% { transform: translateX(-2px); } }
+@keyframes csNod { 50% { transform: translateY(8px) rotate(2deg); } }
+@keyframes csBow { 25%, 70% { transform: translateY(16px) rotate(9deg); } }
+@keyframes csSpin { 50% { transform: scaleX(-1); } }
+@keyframes csTurn { 50% { transform: scaleX(.1); } }
+@keyframes csFaint { 40% { transform: translateY(-10px) rotate(-8deg); } 100% { transform: translateY(24px) rotate(84deg); } }
+
+/* Sin movimiento (ajuste del sistema o Animaciones: No): solo fundidos */
+.cutscene.lite *, .cutscene.lite { animation: none !important; transition-duration: .2s !important; }
+.cutscene.lite .cs-actor.fx-rays .cs-a-rays { opacity: .35; }
+.cutscene.lite .cs-big.on { opacity: 1; }
+.cutscene.lite .cs-stage.fx-heartbeat .cs-vig { opacity: .6; }
+@media (prefers-reduced-motion: reduce) { .cutscene *, .cutscene { animation: none !important; transition-duration: .2s !important; } .cs-big.on { opacity: 1; } .cs-flash { opacity: .3; } }
+.cs-a-body.flip .cs-medal { transform: scaleX(-1); }
+.cs-medal.shiny { box-shadow: inset 0 -12px 0 rgba(0, 0, 0, .22), inset 0 0 0 4px rgba(255, 255, 255, .3), 0 0 0 3px #ffe27a; }
+.cs-medal.shiny::after { content: '✦'; position: absolute; right: -4px; top: -8px; font-size: 26px; line-height: 1; color: #ffe27a; text-shadow: 0 2px 0 #16203a, 2px 0 0 #16203a, -2px 0 0 #16203a, 0 -2px 0 #16203a; }
+.cutscene.lite .cs-flash { opacity: .3; }
+.cs-monw { display: flex; justify-content: center; align-items: flex-end; }
+
+/* Sin sprite (sin conexión ni caché), el medallón de reserva no debe decir quién es cuando la escena lo esconde */
+.fx-silhouette .cs-medal b, .fx-silhouette .cs-medal i, .dim .cs-medal b, .dim .cs-medal i { visibility: hidden; }
+.fx-silhouette .cs-medal, .dim .cs-medal { --c1: #14161c; --c2: #14161c; }

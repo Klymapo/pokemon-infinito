@@ -266,17 +266,17 @@ export default {
 			] },
 			{ say: 'yasmina', text: 'Las colas. Que se toquen las colas. El abuelo decía que los faros se encienden mirándose. Con los Ampharos… creo que es igual. Bueno. Lo sé.' },
 			{ cutscene: { bg: { type: 'tower' }, start: 'dark', frames: [
-				{ mon: 'ampharos', text: 'Las dos colas se acercan. La de Amphy, pálida, rosada, como una brasa. La otra, fuerte, joven, que no tiembla.' },
-				{ fx: 'flash', text: 'Se tocan. *Chss.* Una chispa salta entre las dos esferas, y la lana de los dos se eriza a la vez.' },
-				{ fx: 'glow', text: 'La luz de Amphy no crece. Pero ya no está sola. Las dos se suman, entran juntas en la lente, y la lente, por primera vez en años, no se para a la mitad.' },
-				{ fx: 'light', text: 'Da la vuelta entera. Y otra. Y otra. El haz barre el puerto, la bocana, el cabo, el mar abierto. Llega hasta donde no llegaba desde hacía mucho tiempo.' },
+				{ actors: [{ id: 'yasmina', at: 'left', dim: true }], on: '_c', mon: 'ampharos', text: 'Las dos colas se acercan. La de Amphy, pálida, rosada, como una brasa. La otra, fuerte, joven, que no tiembla.' },
+				{ shake: 1, color: '#ffe27a', fx: ['flash', 'sparkle'], text: 'Se tocan. *Chss.* Una chispa salta entre las dos esferas, y la lana de los dos se eriza a la vez.' },
+				{ color: '#ffb070', cam: 'push', fx: 'glow', text: 'La luz de Amphy no crece. Pero ya no está sola. Las dos se suman, entran juntas en la lente, y la lente, por primera vez en años, no se para a la mitad.' },
+				{ cam: 'pan-up', color: '#fff2c8', fx: ['light', 'beam'], text: 'Da la vuelta entera. Y otra. Y otra. El haz barre el puerto, la bocana, el cabo, el mar abierto. Llega hasta donde no llegaba desde hacía mucho tiempo.' },
 			] } },
 			{ text: 'Abajo, en el puerto, los barcos tocan la sirena. No todos a la vez, esta vez. Uno detrás de otro, cada vez que el haz les pasa por encima. Como si fueran diciendo «presente».' },
 			{ text: 'Con la última vuelta se oye un clic metálico bajo el suelo. La cuna de latón del eje sube por el centro de la lente, se abre como una flor de cuatro pétalos y se queda quieta, mostrando lo que guardaba.' },
 			{ cutscene: { bg: { type: 'tower' }, start: 'dark', frames: [
-				{ item: 'ampharosite', text: 'Una esfera del tamaño de una nuez. Dentro, un remolino de colores, amarillo y azul, enroscado sobre sí mismo como una espiral.' },
+				{ fx: 'rays', cam: 'push', item: 'ampharosite', text: 'Una esfera del tamaño de una nuez. Dentro, un remolino de colores, amarillo y azul, enroscado sobre sí mismo como una espiral.' },
 				{ fx: 'glow', text: 'Late. Cada vez que el haz de la lente pasa por encima, la espiral se ilumina por dentro, al mismo ritmo.' },
-				{ npc: 'yasmina', text: 'Yasmina la toma con las dos manos, como se toma un pájaro herido. La mira. Mira a Amphy. Amphy la mira a ella, tranquilo, como si llevara cuarenta años esperando a que alguien la encontrara.' },
+				{ actors: [{ id: 'yasmina', at: 'left' }, { mon: 'ampharos', at: 0.78, size: 's', enter: 'fade' }], on: '_c', text: 'Yasmina la toma con las dos manos, como se toma un pájaro herido. La mira. Mira a Amphy. Amphy la mira a ella, tranquilo, como si llevara cuarenta años esperando a que alguien la encontrara.' },
 			] } },
 			{ if: 'has("paginafaro")', then: [
 				{ text: 'Le enseñas la hoja de la lata de tabaco. Yasmina reconoce la letra grande y torcida antes de leer una sola palabra. La lee entera. Luego otra vez. En la última línea se ríe y se le saltan las lágrimas a la vez.' },

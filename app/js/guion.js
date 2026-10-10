@@ -5,6 +5,7 @@ import { C, npc } from './content.js';
 import { G, evalCond, setPath, addItem, removeItem, count, markCaught, saveGame, beginScene, endScene, commitScene, addHito } from './state.js';
 import { createPokemon, displayName, healFull, addHappy, maxHp } from './pokemon.js';
 import { uniqueKeyOf, uniqueResult } from './unicos.js';
+import * as MJ from './minijuegos.js';
 
 export const UI = {}; // lo rellena la interfaz: say, choose, battle, toast, prompt, refresh, goto, receivePokemon, learnMove, nickname
 
@@ -217,6 +218,31 @@ async function runCmd(c, ctx) {
 			if (c.puzzle.id) { const pz = ((G.puzzles ||= {})[c.puzzle.id] ||= { best: null, n: 0 }); pz.n++; pz.t = Date.now(); if (pz.best === null || res.moves < pz.best) pz.best = res.moves; }
 			if (c.onSolve) await runList(c.onSolve, ctx);
 		} else if (c.onQuit) await runList(c.onQuit, ctx);
+		return;
+	}
+	if (c.minigame) {
+		// Minijuego para conseguir objetos (ver app/js/minijuegos.js y docs/MINIJUEGOS.md). Sin interfaz que lo juegue, cuenta como ganado.
+		const P = MJ.prepare({ def: { ...c.minigame, title: tx(c.minigame.title), hint: tx(c.minigame.hint) }, G, cond: evalCond });
+		const res = UI.minigame ? await UI.minigame(P) : MJ.skipResult(P);
+		ctx.lastMinigame = res;
+		const { items, consol } = MJ.settle(G, P, res);
+		const list = Object.entries(items).map(([id, n]) => ({ id, n, fresh: !G.found?.[id] }));
+		for (const it of list) addItem(it.id, it.n);
+		if (res.result !== 'quit' && (list.length || !res.wild)) {
+			const title = res.result === 'win' ? (c.minigame.lootTitle || '¡Botín!') : 'Otra vez será';
+			const text = res.result === 'win' ? '' : consol ? 'No ha salido, pero no te vas con las manos vacías.' : 'Esta vez no ha salido nada.';
+			if (list.length || res.result === 'lose') {
+				if (UI.minigameLoot) await UI.minigameLoot({ title, text, items: list });
+				else await UI.say(null, (text ? text + '\n' : '') + list.map(it => `**${D.items[it.id]?.name || it.id}**${it.n > 1 ? ' ×' + it.n : ''}`).join(' · '));
+			}
+		}
+		// Pesca: lo que ha picado era un Pokémon salvaje
+		if (res.result === 'win' && res.wild) {
+			const b = await UI.battle({ wild: { sp: res.wild.sp, lv: res.wild.lv, unique: false }, canRun: true, canLose: true });
+			ctx.lastBattle = b;
+		}
+		const next = res.result === 'win' ? c.onWin : res.result === 'lose' ? c.onLose : c.onQuit;
+		if (next) await runList(next, ctx);
 		return;
 	}
 	if (c.input) {
