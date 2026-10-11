@@ -814,7 +814,7 @@ export default {
 					{ af: { rhi: 1 } },
 					{ say: 'rhi', text: 'Eh. No pongas esa cara. Jugaste bien. Pero la delantera soy yo.' },
 					{ heal: 'Rhi te lanza una Superpoción sin mirar. «Que no se diga que gano con ventaja.»' },
-					{ quest: 'b01_t_rhi', stage: 'revancha' },
+					{ quest: 'b01_t_rhi', stage: 'revancha', done: true },
 				] },
 			{ say: 'nate', text: 'Tu {riolu} tiene buen toque.' },
 			{ say: 'rhi', text: '¿Qué? ¿Desde cuándo tú comentas algo?' },
@@ -1055,7 +1055,7 @@ export default {
 			{ text: 'Se levanta. Tarda un rato: hay mucho hombre que levantar. Y se aleja hacia el oeste, sin prisa, entre los menhires, hasta que lo pierdes de vista.' },
 			{ say: 'rotom', text: '¡Bzzt! No… no está en mi base de datos. ¡Debería estar en mi base de datos! ¡Mide casi tres metros!' },
 			{ set: { 'flag.b01_az_1': true } },
-			{ quest: 'b01_t_az', stage: 'visto' },
+			{ quest: 'b01_t_az', stage: 'visto', done: true },
 		],
 
 		// =================== Pueblo Crómlech ===================

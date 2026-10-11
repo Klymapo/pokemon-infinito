@@ -2,7 +2,7 @@
 
 > Diseño del juego con ojos de diseñador. **✖ grave** · **⚠ detalle** · **· curiosidad** (opinable).
 
-**Total:** 0 graves · 0 detalles · 6 curiosidades. 97 misiones, 4 bloques y 112 lugares revisados.
+**Total:** 0 graves · 0 detalles · 2 curiosidades. 97 misiones, 4 bloques y 112 lugares revisados.
 
 ## Hub de misiones: fichas que no te guían (0)
 
@@ -12,13 +12,9 @@ Bien resuelto. ✅
 
 Bien resuelto. ✅
 
-## Misiones sin final o sin premio (6)
+## Misiones sin final o sin premio (2)
 
-- · **Casos de la Agencia (II) [b02_t_agencia]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
-- · **Casos Fríos: el traslado [b04_t_renata]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
-- · **Dulce veneno (III) [b04_t_kaori]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Fiado no [b02_t_lola]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
-- · **Las jaulas (IV) [b04_t_noa]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 - · **Lo que vive en la cueva [b04_t_cueva]** — Hilo sin final todavía (normal si sigue en bloques futuros; que no se olvide).
 
 ## Reglas de diseño por bloque (0)

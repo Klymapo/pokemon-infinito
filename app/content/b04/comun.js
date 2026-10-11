@@ -1,5 +1,10 @@
 // Bloque 4 — elementos comunes: medalla, objetos, tiendas, retos, enganche de inicio, viajes y aviso de ritmo.
 const INICIO = 'flag.b03_fin && !flag.b04_inicio_hecho';
+// Revisión de lógica de misiones (2026-10-10): los hilos de personajes se cierran al terminar su parte (la siguiente
+// parte es otra misión). Las partidas que ya estaban en esa etapa final se cierran solas al entrar en cualquier ciudad
+// o pueblo (onEnter sin `once`; `visited(...)` evita que cuente como «sitio donde avanzar» en lugares sin pisar).
+const HILOS_PARADOS = 'quest.b01_t_rhi == "revancha" || quest.b01_t_agencia == "resuelto" || quest.b01_t_az == "visto" || quest.b01_t_ambar == "abierto" || quest.b01_t_cabina == "abierto" || quest.b01_t_vencejos == "abierto" || quest.b02_t_noa == "abierto" || quest.b02_t_ambar == "abierto" || quest.b02_t_cabina == "abierto" || quest.b02_t_vencejos == "abierto" || quest.b02_t_kaori == "abierto" || quest.b02_t_az == "visto" || quest.b02_t_agencia == "resuelto" || quest.b03_t_noa == "abierto" || quest.b03_t_ambar == "abierto" || quest.b03_t_vencejos == "abierto" || quest.b03_t_kaori == "abierto" || quest.b04_t_noa == "abierto" || quest.b04_t_kaori == "abierto" || quest.b04_t_renata == "abierto"';
+const CIERRE = { script: 'logica_cierre_hilos', once: false };
 export default {
 	badges: {
 		medalla_cascada: { name: 'Medalla Cascada', type: 'Water', desc: 'Circuito Infinito · Ciudad Celeste (Misty). La octava.' },
@@ -57,12 +62,37 @@ export default {
 			],
 		},
 	},
+	scripts: {
+		logica_cierre_hilos: [
+			{ quest: 'b01_t_rhi', done: true, silent: true, cond: 'quest.b01_t_rhi == "revancha"' },
+			{ quest: 'b01_t_agencia', done: true, silent: true, cond: 'quest.b01_t_agencia == "resuelto"' },
+			{ quest: 'b01_t_az', done: true, silent: true, cond: 'quest.b01_t_az == "visto"' },
+			{ quest: 'b01_t_ambar', done: true, silent: true, cond: 'quest.b01_t_ambar == "abierto"' },
+			{ quest: 'b01_t_cabina', done: true, silent: true, cond: 'quest.b01_t_cabina == "abierto"' },
+			{ quest: 'b01_t_vencejos', done: true, silent: true, cond: 'quest.b01_t_vencejos == "abierto"' },
+			{ quest: 'b02_t_noa', done: true, silent: true, cond: 'quest.b02_t_noa == "abierto"' },
+			{ quest: 'b02_t_ambar', done: true, silent: true, cond: 'quest.b02_t_ambar == "abierto"' },
+			{ quest: 'b02_t_cabina', done: true, silent: true, cond: 'quest.b02_t_cabina == "abierto"' },
+			{ quest: 'b02_t_vencejos', done: true, silent: true, cond: 'quest.b02_t_vencejos == "abierto"' },
+			{ quest: 'b02_t_kaori', done: true, silent: true, cond: 'quest.b02_t_kaori == "abierto"' },
+			{ quest: 'b02_t_az', done: true, silent: true, cond: 'quest.b02_t_az == "visto"' },
+			{ quest: 'b02_t_agencia', done: true, silent: true, cond: 'quest.b02_t_agencia == "resuelto"' },
+			{ quest: 'b03_t_noa', done: true, silent: true, cond: 'quest.b03_t_noa == "abierto"' },
+			{ quest: 'b03_t_ambar', done: true, silent: true, cond: 'quest.b03_t_ambar == "abierto"' },
+			{ quest: 'b03_t_vencejos', done: true, silent: true, cond: 'quest.b03_t_vencejos == "abierto"' },
+			{ quest: 'b03_t_kaori', done: true, silent: true, cond: 'quest.b03_t_kaori == "abierto"' },
+			{ quest: 'b04_t_noa', done: true, silent: true, cond: 'quest.b04_t_noa == "abierto"' },
+			{ quest: 'b04_t_kaori', done: true, silent: true, cond: 'quest.b04_t_kaori == "abierto"' },
+			{ quest: 'b04_t_renata', done: true, silent: true, cond: 'quest.b04_t_renata == "abierto"' },
+		],
+	},
 	patches: {
 		// Enganche del inicio: el jugador termina el B3 en el Lago de la Furia
 		lago_furia: {
 			spots: [{ label: '🚆 Un billete de tren en la Pokédex', sub: 'La Gira continúa en Kanto', icon: '🎫', cond: INICIO, new: INICIO, script: 'b04_inicio' }],
 		},
 		caoba: {
+			onEnter: [{ ...CIERRE, cond: 'visited("caoba") && (' + HILOS_PARADOS + ')' }],
 			spots: [{ label: '🚆 Un billete de tren en la Pokédex', sub: 'La Gira continúa en Kanto', icon: '🎫', cond: INICIO, new: INICIO, script: 'b04_inicio' }],
 		},
 		estacion_magnetica: {
@@ -78,6 +108,24 @@ export default {
 		puerta_trigal: {
 			spots: [{ label: 'Cruzar a Kanto (Azafrán)', sub: 'Puerta Lemnis', icon: '🌀', cond: 'flag.b04_puerta_azafran', action: { go: 'puerta_azafran' } }],
 		},
+		// Cierre de hilos parados (ver HILOS_PARADOS arriba)
+		luminalia: { onEnter: [{ ...CIERRE, cond: 'visited("luminalia") && (' + HILOS_PARADOS + ')' }] },
+		trigal: { onEnter: [{ ...CIERRE, cond: 'visited("trigal") && (' + HILOS_PARADOS + ')' }] },
+		novarte: { onEnter: [{ ...CIERRE, cond: 'visited("novarte") && (' + HILOS_PARADOS + ')' }] },
+		acuarela: { onEnter: [{ ...CIERRE, cond: 'visited("acuarela") && (' + HILOS_PARADOS + ')' }] },
+		boceto: { onEnter: [{ ...CIERRE, cond: 'visited("boceto") && (' + HILOS_PARADOS + ')' }] },
+		vanitas: { onEnter: [{ ...CIERRE, cond: 'visited("vanitas") && (' + HILOS_PARADOS + ')' }] },
+		petroglifo: { onEnter: [{ ...CIERRE, cond: 'visited("petroglifo") && (' + HILOS_PARADOS + ')' }] },
+		relieve: { onEnter: [{ ...CIERRE, cond: 'visited("relieve") && (' + HILOS_PARADOS + ')' }] },
+		cromlech: { onEnter: [{ ...CIERRE, cond: 'visited("cromlech") && (' + HILOS_PARADOS + ')' }] },
+		yantra: { onEnter: [{ ...CIERRE, cond: 'visited("yantra") && (' + HILOS_PARADOS + ')' }] },
+		azalea: { onEnter: [{ ...CIERRE, cond: 'visited("azalea") && (' + HILOS_PARADOS + ')' }] },
+		iris: { onEnter: [{ ...CIERRE, cond: 'visited("iris") && (' + HILOS_PARADOS + ')' }] },
+		malva: { onEnter: [{ ...CIERRE, cond: 'visited("malva") && (' + HILOS_PARADOS + ')' }] },
+		olivo: { onEnter: [{ ...CIERRE, cond: 'visited("olivo") && (' + HILOS_PARADOS + ')' }] },
+		azafran: { onEnter: [{ ...CIERRE, cond: 'visited("azafran") && (' + HILOS_PARADOS + ')' }] },
+		celeste: { onEnter: [{ ...CIERRE, cond: 'visited("celeste") && (' + HILOS_PARADOS + ')' }] },
+		lavanda: { onEnter: [{ ...CIERRE, cond: 'visited("lavanda") && (' + HILOS_PARADOS + ')' }] },
 	},
 	milestones: [{ flag: 'b04_m_aviso', hoursLeft: 3 }],
 };

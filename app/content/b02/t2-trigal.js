@@ -210,7 +210,7 @@ export default {
 			desc: 'Un local estrecho donde las macetas llegan hasta el techo. Huele a tierra mojada. Dos hermanas atienden detrás del mostrador: la mayor riega, la pequeña habla.\n\nEn una estantería, una regadera de hojalata con forma de Squirtle. Tiene una etiqueta: «NO SE VENDE».',
 			mapNote: 'Regadera Ardilla',
 			spots: [
-				{ label: 'Las floristas', sub: 'La pequeña ya te está saludando', icon: '💐', new: '!flag.b02_regadera', talk: [
+				{ label: 'Las floristas', sub: 'La pequeña ya te está saludando', icon: '💐', new: '!flag.b02_regadera && ' + GIRA, talk: [
 					{ cond: '!flag.b02_regadera && !' + GIRA, script: 'b02_floristeria_pronto' },
 					{ cond: '!flag.b02_regadera', script: 'b02_floristeria' },
 					{ script: 'b02_floristeria_despues' },
@@ -979,7 +979,7 @@ export default {
 				{ text: 'Bastien la mira mucho rato. Luego la toma, sin decir nada, y la aprieta en el puño. Se va sin despedirse. Pero se la lleva.' },
 			] },
 			{ say: 'noa', text: 'Si me pasa algo… no, nada. No me va a pasar nada. Soy de recursos humanos, básicamente. A los de recursos humanos no nos pasa nada.' },
-			{ quest: 'b02_t_noa', stage: 'abierto' },
+			{ quest: 'b02_t_noa', stage: 'abierto', done: true },
 			{ intel: { npc: 'noa', text: 'Te enseñó el registro de transportes del centro de procesamiento de Luminalia: ningún desplazado vuelve a su región. Las furgonetas van de madrugada a la Puerta de Luminalia «apagada por mantenimiento», y de ahí a «N-02», que no está en ningún mapa. Está muy asustada. Le regaló a Bastien una insignia de hojalata sin logo, «por si acaso».' } },
 		],
 
@@ -1077,7 +1077,7 @@ export default {
 			{ text: 'Cuando te asomas, en la cabeza del Miltank hinchable solo queda una pluma gris, clavada como una flecha. El Miltank pierde un poco de aire por el agujero. Pone cara de pena.' },
 			{ say: 'rotom', text: '¡Bzzt! Ha caído en un camión de sábanas. ¡Sábanas! Si llega a pasar el de los Bonguris… Eso era una idea malísima. …Ha salido bien otra vez. Dejo de apostar.' },
 			{ if: '!has("plumagris")', then: [{ give: 'plumagris' }] },
-			{ quest: 'b02_t_vencejos', stage: 'abierto' },
+			{ quest: 'b02_t_vencejos', stage: 'abierto', done: true },
 			{ intel: { npc: 'ysolde', text: 'En Trigal, desde la azotea: Lemnis puso cámaras en los tejados de la plaza la mañana en que no llegaste. Los Vencejos tienen un nido viejo en Johto y vigilaban a «alguien de Lemnis» antes de que existiera el logo. Rangos: Pluma, Ala, Vencejo, Cumbre (ella es Ala).' } },
 		],
 
@@ -1267,7 +1267,7 @@ export default {
 				{ say: 'matiere', as: 'Matière (llamada)', text: 'El Centro Comercial te manda un regalo. Y yo, un abrazo. El abrazo no se puede mandar por el Rotom. Lo apunto para cuando vuelvas a Luminalia.' },
 				{ give: 'ppup' }, { rep: { policia: 2, johto: 1 } },
 			] },
-			{ quest: 'b02_t_agencia', stage: 'resuelto' },
+			{ quest: 'b02_t_agencia', stage: 'resuelto', done: true },
 			{ say: 'matiere', as: 'Matière (llamada)', text: 'Y {jugador}… Handsome está ahí, ¿verdad? Disfrazado de algo absurdo. Dile que coma. Que se olvida. Que le he hecho un táper y lo tiene en mi nevera, en Kalos, muriéndose de pena.' },
 		],
 

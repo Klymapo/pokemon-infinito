@@ -1,6 +1,6 @@
 # Registro automático (no editar a mano)
 
-Generado: 2026-10-10T22:04:14.971Z · contenido 2026-10-10.1
+Generado: 2026-10-11T00:22:16.349Z · contenido 2026-10-10.2
 
 ## Apariciones de NPCs (escenas por bloque)
 
@@ -568,7 +568,7 @@ Generado: 2026-10-10T22:04:14.971Z · contenido 2026-10-10.1
 - `b01_s_espejo` (side) Lo que ve el espejo: cueva → hecha
 - `ev_halloween` (event) El Gran Atraco de Halloween: inicio → hecha
 - `ev_muertos` (event) La ofrenda: flores → hecha
-- `b01_s_cenit` (side) Princesa en el laberinto: buscar → hecha
+- `b01_s_cenit` (side) Princesa en el laberinto: buscar → volver → hecha
 - `b01_s_acuario` (side) Vecinos de la Muralla: fotos → hecha
 - `b01_s_lino` (side) El muro de Lino: fan → hecha
 - `b01_t_ambar` (thread) El ámbar sin registro: hallazgo → guardar → abierto
@@ -609,7 +609,7 @@ Generado: 2026-10-10T22:04:14.971Z · contenido 2026-10-10.1
 - `b03_t_rhi` (thread) La delantera (III): llamada → hecha
 - `b03_t_bastien` (thread) Letra pequeña (III): olivo → hecha
 - `b03_t_noa` (thread) Las jaulas (III): datos → abierto
-- `b03_t_renata` (thread) Casos Fríos: el sótano: sotano → hecha
+- `b03_t_renata` (thread) Casos Fríos: el sótano: sotano → bajar → hecha
 - `b03_t_ambar` (thread) El ámbar sin registro (III): ruinas → abierto
 - `b03_t_vencejos` (thread) Plumas en el tejado (III): sede → abierto
 - `b03_t_kaori` (thread) Dulce veneno (II): olivo → muestra → abierto

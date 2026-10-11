@@ -557,7 +557,7 @@ export default {
 			{ say: 'az', text: 'Y si cruzan, que cruzarán… cuídalo. Él siente las cosas antes que tú. Hazle caso cuando tiemble.' },
 			{ text: 'Se aleja hacia las calles del norte, sin prisa. La gente se aparta a su paso sin saber por qué. Nadie lo mira dos veces. Es como si la ciudad se hubiera acostumbrado a no verlo.' },
 			{ say: 'rotom', text: '¡Bzzt! Sigue sin estar en mi base de datos. Ni con foto. Ni con medidas. ¡Mide casi tres metros! ¡Eso debería salir en algún sitio!' },
-			{ quest: 'b02_t_az', stage: 'visto' },
+			{ quest: 'b02_t_az', stage: 'visto', done: true },
 		],
 
 		// =================== LUCIEN SE CUELA EN LA COLA ===================

@@ -2,6 +2,9 @@
 // Sirve para auditar: detecta errores, atascos y problemas de balance.
 // DUMP=archivo.json guarda el estado final de la partida (útil para probar la interfaz con una partida avanzada).
 // Uso: node herramientas/recorrido.mjs [--semilla N] [--max 20000] [--hasta flag] [--verbose] [--elecciones primera|azar] [--fecha MM-DD] [--hora HH]
+// Otras herramientas pueden «engancharse» a la partida: si antes de importar este módulo existe
+// globalThis.__RECORRIDO_HOOK = { onStep(step), done() }, se llama a onStep al principio de cada paso y, al terminar,
+// a done() en vez de imprimir el informe y salir (lo usa herramientas/hub.mjs para auditar el hub de misiones).
 import { loadDataNode } from './test/node-env.mjs';
 import { D, toID } from '../app/js/data.js';
 import { C, registerBlock, topLoc } from '../app/js/content.js';
@@ -18,6 +21,7 @@ import {
 	trainingOpen, routeProg, activeEvents, encounterRate,
 } from '../app/js/world.js';
 
+const HOOK = globalThis.__RECORRIDO_HOOK || null;
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d; };
 let seed = +arg('--semilla', 1);
 const MAX = +arg('--max', 25000);
@@ -424,6 +428,7 @@ let lastProgress = 0, lastSig = '';
 const sigNow = () => Object.keys(G.flags).length + '/' + Object.values(G.quests).map(q => q.stage).join(',') + '/' + G.player.badges.length + '/' + Object.keys(G.bag).length + '/' + G.party.map(p => p.sp).join(',');
 for (step = 0; step < MAX; step++) {
 	if (UNTIL ? G.flags[UNTIL] : G.flags[C.blocks[C.blocks.length - 1].ends]) break;
+	if (HOOK?.onStep) await HOOK.onStep(step);
 	const sig = Object.keys(G.flags).length + '/' + Object.values(G.quests).map(q => q.stage).join(',') + '/' + G.player.badges.length + '/' + Object.keys(G.visited).length;
 	if (sig !== lastSig) { lastSig = sig; lastProgress = step; }
 	if (step - lastProgress > 900) { report.stuck.push(`sin progreso desde el paso ${lastProgress}: lugar ${G.loc}, misiones ${JSON.stringify(Object.fromEntries(Object.entries(G.quests).filter(([k, q]) => !q.done).map(([k, q]) => [k, q.stage])))}`); break; }
@@ -492,26 +497,29 @@ for (step = 0; step < MAX; step++) {
 }
 
 // ---------------- Informe ----------------
-const done = Object.entries(G.quests).filter(([k, q]) => q.done).map(([k]) => k);
-const open = Object.entries(G.quests).filter(([k, q]) => !q.done).map(([k, q]) => `${k}:${q.stage}`);
-const never = Object.keys(C.quests).filter(k => !G.quests[k]);
-const unvisited = Object.keys(C.locations).filter(k => !G.visited[k]);
-const unusedScripts = Object.keys(C.scripts).filter(k => !report.scripts.has(k));
-console.log(`\n=== RECORRIDO (semilla ${seed}${FECHA ? ' · fecha ' + FECHA : ''} · hora ${HORA}) ===`);
-console.log(`Final alcanzado: ${G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 'SÍ' : 'NO'} · pasos ${step} · ${((Date.now() - t0) / 1000).toFixed(1)} s`);
-console.log(`Medallas: ${G.player.badges.join(', ')} · Dinero ₽${G.player.money} · Equipo: ${G.party.map(p => `${p.sp} ${p.lv}`).join(', ')}`);
-console.log(`Combates: ${report.battles.trainer} entrenador, ${report.battles.wild} salvajes · ganados ${report.battles.won} · perdidos ${report.battles.lost}`);
-console.log(`Gimnasios:\n  ${report.gyms.join('\n  ') || '-'}`);
-console.log(`Diario: ${G.diary.length} entradas · textos mostrados: ${report.texts}`);
-if (report.minis) console.log(`Minijuegos: ${Object.entries(report.minis).map(([k, m]) => `${k} ${m.w}/${m.n} ganados`).join(' · ')}`);
-console.log(`Misiones hechas (${done.length}): ${done.join(', ')}`);
-console.log(`Misiones abiertas (${open.length}): ${open.join(', ')}`);
-console.log(`Misiones nunca iniciadas (${never.length}): ${never.join(', ')}`);
-console.log(`Lugares sin visitar (${unvisited.length}): ${unvisited.join(', ')}`);
-console.log(`Guiones nunca ejecutados (${unusedScripts.length}): ${unusedScripts.slice(0, 80).join(', ')}`);
-if (report.losses.length) console.log(`Derrotas:\n  ${report.losses.slice(0, 20).join('\n  ')}`);
-if (report.stuck.length) console.log(`ATASCOS:\n  ${[...new Set(report.stuck)].slice(0, 15).join('\n  ')}`);
-if (report.repeatGifts.length) console.log(`REGALOS REPETIDOS:\n  ${report.repeatGifts.slice(0, 20).join('\n  ')}`);
-if (report.errors.length) console.log(`ERRORES (${report.errors.length}):\n  ${[...new Set(report.errors)].slice(0, 40).join('\n  ')}`);
-if (process.env.DUMP) (await import('fs')).writeFileSync(process.env.DUMP, JSON.stringify(G));
-process.exit(report.errors.length || !G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 1 : 0);
+if (HOOK) await HOOK.done?.({ report, step });
+else {
+	const done = Object.entries(G.quests).filter(([k, q]) => q.done).map(([k]) => k);
+	const open = Object.entries(G.quests).filter(([k, q]) => !q.done).map(([k, q]) => `${k}:${q.stage}`);
+	const never = Object.keys(C.quests).filter(k => !G.quests[k]);
+	const unvisited = Object.keys(C.locations).filter(k => !G.visited[k]);
+	const unusedScripts = Object.keys(C.scripts).filter(k => !report.scripts.has(k));
+	console.log(`\n=== RECORRIDO (semilla ${seed}${FECHA ? ' · fecha ' + FECHA : ''} · hora ${HORA}) ===`);
+	console.log(`Final alcanzado: ${G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 'SÍ' : 'NO'} · pasos ${step} · ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+	console.log(`Medallas: ${G.player.badges.join(', ')} · Dinero ₽${G.player.money} · Equipo: ${G.party.map(p => `${p.sp} ${p.lv}`).join(', ')}`);
+	console.log(`Combates: ${report.battles.trainer} entrenador, ${report.battles.wild} salvajes · ganados ${report.battles.won} · perdidos ${report.battles.lost}`);
+	console.log(`Gimnasios:\n  ${report.gyms.join('\n  ') || '-'}`);
+	console.log(`Diario: ${G.diary.length} entradas · textos mostrados: ${report.texts}`);
+	if (report.minis) console.log(`Minijuegos: ${Object.entries(report.minis).map(([k, m]) => `${k} ${m.w}/${m.n} ganados`).join(' · ')}`);
+	console.log(`Misiones hechas (${done.length}): ${done.join(', ')}`);
+	console.log(`Misiones abiertas (${open.length}): ${open.join(', ')}`);
+	console.log(`Misiones nunca iniciadas (${never.length}): ${never.join(', ')}`);
+	console.log(`Lugares sin visitar (${unvisited.length}): ${unvisited.join(', ')}`);
+	console.log(`Guiones nunca ejecutados (${unusedScripts.length}): ${unusedScripts.slice(0, 80).join(', ')}`);
+	if (report.losses.length) console.log(`Derrotas:\n  ${report.losses.slice(0, 20).join('\n  ')}`);
+	if (report.stuck.length) console.log(`ATASCOS:\n  ${[...new Set(report.stuck)].slice(0, 15).join('\n  ')}`);
+	if (report.repeatGifts.length) console.log(`REGALOS REPETIDOS:\n  ${report.repeatGifts.slice(0, 20).join('\n  ')}`);
+	if (report.errors.length) console.log(`ERRORES (${report.errors.length}):\n  ${[...new Set(report.errors)].slice(0, 40).join('\n  ')}`);
+	if (process.env.DUMP) (await import('fs')).writeFileSync(process.env.DUMP, JSON.stringify(G));
+	process.exit(report.errors.length || !G.flags[UNTIL || C.blocks[C.blocks.length - 1].ends] ? 1 : 0);
+}

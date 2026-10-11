@@ -152,7 +152,7 @@ export default {
 			spots: [
 				{ label: 'Cruzar a Kalos (Luminalia)', sub: 'Puerta Lemnis', icon: '🌀', cond: 'flag.b04_puerta_azafran', action: { go: 'luminalia_plaza' } },
 				{ label: 'Cruzar a Johto (Trigal)', sub: 'Puerta Lemnis', icon: '🌀', cond: 'flag.b04_puerta_azafran', action: { go: 'puerta_trigal' } },
-				{ label: 'Registro de viajeros', sub: 'Un técnico de Lemnis con una tablet', icon: '💻', new: '!flag.b04_puerta_azafran', talk: [{ cond: 'flag.b04_puerta_azafran', script: 'b04_puerta_tecnico_2' }, { script: 'b04_puerta_registro' }] },
+				{ label: 'Registro de viajeros', sub: 'Un técnico de Lemnis con una tablet', icon: '💻', new: '!flag.b04_puerta_azafran', talk: [{ cond: 'flag.b04_puerta_azafran', script: 'b04_puerta_tecnico_2' }, { cond: 'flag.b04_recepcion', script: 'b04_puerta_registro_check' }, { script: 'b04_puerta_registro' }] },
 				{ label: 'Dos hombres recién llegados de Kalos', sub: 'Uno lleva bigote postizo. El otro, de verdad', icon: '🕵️', cond: 'flag.b04_recepcion && !flag.b04_lebrun_azafran', new: 'true', talk: [{ script: 'b04_lebrun_azafran' }] },
 				{ label: 'Handsome', sub: 'Se ha quitado el bigote. Lo guarda en el bolsillo, por si acaso', icon: '🕵️', cond: 'flag.b04_lebrun_azafran && !flag.b04_ysolde_plan', talk: [{ script: 'b04_handsome_despues' }] },
 			],
@@ -180,7 +180,7 @@ export default {
 			desc: 'A oscuras. El suelo está lleno de **baldosas de teletransporte**, apagadas, como charcos secos. Las paredes no tienen ventanas.\n\nEn el centro de la sala, en una silla de respaldo alto, una mujer de pelo negro muy largo está sentada con los ojos cerrados. Alrededor de ella flotan tres cucharas. Ninguna se cae.\n\nUn cartel junto a la puerta: «Gimnasio **en pausa** por el Programa de Intercambio. La líder no da medallas. La líder sí da consejos. A veces».',
 			mapNote: 'Sabrina (sin medalla en esta temporada)',
 			spots: [
-				{ label: 'Sabrina', sub: 'Las cucharas giran despacio a su alrededor', icon: '🔮', new: '!flag.b04_sabrina_eco', talk: [{ cond: 'flag.b04_sabrina_eco', script: 'b04_sabrina_despues' }, { script: 'b04_sabrina' }] },
+				{ label: 'Sabrina', sub: 'Las cucharas giran despacio a su alrededor', icon: '🔮', new: '!flag.b04_sabrina_eco', talk: [{ cond: 'flag.b04_sabrina_eco', script: 'b04_sabrina_despues' }, { cond: 'flag.b04_recepcion', script: 'b04_sabrina_check' }, { script: 'b04_sabrina' }] },
 				{ label: 'Las baldosas apagadas', icon: '🌀', talk: [{ script: 'b04_baldosas' }] },
 			],
 		},
@@ -701,6 +701,9 @@ export default {
 			{ set: { 'flag.b04_puerta_azafran': true } },
 			{ text: '—Ya puede cruzar a Kalos o a Johto cuando quiera. Luminalia, Trigal y vuelta. Un mundo. Una liga. —Y vuelve a mirar su tablet.' },
 			{ toast: '🌀 La Puerta de Kanto ya lleva a Luminalia y a Trigal' },
+		],
+		b04_puerta_registro_check: [
+			{ call: 'b04_puerta_registro' },
 			{ call: 'b04_t0_check' },
 		],
 		b04_puerta_tecnico_2: [
@@ -811,6 +814,11 @@ export default {
 			{ give: 'mt_psiquico' },
 			{ say: 'sabrina', text: 'Ahora vete. Tengo que ver un par de cosas que todavía no han pasado. Y tú tienes que ir a que pasen.' },
 			{ intel: { npc: 'sabrina', text: 'Líder del gimnasio de Azafrán (Psíquico), en pausa: se negó a entrar en el Programa de Intercambio. Te esperaba «ayer». Dijo que tu Pokédex «tiene eco, como una habitación con alguien más dentro». Rotom dice que es el altavoz.' } },
+		],
+		// La comprobación del tramo solo tiene sentido tras la recepción: antes, la misión de Azafrán no existe y el sitio
+		// salía en Novedades como «misión nueva» sin serlo (revisión de lógica, 2026-10-10).
+		b04_sabrina_check: [
+			{ call: 'b04_sabrina' },
 			{ call: 'b04_t0_check' },
 		],
 		b04_sabrina_despues: [

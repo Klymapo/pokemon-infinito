@@ -804,7 +804,7 @@ export default {
 			{ say: 'renata', text: 'Escucha. El próximo episodio no se graba aquí. Se graba lejos. Donde lo trasladaron. Cuando la Gira llegue a Teselia, búscame. Te debo un café. Y una disculpa. Y un capítulo entero.' },
 			{ say: 'renata', text: 'Y sal de donde estés. Ya. Nota para el episodio: el testigo cuelga antes de que lo pillen.' },
 			{ text: 'Cuelga. La pantalla se queda en negro. El fluorescente del pasillo zumba.' },
-			{ quest: 'b04_t_renata', stage: 'abierto' },
+			{ quest: 'b04_t_renata', stage: 'abierto', done: true },
 			{ intel: { npc: 'renata', text: 'Te llamó mientras estabas en la planta 11 de Silph. El expediente de Matías Olmedo dice «Trasladado a: Proyecto Arco II · Teselia» (si la carpeta seguía allí) o fue retirado «por razones de patrimonio» (si se emitió el episodio). El próximo episodio se graba en Teselia.' } },
 		],
 		b04_expediente_despues: [
@@ -1173,7 +1173,7 @@ export default {
 			{ give: 'diariofuji' },
 			{ say: 'fuji', text: 'Si un día encuentras a alguien muy cansado, muy fuerte y muy enfadado… —Se calla. Vuelve a tomar la taza—. No le tengas miedo. Lo que tiene no es rabia. Es cansancio. Desde fuera se parecen mucho.' },
 			{ quest: 'b04_q_ceniza', done: true },
-			{ quest: 'b04_t_kaori', stage: 'abierto' },
+			{ quest: 'b04_t_kaori', stage: 'abierto', done: true },
 			{ intel: { npc: 'kaori', text: 'Con la ceniza del incensario de la vieja torre (resina de tejo), su antídoto da un paso: la Ponyta de la Casa Pokémon recuperó una llamita. Estable, no curada. «El cansancio no desaparece. Va a alguna parte. Alguien se lo está quedando».' } },
 			{ diary: 'Hoy mi entrenador{|a|e} y yo fuimos a Pueblo Lavanda, que huele a lavanda (¡de verdad!). Visitamos al Señor Fuji, un abuelito muy amable que cuida de muchísimos Pokémon, y a Kaori, que es boticaria y no sonríe nunca, pero hoy casi.\n\nHabía una Ponyta muy cansada, sin fuego en la crin. Bajamos a un sótano lleno de fantasmas a por ceniza de incienso, y Kaori hizo una medicina, ¡y a la Ponyta le salió una llamita! Pequeñita. Como de vela de cumpleaños.\n\nEl Señor Fuji nos dio una hoja de su diario. No la he leído. Me ha parecido de mala educación. ¡Eso se lo dejo a mi entrenador{|a|e}!', cond: 'flag.b01_diario' },
 		],

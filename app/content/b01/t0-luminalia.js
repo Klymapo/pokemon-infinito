@@ -354,7 +354,7 @@ export default {
 			{ say: 'handsome', text: '…Era un Furfrou muy sospechoso.' },
 			{ give: 'rarecandy' }, { rep: { policia: 2 } },
 			{ set: { 'flag.b01_agencia_macaron_premio': true } },
-			{ quest: 'b01_t_agencia', stage: 'resuelto' },
+			{ quest: 'b01_t_agencia', stage: 'resuelto', done: true },
 			{ say: 'matiere', text: 'Habrá más casos. Siempre los hay. Pásate de vez en cuando.' },
 		],
 		b01_agencia_generico: [

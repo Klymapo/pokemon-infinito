@@ -52,6 +52,7 @@ export default {
 				{ label: 'Mostrador de piedras', sub: 'Peña e Hija · piedras e importación', icon: '💎', action: { shop: 'p7_piedras_azafran' } },
 				{ label: 'Expendedora de MT', sub: 'Silph S.A. · «introduzca importe exacto»', icon: '💿', action: { shop: 'p7_mt_azafran' } },
 				{ label: 'Jade', sub: 'Pesa piedras y habla al mismo tiempo', icon: '💬', new: '!flag.p7_jade_1 || (has("p7_sobre_casilda") && !flag.p7_jade_nota)', talk: [
+					{ cond: '!flag.p7_jade_1 && has("p7_sobre_casilda") && !flag.p7_jade_nota', script: 'p7_jade_intro_sobre' },
 					{ cond: '!flag.p7_jade_1', script: 'p7_jade_intro' },
 					{ cond: 'has("p7_sobre_casilda") && !flag.p7_jade_nota', script: 'p7_jade_sobre' },
 					{ script: 'p7_jade_generico' },
@@ -87,17 +88,18 @@ export default {
 		cc_trigal: {
 			mapNote: 'Tiendas · Piedras (4.ª planta) · MT (5.ª planta) · Azotea: entrenamiento (nivel 38)',
 			spots: [
-				{ label: 'Peña e Hija · Piedras', sub: '4.ª planta. Piedras evolutivas, pesadas una a una', icon: '💎', new: '!flag.p7_casilda_1', action: { shop: 'p7_piedras_trigal' } },
+				{ label: 'Peña e Hija · Piedras', sub: '4.ª planta. Piedras evolutivas, pesadas una a una', icon: '💎', action: { shop: 'p7_piedras_trigal' } },
 				{ label: 'Doña Casilda', sub: 'Detrás de una balanza de latón, con lupa', icon: '🔍',
 					new: '!flag.p7_casilda_1 || (flag.b03_fin && !flag.p7_recado_dado) || (flag.p7_jade_nota && !flag.p7_recado_hecho) || (' + CASILDA_RETO + ' && !flag.p7_casilda_reto_visto)',
 					talk: [
+						{ cond: '!flag.p7_casilda_1 && flag.b03_fin', script: 'p7_casilda_intro_recado' },
 						{ cond: '!flag.p7_casilda_1', script: 'p7_casilda_intro' },
 						{ cond: 'flag.b03_fin && !flag.p7_recado_dado', script: 'p7_casilda_recado' },
 						{ cond: 'flag.p7_jade_nota && !flag.p7_recado_hecho', script: 'p7_casilda_nota' },
 						{ cond: CASILDA_RETO, script: 'p7_casilda_reto' },
 						{ script: 'p7_casilda_generico' },
 					] },
-				{ label: 'Disco Técnico · MT', sub: '5.ª planta. Máquinas Técnicas en fundas de vinilo', icon: '💿', new: '!flag.p7_dj_1', action: { shop: 'p7_mt_trigal' } },
+				{ label: 'Disco Técnico · MT', sub: '5.ª planta. Máquinas Técnicas en fundas de vinilo', icon: '💿', action: { shop: 'p7_mt_trigal' } },
 				{ label: 'El dependiente de Disco Técnico', sub: 'Lleva auriculares. No hay música puesta', icon: '🎧', new: '!flag.p7_dj_1', talk: [
 					{ cond: '!flag.p7_dj_1', script: 'p7_dj_intro' },
 					{ script: 'p7_dj_generico' },
@@ -303,7 +305,11 @@ export default {
 			{ say: 'p7_casilda', text: 'También tengo Cordón Unión, Mineral Negro y alguna cosa que no es piedra pero se le parece. Lo que no tengo es rebajas. Las piedras no caducan.' },
 			{ text: 'Algo se mueve debajo del mostrador. Dos ojos facetados, como diamantes mal cortados, asoman un segundo, miran tu mochila con hambre y se esconden.' },
 			{ say: 'p7_casilda', text: 'Ese es Tasador. Mi Sableye. Se come lo defectuoso. No toques el mostrador con anillos puestos.' },
-			{ call: 'p7_casilda_recado', cond: 'flag.b03_fin' },
+		],
+		// Presentación + encargo en una sola visita (aparte, por lo mismo que Jade).
+		p7_casilda_intro_recado: [
+			{ call: 'p7_casilda_intro' },
+			{ call: 'p7_casilda_recado' },
 		],
 		p7_casilda_recado: [
 			{ set: { 'flag.p7_recado_dado': true } },
@@ -318,7 +324,6 @@ export default {
 			] },
 			{ give: 'p7_sobre_casilda' },
 			{ quest: 'p7_s_recado', stage: 'llevar' },
-			{ toast: 'Nueva misión: Peso neto' },
 		],
 		p7_casilda_nota: [
 			{ set: { 'flag.p7_recado_hecho': true } },
@@ -410,7 +415,12 @@ export default {
 			], else: [
 				{ say: 'p7_jade', text: 'La casa madre está en Trigal, en el Centro Comercial, 4.ª planta. La lleva mi madre. Si pasas, no le digas lo de las bolsitas. Y deja que te pese: le hace ilusión.' },
 			] },
-			{ call: 'p7_jade_sobre', cond: 'has("p7_sobre_casilda") && !flag.p7_jade_nota' },
+		],
+		// Presentación + sobre en una sola visita. Va aparte para que Jade no salga como «misión nueva»
+		// cuando aún no llevas el sobre (revisión de lógica, 2026-10-10).
+		p7_jade_intro_sobre: [
+			{ call: 'p7_jade_intro' },
+			{ call: 'p7_jade_sobre' },
 		],
 		p7_jade_sobre: [
 			{ set: { 'flag.p7_jade_nota': true } },

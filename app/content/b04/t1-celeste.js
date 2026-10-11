@@ -589,7 +589,7 @@ export default {
 			{ text: 'Desde la calle, una voz con megáfono: «¡Lambert! ¡Al furgón! ¡Ya!».' },
 			{ say: 'noa', text: 'Voy. —A ti, sin mirarte—. No me has visto.' },
 			{ text: 'Sale del callejón con la cabeza baja, alisándose el uniforme. Cuando pasa por delante del escaparate de las bicis, se para un segundo y mira la bici roja de un millón. Luego sigue.' },
-			{ quest: 'b04_t_noa', stage: 'abierto' },
+			{ quest: 'b04_t_noa', stage: 'abierto', done: true },
 			{ intel: { npc: 'noa', text: 'La han reasignado a la Cueva Celeste para «inventariar lo que haya», con una tarjeta de VISITANTE. Sabe que a Bastien lo han llamado a Celeste «para estudios». Te pidió que, si un día no contesta, alguien abra las jaulas.' } },
 		],
 

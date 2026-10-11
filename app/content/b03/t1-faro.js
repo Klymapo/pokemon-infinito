@@ -700,6 +700,7 @@ export default {
 		// =================== RENATA Y EL SÓTANO ===================
 		b03_renata_estacion: [
 			{ set: { 'flag.b03_sotano_abierto': true } },
+			{ quest: 'b03_t_renata', stage: 'bajar', silent: true },
 			{ text: 'En el andén, una chica con gabardina mostaza, rizos imposibles y gafas redondas habla con Dámaso, el mecánico, a una velocidad que el pobre hombre no puede seguir. Lleva un micrófono en una mano y un café en la otra. Los mueve igual.' },
 			{ say: 'renata', text: '¡Testigo! —Te señala con el café—. Por fin. La última vez que te vi la cara fue en Kalos. Ahora tienes cara de haber dormido tres días en un bosque. Cool, cool, cool.' },
 			{ say: 'renata', text: 'Renata Castellanos, *Casos Fríos de Teselia*, en directo desde Johto. Bueno, en diferido: lo monto luego.' },
@@ -1163,7 +1164,7 @@ export default {
 				] },
 			] },
 			{ text: 'Noa sale por el otro lado de los pilotes, por una escalerilla que da a la playa. No mira atrás. Camina rápido, con la cabeza baja, como quien ya sabe que la siguen.' },
-			{ quest: 'b03_t_noa', stage: 'abierto' },
+			{ quest: 'b03_t_noa', stage: 'abierto', done: true },
 			{ intel: { npc: 'noa', text: 'Te dio el registro de «Envíos N-02»: cada martes y viernes, desplazados del centro de Luminalia pasan por la Puerta «apagada», embarcan en el *Marea Quieta* (sin bandera), descargan en el muelle 3 de Olivo y acaban en la «excavación de patrimonio» de la Fundación Raíces. Le han cambiado la tarjeta de acceso. Está muy asustada.' } },
 			{ diary: 'Hoy, en el puerto de Olivo, nos encontramos con la doctora Lambert. ¡Qué casualidad, tan lejos de Kalos! Estaba muy cansada. Debería dormir más; los del puerto madrugan muchísimo.\n\nMi entrenador{|a|e} y ella charlaron un ratito a la sombra del muelle, que hacía fresco. Luego ella se fue por la playa. ¡Le gusta pasear!\n\nEl mar de Olivo es muy frío y muy transparente. Se ven estrellas de mar en el fondo. Algunas se mueven. ¡Esas son las mejores!', cond: 'flag.b01_diario' },
 			{ set: { 'flag.b03_noa_doctora': true }, cond: 'flag.b01_diario' },
@@ -1226,7 +1227,7 @@ export default {
 			] },
 			{ say: 'ysolde', text: 'Un consejo de Ala, gratis: los de las cajas no son los que deciden. Son los que firman. El que decide nunca está en el muelle.' },
 			{ text: 'La barca de los Magikarp se aleja. Cuando te giras, Ysolde ya no está en la veleta. Solo queda la veleta, que gira un poco, como si alguien acabara de bajarse.' },
-			{ quest: 'b03_t_vencejos', stage: 'abierto' },
+			{ quest: 'b03_t_vencejos', stage: 'abierto', done: true },
 		],
 		b03_ysolde_despues: [
 			{ if: 'flag.b03_vencejo_pluma', then: [

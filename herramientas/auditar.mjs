@@ -4,6 +4,7 @@
 // Ejecuta, en este orden:
 //   1. Validador de contenido (bloquea si hay ERRORES) y los bots Superfan (canon), Game Tester (lógica) y Game Designer (diseño); estos tres solo avisan.
 //   2. Bot de recorrido con N semillas de día (13 h) y N de noche (3 h).
+//   2b. Hub de misiones (herramientas/hub.mjs): lo que anuncian Novedades, Diario, 📌 y las marcas existe de verdad (bloquea si hay graves).
 //   3. Bot en la fecha de inicio de cada evento por fechas.
 //   4. Registro automático de continuidad.
 //   5. Prueba de humo en un navegador con pantalla de móvil.
@@ -63,7 +64,7 @@ for (const [nombre, archivo, fich] of [['Game Tester', 'tester.mjs', 'tester'], 
 }
 
 // 1b. Pruebas del motor
-for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs', 'herramientas/test/rejilla-test.mjs', 'herramientas/test/unicos-tutor-test.mjs', 'herramientas/test/pc-multi-test.mjs', 'herramientas/test/negocios-test.mjs', 'herramientas/test/minijuegos-test.mjs', 'herramientas/test/cine-test.mjs', 'herramientas/test/fx-eventos-test.mjs']) {
+for (const t of ['herramientas/test/shift-test.mjs', 'herramientas/test/combates-encadenados.mjs', 'herramientas/test/rejilla-test.mjs', 'herramientas/test/unicos-tutor-test.mjs', 'herramientas/test/pc-multi-test.mjs', 'herramientas/test/negocios-test.mjs', 'herramientas/test/minijuegos-test.mjs', 'herramientas/test/cine-test.mjs', 'herramientas/test/fx-eventos-test.mjs', 'herramientas/test/hub-test.mjs']) {
 	const r = await run('node', [t]);
 	report.push(`Prueba \`${t}\`: ${r.code === 0 ? 'OK' : '**FALLA**'}`, '');
 	if (r.code !== 0) { blockers.push(`Falla la prueba ${t}`); report.push('```', r.out.slice(-2000), '```', ''); }
@@ -108,6 +109,15 @@ if (errs.length) report.push('**Errores del bot:**', '', ...errs.slice(0, 30).ma
 const neverAll = runs.length ? runs.map(r => new Set(r.nunca)).reduce((a, b) => new Set([...a].filter(x => b.has(x)))) : new Set();
 const neverList = [...neverAll].filter(x => x && !x.startsWith('ev_') && x !== 'usar_menu_kalos');
 report.push(`**Guiones que ningún recorrido ejecutó** (${neverList.length}; muchos son ramas de decisión o textos de "recordar", pero revisa los raros):`, '', neverList.join(', ') || '—', '');
+
+// 2b. Hub de misiones: juega con el bot y con las partidas de herramientas/test/partidas/ y comprueba en muchos puntos
+// que cada Novedad, marca «!»/«?»/«•», «Lo que necesitas», Por hacer / En espera y cada «Ir» corresponden a algo real
+const hub = await run('node', ['herramientas/hub.mjs'], 20 * 60e3);
+report.push('## 2b. Hub de misiones', '', '```', hub.out.trim().split('\n').slice(-30).join('\n'), '```', '', `Detalle en \`secreto/auditorias/hub-${fecha}.md\`.`, '');
+{
+	const g = +(hub.out.match(/Hub: (\d+) graves/)?.[1] || 0);
+	if (hub.code !== 0) blockers.push(g ? `El hub de misiones anuncia o pide cosas que no existen (${g} graves; ver su informe)` : 'La auditoría del hub de misiones no pudo terminar');
+}
 
 // 3. Eventos por fechas
 const mod = await import(path.join(ROOT, 'app/content/index.js'));

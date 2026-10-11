@@ -796,7 +796,7 @@ export default {
 			{ text: 'Chispas te mira desde el hombro de {riolu}. Luego mira la carpa de Lemnis. Se le apagan las mejillas un segundo, como si tuviera miedo, y se esconde detrás de la oreja de {riolu}.', cond: 'flag.b02_apagados && (' + LUC + ')' },
 			{ say: 'petra', text: 'Te dejo una cosa. —Arranca una hoja de la libreta, se le cae la libreta al agujero, Pala la recoge—. Mis notas de Chispas. Por si un día encuentras a otro que no se despierta. Que alguien sepa lo que funcionó.' },
 			{ give: 'notapetra' },
-			{ quest: 'b03_t_ambar', stage: 'abierto' },
+			{ quest: 'b03_t_ambar', stage: 'abierto', done: true },
 			{ intel: { npc: 'petra', text: 'En las Ruinas Alfa con Chispas, el Pachirisu del Encinar (ya despierto, no se separa de ella). Bajo la cámara grande hay una franja de tierra «de ninguna época», como en el Encinar. El ámbar late más deprisa cerca de la cámara y de la carpa de Lemnis.' } },
 		],
 		b03_petra_generico: [

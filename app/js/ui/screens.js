@@ -29,6 +29,9 @@ import { MINI_INFO, gatherGame, gatherCargo, prepare, settle, sumCargo } from '.
 import { openVentures, openVenture, setVentureHooks } from './negocios-ui.js';
 import { ventureList, venturesSummary, pending as venturePending } from '../negocios.js';
 import { phase, PHASE_NAMES, isNight } from '../time.js';
+import {
+	spotMarker, prizeState, newsUpdate, newsByPlace, questPlaces, questNeeds, questStatus, isTodo, questParts, itemSpots, tramoName, travelPlan,
+} from '../hub.js';
 import { fmtMoney, fmtText, rng, pick, fmtDuration, clone } from '../util.js';
 
 const PHASE_ICON = { manana: '🌅', dia: '☀️', tarde: '🌇', noche: '🌙' };
@@ -262,7 +265,7 @@ export function render() {
 	if (tracker) main.append(tracker);
 	if (isRoute(loc)) renderRoute(main, loc);
 	else renderPlace(main, loc);
-	try { newsState({ announce: !busy, force: true }); } catch (e) { console.error(e); }
+	try { newsState({ announce: !busy }); } catch (e) { console.error(e); }
 	root.append(top, main, navBar());
 	// avisos de ritmo pendientes
 	const due = uniquesDue(); // asigna lugar a los únicos que ya vuelven aunque haya otro aviso delante
@@ -382,29 +385,8 @@ function spotIcon(s) {
 	return '💬';
 }
 
-/** Qué señal lleva un sitio: «!» misión nueva, «?» misión en curso, «•» novedad sin misión. */
-function spotMarker(s) {
-	const a = s.action || {};
-	const scripts = [];
-	const talk = s.talk || a.talk;
-	if (Array.isArray(talk)) { const t = talk.find(e => { try { return e.cond === undefined || evalCond(e.cond); } catch (x) { return false; } }); if (t?.script) scripts.push(t.script); }
-	if (s.script) scripts.push(s.script);
-	if (a.script) scripts.push(a.script);
-	const touch = questTouches();
-	let active = null, touchedAny = false;
-	for (const sc of scripts) for (const q of touch[sc] || []) {
-		if (!C.quests[q]) continue;
-		touchedAny = true;
-		const st = G.quests[q];
-		if (!st) return { kind: 'new', q };
-		if (!st.done && !active) active = { kind: 'active', q };
-	}
-	if (active) return active;
-	let isNew = false;
-	try { isNew = s.new !== undefined && evalCond(s.new); } catch (x) { isNew = false; }
-	if (isNew && !touchedAny) return { kind: 'hint' };
-	return null; // solo toca misiones ya terminadas: sin señal
-}
+// Qué señal lleva cada sitio («!» misión nueva, «?» en curso, «•» novedad) lo decide hub.js (spotMarker),
+// igual para el lugar, la ruta, el mapa y Novedades.
 function markerEl(m) {
 	if (!m) return null;
 	if (m.kind === 'new') return h('span', { class: 'mk new', title: 'Misión nueva' }, '!');
@@ -710,13 +692,7 @@ async function pokemonCenter(a = {}) {
 
 // Premio del instructor: al ganar `prize.wins` combates de práctica en una zona, su encargado te da algo
 // del lugar (una MT o una Megapiedra temática) con su propia escena. Cuentan las victorias de antes.
-function trainWins(t) { return (t.trainers || []).reduce((a, id) => a + (G.beaten[id] || 0), 0); }
-function prizeState(t) {
-	const pz = t?.prize;
-	if (!pz?.script || !C.scripts[pz.script]) return null;
-	const need = pz.wins || 3, wins = trainWins(t);
-	return { claimed: !!G.flags['premio:' + pz.script], wins: Math.min(wins, need), need, ready: wins >= need };
-}
+// (el estado del premio, prizeState, está en hub.js)
 async function givePrize(t) {
 	const pz = t.prize;
 	beginScene();
@@ -794,8 +770,8 @@ function renderRoute(main, loc) {
 		}
 		if (it.talk || it.spot) {
 			const sp = it.spot || {};
-			const mk = it.talk ? spotMarker(it) : null;
-			extra.append(h('button', { class: 'row' + (mk?.kind === 'new' ? ' q-new' : mk?.kind === 'active' ? ' q-active' : (mk || (it.new && !it.talk && evalCond(it.new))) ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), markerEl(mk), h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), sp.action?.gather ? h('div', { class: 's' }, gatherSub(sp.action.gather, loc, it.sub)) : it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
+			const mk = spotMarker(it);
+			extra.append(h('button', { class: 'row' + (mk?.kind === 'new' ? ' q-new' : mk?.kind === 'active' ? ' q-active' : mk ? ' hl' : ''), onclick: () => guarded(() => it.talk ? runFirst(it.talk) : doSpot(sp, loc)) }, h('div', { class: 'ico' }, it.icon || '💬'), it.talk ? markerEl(mk) : null, h('div', { class: 'lbl' }, h('div', { class: 't' }, tx(it.label || sp.label || 'Hablar')), sp.action?.gather ? h('div', { class: 's' }, gatherSub(sp.action.gather, loc, it.sub)) : it.sub ? h('div', { class: 's' }, tx(it.sub)) : null)));
 		}
 	}
 	if (extra.children.length) main.append(extra);
@@ -1187,7 +1163,7 @@ function openMap(startRegion = null) {
 		sheet.title('Mapa de ' + (R.name || region));
 		const nodes = Object.values(C.locations).filter(l => l.region === region && l.map && !l.parent);
 		const W = 100, H = R.h || 130;
-		const news = newsByPlace();
+		const news = newsByPlace(newsState().items);
 		const gatherReady = {};
 		for (const p of knownGatherPoints()) if (!gatherLeft(p.gid, p.loc)) { const t = (topLoc(p.loc.id) || p.loc).id; gatherReady[t] = (gatherReady[t] || 0) + 1; }
 		const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Mapa de ' + (R.name || region) });
@@ -1268,16 +1244,17 @@ function openMap(startRegion = null) {
 				if (gatherReady[s.id]) info.append(h('div', { class: 'mapchips' }, h('span', { class: 'ok' }, `✨ ${gatherReady[s.id]} ${gatherReady[s.id] === 1 ? 'punto de recolección listo' : 'puntos de recolección listos'}`)));
 			}
 			if (s.id !== here?.id) {
-				const start = G.route ? G.loc : here.id;
-				const path = findPath(start, s.id);
-				if (path) {
+				// mismo plan que «Ir» de Novedades y del Diario (hub.js): caminos del mapa, puertas y Puertas Lemnis
+				const plan = travelPlan(s.id);
+				if (plan.ok) {
 					info.append(h('button', { class: 'btn primary', style: { width: '100%' }, onclick: async () => {
 						const ce = canEnter(s.id);
 						if (!ce.ok) { toast(tx(ce.msg)); return; }
 						sheet.close();
-						await guarded(async () => { await enterLocation(s.id, { from: path.length >= 2 ? path[path.length - 2] : start }); });
-					} }, path.length > 2 ? `Viajar · ${path.length - 1} tramos de camino conocido` : 'Ir'));
-				} else info.append(h('div', { class: 'note' }, 'Aún no conoces un camino seguro hasta aquí.'));
+						await guarded(() => travelTo(s.id));
+					} }, plan.tramos > 1 ? `Viajar · ${plan.tramos} tramos de camino conocido` : 'Ir'));
+				} else if (!canEnter(s.id).ok) info.append(h('div', { class: 'note' }, tx(canEnter(s.id).msg)));
+				else info.append(h('div', { class: 'note' }, 'Aún no conoces un camino seguro hasta aquí.'));
 			}
 			const here2 = newsState().items.filter(i => i.loc && (topLoc(i.loc) || L(i.loc))?.id === s.id);
 			if (here2.length) info.append(h('div', { class: 'section-title' }, `Novedades aquí (${here2.length})`), h('div', { class: 'list' }, ...here2.slice(0, 6).map(i => newsRow(i))));
@@ -2038,150 +2015,45 @@ async function openPC() {
 }
 
 // =================== Viajar a un lugar conocido ===================
-/** Va a un lugar (o sub-lugar) por caminos conocidos, como el mapa. `tramo` coloca en ese tramo si la ruta ya está despejada. */
+/**
+ * Va a un lugar (o sub-lugar) por caminos conocidos: el plan (rutas despejadas, lugares visitados, puertas visibles y
+ * Puertas Lemnis entre regiones) lo hace hub.js; aquí solo se entra en cada paso. `tramo` coloca en ese tramo si la
+ * ruta ya está despejada. Si un sub-lugar no tiene entrada hoy, se queda fuera (y lo dice).
+ */
 async function travelTo(id, tramo = null) {
-	const target = L(id);
-	if (!target) return;
-	if (G.loc === id && (tramo === null || G.route?.pos === tramo)) { render(); return; }
-	const dest = topLoc(id) || target;
-	reachCache = null;
-	if (target.parent && !reachable().has(id)) { await say(null, `Ahora mismo no hay forma de entrar en ${target.name}.`); id = dest.id; tramo = null; }
-	const here = topLoc(G.loc);
-	const start = G.route ? G.loc : here?.id;
-	const path = dest.id === start ? [start] : findPath(start, dest.id);
-	if (!path) { await say(null, `Aún no conoces un camino seguro hasta ${dest.name}. Ve a pie desde el mapa.`); return; }
-	const ce = canEnter(id);
-	if (!ce.ok) { await say(null, tx(ce.msg)); return; }
-	const prev = path.length >= 2 ? path[path.length - 2] : start;
-	if (dest.id !== G.loc && !(G.route && G.loc === dest.id)) await enterLocation(dest.id, { from: prev });
-	if (G.loc !== dest.id) return; // un guion al entrar nos movió
-	if (id !== dest.id) {
-		// sub-lugares anidados: entra de fuera hacia dentro
-		const chain = [];
-		for (let l = L(id); l && l.id !== dest.id; l = L(l.parent)) chain.unshift(l.id);
-		for (const step of chain) { const c2 = canEnter(step); if (!c2.ok) { await say(null, tx(c2.msg)); break; } await enterLocation(step, { from: G.loc }); if (G.loc !== step) return; }
+	if (!L(id)) return;
+	const plan = travelPlan(id, tramo);
+	if (plan.fallbackMsg) await say(null, plan.fallbackMsg);
+	if (!plan.ok) { await say(null, tx(plan.msg)); return; }
+	for (const st of plan.steps) {
+		const ce = canEnter(st.id);
+		if (!ce.ok) { await say(null, tx(ce.msg)); break; }
+		await enterLocation(st.id, { from: st.from });
+		if (G.loc !== st.id) return; // un guion al entrar nos movió
 	}
-	if (tramo !== null && G.loc === id && L(id).route) {
-		if (G.cleared[id] || mounted()) { G.route = { id, pos: tramo }; markTramo(id, tramo); await saveGame(); }
-		else toast(`Está en el tramo ${tramo}: avanza por la ruta hasta llegar.`);
+	if (plan.tramo !== null && G.loc === plan.id && L(plan.id).route) {
+		if (G.cleared[plan.id] || mounted()) { G.route = { id: plan.id, pos: plan.tramo }; markTramo(plan.id, plan.tramo); await saveGame(); }
+		else toast(`Está en el tramo ${plan.tramo}: avanza por la ruta hasta llegar.`);
 	}
 	render();
-}
-
-// =================== Lugares a los que de verdad puedes ir ahora ===================
-// Un edificio o zona interior solo cuenta si hoy existe una entrada visible hasta él (un sitio «ir a…» o un desvío de ruta)
-// desde un lugar que ya conoces. Así ni las Novedades ni el Diario enseñan (ni dejan viajar a) sitios cuya puerta
-// la historia aún no ha abierto, o trenes que ya se fueron.
-let reachCache = null, reachAt = 0;
-function reachable() {
-	if (reachCache && Date.now() - reachAt < 1500) return reachCache;
-	const R = new Set(), queue = [];
-	const add = id => { if (id && L(id) && !R.has(id)) { R.add(id); queue.push(id); } };
-	for (const loc of Object.values(C.locations)) if (!loc.parent && G.visited[loc.id]) add(loc.id);
-	add(G.loc);
-	while (queue.length) {
-		const loc = L(queue.pop());
-		if (!canEnter(loc.id).ok && loc.id !== G.loc) continue;
-		let spots = [];
-		try { spots = spotsOf(loc); } catch (e) { spots = []; }
-		for (const s of spots) { const go = s.action?.go; if (go && L(go)?.parent) add(go); }
-		if (loc.route) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) {
-			if (it.branch?.go && L(it.branch.go)?.parent && (it.branch.cond === undefined || evalCond(it.branch.cond))) add(it.branch.go);
-			const go = it.spot?.action?.go; if (go && L(go)?.parent) add(go);
-		}
-	}
-	reachCache = R; reachAt = Date.now();
-	return R;
 }
 
 // =================== Novedades ===================
 // Pedido de Mario (2026-10-10): «notificaciones o alguna mecánica para saber de misiones nuevas o recién aparecidas,
 // para que no tenga que ir todos los días a recorrer Kalos, Johto y Kanto en cada ciudad, cada edificio y cada ruta».
-// Rotom revisa todos los lugares que ya conoces y lista lo que hay nuevo: misiones que alguien ofrece, gente con algo
-// que decir («!»), cosas que pasarán al llegar a un sitio, premios de instructores listos y negocios que piden socio
-// o tienen algo pendiente. Cada cosa lleva su «Ir». Lo que aparece por primera vez se avisa y queda marcado como nuevo.
-function newsScan() {
-	const out = [], seen = new Set();
-	const safe = c => { try { return c === undefined || evalCond(c); } catch (e) { return false; } };
-	const put = it => { if (seen.has(it.key)) return; seen.add(it.key); out.push(it); };
-	const placeOf = (loc, n) => { const top = topLoc(loc.id); return (top && top.id !== loc.id ? `${top.name} › ${loc.name}` : loc.name) + (n !== undefined && n !== null ? ` · tramo ${n}` : ''); };
-	const addSpot = (loc, s, n = null) => {
-		const a = s.action || s.spot?.action || {};
-		const label = tx(s.label || s.spot?.label || 'Alguien quiere hablar contigo');
-		const pz = a.training ? prizeState(a.training) : null;
-		if (pz && !pz.claimed && pz.ready) put({ key: 'pz:' + a.training.prize.script, kind: 'prize', icon: '🎁', title: `Premio listo: ${label}`, sub: 'Ya ganaste los combates. Pasa a recogerlo.', loc: loc.id, tramo: n, place: placeOf(loc, n) });
-		if (!(s.talk || s.script || a.script || a.talk)) return;
-		const m = spotMarker(s);
-		if (!m) return;
-		if (m.kind === 'active') {
-			// Una misión que ya tienes y que aquí puede avanzar: avisa cuando pasa de «en espera» a «te toca»
-			const def = C.quests[m.q], st = G.quests[m.q];
-			if (def && st) put({ key: 'a:' + m.q + ':' + (st.stage || ''), kind: 'active', icon: def.type === 'main' ? '⭐' : def.type === 'thread' ? '🧵' : '📜', title: def.name, sub: `Te toca · ${label}`, loc: loc.id, tramo: n, place: placeOf(loc, n), q: m.q });
-			return;
-		}
-		if (m.kind === 'new') {
-			const def = C.quests[m.q];
-			put({ key: 'q:' + m.q, kind: 'quest', icon: def.type === 'main' ? '⭐' : def.type === 'thread' ? '🧵' : def.type === 'event' ? '🎉' : '📜', title: def.name, sub: `Misión nueva · ${label}`, loc: loc.id, tramo: n, place: placeOf(loc, n), q: m.q });
-		} else {
-			// El mismo aviso puede estar en varias ciudades (un mensaje que te alcanza donde estés): sale una vez, en el sitio más a mano
-			const talk = s.talk || a.talk;
-			const sc = s.script || a.script || (Array.isArray(talk) ? talk.find(e => safe(e.cond))?.script : null);
-			const key = sc ? 's:' + sc : 's:' + loc.id + ':' + (s.label || s.spot?.label || '');
-			const dup = out.find(o => o.key === key);
-			if (dup) { if (loc.id === G.loc || (topLoc(loc.id)?.id === topLoc(G.loc)?.id && topLoc(dup.loc)?.id !== topLoc(G.loc)?.id)) Object.assign(dup, { loc: loc.id, tramo: n, place: placeOf(loc, n) }); return; }
-			put({ key, kind: 'talk', icon: s.icon || '💬', title: label, sub: s.sub ? tx(s.sub) : 'Tiene algo nuevo que decirte', loc: loc.id, tramo: n, place: placeOf(loc, n) });
-		}
-	};
-	const touch = questTouches();
-	const R = reachable();
-	for (const loc of Object.values(C.locations)) {
-		if (!R.has(loc.id)) continue;
-		if (loc.hidden !== undefined && safe(loc.hidden)) continue;
-		for (const s of spotsOf(loc)) addSpot(loc, s);
-		if (loc.route && G.visited[loc.id]) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) if (it.talk || it.spot) addSpot(loc, it, n);
-		// Escenas que saltan al entrar a un sitio que ya conoces (la historia sigue allí)
-		if (loc.id !== G.loc && G.visited[loc.id]) (loc.onEnter || []).forEach((e, i) => {
-			if (!e.script || (e.once !== false && G.flags['enter:' + loc.id + ':' + (e.script || i)]) || !safe(e.cond) || e.once === false) return;
-			if (!canEnter(loc.id).ok) return;
-			const qs = [...(touch[e.script] || [])].filter(q => C.quests[q]);
-			const q = qs.find(x => G.quests[x] && !G.quests[x].done) || qs.find(x => !G.quests[x]);
-			put({ key: 'e:' + loc.id + ':' + e.script, kind: 'enter', icon: '📍', title: q ? C.quests[q].name : `Algo te espera en ${loc.name}`, sub: 'Pasará algo cuando llegues', loc: loc.id, tramo: null, place: placeOf(loc) });
-		});
-	}
-	for (const v of ventureList()) {
-		if (v.status === 'offer') put({ key: 'v:' + v.id, kind: 'venture', icon: v.def.icon || '🤝', title: v.def.name, sub: 'Buscan socio: puedes invertir', venture: v.id, loc: v.def.loc, place: v.def.loc ? placeOf(L(v.def.loc)) : '' });
-		else {
-			const p = venturePending(v.id);
-			if (v.st.pending) put({ key: 'vi:' + v.id + ':' + v.st.pending + ':' + (v.st.lastEvent || 0), kind: 'venture', icon: v.def.icon || '🤝', title: v.def.name, sub: '❗ Hay un imprevisto que decidir', venture: v.id, loc: v.def.loc, place: '' });
-			else if (p.full) put({ key: 'vf:' + v.id + ':' + Math.floor((v.st.last || 0) / 864e5), kind: 'venture', icon: v.def.icon || '🤝', title: v.def.name, sub: '📦 Almacén lleno: pasa a recoger', venture: v.id, loc: v.def.loc, place: '' });
-		}
-	}
-	return out;
-}
-let newsCache = null, newsAt = 0;
+// Qué es novedad lo decide hub.js (newsScan/newsUpdate, con caché por versión de estado); aquí solo se avisa y se pinta.
+let newsCache = null;
 /** Novedades actuales, con cuáles no has visto todavía. Avisa (una vez) de las que acaban de aparecer. */
-function newsState({ announce = false, force = false } = {}) {
-	if (!force && newsCache && Date.now() - newsAt < 1500) return newsCache;
-	const N = (G.news ||= { known: {}, unread: {} });
-	const first = !N.init;
-	const items = newsScan();
-	const keys = new Set(items.map(i => i.key));
-	const fresh = items.filter(i => !N.known[i.key]);
-	for (const i of fresh) { N.known[i.key] = Date.now(); N.unread[i.key] = Date.now(); }
-	for (const k in N.unread) if (!keys.has(k)) delete N.unread[k];
-	// lo que desapareció hace mucho se olvida, para que la lista de conocidas no crezca sin fin
-	const ks = Object.keys(N.known);
-	if (ks.length > 600) for (const k of ks) if (!keys.has(k) && Date.now() - N.known[k] > 30 * 864e5) delete N.known[k];
-	N.init = true;
-	for (const i of items) i.unread = !!N.unread[i.key];
-	newsCache = { items, unread: items.filter(i => i.unread).length, fresh };
-	newsAt = Date.now();
-	if (announce && fresh.length) {
+function newsState({ announce = false } = {}) {
+	const r = newsUpdate();
+	newsCache = r;
+	if (announce && r.fresh.length) {
+		const { items, fresh, first } = r;
 		const txt = first ? `🔔 Rotom revisó los lugares que conoces: hay ${items.length} ${items.length === 1 ? 'cosa pendiente' : 'cosas pendientes'} en Diario › Novedades.`
 			: fresh.length === 1 ? `🔔 Novedad: **${fresh[0].title}**${fresh[0].place ? ' · ' + fresh[0].place : ''}` : `🔔 ${fresh.length} novedades en lugares que conoces. Míralas en Diario › Novedades.`;
 		toast(txt, 'quest');
 	}
-	return newsCache;
+	return r;
 }
 function newsRow(it, after) {
 	const go = () => {
@@ -2197,79 +2069,10 @@ function newsRow(it, after) {
 		h('div', { class: 'lbl' }, h('div', { class: 't' }, it.title, it.unread ? h('span', { class: 'badge-new' }, 'NUEVO') : null), h('div', { class: 's' }, it.sub), it.place ? h('div', { class: 'qwhere' }, '📍 ' + it.place) : null),
 		h('b', { class: 'news-go' }, it.venture ? 'Abrir' : here ? 'Aquí' : 'Ir'));
 }
-/** Señales por lugar de primer nivel para el mapa: { [topId]: { news: n, unread: n } } */
-function newsByPlace() {
-	const out = {};
-	for (const it of newsState().items) {
-		if (!it.loc) continue;
-		const top = (topLoc(it.loc) || L(it.loc))?.id;
-		if (!top) continue;
-		const o = (out[top] ||= { news: 0, unread: 0 });
-		o.news++; if (it.unread) o.unread++;
-	}
-	return out;
-}
-
 // =================== Diario y misiones ===================
-// ---------- Índice de misiones: qué guiones tocan cada misión y dónde están ----------
-let QTOUCH = null;
-function questTouches() {
-	if (QTOUCH) return QTOUCH;
-	QTOUCH = {};
-	const scan = (list, set, depth) => {
-		for (const c of list || []) {
-			if (!c || typeof c !== 'object') continue;
-			if (c.quest) set.add(c.quest);
-			if (c.call && depth < 4) scan(C.scripts[c.call], set, depth + 1);
-			for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) scan(c[k], set, depth);
-			if (Array.isArray(c.choice)) for (const o of c.choice) scan(o.then, set, depth);
-		}
-	};
-	for (const id in C.scripts) { const set = new Set(); scan(C.scripts[id], set, 0); QTOUCH[id] = set; }
-	return QTOUCH;
-}
-/** Para cada misión, los sitios (visibles ahora mismo y en lugares ya visitados) donde se avanza o se empieza. */
-function questPlaces() {
-	const touch = questTouches();
-	const out = {};
-	const safe = c => { try { return c === undefined || evalCond(c); } catch (e) { return false; } };
-	const add = (loc, spot) => {
-		const scripts = [];
-		if (Array.isArray(spot.talk)) { const t = spot.talk.find(e => safe(e.cond)); if (t?.script) scripts.push(t.script); }
-		if (spot.script) scripts.push(spot.script);
-		if (spot.action?.script) scripts.push(spot.action.script);
-		const top = topLoc(loc.id);
-		const where = top && top.id !== loc.id ? `${top.name} · ${loc.name}` : loc.name;
-		const txt = spot.label ? `${where} · ${spot.label}` : where;
-		const put = q => { const arr = (out[q] ||= []); if (!arr.includes(txt)) arr.push(txt); };
-		for (const sc of scripts) for (const q of touch[sc] || []) put(q);
-	};
-	const R = reachable();
-	for (const loc of Object.values(C.locations)) {
-		if (!R.has(loc.id)) continue;
-		for (const sp of spotsOf(loc)) add(loc, sp);
-		if (loc.route) for (let n = 0; n <= (loc.route.length || 0); n++) for (const it of tramoItems(loc, n)) if (it.talk || it.script) add(loc, it);
-	}
-	// Lugares que conoces pero no has pisado: lo que pasa al llegar (así se ve hacia dónde sigue la historia)
-	const known = new Set();
-	for (const id in G.visited) for (const n of L(id)?.links || []) if (!G.visited[n]) known.add(n);
-	for (const id of known) {
-		const loc = L(id);
-		if (!loc) continue;
-		(loc.onEnter || []).forEach((e, i) => {
-			if (!e.script || (e.once !== false && G.flags['enter:' + id + ':' + (e.script || i)]) || !safe(e.cond)) return;
-			for (const q of touch[e.script] || []) {
-				const arr = (out[q] ||= []);
-				const txt = `Al llegar a ${loc.name}`;
-				if (!arr.includes(txt)) arr.push(txt);
-			}
-		});
-	}
-	return out;
-}
-
+// Dónde se avanza cada misión (questPlaces), qué pide (questNeeds) y si te toca o espera (questStatus) lo decide hub.js.
 function openDiary(startTab = null) {
-	let tab = startTab || (newsState({ force: true }).unread ? 'news' : 'active');
+	let tab = startTab || (newsState().unread ? 'news' : 'active');
 	const sheet = openSheet('Diario', null);
 	const TYPES = [['main', '⭐', 'Historia principal'], ['thread', '🧵', 'Historias de personajes'], ['side', '📜', 'Secundarias'], ['event', '🎉', 'Eventos']];
 	const draw = () => {
@@ -2277,11 +2080,10 @@ function openDiary(startTab = null) {
 		const active = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && !q.done);
 		const done = Object.entries(G.quests).filter(([id, q]) => C.quests[id] && q.done);
 		const avail = Object.keys(places).filter(id => C.quests[id] && !G.quests[id]).map(id => [id, null]);
-		// Por hacer: hay un sitio donde avanzar o algo concreto que conseguir. Registro: historias abiertas sin nada que hacer ahora.
-		const isTodo = id => (places[id] || []).length || C.quests[id].type === 'main' || questNeeds(id).length;
+		// Por hacer: un sitio de ahora la mueve o le falta algo que se consigue (hub.js · questStatus). En espera: el resto.
 		const todo = active.filter(([id]) => isTodo(id));
 		const logq = active.filter(x => !todo.includes(x));
-		const NS = newsState({ force: true });
+		const NS = newsState();
 		const counts = { news: NS.unread || NS.items.length, active: todo.length, avail: avail.length, log: logq.length, done: done.length };
 		const tabs = h('div', { class: 'tabs' }, ...[['news', 'Novedades'], ['active', 'Por hacer'], ['avail', 'Nuevas'], ['log', 'En espera'], ['done', 'Hechas'], ['diary', 'Rotom']].map(([k, n]) =>
 			h('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, n, counts[k] ? h('span', { class: 'tabcount' }, String(counts[k])) : null)));
@@ -2322,7 +2124,7 @@ function openDiary(startTab = null) {
 				const lines = [];
 				if (tab === 'active' || tab === 'log') lines.push(h('div', { class: 's', html: fmtText(tx(def.stages?.[q.stage] || '')) }));
 				if (tab === 'done') lines.push(h('div', { class: 's' }, '✔ Completada' + (q.finished ? ' el ' + new Date(q.finished).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }) : '')));
-				if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
+				if (tab === 'avail') lines.push(h('div', { class: 's' }, (places[id] || []).some(w => /^Al (llegar|entrar|volver)/.test(w)) ? 'Empieza cuando llegues al lugar.' : 'Habla con quien la ofrece para empezarla.'));
 				if (tab !== 'done') for (const w of where) lines.push(h('div', { class: 'qwhere' }, '📍 ' + w));
 				return h('button', { class: 'row quest' + extraCls + (type === 'main' && tab === 'active' ? ' hl' : '') + (tab === 'done' ? ' doneq' : '') + (tab === 'log' ? ' logq' : ''), onclick: () => openQuestDetail(id, places, draw) },
 					h('div', { class: 'ico' }, icon), h('div', { class: 'lbl' }, h('div', { class: 't' }, def.name, (G.settings.tracked || []).includes(id) ? h('span', { class: 'pinmark' }, ' 📌') : null), ...lines), h('span', { class: 'chev' }, '›'));
@@ -2377,7 +2179,7 @@ function questTracker() {
 		const partsProg = def.parts ? [`${def.parts.title || 'Lista'} ${(def.parts.items || []).filter(it => { try { return evalCond(it.done); } catch (e) { return false; } }).length}/${(def.parts.items || []).length}`] : [];
 		const prog = partsProg.concat(needs.map(n => n.kind === 'item' ? `${itemName(n.id)} ${Math.min(count(n.id), n.n)}/${n.n}` : `${n.id.charAt(0).toUpperCase() + n.id.slice(1)} ${Math.min(G.vars[n.id] || 0, n.n)}/${n.n}`)).join(' · ');
 		const stage = (def.stages?.[q.stage] || '').replace(/\*\*/g, '');
-		const waiting = def.type !== 'main' && !prog && !(questPlaces()[id] || []).length;
+		const waiting = !prog && questStatus(id).status === 'waiting';
 		box.append(h('button', { class: 'trk', onclick: () => openQuestDetail(id) },
 			h('div', { class: 'trk-t' }, '📌 ' + def.name),
 			h('div', { class: 'trk-s' }, tx(stage)),
@@ -2387,91 +2189,18 @@ function questTracker() {
 }
 
 // ---------- Ficha de una misión ----------
-const NEED_RX = [
-	[/(^|[^!\w.])has\("(\w+)"\)/g, (m) => ({ kind: 'item', id: m[2], n: 1 })],
-	[/(^|[^!\w.])count\("(\w+)"\)\s*>=\s*(\d+)/g, (m) => ({ kind: 'item', id: m[2], n: +m[3] })],
-	[/(^|[^!\w.])inParty\("(\w+)"\)/g, (m) => ({ kind: 'party', id: m[2] })],
-	[/(^|[^!\w.])(seen|caught|owns)\("(\w+)"\)/g, (m) => ({ kind: m[2], id: m[3] })],
-	[/(^|[^!\w.])vars\.(\w+)\s*>=\s*(\d+)/g, (m) => ({ kind: 'var', id: m[2], n: +m[3] })],
-	[/(^|[^!\w.])beat\("(\w+)"\)/g, (m) => ({ kind: 'beat', id: m[2] })],
-];
-/** Lo que piden los diálogos que avanzan la misión en su etapa actual (objetos, Pokémon, combates, contadores). */
-function questNeeds(id) {
-	const q = G.quests[id];
-	if (!q || q.done) return [];
-	const conds = [];
-	const touch = questTouches();
-	// Una condición vale si no habla de otra etapa de esta misión (si menciona una, debe ser la actual)
-	const stageOk = c => { const m = [...c.matchAll(new RegExp(`quest\\.${id}\\s*==\\s*["'](\\w+)["']`, 'g'))]; return !m.length || m.some(x => x[1] === q.stage); };
-	const scan = (sp) => {
-		// Solo cuentan los sitios que hoy se ven: un diálogo escondido (p. ej., el de una entrega ya hecha) no pide nada
-		const vis = c => { try { return c === undefined || evalCond(c); } catch (e) { return false; } };
-		if ((sp.talk || sp.spot?.talk) && !(vis(sp.cond) && vis(sp.spot?.cond))) return;
-		for (const t of [].concat(sp.talk || sp.spot?.talk || [])) if (t.cond && (touch[t.script] || new Set()).has(id) && stageOk(t.cond)) conds.push(t.cond);
-		// escenas de tramo que se disparan solas cuando cumples algo (p. ej., al encontrar un objeto)
-		if (sp.script && sp.cond && (touch[sp.script] || new Set()).has(id) && stageOk(sp.cond)) conds.push(sp.cond);
-	};
-	// También los «si…» dentro de los guiones cuyo «entonces» avanza la misión
-	const touchesList = (list, d = 0) => (list || []).some(c => c && typeof c === 'object' && (c.quest === id || (c.call && d < 4 && touchesList(C.scripts[c.call], d + 1)) || ['then', 'else', 'onWin', 'onCatch', 'onSolve'].some(k => Array.isArray(c[k]) && touchesList(c[k], d)) || (Array.isArray(c.choice) && c.choice.some(o => touchesList(o.then, d)))));
-	const walkIfs = (list, d = 0) => { for (const c of list || []) { if (!c || typeof c !== 'object') continue; if (c.if && touchesList(c.then) && stageOk(c.if)) conds.push(c.if); for (const k of ['then', 'else', 'onWin', 'onLose', 'onCatch', 'onRun', 'onSolve', 'onQuit']) if (Array.isArray(c[k])) walkIfs(c[k], d); if (Array.isArray(c.choice)) for (const o of c.choice) walkIfs(o.then, d); } };
-	for (const sid in C.scripts) if ((touch[sid] || new Set()).has(id)) walkIfs(C.scripts[sid]);
-	for (const loc of Object.values(C.locations)) {
-		for (const sp of loc.spots || []) scan(sp);
-		if (loc.route) for (const n in loc.route.tramos || {}) for (const it of [].concat(loc.route.tramos[n] || [])) scan(it);
-	}
-	// contadores de una sola escena (el guion los pone a 0 antes de usarlos): no son algo que reunir
-	const scratch = new Set([...JSON.stringify(C.scripts).matchAll(/"vars\.(\w+)":0[,}]/g)].map(m => m[1]));
-	const out = [], keys = new Set();
-	for (const c of conds) for (const [rx, mk] of NEED_RX) for (const m of c.matchAll(rx)) { const n = mk(m); if (n.kind === 'var' && scratch.has(n.id)) continue; const k = n.kind + ':' + n.id; if (!keys.has(k)) { keys.add(k); out.push({ ...n, alt: /\|\|/.test(c) }); } }
-	return out;
-}
-/** Nombre de un punto de ruta: «Ruta 5 · tramo 4 de 9 (desde Ciudad Luminalia)». */
-function tramoName(locId, n) {
-	const loc = L(locId);
-	if (!loc) return locId;
-	if (!loc.route || !n) return loc.name;
-	const from = L(loc.route.from);
-	return `${loc.name} · tramo ${n} de ${loc.route.length}` + (from ? ` (desde ${from.name})` : '');
-}
-/** Dónde hay un objeto tirado o escondido en las rutas (incluye eventos activos), con tramo y si ya lo recogiste. */
-function itemSpots(itemId) {
-	const out = [];
-	for (const loc of Object.values(C.locations)) {
-		if (!loc.route) continue;
-		const pr = G.routeProg?.[loc.id] || { items: {} };
-		for (let n = 0; n <= (loc.route.length || 0); n++) {
-			const list = [].concat(loc.route.tramos?.[n] || []);
-			for (const e of activeEvents()) if (e.tramos?.[loc.id]?.[n]) list.push(...e.tramos[loc.id][n]);
-			for (const it of list) if (it.item === itemId) {
-				const top = topLoc(loc.id);
-				out.push({ loc: loc.id, n, hidden: !!it.hidden, got: !!pr.items?.[n + ':' + itemId], known: !!G.visited[loc.id] || !!G.visited[top?.id] || (loc.links || []).some(x => G.visited[x]) });
-			}
-		}
-	}
-	return out;
-}
+// «Lo que necesitas» (questNeeds), dónde hay objetos tirados (itemSpots) y nombres de tramo (tramoName) salen de hub.js.
 /** Lista de partes de una misión (`parts` en el contenido): qué llevas, qué falta y dónde. */
 function questPartsList(def) {
-	const P = def.parts;
-	const safe = c => { try { return !!c && evalCond(c); } catch (e) { return false; } };
-	const items = P.items || [];
-	const doneN = items.filter(it => safe(it.done)).length;
+	const P = questParts(def);
 	const list = h('div', { class: 'list' });
-	for (const it of items) {
-		const ok = safe(it.done), half = !ok && safe(it.got);
-		const hint = Array.isArray(it.hint) ? (it.hint.find(x => x.cond === undefined || safe(x.cond)) || {}).text : it.hint;
-		const info = [];
-		if (!ok) {
-			if (it.where) info.push('📍 ' + tramoName(it.where, it.tramo));
-			const txt = half ? (it.gotHint || hint) : hint;
-			if (txt) info.push(txt);
-		}
-		list.append(h('div', { class: 'row need part' + (ok ? ' ok' : half ? ' half' : '') },
-			h('div', { class: 'ico' }, ok ? '✔' : half ? '◐' : '○'),
-			h('div', { class: 'lbl' }, h('div', { class: 't' }, ok ? (it.doneLabel || it.label) : it.label), ...info.map(t => h('div', { class: 'needwhere', html: fmtText(tx(t)) }))),
-			h('b', {}, ok ? 'Listo' : half ? 'Casi' : '')));
+	for (const it of P.items) {
+		list.append(h('div', { class: 'row need part' + (it.ok ? ' ok' : it.half ? ' half' : '') },
+			h('div', { class: 'ico' }, it.ok ? '✔' : it.half ? '◐' : '○'),
+			h('div', { class: 'lbl' }, h('div', { class: 't' }, it.label), ...it.info.map(t => h('div', { class: 'needwhere', html: fmtText(tx(t)) }))),
+			h('b', {}, it.ok ? 'Listo' : it.half ? 'Casi' : '')));
 	}
-	return [h('div', { class: 'section-title' }, `${P.title || 'Lista'} · ${doneN}/${items.length}`), list];
+	return [h('div', { class: 'section-title' }, `${P.title} · ${P.done}/${P.items.length}`), list];
 }
 function openQuestDetail(id, places, onChange) {
 	const def = C.quests[id], q = G.quests[id];
@@ -2495,7 +2224,8 @@ function openQuestDetail(id, places, onChange) {
 	}
 	if (q && !q.done) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Ahora'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || '')) })));
 	if (q?.done) body.push(h('div', { class: 'qd-now done' }, h('div', { class: 'qd-label' }, 'Desenlace'), h('div', { html: fmtText(tx(def.stages?.[q.stage] || def.stages?.hecha || 'Completada.')) })));
-	if (!q) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Cómo empezarla'), h('div', {}, (places?.[id] || []).some(w => w.startsWith('Al llegar')) ? 'Empieza sola cuando llegues al lugar indicado.' : 'Habla con quien la ofrece.')));
+	if (!q) body.push(h('div', { class: 'qd-now' }, h('div', { class: 'qd-label' }, 'Cómo empezarla'), h('div', {}, (places?.[id] || questPlaces()[id] || []).some(w => /^Al (llegar|entrar|volver)/.test(w)) ? 'Empieza sola cuando llegues al lugar indicado.' : 'Habla con quien la ofrece.')));
+	if (q && !q.done && questStatus(id).status === 'waiting') body.push(h('div', { class: 'note' }, '⏳ En espera: no tienes que hacer nada por ahora. Cuando te necesite, pasará a «Por hacer» y Rotom te avisará.'));
 	// Lo que necesitas
 	const needs = questNeeds(id).filter(n => !(def.parts && q && !q.done && n.kind === 'var' && n.id === def.parts.var));
 	if (def.parts && q && !q.done) body.push(...questPartsList(def));

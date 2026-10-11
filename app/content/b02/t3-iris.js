@@ -702,7 +702,7 @@ export default {
 			{ give: 'lumberry' },
 			{ text: 'Debajo de la venda del brazo izquierdo, en la piel que asoma, hay dos manchitas nuevas, rojas. Recientes. No dices nada. Ella tampoco.' },
 			{ af: { kaori: 6 } },
-			{ quest: 'b02_t_kaori', stage: 'abierto' },
+			{ quest: 'b02_t_kaori', stage: 'abierto', done: true },
 			{ set: { 'flag.b02_kaori_muestra': true } },
 		],
 		b02_kaori_generico: [
@@ -1125,7 +1125,7 @@ export default {
 		// =================== YSOLDE ===================
 		b02_ysolde_iris: [
 			{ set: { 'flag.b02_ysolde_iris': true } },
-			{ quest: 'b02_t_vencejos', stage: 'abierto' },
+			{ quest: 'b02_t_vencejos', stage: 'abierto', done: true },
 			{ text: 'Sentada en el borde del tejado de la casa de té, con las piernas colgando y la capucha gris puesta, hay alguien que ya conoces. **Ysolde.** Un Fletchinder de plumas grises dormita en su hombro.' },
 			{ say: 'ysolde', text: 'Sube. —No es una pregunta—. Por la escalera de los barriles. La de la izquierda no. La de la izquierda es para turistas.' },
 			{ text: 'Subes. Desde el tejado se ve toda Iris: los faroles, los arces, el teatro con los farolillos encendidos. La Torre Quemada, negra contra el cielo, con el cordón policial alrededor.' },

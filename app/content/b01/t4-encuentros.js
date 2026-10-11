@@ -190,7 +190,7 @@ export default {
 			] },
 			{ say: 'ysolde', text: 'Un consejo, ya que estamos: cuando cruces la Puerta, mira quién te mira. No a quién miras tú. A quién te mira.' },
 			{ text: 'Se pone la capucha, trepa por el menhir como si tuviera escalones y, desde arriba, salta al siguiente. Y al siguiente. Cuando llega al último, ya no la ves.' },
-			{ quest: 'b01_t_vencejos', stage: 'abierto' },
+			{ quest: 'b01_t_vencejos', stage: 'abierto', done: true },
 			{ intel: { npc: 'ysolde', text: 'Se llama Ysolde. Es de los «Vencejos», un grupo que vigila a Lemnis desde los tejados «desde antes de que tuvieran logotipo». Lleva un Honedge escondido en la manga y un Fletchinder. Te dijo: «Cuando cruces la Puerta, mira quién te mira».' } },
 		],
 		b01_enc_ysolde_4: [
@@ -249,7 +249,7 @@ export default {
 			] },
 			{ say: 'petra', text: 'Los de Lemnis no me dejan pasar de las vallas. Me han dicho que no tengo «permiso de excavación». Yo les he dicho que yo no excavo, que excava Pala. No ha colado.' },
 			{ say: 'petra', text: 'Me han hablado de un bosque en Johto donde los relojes se paran. Si el tiempo está doblado en algún sitio, quiero verlo. Y si algún día vas tú… acuérdate de mí. Y del ámbar. Sobre todo del ámbar.' },
-			{ quest: 'b01_t_ambar', stage: 'abierto' },
+			{ quest: 'b01_t_ambar', stage: 'abierto', done: true },
 			{ intel: { npc: 'petra', text: 'En Crómlech encontró capas de tierra «desordenadas, como si alguien hubiera doblado el tiempo». Quiere ir a un bosque de Johto «donde los relojes se paran».' } },
 		],
 
@@ -322,7 +322,7 @@ export default {
 			{ say: 'viajero', text: 'Nos volveremos a ver. De hecho, ya nos hemos visto. Para mí. Fue precioso. Lloraste un poco. Bueno, lloré yo.' },
 			{ text: 'Entra en la cabina. El ruido de acordeón. La cabina se borra. Donde estaba, la arena se queda seca un segundo, y luego la primera ola la moja.' },
 			{ say: 'rotom', text: '¡Bzzt! ¿«Nadie con corbata»? Pues ya me dirás. En Lemnis llevan corbata hasta los guardias.' },
-			{ quest: 'b01_t_cabina', stage: 'abierto' },
+			{ quest: 'b01_t_cabina', stage: 'abierto', done: true },
 			{ intel: { npc: 'viajero', text: 'Dice que «alguien está tirando de las costuras del mundo»: la marea de Yantra, Luminalia, «unas piedras muy viejas». Te pidió que no enseñes lo que lleves «tibio» a nadie con corbata ni con bata.' } },
 		],
 

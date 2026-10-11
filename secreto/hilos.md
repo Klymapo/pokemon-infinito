@@ -125,3 +125,15 @@ Escenas cortas de un solo uso (flag `b01_enc_*`), repartidas por ciudades y mome
 | Casilda y Jade Peña (Trigal ↔ Azafrán) | «Peso neto» cerrable | Casilda sube al tren «en primavera» (evento del 20–22 mar) |
 | Evaristo y el contramaestre (Lago de la Furia ↔ Olivo) | Evaristo compró el boleto a Olivo y no lo ha usado (`p8_botella`) | Tercera aparición: el reencuentro en el Muelle de Olivo |
 | El roble del Parque Nacional | Heracrossita entregada; el muchacho del Heracross «dejó de venir» | Semilla sin plan |
+
+## Revisión de lógica de misiones (2026-10-10): qué hilos siguen abiertos y por qué
+
+**Regla desde hoy:** cada parte de un hilo (I, II, III…) es su propia misión y **se cierra cuando termina su parte** (`{ quest, stage: 'abierto', done: true }`), no cuando empieza la siguiente. La parte siguiente abre una misión nueva. Mario se quejó de «misiones abiertas sin nada que hacer»: un hilo solo se queda abierto si el jugador tiene algo que hacer o si es un gancho que se resuelve en la misma misión más adelante. Las partidas que ya estaban paradas en la etapa final se cierran solas al entrar en una ciudad o pueblo (`logica_cierre_hilos` en `b04/comun.js`).
+
+| Hilo | Etapa | Por qué sigue abierto (a propósito) | Qué debe hacer un bloque futuro |
+|---|---|---|---|
+| La arrepentida (`b02_t_lola`) | `espera` | Lola «algún día te dará la receta de verdad»: la confesión llega en el Acto V o en la vuelta a Johto/Kanto antes del VI (plan en `registro.md`, Publicación 6) | Continuar **esta misma misión** (nuevas etapas) y cerrarla con la confesión |
+| Las ondas (`b03_t_ondas`) | `abierto` | El misterio de «M.» lo resuelve el propio B4 en el núcleo de la Cueva Celeste (`b04_nodo`, Magda) | Nada: se cierra sola en el B4 |
+| Lo que vive en la cueva (`b04_t_cueva`) | `abierto` | Gancho largo: Mewtwo reaparece en un acto alto (no capturable antes del IX) | Continuar esta misma misión cuando vuelva Mewtwo |
+
+Cerrados hoy al terminar su parte (antes esperaban al bloque siguiente o no se cerraban nunca): `b01_t_rhi` (si perdiste en Relieve), `b01_t_agencia`, `b01_t_az`, `b01_t_ambar`, `b01_t_cabina`, `b01_t_vencejos`, `b02_t_noa`, `b02_t_ambar`, `b02_t_cabina`, `b02_t_vencejos`, `b02_t_kaori`, `b02_t_az`, **`b02_t_agencia` (no se cerraba nunca)**, `b03_t_noa`, `b03_t_ambar`, `b03_t_vencejos`, `b03_t_kaori`, `b04_t_noa`, `b04_t_kaori`, `b04_t_renata`. El B5 abre `b05_t_noa`, `b05_t_kaori`, `b05_t_renata`… como partes nuevas; los cierres en cascada que ya hay (`quest.X && !done.X`) siguen valiendo y no hacen nada.

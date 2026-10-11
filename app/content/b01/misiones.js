@@ -60,7 +60,7 @@ export default {
 	} },
 	b01_t_rhi: { name: 'La delantera', type: 'thread', stages: {
 		conocida: 'Rhi, novata de Galar, te ha declarado la guerra. Más o menos.',
-		relieve: 'Rhi quiere la revancha contra Blanca… y contra ti.',
+		relieve: 'Rhi quiere la revancha contra Blanca… y contra ti. Te va a buscar en **Ciudad Relieve** en cuanto tengas tu medalla.',
 		revancha: 'Rhi te ganó en Relieve y se fue a por su medalla. La próxima vez, el gol lo metes tú.',
 		hecha: 'Rhi ya sabe tu nombre.',
 	} },

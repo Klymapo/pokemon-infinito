@@ -45,7 +45,7 @@ export default {
 	} },
 	b02_t_rhi: { name: 'La delantera (II)', type: 'thread', stages: {
 		trigal: 'Rhi llegó a Johto a tiempo. Tú no. Te está buscando en **Ciudad Trigal**.',
-		carta: 'A Rhi le llegó una carta. No quiere hablar de ella. Mucho.',
+		carta: 'A Rhi le llegó una carta. No quiere hablar de ella. Mucho. Está sola en un banco de **Ciudad Trigal**.',
 		hecha: 'Rhi te enseñó algo que no le enseña a nadie.',
 	} },
 	b02_t_sera: { name: 'La heredera (II)', type: 'thread', stages: {
@@ -55,7 +55,7 @@ export default {
 		hecha: 'Serafina sabe lo que hiciste con el fragmento.',
 	} },
 	b02_t_bastien: { name: 'Letra pequeña (II)', type: 'thread', stages: {
-		trigal: 'Bastien está en la Gira. Lo que pasó en la Cueva Brillante le sigue pesando.',
+		trigal: 'Bastien está en la Gira. Lo que pasó en la Cueva Brillante le sigue pesando. Búscalo en **Ciudad Trigal**.',
 		hecha: 'Bastien y tú pusisteis las cuentas al día. Más o menos.',
 	} },
 	b02_t_noa: { name: 'Las jaulas', type: 'thread', stages: {

@@ -494,7 +494,7 @@ export default {
 			{ say: 'kaori', as: 'Kaori (mensaje)', text: 'Te mando dos cosas para tu equipo. No son veneno. Las he probado yo. Sigo viva.' },
 			{ give: 'fullheal', n: 2 },
 			{ af: { kaori: 5 } },
-			{ quest: 'b03_t_kaori', stage: 'abierto' },
+			{ quest: 'b03_t_kaori', stage: 'abierto', done: true },
 		],
 
 		// =================== LA TIENDA DE RECUERDOS ===================

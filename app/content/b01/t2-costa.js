@@ -191,7 +191,7 @@ export default {
 			mapNote: 'Jardines reales (opcional)',
 			spots: [
 				{ label: 'El dueño del palacio', sub: 'Un señor con peluca empolvada', icon: '👑', talk: [
-					{ cond: 'quest.b01_s_cenit == "buscar" && flag.b01_cenit_furfrou', script: 'b01_cenit_entrega' },
+					{ cond: '(quest.b01_s_cenit == "buscar" || quest.b01_s_cenit == "volver") && flag.b01_cenit_furfrou', script: 'b01_cenit_entrega' },
 					{ cond: 'quest.b01_s_cenit == "buscar"', script: 'b01_cenit_recordar' },
 					{ cond: 'done.b01_s_cenit', script: 'b01_cenit_despues' },
 					{ script: 'b01_cenit_1' },
@@ -972,6 +972,7 @@ export default {
 									{ text: 'Detrás del arco, sobre un cojín de pétalos de rosa que nadie sabe quién ha puesto, duerme al sol una **Furfrou** con corte Reina y un lacito rosa en la oreja izquierda. Está despeinadísima. Y feliz.' },
 									{ text: 'Princesa abre un ojo, te mira de arriba abajo, decide que eres aceptable y se levanta con toda la dignidad de una reina. Te sigue.' },
 									{ set: { 'flag.b01_cenit_furfrou': true } },
+									{ quest: 'b01_s_cenit', stage: 'volver', silent: true },
 									{ toast: 'Lleva a Princesa con el dueño del palacio.' },
 								] },
 								{ text: 'El que no tiene ningún hilo.', then: [{ call: 'b01_cenit_perdido' }] },
@@ -1284,6 +1285,7 @@ export default {
 	quests: {
 		b01_s_cenit: { name: 'Princesa en el laberinto', type: 'side', est: 15, stages: {
 			buscar: 'La Furfrou del dueño del **Palacio Cénit**, Princesa, se perdió en el laberinto de setos. Odia la lavanda, adora las rosas, nunca va por la sombra y lleva un lacito rosa.',
+			volver: 'Princesa te sigue muy digna. Llévala con el dueño del **Palacio Cénit**.',
 			hecha: 'Princesa volvió a casa. Despeinada, pero feliz.',
 		} },
 		b01_s_acuario: { name: 'Vecinos de la Muralla', type: 'side', est: 15, stages: {

@@ -40,7 +40,7 @@ export default {
 		hecha: 'Lila y su compañera ya no son las mismas. Para bien.',
 	} },
 	b03_t_rhi: { name: 'La delantera (III)', type: 'thread', stages: {
-		llamada: 'Rhi ha llamado a casa. No te ha contado qué le dijeron.',
+		llamada: 'Rhi ha llamado a casa. No te ha contado qué le dijeron. Sigue en el **Puerto de Olivo**.',
 		hecha: 'Rhi te contó algo que no le cuenta a nadie. Otra vez.',
 	} },
 	b03_t_bastien: { name: 'Letra pequeña (III)', type: 'thread', stages: {
@@ -53,6 +53,7 @@ export default {
 	} },
 	b03_t_renata: { name: 'Casos Fríos: el sótano', type: 'thread', stages: {
 		sotano: 'Renata quiere bajar al sótano tapiado de la **estación del Tren Magnético** de Trigal.',
+		bajar: 'El sótano de la **estación del Tren Magnético** de Trigal ya está abierto. Busca pistas allá abajo y cuéntale a Renata tu teoría.',
 		hecha: 'Renata tiene el episodio de su vida. Falta decidir cuándo se emite.',
 	} },
 	b03_t_ambar: { name: 'El ámbar sin registro (III)', type: 'thread', stages: {

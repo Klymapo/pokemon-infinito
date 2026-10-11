@@ -134,6 +134,8 @@ Trabaja en este orden. Usa la lista de tareas para que Mario vea el progreso si 
    - **Cinemáticas (pedido de Mario, 2026-10-10):** escríbelas con el formato de `docs/CINE.md` (actores, cámara, clima, efectos): nunca un fondo con un texto y ya. Siguen siendo 2–4 por bloque.
    - **Minijuegos para conseguir objetos (pedido de Mario, 2026-10-10):** cada bloque trae al menos 4 sitios nuevos con minijuego (`docs/MINIJUEGOS.md`): puntos diarios con `gather.game` y una o dos escenas únicas con premio especial, variando entre excavar, pescar, cosechar, rastrear, cerradura y el puzle de rejilla.
    - **Sub-lugares:** un edificio o zona interior solo es visible para Novedades, Diario y viajes si hoy existe un spot `go` (o un `branch`) visible que lleve a él. No dejes sub-lugares accesibles sin entrada, y cierra con `cond` las entradas de escenas ya terminadas.
+   - **Misiones de hilo (pedido de Mario, 2026-10-10: «las historias de personajes están abiertas pero no debo hacer nada yo y me confunde»):** cada parte de un hilo es su propia misión (`b05_t_noa`…) y **se cierra al terminar su parte** (`{ quest, stage, done: true }`); no la dejes abierta esperando al bloque siguiente. Solo queda abierta si de verdad hay algo pendiente que el jugador hará más adelante, y entonces su etapa dice qué y dónde.
+   - **Misiones y marcadores:** un sitio solo se marca «!»/«?»/«•» si su guion, en el estado de ese momento, empieza o cambia algo de verdad (`app/js/hub.js` lo simula). No pongas dentro de guiones de conversación comandos `quest` «por si acaso»: haz una variante de `talk` con su `cond`.
    - **Cartas y notas:** siempre como objeto con `read` y, si se leen en el momento, con `{ read: 'id' }` (hoja de papel). Nunca una carta larga en un `text`.
    - **Novedades:** lo nuevo que aparezca en zonas viejas sale solo en Diario › Novedades si el spot tiene `new` o su guion toca una misión sin empezar. Pon siempre `new` a los spots de contenido añadido a zonas ya visitadas, o Mario no se enterará.
    - **Colección:** cada bloque añade puntos de recolección (`gather`) en sus rutas y cuevas, 2 o 3 objetos para leer (`read`: cartas, notas, diarios de NPCs que cuenten algo de su historia) y al menos un recuerdo para mirar (`art`). Mario pidió poder ver y recolectar muchas cosas.
@@ -175,7 +177,7 @@ Escribe `secreto/auditorias/AAAA-MM-DD.md` y sale con código 1 si algo bloquea.
    - Superficies azules con texto blanco: `var(--aura-fill)`, no `var(--aura)`.
    - Nada de letra < 12 px ni botones < 44 px de lado corto (en el mapa cuenta la zona de toque invisible).
 
-La auditoría también corre `cine-test.mjs` (todas las cinemáticas contra su vocabulario), `minijuegos-test.mjs`, `fx-eventos-test.mjs` (orden de los eventos de combate que la interfaz necesita), `herramientas/test/pc-multi-test.mjs` (PC) y `herramientas/test/negocios-test.mjs` (entrar, producir, almacén, esfuerzo, Pokémon trabajando, mejoras e imprevistos de **todos** los negocios publicados).
+La auditoría también corre **`herramientas/hub.mjs`** (bloquea): juega partidas con el bot y las de `herramientas/test/partidas/` (reales de Mario) y comprueba que todo lo que el Diario, Novedades, el mapa y los marcadores anuncian lleva a algo real: novedades fantasma, marcadores mentirosos, «Lo que necesitas» caducado, «Por hacer»/«En espera» mal clasificados, misiones colgadas, viajes a sitios sin entrada y regalos repetibles. Cuando Mario mande un respaldo, cópialo a `herramientas/test/partidas/`. También corre `cine-test.mjs` (todas las cinemáticas contra su vocabulario), `minijuegos-test.mjs`, `fx-eventos-test.mjs` (orden de los eventos de combate que la interfaz necesita), `herramientas/test/pc-multi-test.mjs` (PC) y `herramientas/test/negocios-test.mjs` (entrar, producir, almacén, esfuerzo, Pokémon trabajando, mejoras e imprevistos de **todos** los negocios publicados).
 
 Si añadiste mecánicas nuevas al motor, añade también su prueba (por ejemplo, en `herramientas/test/battle-test.mjs`) y ejecútala.
 
@@ -230,6 +232,7 @@ node herramientas/validar.mjs                          # validar contenido
 node herramientas/superfan.mjs                         # detalles de canon con ojos de fan
 node herramientas/tester.mjs                           # lógica de juego (combates sin curar, atascos…)
 node herramientas/disenador.mjs                        # hub de misiones, reglas de bloque y colección
+node herramientas/hub.mjs                              # lógica del Diario, Novedades y marcadores con partidas reales
 node herramientas/recorrido.mjs --semilla 3            # una partida del bot (día)
 node herramientas/recorrido.mjs --semilla 3 --hora 2   # de noche
 node herramientas/recorrido.mjs --fecha 12-24          # en una fecha concreta

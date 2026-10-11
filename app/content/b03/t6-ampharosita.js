@@ -123,7 +123,6 @@ export default {
 			] },
 			{ say: 'yasmina', text: 'Los contrapesos tienen que ir sobre las placas del suelo. Eso lo sé porque el abuelo lo decía cantando. «Plomo en su placa, cadena tirante, la lente que gire y el barco adelante». No rima muy bien. Él decía que sí.' },
 			{ quest: 'b03_s_ampharosita', stage: 'contrapesos' },
-			{ toast: 'Nueva misión: Una luz que enciende otra' },
 		],
 
 		// ---------- Llegada a la sala de máquinas (una vez) ----------
