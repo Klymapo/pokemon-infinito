@@ -17,6 +17,15 @@
 > **2026-10-06:** el B3 ya está publicado (sesión de día).
 > Desde hoy hay **dos sesiones de madrugada**: 0:47 (arte, interfaz, sonido y motor) y 2:53 (historia). La de historia no toca `app/js/` salvo bugs; la de arte no toca la historia.
 
+> **2026-10-10 (tarde):** Mario va por el **principio del B4** (Azafrán). El B4 es el último publicado, así que vamos **0 bloques por delante**: la siguiente madrugada de historia **sí escribe el B5**. (La nota de arriba sobre «3 bloques por delante» ya no vale.)
+
+## Indicación de Mario para la noche del 2026-10-11 (madrugada del domingo)
+
+**«Que las tareas de esta noche se centren en la historia.»** Las dos sesiones de madrugada trabajan en historia; nada de arte, interfaz, motor ni minijuegos salvo un bug que bloquee.
+- **Sesión de las 0:47:** empieza el **Bloque 5** siguiendo `CLAUDE.md` §2.4: lee el mundo (§2.2), escribe `secreto/bloques/b05-plan.md` y `b05-encargo.md`, y escribe los dos primeros tramos con subagentes. Deja el bloque en `app/content/b05/` **sin** añadirlo a `BLOCKS` si no está completo y auditado; súbelo igualmente (commit sin spoilers) y anota aquí debajo qué quedó hecho y qué falta.
+- **Sesión de las 2:53:** sigue lo que dejó la de las 0:47 (o empieza el B5 si no hay nada): termina los tramos que falten, conecta el bloque, pasa la auditoría extensa completa (incluida `herramientas/hub.mjs`) y el lector independiente, y publica.
+- Recuerda las reglas nuevas del 2026-10-10 en `CLAUDE.md` §2.4 (hilos que se cierran al terminar su parte, cinemáticas con `docs/CINE.md`, minijuegos, premios de instructor, negocios, Megas/Teras a la vista, nada de regalar especies repetidas) y que la curva de niveles **se queda como está** (decisión de Mario).
+
 **Último bloque terminado:** ninguno (B1 casi terminado).
 **Bloques publicados:** B1, B2, B3 (B2 y B3 publicados el 2026-10-05/06 en sesión de día, a petición de Mario) y **B4 (Kanto)**, publicado la madrugada del 2026-10-06. Vamos **3 bloques por delante**: la próxima madrugada de historia **no** escribe el B5 (Alola) salvo que Mario avance; toca eventos por fecha (Navidad entra en la ventana de 60 días a partir del 21 de octubre) o profundidad.
 
